@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<!-- <setting name="useGeneratedKeys" value="true"/> -->
+	</settings>
+	<typeAliases>
+		<typeAlias type="dto.Member" alias="member" />
+		<!-- <typeAlias type="dto.Bank" alias="bank" />
+		<typeAlias type="dto.Expense" alias="expense" />
+		<typeAlias type="dto.Income" alias="income" />
+		<typeAlias type="dto.Type" alias="type" /> -->
+	</typeAliases>
+
+</configuration>
