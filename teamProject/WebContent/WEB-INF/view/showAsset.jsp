@@ -7,14 +7,14 @@
 <title>myAsset.jsp</title>
 
 <style>
-*{text-align:"center"; background:"yellow";}
 </style>
 </head>
 
-<body>
-	<div>
+<body style="background: yellow">
+	<div style="font-size: 50px;">
 		<h1>내 자산 현황</h1>
-		id : ${mem.userKey}<br>
+		
+		user_key : ${mem.userKey}<br>
 		name : ${mem.name}<br>
 	</div>
 </body>
