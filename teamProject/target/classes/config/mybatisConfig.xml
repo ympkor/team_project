@@ -9,11 +9,12 @@
 		<!-- <setting name="useGeneratedKeys" value="true"/> -->
 	</settings>
 	<typeAliases>
-		<typeAlias type="dto.Member" alias="member" />
-		<!-- <typeAlias type="dto.Bank" alias="bank" />
+		<typeAlias type="dto.Assets" alias="assets" />
 		<typeAlias type="dto.Expense" alias="expense" />
+		<typeAlias type="dto.ExpenseCategory" alias="expenseCategory" />
 		<typeAlias type="dto.Income" alias="income" />
-		<typeAlias type="dto.Type" alias="type" /> -->
+		<typeAlias type="dto.IncomeCategory" alias="incomeCategory" />
+		<typeAlias type="dto.Member" alias="member" />
 	</typeAliases>
 
 </configuration>
