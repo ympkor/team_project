@@ -38,6 +38,7 @@
 				<value>classpath:mapper/expenseMapper.xml</value>
 				<value>classpath:mapper/incomeMapper.xml</value>
 				<value>classpath:mapper/typeMapper.xml</value> -->
+				<value>classpath:mapper/memberMapper.xml</value>
 			</list>
 		</property>
 	</bean>

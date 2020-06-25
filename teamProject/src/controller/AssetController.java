@@ -22,6 +22,7 @@ public class AssetController {
 		System.out.println(memAsset.getName());
 		System.out.println(memAsset.getUserId());
 		System.out.println(memAsset.getUserKey());
+//		m.addAttribute("userKey", userkey);
 		return "showAsset";
 	}
 
