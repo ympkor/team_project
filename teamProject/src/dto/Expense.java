@@ -1,29 +1,29 @@
 package dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Expense {
 
 	private int expenseId;
 	private int userKey;
 	private int amount;
-	private LocalDateTime expenseDate;
-	private int bankId;
-	private int typeId;
+	private LocalDate expenseDate;
+	private int assetsId;
+	private int ecId;
 	private String memo;
 	
 	public Expense() {
 	}
 
-	public Expense(int expenseId, int userKey, int amount, LocalDateTime expenseDate, int bankId, int typeId,
+	public Expense(int expenseId, int userKey, int amount, LocalDate expenseDate, int assetsId, int ecId,
 			String memo) {
 		super();
 		this.expenseId = expenseId;
 		this.userKey = userKey;
 		this.amount = amount;
 		this.expenseDate = expenseDate;
-		this.bankId = bankId;
-		this.typeId = typeId;
+		this.assetsId = assetsId;
+		this.ecId = ecId;
 		this.memo = memo;
 	}
 
@@ -51,28 +51,28 @@ public class Expense {
 		this.amount = amount;
 	}
 
-	public LocalDateTime getExpenseDate() {
+	public LocalDate getExpenseDate() {
 		return expenseDate;
 	}
 
-	public void setExpenseDate(LocalDateTime expenseDate) {
+	public void setExpenseDate(LocalDate expenseDate) {
 		this.expenseDate = expenseDate;
 	}
 
-	public int getBankId() {
-		return bankId;
+	public int getassetsId() {
+		return assetsId;
 	}
 
-	public void setBankId(int bankId) {
-		this.bankId = bankId;
+	public void setassetsId(int assetsId) {
+		this.assetsId = assetsId;
 	}
 
-	public int getTypeId() {
-		return typeId;
+	public int getecId() {
+		return ecId;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setecId(int ecId) {
+		this.ecId = ecId;
 	}
 
 	public String getMemo() {
@@ -86,6 +86,6 @@ public class Expense {
 	@Override
 	public String toString() {
 		return "Expense [expenseId=" + expenseId + ", userKey=" + userKey + ", amount=" + amount + ", expenseDate="
-				+ expenseDate + ", bankId=" + bankId + ", typeId=" + typeId + ", memo=" + memo + "]";
+				+ expenseDate + ", assetsId=" + assetsId + ", ecId=" + ecId + ", memo=" + memo + "]";
 	}
 }

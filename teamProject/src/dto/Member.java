@@ -6,16 +6,18 @@ public class Member {
 	private String userId;
 	private String pwd;
 	private String name;
+	private String email;
 	
 	public Member() {
 	}
 
-	public Member(int userKey, String userId, String pwd, String name) {
+	public Member(int userKey, String userId, String pwd, String name, String email) {
 		super();
 		this.userKey = userKey;
 		this.userId = userId;
 		this.pwd = pwd;
 		this.name = name;
+		this.email = email;
 	}
 
 	public int getUserKey() {
@@ -49,10 +51,19 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 	@Override
 	public String toString() {
-		return "Member [userKey=" + userKey + ", userId=" + userId + ", pwd=" + pwd + ", name=" + name + "]";
+		return "Member [userKey=" + userKey + ", userId=" + userId + ", pwd=" + pwd + ", name=" + name + ", email="
+				+ email + "]";
 	}
-	
+
 }

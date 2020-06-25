@@ -1,29 +1,29 @@
 package dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Income {
 	
 	private int incomeId;
 	private int userKey;
 	private int amount;
-	private LocalDateTime incomeDate;
-	private int bankId;
-	private int typeId;
+	private LocalDate incomeDate;
+	private int assetsId;
+	private int icId;
 	private String memo;
 	
 	public Income() {
 	}
 
-	public Income(int incomeId, int userKey, int amount, LocalDateTime incomeDate, int bankId, int typeId,
+	public Income(int incomeId, int userKey, int amount, LocalDate incomeDate, int assetsId, int icId,
 			String memo) {
 		super();
 		this.incomeId = incomeId;
 		this.userKey = userKey;
 		this.amount = amount;
 		this.incomeDate = incomeDate;
-		this.bankId = bankId;
-		this.typeId = typeId;
+		this.assetsId = assetsId;
+		this.icId = icId;
 		this.memo = memo;
 	}
 
@@ -51,28 +51,28 @@ public class Income {
 		this.amount = amount;
 	}
 
-	public LocalDateTime getIncomeDate() {
+	public LocalDate getIncomeDate() {
 		return incomeDate;
 	}
 
-	public void setIncomeDate(LocalDateTime incomeDate) {
+	public void setIncomeDate(LocalDate incomeDate) {
 		this.incomeDate = incomeDate;
 	}
 
-	public int getBankId() {
-		return bankId;
+	public int getassetsId() {
+		return assetsId;
 	}
 
-	public void setBankId(int bankId) {
-		this.bankId = bankId;
+	public void setassetsId(int assetsId) {
+		this.assetsId = assetsId;
 	}
 
-	public int getTypeId() {
-		return typeId;
+	public int geticId() {
+		return icId;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void seticId(int icId) {
+		this.icId = icId;
 	}
 
 	public String getMemo() {
@@ -86,7 +86,7 @@ public class Income {
 	@Override
 	public String toString() {
 		return "Income [incomeId=" + incomeId + ", userKey=" + userKey + ", amount=" + amount + ", incomeDate="
-				+ incomeDate + ", bankId=" + bankId + ", typeId=" + typeId + ", memo=" + memo + "]";
+				+ incomeDate + ", assetsId=" + assetsId + ", icId=" + icId + ", memo=" + memo + "]";
 	}
 
 }
