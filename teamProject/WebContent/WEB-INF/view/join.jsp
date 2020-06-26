@@ -46,7 +46,7 @@
 		 		alert("같은 문자를 4번이상 사용하실 수 없습니다");
 		 		$("input[name=password]").focus(); 
 		 		return false;
-	 		 } else if((num < 0 && eng < 0) || (eng < 0 && spe < 0)){
+	 		 } else if((num < 0 || eng < 0) && (eng < 0 || spe < 0)){
 	 			 alert("문자+숫자 또는 문자+특수문자로만 입력해주세요.");
 	 			$("input[name=password]").focus();
 		 		return false;
