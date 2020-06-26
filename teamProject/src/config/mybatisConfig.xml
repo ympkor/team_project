@@ -15,6 +15,9 @@
 		<typeAlias type="dto.Income" alias="income" />
 		<typeAlias type="dto.IncomeCategory" alias="incomeCategory" />
 		<typeAlias type="dto.Member" alias="member" />
+		<typeAlias type="dto.DailyExpense" alias="DExpense" />
+		<typeAlias type="dto.DailyIncome" alias="DIncome" />
+		
 	</typeAliases>
 
 </configuration>

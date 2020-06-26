@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mapper.MemberMapper"> 
+  	<!-- 인서트 했을때 들어간 아이디값을 객체에 넣어주는... -->
+  	<select id="selectOneEx" resultType="expense" >
+  		select * from expense
+  		where user_key=#{userKey}
+  	</select>
+  	
+  	<select id="selectOneIn" resultType="income">
+  		select * from income
+  		where user_key=#{userKey}
+  	</select>
+  	
+  	<select id="selectDailyExpense" resultType="DExpense">
+  		select ec_name,amount,assets_name,memo from expense as e 
+  		join expense_category as ec on e.ec_id=ec.ec_id 
+  		join assets as a on e.assets_id=a.assets_id 
+  		where user_key=#{userKey} and expense_date=#{expenseDate};
+  	</select>
+  	<select id="selectDailyIncome" resultType="DIncome">
+  		select ic_name,amount,assets_name,memo from income as i 
+  		join income_category as ic on i.ic_id=ic.ic_id 
+  		join assets as a on i.assets_id=a.assets_id
+  		where user_key=#{userKey} and income_date=#{incomeDate};
+  	</select>
+  	<select id="selectWeekExpense" resultType="DExpense">
+  		select amount as amount,expense_date 
+  		from expense where expense_date=#{weekDate} and user_key=#{userKey}
+  	</select>
+  	<select id="selectWeekIncome" resultType="DIncome">
+  		select amount as amount,income_date 
+  		from income where income_date=#{weekDate} and user_key=#{userKey}
+  	</select>
+  </mapper>
