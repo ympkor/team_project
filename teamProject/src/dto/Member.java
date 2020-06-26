@@ -1,24 +1,21 @@
 package dto;
 
 public class Member {
-
 	private int userKey;
 	private String userId;
-	private String pwd;
+	private String password;
 	private String name;
 	private String email;
 	
-	public Member() {
-	}
-
-	public Member(int userKey, String userId, String pwd, String name, String email) {
-		super();
+	public Member(int userKey, String userId, String password, String name, String email) {
 		this.userKey = userKey;
 		this.userId = userId;
-		this.pwd = pwd;
+		this.password = password;
 		this.name = name;
 		this.email = email;
 	}
+
+	public Member() {}
 
 	public int getUserKey() {
 		return userKey;
@@ -36,12 +33,12 @@ public class Member {
 		this.userId = userId;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getName() {
@@ -51,7 +48,7 @@ public class Member {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -62,8 +59,9 @@ public class Member {
 
 	@Override
 	public String toString() {
-		return "Member [userKey=" + userKey + ", userId=" + userId + ", pwd=" + pwd + ", name=" + name + ", email="
+		return "Member [userKey=" + userKey + ", userId=" + userId + ", password=" + password + ", name=" + name + ", email="
 				+ email + "]";
 	}
-
+	
+	
 }
