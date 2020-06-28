@@ -15,7 +15,7 @@
   	</select>
   	
   	<select id="selectDailyExpense" resultType="DExpense">
-  		select ec_name,amount,assets_name,memo from expense as e 
+  		select ec_name,amount,expense_date,assets_name,memo from expense as e 
   		join expense_category as ec on e.ec_id=ec.ec_id 
   		join assets as a on e.assets_id=a.assets_id 
   		where user_key=#{userKey} and expense_date=#{expenseDate};
@@ -27,11 +27,33 @@
   		where user_key=#{userKey} and income_date=#{incomeDate};
   	</select>
   	<select id="selectWeekExpense" resultType="DExpense">
-  		select amount as amount,expense_date 
+  		select sum(amount) as amount
   		from expense where expense_date=#{weekDate} and user_key=#{userKey}
   	</select>
   	<select id="selectWeekIncome" resultType="DIncome">
-  		select amount as amount,income_date 
+  		select sum(amount) as amount
   		from income where income_date=#{weekDate} and user_key=#{userKey}
+  	</select>
+  	<select id="selectMonthExpense" resultType="DExpense">
+  		select ec_name,sum(amount) as amount from expense as e 
+  		join expense_category as ec on e.ec_id=ec.ec_id where user_key=#{userKey}
+		and expense_date &gt;=#{startDate} and expense_date&lt;#{endDate}
+		group by ec_name order by amount desc
+  	</select>
+  	<select id="selectMonthIncome" resultType="DIncome">
+  		select ic_name,sum(amount) as amount from income as i 
+  		join income_category as ic on i.ic_id=ic.ic_id where user_key=#{userKey}
+		and income_date &gt;=#{startDate} and income_date&lt;#{endDate}
+		group by ic_name order by amount desc
+  	</select>
+  	<select id="selectYearExpense" resultType="DExpense">
+  		select sum(amount) as amount ,max(expense_date) as expense_date 
+  		from expense where year(expense_date)=#{year} and user_key=#{userKey} 
+  		group by month(expense_date);
+  	</select>
+  	<select id="selectYearIncome" resultType="DIncome">
+  		select sum(amount) as amount ,max(income_date) as income_date 
+  		from income where year(income_date)=#{year} and user_key=#{userKey} 
+  		group by month(income_date);
   	</select>
   </mapper>
