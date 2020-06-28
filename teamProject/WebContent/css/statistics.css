@@ -1,0 +1,9 @@
+@charset "UTF-8";
+table{border-collapse: collapse; width:500px;}
+th,td{border: 1px solid black;}
+div#leftdayandweek, div#rightmonth{float: left;}
+div#ExpenseChart, div#profitChart{width:500px; height: 270px;}
+div#bottomyear{position:relative; float:left; width: 900px; height: 400px;}
+div#yearChart{height:90%;}
+#chartData div{display: none;}
+div#daymove{width:100%; text-align: center;}
