@@ -1,0 +1,18 @@
+@charset "UTF-8";
+h3{text-align: center;}
+span.dateSpan{display: block;}
+.income{color: blue;}
+.expense{color: red;}
+/*상세내역 리스트들 정리하기*/
+div.detailDateDiv{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+div.detailSumI{margin-left: auto;}
+div.detailSumE{margin-left: auto;}
+div.detailItem{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
