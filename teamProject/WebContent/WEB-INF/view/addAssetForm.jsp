@@ -32,6 +32,7 @@
 	<h1>자산 추가</h1>
 	<form action="/asset/addAsset" method="post" style="padding-top:200px;">
 	<div>
+		<input type="hidden" name="userKey" value="${userKey}">
 		
 		금액<input type="number" name="amount" placeholder="금액"><br><br>
 		
@@ -40,16 +41,17 @@
         부채<input type="radio" name="type" value="부채"><br><br>
 		
 		은행
-		국민은행<input type="radio" name="assetsID" value="1">
-        기업은행<input type="radio" name="assetsID" value="2">
-        농협<input type="radio" name="assetsID" value="3">
-        신한은행<input type="radio" name="assetsID" value="4">
-        산업은행<input type="radio" name="assetsID" value="5">
-        우리은행<input type="radio" name="assetsID" value="6">
-        씨티은행<input type="radio" name="assetsID" value="7">
-        하나은행<input type="radio" name="assetsID" value="8">
-        SC제일은행<input type="radio" name="assetsID" value="9">
-        기타<input type="radio" name="assetsID" value="10"><br><br>
+		
+		국민은행<input type="radio" name="assetsId" value="1">
+        기업은행<input type="radio" name="assetsId" value="2">
+        농협<input type="radio" name="assetsId" value="3">
+        신한은행<input type="radio" name="assetsId" value="4">
+        산업은행<input type="radio" name="assetsId" value="5">
+        우리은행<input type="radio" name="assetsId" value="6">
+        씨티은행<input type="radio" name="assetsId" value="7">
+        하나은행<input type="radio" name="assetsId" value="8">
+        SC제일은행<input type="radio" name="assetsId" value="9">
+        기타<input type="radio" name="assetsId" value="10"><br><br>
         
         메모<input type="text" name="memo" placeholder="적금, 학자금대출 등"><br><br>
 		

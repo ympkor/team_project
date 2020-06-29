@@ -15,9 +15,9 @@
 		where member.user_key = #{userKey};
 	</select>
 
-	<insert id="addAsset" parameterType="assetOfMember" keyProperty="userKey">
+	<insert id="addAsset" parameterType="assetOfMember">
   		insert into assets_of_member (user_key, type, amount, assets_id, memo) 
-  		values(1, #{type}, #{amount}, #{assetsId}, #{memo});
+  		values(#{userKey}, #{type}, #{amount}, #{assetsId}, #{memo});
 	</insert>
 
 </mapper>

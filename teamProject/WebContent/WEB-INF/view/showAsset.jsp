@@ -38,7 +38,7 @@
 	</div>
 	<div>
 
-		${newsList}
+		<%-- ${newsList} --%>
 
 		<%-- <c:forEach var="news" items="${newsList}">
 			${news.title}<br>

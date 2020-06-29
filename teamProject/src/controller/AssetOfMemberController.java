@@ -7,7 +7,9 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.mysql.cj.xdevapi.JsonParser;
 
@@ -17,13 +19,15 @@ import service.AssetOfMemberService;
 
 @Controller
 @RequestMapping("/asset")
+@SessionAttributes("userKey")
 public class AssetOfMemberController {
-
+	
 	@Autowired AssetOfMemberService aomService;
 
 	@RequestMapping("/view")
-	public String getMemberAsset(Model m1, Model m2, Model m3) {
-		List<AssetOfMember> aomList = aomService.getAssetOfMember(1);
+	public String getMemberAsset(@ModelAttribute("userKey")int userKey, Model m) {
+		System.out.println(userKey);
+		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);
 		int i = 0;
 		int sumAssets = 0;
 		while(aomList.size() > i) {
@@ -31,24 +35,24 @@ public class AssetOfMemberController {
 			i++;
 		}
 		
-		AssetNewsService ans = new AssetNewsService();
-		StringBuilder newsString = ans.getNews();
-		System.out.println("스트링빌더값"+newsString);
+//		AssetNewsService ans = new AssetNewsService();
+//		StringBuilder newsString = ans.getNews();
+//		System.out.println("스트링빌더값"+newsString);
+//
+//		JSONObject jsnObject = new JSONObject(newsString.toString());
+//		JSONArray jsonArray = jsnObject.getJSONArray("items");
+//		System.out.println("json배열값"+jsonArray);
 
-		JSONObject jsnObject = new JSONObject(newsString.toString());
-		JSONArray jsonArray = jsnObject.getJSONArray("items");
-		System.out.println("json배열값"+jsonArray);
-
-		m1.addAttribute("aomList", aomList);
-		m2.addAttribute("sumAsset", sumAssets);
-		m3.addAttribute("newsList", jsonArray);
+		m.addAttribute("aomList", aomList);
+		m.addAttribute("sumAsset", sumAssets);
+//		m3.addAttribute("newsList", jsonArray);
 
 		return "showAsset";
 	}
 	
 	@RequestMapping("/add")
-	public String showAddForm(Model m) {
-		List<AssetOfMember> aomList = aomService.getAssetOfMember(1);
+	public String showAddForm(@ModelAttribute("userKey")int userKey, Model m) {
+		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);
 		int i = 0;
 		int sumAssets = 0;
 		while(aomList.size() > i) {
@@ -59,15 +63,13 @@ public class AssetOfMemberController {
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumAsset", sumAssets);
 		
-		
 		return "addAssetForm";
 	}
 
 	@RequestMapping("/addAsset")
-	public String addAsset(Model m, AssetOfMember assetOfMember) {
-		aomService.addAsset(assetOfMember);
-		m.addAttribute("aom", assetOfMember);
-		System.out.println(assetOfMember);
+	public String addAsset(@ModelAttribute("userKey")int userKey, Model m, AssetOfMember aom) {
+		aomService.addAsset(aom);
+		m.addAttribute("aom", aom);
 		return "addResult";
 	}
 	
