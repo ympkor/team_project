@@ -7,20 +7,17 @@
 <meta charset="UTF-8">
 <title>내 자산 추가</title>
 </head>
-<body style="background: #FFDF24">
-	<div
-		style="width =: 520px; height: 100%; text-align: center; font-size: 20px; float: left;">
-		<div style="height: 150px;">
+<body>
+	<div>
 			<h1>내 자산 현황</h1>
 			<h1>총 ${sumAsset}원</h1>
 			<br>
 		</div>
 		<c:forEach items="${aomList}" var="list">
-			<div
-				style="width: 500px; height: 100px; border: 1px solid black; border-radius: 5px; margin: 5px; background: yellow; opacity: 0.8; padding: 10px;">
+			<div>
 				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
 				${list.amount}원<br> ${list.memo}
-				<div style="text-align: right; margin-top: -20px;">
+				<div>
 					<input type="button" name="editAsset" value="수정"> <input
 						type="button" name="deleteAsset" value="삭제">
 				</div>
@@ -30,7 +27,7 @@
 
 	</div>
 	<h1>자산 추가</h1>
-	<form action="/asset/addAsset" method="post" style="padding-top:200px;">
+	<form action="/asset/addAsset" method="post">
 	<div>
 		<input type="hidden" name="userKey" value="${userKey}">
 		
