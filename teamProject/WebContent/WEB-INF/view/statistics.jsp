@@ -13,6 +13,14 @@
 <link rel="stylesheet" href="/css/statistics.css">
 </head>
 <body>
+<div id="topmenu">
+<div class="basic"><a href="/statistics/show">가계부</a></div>
+<div class="statistics"><a href="/statistics/show">통계</a></div>
+<div class="assest"><a href="/asset/view">자산</a></div>
+<div class="board">게시판  </div>
+</div>
+
+<div id="content">
 <form action="/statistics/show"><input id="date" type="date" name="date"><button id="formbutton" >일자선택</button></form>
 <div id="leftdayandweek">
 <div>
@@ -114,5 +122,7 @@
 </div>
 
 </div>
+</div>
+<a class="gotop" href="#topmenu" title="맨 위로">맨 위로</a> 
 </body>
 </html>

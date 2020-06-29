@@ -1,4 +1,5 @@
 @charset "UTF-8";
+a.gotop{display:scroll;position:fixed;bottom:10px;right:10px;}
 table{border-collapse: collapse; width:500px;}
 th,td{border: 1px solid black;}
 div#leftdayandweek, div#rightmonth{float: left;}
@@ -7,3 +8,9 @@ div#bottomyear{position:relative; float:left; width: 900px; height: 400px;}
 div#yearChart{height:90%;}
 #chartData div{display: none;}
 div#daymove{width:100%; text-align: center;}
+div#topmenu{position:absolute;top:0px; width:100%; background-color: white;}
+div.basic{position:absolute;left:0px;top:10px; width:25%;}
+div.statistics{position:absolute;left:25%;top:10px; width:25%;}
+div.assest{position:absolute;left:50%;top:10px; width:25%;}
+div.board{position:absolute;right:0px;top:10px; width:25%;}
+div#content{position: absolute;top:70px;}
