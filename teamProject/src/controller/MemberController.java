@@ -2,13 +2,18 @@ package controller;
 
 import java.util.List;
 
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.Member;
 import mapper.JoinMapper;
@@ -16,26 +21,31 @@ import service.MemberService;
 
 @Controller
 @RequestMapping("/member")
+@SessionAttributes("userKey")
 public class MemberController {
 	
 	@Autowired
 	MemberService memberService;
-//	@Autowired
-//	JoinMapper joinMapper;
 	
+	@Autowired
+	JoinMapper joinMapper;
+	
+	//회원가입버튼 눌렀을 때, 회원가입폼으로 이동
 	@GetMapping("/join")
 	public String getMemberAddForm() {
 		return "join";
 	}
 	
+	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
 	@PostMapping("/money")
 	public String MemberAddproc(Member member) {
 		System.out.println("join:"+member);
 		memberService.addMember(member);
 		return "money";
 	}
+	
 	//아이디 중복체크
-	@PostMapping(value="equalsId", produces="text/html;charset=UTF-8")
+	@PostMapping(value="/equalsId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String EqualsId(Member member) {
 		//System.out.println("Test");
 		//System.out.println("equalId : "+member);
@@ -44,19 +54,70 @@ public class MemberController {
 		return equalId;
 	}
 	
+	//이메일 중복체크
+	@PostMapping(value="/equalsEmail", produces="text/html;charset=UTF-8")
+	public @ResponseBody String EqualsEmail(Member member) {
+		String equalEmail = memberService.equalEmail(member);
+		return equalEmail;
+	}
+	
+	//로그인버튼 눌렀을 때, 로그인폼으로 이동
 	@GetMapping("/login")
 	public String getLogin() {
 		return "login";
 	}
 	
-	@PostMapping(value="login", produces="text/html;charset=UTF-8")
-	public @ResponseBody String Loginproc(Member member) {
-		//System.out.println("Test");
-		//System.out.println(member.getUserKey());
-		//Member m = joinMapper.selectById(member.getUserId());
+	//로그인시 아이디와 비밀번호 유효성 체크해주고 그 결과에 대한 값을 알람창으로 띄워줌
+	@PostMapping(value="/login", produces="text/html;charset=UTF-8")
+	public @ResponseBody String Loginproc(Model model, Member member) {
+		//세션값을 저장하기 위해서 사용
+		Member m = joinMapper.selectById(member.getUserId());
 		//System.out.println(m.getUserKey());
+		Model uk = model.addAttribute("userKey", m.getUserKey());
+		//System.out.println("세션:"+uk);
 		String str=memberService.login(member);
+		//System.out.println(str);
+		return str;
+	}
+	
+	//아이디찾기 버튼을 눌렀을 때 아이디찾기폼으로 이동
+	@GetMapping("/searchId")
+	public String getId() {
+		return "searchId";
+	}
+	
+	//아이디 찾기시 해당되는 결과에 대응되는 값을 출력
+	@PostMapping(value="/searchId", produces="text/html;charset=UTF-8")
+	public @ResponseBody String searchIdproc(String email) {
+		String str = memberService.searchId(email);
 		System.out.println(str);
 		return str;
+	}
+	
+	//비밀번호찾기 버튼을 눌렀을 때 비밀번호찾기폼으로 이동
+	@GetMapping("/searchPw")
+	public String getPw() {
+		return "searchPw";
+	}
+	
+	//비밀번호찾기시 해당되는 결과에 대응되는 값을 출력
+	@PostMapping(value="/searchPw", produces="text/html;charset=UTF-8")
+	public @ResponseBody String searchPwproc(String userId) {
+		String str = memberService.searchPw(userId);
+		return str;
+	}
+	
+	//마이페이지버튼클릭시 마이페이지로 넘어감
+	@GetMapping("/mypage")
+	public String getMember(Model m, @RequestParam(defaultValue = "1")String userKey) {
+		Member member = memberService.showMember(userKey);
+		m.addAttribute("member", member);
+		return "mypage";
+	}
+	
+	//세션값이 넘어가는지 확인해주는페이지
+	@GetMapping("/money")
+	public String getMo() {
+		return "money";
 	}
 }

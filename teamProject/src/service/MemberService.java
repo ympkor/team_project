@@ -15,13 +15,26 @@ public class MemberService {
 	JoinMapper joinMapper;
 	//회원가입시 아이디 중복체크
 	public String equalId(Member member) {
-		Member dbMember = joinMapper.selectById(member.getUserId());
-		System.out.println("dbMember: " + dbMember);
+		Member dbId = joinMapper.selectById(member.getUserId());
+		System.out.println("dbMember: " + dbId);
 		System.out.println("member: " +member.getUserId());
-		if(dbMember == null) {
-			dbMember = new Member(0, "", "", "", "");
+		if(dbId == null) {
+			dbId = new Member(0, "", "", "", "");
 		}
-		if(!(member.getUserId().equals(dbMember.getUserId()))) {
+		if(!(member.getUserId().equals(dbId.getUserId()))) {
+			return "중복되지 않음";
+		} else {
+			return "중복됨";
+		}
+	}
+	
+	//회원가입시 이메일 중복체크
+	public String equalEmail(Member member) {
+		Member dbEmail = joinMapper.selectByEmail(member.getEmail());
+		if(dbEmail == null) {
+			dbEmail = new Member(0, "", "", "", "");
+		}
+		if(!(member.getEmail().equals(dbEmail.getEmail()))) {
 			return "중복되지 않음";
 		} else {
 			return "중복됨";
@@ -35,18 +48,48 @@ public class MemberService {
 	
 	//로그인시 아이디와 비번 유효성 체크
 	public String login(Member member) {
-		Member dbMember = joinMapper.selectById(member.getUserId());
-		if(dbMember == null) {
-			dbMember = new Member(0, "", "", "", "");
+		Member dbId = joinMapper.selectById(member.getUserId());
+		if(dbId == null) {
+			dbId = new Member(0, "", "", "", "");
 		}
-		if(!(member.getUserId().equals(dbMember.getUserId()))) {
+		if(!(member.getUserId().equals(dbId.getUserId()))) {
 			return "아이디틀림";
 		} else {
-			if(member.getPassword().equals(dbMember.getPassword())) {
+			if(member.getPassword().equals(dbId.getPassword())) {
 				return "성공";
 			} else {
 				return "패스워드 틀림";
 			}
 		}
 	}
+	
+	//이메일로 아이디 검색
+	public String searchId(String email) {
+		//System.out.println("입력받은 " + email);
+		String dbId = joinMapper.idSelectByEmail(email);//DB에서 이메일 값을 가져옴
+		//System.out.println(dbMember.size());
+		if(!(dbId==null)) {
+			return email+"님의 아이디입니다.<br>"+dbId;
+		} else {
+			return "없는 이메일";
+		}
+	}
+	
+	//아이디로 비밀번호 검색
+	public String searchPw(String userId) {
+		String dbPw = joinMapper.pwSelectById(userId);
+		if(!(dbPw==null)) {
+			return userId+"님의 비밀번호입니다.<br>"+dbPw;
+		} else {
+			return "없는 아이디";
+		}
+	}
+	
+	//회원번호로 전체정보조회
+	public Member showMember(String userKey) {
+		return joinMapper.selectByUserKey(userKey);
+	}
+	
+	//탈퇴하기 
+	//수정하기
 }
