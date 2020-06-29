@@ -1,0 +1,7 @@
+@charset "UTF-8";
+div#topmenu{position:absolute;top:0px; width:100%; background-color: white;}
+div.basic{position:absolute;left:0px;top:10px; width:25%;}
+div.statistics{position:absolute;left:25%;top:10px; width:25%;}
+div.assest{position:absolute;left:50%;top:10px; width:25%;}
+div.board{position:absolute;right:0px;top:10px; width:25%;}
+div#content{position: absolute;top:70px;}

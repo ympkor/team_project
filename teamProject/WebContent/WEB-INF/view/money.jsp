@@ -12,6 +12,9 @@ Object user_key = session.getAttribute("userKey");
 </head>
 <body>
 	<%=user_key%>
-	<a href="/statistics/show">통계로 가자!!</a>
+	<br><a href="/member/mypage">마이페이지로</a>
+	<br><a href="/statistics/show">통계로 가보까</a>
+	<br>
+	<a href="/member/logout">로그아웃</a>
 </body>
 </html>

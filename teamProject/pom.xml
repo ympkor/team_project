@@ -104,5 +104,19 @@
 			<artifactId>taglibs-standard-spec</artifactId>
 			<version>1.2.5</version>
 		</dependency>
+		<!-- jackson-databind -->
+	<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.11.0</version>
+	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.json/json -->
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20200518</version>
+</dependency>
+	
 	</dependencies>
+	
 </project>

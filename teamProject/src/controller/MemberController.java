@@ -2,13 +2,12 @@ package controller;
 
 import java.util.List;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,9 +37,12 @@ public class MemberController {
 	
 	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
 	@PostMapping("/money")
-	public String MemberAddproc(Member member) {
-		System.out.println("join:"+member);
+	public String MemberAddproc(Model model, Member member) {
 		memberService.addMember(member);
+		Member m = joinMapper.selectById(member.getUserId());
+		//System.out.println("userkey : " + m.getUserKey());
+		Model uk = model.addAttribute("userKey", m.getUserKey());
+		//System.out.println("join:"+member);
 		return "money";
 	}
 	
@@ -67,16 +69,21 @@ public class MemberController {
 		return "login";
 	}
 	
+	@GetMapping("/logout")
+	public String getLogout() {
+		return "logout";
+	}
+	
 	//로그인시 아이디와 비밀번호 유효성 체크해주고 그 결과에 대한 값을 알람창으로 띄워줌
 	@PostMapping(value="/login", produces="text/html;charset=UTF-8")
 	public @ResponseBody String Loginproc(Model model, Member member) {
 		//세션값을 저장하기 위해서 사용
 		Member m = joinMapper.selectById(member.getUserId());
-		//System.out.println(m.getUserKey());
+		System.out.println(m.getUserKey());
 		Model uk = model.addAttribute("userKey", m.getUserKey());
-		//System.out.println("세션:"+uk);
+		System.out.println("세션:"+uk);
 		String str=memberService.login(member);
-		//System.out.println(str);
+		System.out.println(str);
 		return str;
 	}
 	
@@ -109,11 +116,25 @@ public class MemberController {
 	
 	//마이페이지버튼클릭시 마이페이지로 넘어감
 	@GetMapping("/mypage")
-	public String getMember(Model m, @RequestParam(defaultValue = "1")String userKey) {
+	public String getMember(Model m, @ModelAttribute("userKey")String userKey) {
 		Member member = memberService.showMember(userKey);
 		m.addAttribute("member", member);
 		return "mypage";
 	}
+	
+	//마이페이지에 있는 수정하기버튼클릭시 수정페이지로 넘어감
+	@GetMapping("/update")
+	public String getUpdate(Model m, @ModelAttribute("userKey")String userKey) {
+		Member member= joinMapper.selectByUserKey(userKey);
+		m.addAttribute("member", member);
+		return "updateMember";
+	}
+	
+//	@PostMapping("/mypage")
+//	public String updateProc(Member member) {
+//		memberService.updateMember(member);
+//		return "mypage";
+//	}
 	
 	//세션값이 넘어가는지 확인해주는페이지
 	@GetMapping("/money")
