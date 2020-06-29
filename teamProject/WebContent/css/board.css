@@ -5,3 +5,4 @@ div.statistics{position:absolute;left:25%;top:10px; width:25%;}
 div.assest{position:absolute;left:50%;top:10px; width:25%;}
 div.board{position:absolute;right:0px;top:10px; width:25%;}
 div#content{position: absolute;top:70px;}
+div.boardcontent{width:400px; height: 200px; border: 1px solid green;}

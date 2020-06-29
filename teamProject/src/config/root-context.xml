@@ -39,6 +39,7 @@
 				<value>classpath:mapper/memberMapper.xml</value>
 				<value>classpath:mapper/joinMapper.xml</value>
 				<value>classpath:mapper/assetOfMemberMapper.xml</value>
+				<value>classpath:mapper/boardMapper.xml</value>
 			</list>
 		</property>
 	</bean>
