@@ -10,11 +10,9 @@
 </head>
 <body>
 	<form>
-		<div>
-			아이디 <input type="text" name="userId">
-			<button type="button" name="pwCk">비밀번호찾기</button>
-		</div>
-		<div id="message"></div>
+		<div>아이디 <input type="text" name="userId"></div>
+		<div><input type="submit" value="비밀번호찾기"></div>
 	</form>
+		<div id="message"></div>
 </body>
 </html>

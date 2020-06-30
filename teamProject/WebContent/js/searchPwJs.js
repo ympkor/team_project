@@ -1,5 +1,5 @@
 $(function(){
-	$("button[name=pwCk]").on("click", function(){
+	$("form").on("submit", function(){
 		var id = $("input[name=userId]").eq(0).serialize();
 		$.ajax({
 			url:"/member/searchPw",
@@ -14,6 +14,7 @@ $(function(){
 					document.getElementById("message").innerHTML+="<br><a href='/member/login'>로그인하러가기</a>";
 				}
 			}
-		})
+		});
+		return false;
 	});
 });

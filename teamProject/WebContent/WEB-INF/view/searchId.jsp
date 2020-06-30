@@ -10,11 +10,9 @@
 </head>
 <body>
 	<form>
-		<div>
-			이메일 <input type="text" name="email">
-			<button type="button" name="idCk">아이디찾기</button>
-		</div>
-		<div id="message"></div>
+		<div>이메일 <input type="text" name="email"></div>
+		<div><input type="submit" value="아이디찾기"></div>
 	</form>
+		<div id="message"></div>
 </body>
 </html>
