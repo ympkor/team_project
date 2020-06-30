@@ -38,16 +38,15 @@ public class AssetOfMemberController {
 
 		AssetNewsService ans = new AssetNewsService();
 		StringBuilder newsString = ans.getNews();
-//		System.out.println("스트링빌더값 : "+newsString);
+		//		System.out.println("스트링빌더값 : "+newsString);
 
 		JSONObject jsnObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsnObject.getJSONArray("items");
-//		System.out.println("json array값 : "+jsonArray);
-//		System.out.println(jsonArray.get(0));
+		//		System.out.println("json array값 : "+jsonArray);
+		//		System.out.println(jsonArray.get(0));
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("newsList", jsonArray);
-
 		return "showAsset";
 	}
 
@@ -60,10 +59,8 @@ public class AssetOfMemberController {
 			sumAssets += aomList.get(i).getAmount();
 			i++;
 		}
-
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumAsset", sumAssets);
-
 		return "addAssetForm";
 	}
 
@@ -74,7 +71,7 @@ public class AssetOfMemberController {
 		m.addAttribute("aom", aom);
 		return "addResult";
 	}
-	
+
 	@RequestMapping("/edit")
 	public String showeditForm(int memAssetId, Model m, AssetOfMember aom) {
 		aom = aomService.getAssetById(memAssetId);
@@ -84,8 +81,6 @@ public class AssetOfMemberController {
 
 	@RequestMapping("/editAsset")
 	public String editAsset(int memAssetId, Model m,  AssetOfMember aom) {
-		System.out.println("돌아가나");
-		
 		aomService.editAsset(aom);
 		return "editResult";
 	}
@@ -99,8 +94,6 @@ public class AssetOfMemberController {
 		String delResult = bank+"의 "+assetType+" "+amount+"원 항목이 삭제되었습니다.";
 		m.addAttribute("delrst", delResult);
 		aomService.delAsset(memAssetId);
-
 		return "deleteResult";
 	}
-
 }
