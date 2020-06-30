@@ -7,11 +7,11 @@
 		WHERE income_id=#{incomeId}
 	</update>
 	
-	<select id="selectSUMINCOMEByUserKeyAndAssetsId" resultType="int">
+	<select id="selectSUMINCOMEByUserKeyAndAssetsId" resultType="integer">
 		SELECT SUM(amount) FROM income WHERE user_key=#{userKey} AND assets_id=#{assetsId}
 	</select>
 	
-	<select id="selectSUMExpenseByUserKeyAndAssetsId" resultType="int">
+	<select id="selectSUMExpenseByUserKeyAndAssetsId" resultType="integer">
 		SELECT SUM(amount) FROM expense WHERE user_key=#{userKey} AND assets_id=#{assetsId}
 	</select>
 	
@@ -24,8 +24,23 @@
 		DELETE FROM tp.income WHERE income_id=#{incomeId}
 	</delete>
 	
-	<insert id="insertExpense" parameterType="Expense">
+	<insert id="insertExpense" parameterType="MainExpense">
 		INSERT INTO tp.expense(user_key, amount, expense_date, assets_id, ec_id, memo) 
 		VALUES(#{userKey}, #{amount}, #{expenseDate}, #{assetsId}, #{ecId}, #{memo})
+	</insert>
+	
+	<update id="updateExpenseByExpenseId" parameterType="ExpenseUpdate">
+		UPDATE tp.expense SET amount=#{amount}, expense_date=#{expenseDate}, 
+		assets_id=#{assetsId}, ec_id=#{ecId}, memo=#{memo} 
+		WHERE expense_id=#{expenseId}
+	</update>
+	
+	<delete id="deleteExpenseByExpenseId">
+		DELETE FROM tp.expense WHERE expense_id=#{expenseId}
+	</delete>
+	
+	<insert id="insertIncome" parameterType="MainIncome">
+		INSERT INTO tp.income(user_key, amount, income_date, assets_id, ic_id, memo) 
+		VALUES(#{userKey}, #{amount}, #{incomeDate}, #{assetsId}, #{icId}, #{memo})
 	</insert>
 </mapper>

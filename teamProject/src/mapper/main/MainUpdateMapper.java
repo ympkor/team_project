@@ -3,6 +3,7 @@ package mapper.main;
 import org.apache.ibatis.annotations.Param;
 
 import dto.main.Expense;
+import dto.main.Income;
 import dto.main.IncomeUpdate;
 
 public interface MainUpdateMapper {
@@ -14,10 +15,10 @@ public interface MainUpdateMapper {
 	public void updateAssetsOfMemeberByMemAssetId(IncomeUpdate incomeUpdate);
 
 	//해당 유저의 모든 income SUM
-	public int selectSUMINCOMEByUserKeyAndAssetsId(@Param("userKey")int userKey, @Param("assetsId") int assetsId);
+	public Integer selectSUMINCOMEByUserKeyAndAssetsId(@Param("userKey")int userKey, @Param("assetsId") int assetsId);
 
 	//해당 유저의 모든 expense SUM
-	public int selectSUMExpenseByUserKeyAndAssetsId(@Param("userKey")int userKey,  @Param("assetsId") int assetsId);
+	public Integer selectSUMExpenseByUserKeyAndAssetsId(@Param("userKey")int userKey,  @Param("assetsId") int assetsId);
 
 	//AOM의 amount update
 	public void updateAOMByMemAssetId(@Param("amount")int amount, @Param("memAssetId")int memAssetId);
@@ -27,5 +28,14 @@ public interface MainUpdateMapper {
 
 	//Insert expense
 	public void insertExpense(Expense expense);
+
+	//ExpenseId로 Expense update
+	public void updateExpenseByExpenseId(Expense expense);
+	
+	//DELETE expense By Expense id
+	public void deleteExpenseByExpenseId(@Param("expenseId")int expenseId);
+
+	//Insert Income
+	public void insertIncome(Income income);
 
 }

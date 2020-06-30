@@ -13,8 +13,9 @@ public class Expense {
 	private int assetsId;
 	private int ecId;
 	private String memo;
+	private int memAssetId;//Expense변경 시 aom을 변경해줘야 해서 넣어놨다.
 	public Expense() {}
-	public Expense(int expenseId, int userKey, int amount, LocalDate expenseDate, int assetsId, int ecId, String memo) {
+	public Expense(int expenseId, int userKey, int amount, LocalDate expenseDate, int assetsId, int ecId, String memo, int memAssetId) {
 		this.expenseId = expenseId;
 		this.userKey = userKey;
 		this.amount = amount;
@@ -22,6 +23,7 @@ public class Expense {
 		this.assetsId = assetsId;
 		this.ecId = ecId;
 		this.memo = memo;
+		this.memAssetId = memAssetId;
 	}
 	public int getExpenseId() {
 		return expenseId;
@@ -65,9 +67,16 @@ public class Expense {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	public int getMemAssetId() {
+		return memAssetId;
+	}
+	public void setMemAssetId(int memAssetId) {
+		this.memAssetId = memAssetId;
+	}
 	@Override
 	public String toString() {
 		return "Expense [expenseId=" + expenseId + ", userKey=" + userKey + ", amount=" + amount + ", expenseDate="
-				+ expenseDate + ", assetsId=" + assetsId + ", ecId=" + ecId + ", memo=" + memo + "]";
+				+ expenseDate + ", assetsId=" + assetsId + ", ecId=" + ecId + ", memo=" + memo + ", memAssetId="
+				+ memAssetId + "]";
 	}
 }

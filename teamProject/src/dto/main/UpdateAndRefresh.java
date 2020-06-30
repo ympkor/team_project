@@ -3,20 +3,28 @@ package dto.main;
 import java.util.List;
 
 public class UpdateAndRefresh {
+	private Calendar cal;
 	private List<MemberIncomeIncomeCategory> miicList;
 	private List<MemberExpenseExpenseCategory> meecList;
 	private List<IncomeIncomeCategoryAssets> iicaList;
 	private List<ExpenseExpenseCategoryAssets> eecaList;
 	private SumAmounts sumAmounts;
 	public UpdateAndRefresh() {}
-	public UpdateAndRefresh(List<MemberIncomeIncomeCategory> miicList, List<MemberExpenseExpenseCategory> meecList,
+	public UpdateAndRefresh(Calendar cal, List<MemberIncomeIncomeCategory> miicList, List<MemberExpenseExpenseCategory> meecList,
 			List<IncomeIncomeCategoryAssets> iicaList, List<ExpenseExpenseCategoryAssets> eecaList,
 			SumAmounts sumAmounts) {
+		this.cal = cal;
 		this.miicList = miicList;
 		this.meecList = meecList;
 		this.iicaList = iicaList;
 		this.eecaList = eecaList;
 		this.sumAmounts = sumAmounts;
+	}
+	public Calendar getCal() {
+		return cal;
+	}
+	public void setCal(Calendar cal) {
+		this.cal = cal;
 	}
 	public List<IncomeIncomeCategoryAssets> getIicaList() {
 		return iicaList;
@@ -53,7 +61,7 @@ public class UpdateAndRefresh {
 	}
 	@Override
 	public String toString() {
-		return "UpdateAndRefresh [miicList=" + miicList + ", meecList=" + meecList + ", iicaList=" + iicaList
-				+ ", eecaList=" + eecaList + ", sumAmounts=" + sumAmounts + "]";
+		return "UpdateAndRefresh [cal=" + cal + ", miicList=" + miicList + ", meecList=" + meecList + ", iicaList="
+				+ iicaList + ", eecaList=" + eecaList + ", sumAmounts=" + sumAmounts + "]";
 	}
 }

@@ -61,12 +61,12 @@
 		WHERE user_key=#{userKey} AND assets_id=#{assetsId}
 	</select>
 	
-	<select id="selectSUMIncomeByDate" resultType="int">
+	<select id="selectSUMIncomeByDate" resultType="integer">
 		SELECT sum(amount) FROM income 
 		WHERE user_key=#{userKey} AND income_date LIKE #{incomeDate}
 	</select>
 	
-	<select id="selectSUMExpenseByDate" resultType="int">
+	<select id="selectSUMExpenseByDate" resultType="integer">
 		SELECT sum(amount) FROM expense 
 		WHERE user_key=#{userKey} AND expense_date LIKE #{expenseDate}
 	</select>

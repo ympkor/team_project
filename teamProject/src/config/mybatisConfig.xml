@@ -29,7 +29,9 @@
 		<typeAlias type="dto.main.AssetsAssetsOfMember" alias="AAOM"/>
 		<typeAlias type="dto.main.IncomeUpdate" alias="IncomeUpdate"/>
 		<typeAlias type="dto.main.AssetsOfMember" alias="AOM"/>
-		<typeAlias type="dto.main.Expense" alias="Expense"/>
+		<typeAlias type="dto.main.Expense" alias="MainExpense"/>
+		<typeAlias type="dto.main.ExpenseUpdate" alias="ExpenseUpdate"/>
+		<typeAlias type="dto.main.Income" alias="MainIncome"/>
 	</typeAliases>
 
 </configuration>

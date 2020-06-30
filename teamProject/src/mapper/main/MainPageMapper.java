@@ -39,9 +39,9 @@ public interface MainPageMapper {
 	public List<AssetsOfMember> selectAOMByUserKeyAndAssetsId(@Param("userKey")int userKey, @Param("assetsId")int assetsId);
 
 	//userKey와 년-월로 income의 sum가져오기
-	public int selectSUMIncomeByDate(@Param("userKey")int userKey, @Param("incomeDate")String yearMonth);
+	public Integer selectSUMIncomeByDate(@Param("userKey")int userKey, @Param("incomeDate")String yearMonth);
 
 //	userKey와 년-월로 expense의 sum가져오기
-	public int selectSUMExpenseByDate(@Param("userKey")int userKey, @Param("expenseDate")String yearMonth);
+	public Integer selectSUMExpenseByDate(@Param("userKey")int userKey, @Param("expenseDate")String yearMonth);
 		
 }

@@ -1,4 +1,30 @@
 @charset "UTF-8";
+*{padding: 0; margin: 0; box-sizing: border-box;}
+body{width: 100vw; height: 100vh;}
+.grid_container{
+  display: grid;
+  grid-template-areas: 
+  "header header header"
+  "aside main main"
+  "aside main main"
+  "aside section section"
+  "footer footer footer";
+}
+.grid_header{
+  grid-area: header;
+}
+.grid_aside{
+  grid-area: aside;
+}
+.grid_main{
+  grid-area: main;
+}
+.grid_section{
+  grid-area: section;
+}
+.grid_footer{
+  grid-area: footer;
+}
 h3{text-align: center;}
 span.dateSpan{display: block;}
 .income{color: blue;}
@@ -9,6 +35,11 @@ div.detailDateDiv{
   justify-content: space-between;
   align-items: baseline;
 }
+div.topmenu{position:absolute;top:0px; width:100%; background-color: white;}
+div.basic{position:absolute;left:0px;top:10px; width:25%;}
+div.statistics{position:absolute;left:25%;top:10px; width:25%;}
+div.assest{position:absolute;left:50%;top:10px; width:25%;}
+div.board{position:absolute;right:0px;top:10px; width:25%;}
 div.detailSumI{margin-left: auto;}
 div.detailSumE{margin-left: auto;}
 div.detailItem{
@@ -16,8 +47,3 @@ div.detailItem{
   justify-content: space-between;
   align-items: center;
 }
-div.topmenu{position:absolute;top:0px; width:100%; background-color: white;}
-div.basic{position:absolute;left:0px;top:10px; width:25%;}
-div.statistics{position:absolute;left:25%;top:10px; width:25%;}
-div.assest{position:absolute;left:50%;top:10px; width:25%;}
-div.board{position:absolute;right:0px;top:10px; width:25%;}

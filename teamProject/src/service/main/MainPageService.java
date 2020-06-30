@@ -83,8 +83,12 @@ public class MainPageService {
 	public SumAmounts selectSUMIEByUserKeyAndDate(int userKey, String yearMonth) {
 		SumAmounts sumAmounts = new SumAmounts();
 		yearMonth = yearMonth+"%";
-		sumAmounts.setSumIncome(mainPageMapper.selectSUMIncomeByDate(userKey, yearMonth));
-		sumAmounts.setSumExpense(mainPageMapper.selectSUMExpenseByDate(userKey, yearMonth));
+		Integer sumIncome = mainPageMapper.selectSUMIncomeByDate(userKey, yearMonth);
+		Integer sumExpense = mainPageMapper.selectSUMExpenseByDate(userKey, yearMonth);
+		if(sumIncome == null) {sumIncome = 0;}
+		if(sumExpense == null) {sumExpense = 0;}
+		sumAmounts.setSumIncome(sumIncome);
+		sumAmounts.setSumExpense(sumExpense);
 		return null;
 	}
 }
