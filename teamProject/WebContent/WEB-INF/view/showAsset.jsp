@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
+<script type="text/javascript" src="/js/searchIdJs.js">
+
+
+</script>
 <style>
 </style>
 </head>
@@ -21,10 +25,17 @@
 		<c:forEach items="${aomList}" var="list">
 			<div>
 				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
-				${list.amount}원<br> ${list.memo}
+				${list.amount}원<br> ${list.memo}<br>${list.memAssetId}
 				<div>
-					<input type="button" name="editAsset" value="수정"> <input
-						type="button" name="deleteAsset" value="삭제">
+					<a href="edit?memAssetId=${list.memAssetId}">
+					수정</a>
+					<a href="delete?memAssetId=${list.memAssetId}" onclick="return confirm('정말 삭제하시겠습니까?')">
+					삭제</a>
+					
+					<%-- <input type="button" name="editAsset" value="수정" 
+					onClick="location.href='edit?memAssetId=${list.memAssetId}'">
+					<input type="button" name="deleteAsset" value="삭제" 
+					onClick="location.href='delete?memAssetId=${list.memAssetId}'"> --%>
 				</div>
 			</div>
 			<br>
@@ -35,15 +46,15 @@
 	<div>
 
 		
-		<%-- ${newsList} --%>
+		${newsList}
 
 		<%-- <c:forEach var="news" items="${newsList}">
 			${news.title}<br>
 			${news.pubDate}<br>
 			${news.description}<br>
-			${news.link}<br>
+			${news.link}<br> %>
 		</c:forEach> --%>
-
+		
 	</div>
 
 </body>
