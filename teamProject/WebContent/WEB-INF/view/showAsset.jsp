@@ -25,17 +25,12 @@
 		<c:forEach items="${aomList}" var="list">
 			<div>
 				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
-				${list.amount}원<br> ${list.memo}<br>${list.memAssetId}
+				${list.amount}원<br> ${list.memo}
 				<div>
 					<a href="edit?memAssetId=${list.memAssetId}">
 					수정</a>
 					<a href="delete?memAssetId=${list.memAssetId}" onclick="return confirm('정말 삭제하시겠습니까?')">
 					삭제</a>
-					
-					<%-- <input type="button" name="editAsset" value="수정" 
-					onClick="location.href='edit?memAssetId=${list.memAssetId}'">
-					<input type="button" name="deleteAsset" value="삭제" 
-					onClick="location.href='delete?memAssetId=${list.memAssetId}'"> --%>
 				</div>
 			</div>
 			<br>
@@ -44,7 +39,6 @@
 		<input type="button" name="addAsset" value="내 자산 추가" onClick="location.href='add'">
 	</div>
 	<div>
-
 		
 		${newsList}
 
