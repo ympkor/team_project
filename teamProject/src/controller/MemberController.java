@@ -69,6 +69,7 @@ public class MemberController {
 		return "login";
 	}
 	
+	//로그아웃버튼 눌렀을 때, 로그아웃폼으로 이동
 	@GetMapping("/logout")
 	public String getLogout() {
 		return "logout";
@@ -79,12 +80,18 @@ public class MemberController {
 	public @ResponseBody String Loginproc(Model model, Member member) {
 		//세션값을 저장하기 위해서 사용
 		Member m = joinMapper.selectById(member.getUserId());
-		System.out.println(m.getUserKey());
-		Model uk = model.addAttribute("userKey", m.getUserKey());
-		System.out.println("세션:"+uk);
-		String str=memberService.login(member);
-		System.out.println(str);
-		return str;
+		if(m!=null) {
+			System.out.println(m.getUserKey());
+			Model uk = model.addAttribute("userKey", m.getUserKey());
+			System.out.println("세션:"+uk);
+			String str=memberService.login(member);
+			System.out.println(str);
+			return str;
+		} else {
+			String str=memberService.login(member);
+			System.out.println(str);
+			return str;
+		}
 	}
 	
 	//아이디찾기 버튼을 눌렀을 때 아이디찾기폼으로 이동
@@ -123,6 +130,7 @@ public class MemberController {
 	}
 	
 	//마이페이지에 있는 수정하기버튼클릭시 수정페이지로 넘어감
+	//처음에 DB에 입력되어있는 값을 보여줌
 	@GetMapping("/update")
 	public String getUpdate(Model m, @ModelAttribute("userKey")String userKey) {
 		Member member= joinMapper.selectByUserKey(userKey);
@@ -130,11 +138,35 @@ public class MemberController {
 		return "updateMember";
 	}
 	
-//	@PostMapping("/mypage")
-//	public String updateProc(Member member) {
-//		memberService.updateMember(member);
-//		return "mypage";
-//	}
+	//수정페이지에서 수정한 내용을 다시 DB로 보내줌
+	@PostMapping("/mypage")
+	public String updateProc(Member member) {
+		memberService.updateMember(member);
+		return "mypage";
+	}
+	
+	//삭제버튼시 넘어감
+	@GetMapping("/delete")
+	public String delProc(@ModelAttribute("userKey")int userKey) {
+		joinMapper.deleteByUserKey(userKey);
+		return "login";
+	}
+	
+	//마이페이지 넘어갈 때 본인확인용 비밀번호
+	@GetMapping("/mypageProc")
+	public String getmypageproc(Model m, @ModelAttribute("userKey")String userKey) {
+		Member member= joinMapper.selectByUserKey(userKey);
+		m.addAttribute("member", member);
+		return "mypageProc";
+	}
+	
+	@PostMapping(value="/mypageProc", produces="text/html;charset=UTF-8")
+	public @ResponseBody String mypageProc(Member member) {
+		System.out.println(member);
+		String str = memberService.mypagePw(member);
+		System.out.println(str);
+		return str;
+	}
 	
 	//세션값이 넘어가는지 확인해주는페이지
 	@GetMapping("/money")

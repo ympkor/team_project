@@ -5,7 +5,7 @@ import java.util.List;
 import dto.Member;
 
 public interface JoinMapper {
-	//회원추가
+	//회원추가, 마이페이지 진입시 비밀번호 입력
 	public void insertMember(Member member);
 	
 	//로그인, 아이디중복확인
@@ -24,5 +24,8 @@ public interface JoinMapper {
 	public Member selectByUserKey(String userKey);
 	
 	//수정하기
+	public void updateByUserKey(Member member);
+	
 	//삭제하기
+	public void deleteByUserKey(int userKey);
 }

@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="mapper.JoinMapper">
-  	<insert id="insertMember" parameterType="Member" >
+  	<insert id="insertMember" parameterType="Member" keyProperty="userKey">
   		insert into member(user_id, password, name, email) values(#{userId}, #{password}, #{name}, #{email})
   	</insert>
   	
@@ -28,8 +28,8 @@
   		select * from member where user_key=#{userKey}
   	</select>
   	
-  	<update id="updateByUserKey">
-  		update member set name=#{name}, email=#{email} where user_key=#{userKey}
+  	<update id="updateByUserKey" parameterType="Member" >
+  		update member set password=#{password}, name=#{name} where user_key=#{userKey}
   	</update>
   	
   	<delete id="deleteByUserKey">

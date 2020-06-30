@@ -48,6 +48,7 @@ public class MemberService {
 	
 	//로그인시 아이디와 비번 유효성 체크
 	public String login(Member member) {
+		//System.out.println("아이디"+member.getUserId());
 		Member dbId = joinMapper.selectById(member.getUserId());
 		if(dbId == null) {
 			dbId = new Member(0, "", "", "", "");
@@ -90,6 +91,27 @@ public class MemberService {
 		return joinMapper.selectByUserKey(userKey);
 	}
 	
-	//탈퇴하기 
 	//수정하기
+	public void updateMember(Member member) {
+		joinMapper.updateByUserKey(member);
+	}
+	
+	//탈퇴하기 
+	public void deleteMember(int userKey) {
+		joinMapper.deleteByUserKey(userKey);
+	}
+	
+	//마이페이지 진입시 비밀번호 비교
+	public String mypagePw(Member member) {
+		System.out.println("아이디"+member.getUserId());
+		Member dbId = joinMapper.selectById(member.getUserId());
+		if(dbId == null) {
+			dbId = new Member(0, "", "", "", "");
+		}
+		if(member.getPassword().equals(dbId.getPassword())) {
+			return "비밀번호맞음";
+		} else {
+			return "비밀번호틀림";
+		}
+	}
 }
