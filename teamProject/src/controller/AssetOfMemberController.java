@@ -27,7 +27,6 @@ public class AssetOfMemberController {
 
 	@RequestMapping("/view")
 	public String getMemberAsset(@ModelAttribute("userKey")int userKey, Model m) {
-		System.out.println(userKey);
 		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);
 		int i = 0;
 		int sumAssets = 0;
@@ -47,6 +46,7 @@ public class AssetOfMemberController {
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("newsList", jsonArray);
+		System.out.println(jsonArray.getClass());
 		return "showAsset";
 	}
 
