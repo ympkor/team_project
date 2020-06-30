@@ -30,14 +30,14 @@
 	<div>
 		<input type="hidden" name="userKey" value="${userKey}">
 		
-		금액<input type="number" name="amount" placeholder="금액"><br><br>
+		금액<br>
+		<input type="number" name="amount" placeholder="금액"><br><br>
 		
-		구분
+		구분<br>
 		자산<input type="radio" name="type" value="자산">
         부채<input type="radio" name="type" value="부채"><br><br>
 		
-		은행
-		
+		은행<br>
 		국민은행<input type="radio" name="assetsId" value="1">
         기업은행<input type="radio" name="assetsId" value="2">
         농협<input type="radio" name="assetsId" value="3">
@@ -49,9 +49,10 @@
         SC제일은행<input type="radio" name="assetsId" value="9">
         기타<input type="radio" name="assetsId" value="10"><br><br>
         
-        메모<input type="text" name="memo" placeholder="적금, 학자금대출 등"><br><br>
+        메모<br>
+        <input type="text" name="memo" placeholder="적금, 학자금대출 등"><br><br>
 		
-		<input type="submit" value="입력하기"><br>
+		<input type="submit" value="입력하기"> 
 		<input type="button" value="취소" onClick="location.href='view'">
 	</div>
 </form>
