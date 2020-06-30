@@ -37,12 +37,9 @@ public class AssetOfMemberController {
 
 		AssetNewsService ans = new AssetNewsService();
 		StringBuilder newsString = ans.getNews();
-		//		System.out.println("스트링빌더값 : "+newsString);
-
 		JSONObject jsnObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsnObject.getJSONArray("items");
-		//		System.out.println("json array값 : "+jsonArray);
-		//		System.out.println(jsonArray.get(0));
+
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("newsList", jsonArray);
@@ -64,9 +61,17 @@ public class AssetOfMemberController {
 		return "addAssetForm";
 	}
 
-
 	@RequestMapping("/addAsset")
 	public String addAsset(@ModelAttribute("userKey")int userKey, Model m, AssetOfMember aom) {
+		String assetType = aom.getType();
+		int amount = aom.getAmount();
+		System.out.println(assetType);
+		System.out.println(amount);
+		if (assetType.equals("부채")) {
+			amount*=-1;
+		}
+		System.out.println(amount);
+		aom.setAmount(amount);
 		aomService.addAsset(aom);
 		m.addAttribute("aom", aom);
 		return "addResult";
@@ -81,6 +86,12 @@ public class AssetOfMemberController {
 
 	@RequestMapping("/editAsset")
 	public String editAsset(int memAssetId, Model m,  AssetOfMember aom) {
+		String assetType = aom.getType();
+		int amount = aom.getAmount();
+		if (assetType.equals("부채")) {
+			amount*=-1;
+		}
+		aom.setAmount(amount);
 		aomService.editAsset(aom);
 		return "editResult";
 	}
