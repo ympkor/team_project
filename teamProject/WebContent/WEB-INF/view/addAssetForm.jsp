@@ -5,10 +5,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 자산 추가</title>
+<title>내 자산 추가</title> 
 </head>
 <body>
-	<div>
+	<%-- <div>
 			<h1>내 자산 현황</h1>
 			<h1>총 ${sumAsset}원</h1>
 			<br>
@@ -23,9 +23,8 @@
 				</div>
 			</div>
 			<br>
-		</c:forEach>
+		</c:forEach> --%>
 
-	</div>
 	<h1>자산 추가</h1>
 	<form action="/asset/addAsset" method="post">
 	<div>
