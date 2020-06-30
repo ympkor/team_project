@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="mapper.main.MainPageMapper">
+	<!-- user_key와 달력 날짜를 이용해서 income SELECT -->
+	<select id="selecMIICByUserKeyAndIncomeDate" resultType="MIIC">
+		SELECT m.user_key, ic.ic_name, i.amount, i.income_date FROM member AS m 
+		JOIN income AS i ON i.user_key=m.user_key 
+		JOIN income_category AS ic ON ic.ic_id=i.ic_id 
+		WHERE m.user_key=#{userKey} AND i.income_date LIKE #{incomeDate}
+	</select>
+	
+	<!-- user_key와 expense_Date로 expense SELECT -->
+	<select id="selectMEECBYUserKeyAndExpenseDate" resultType="MEEC">
+		SELECT m.user_key, ec.ec_name, e.amount, e.expense_date 
+		FROM tp.member AS m 
+		JOIN tp.expense AS e ON e.user_key=m.user_key 
+		JOIN tp.expense_category AS ec ON ec.ec_id=e.ec_id
+		WHERE m.user_key=#{userKey} AND e.expense_date LIKE #{expenseDate}
+	</select>
+	
+	<!-- user_key와 income_date로 날짜별 수입 상세내역 반환 -->
+	<select id="selectIICAByUserKeyAndIncomeDate" resultType="IICA">
+		SELECT i.income_id, i.ic_id, ic.ic_name, i.memo, ass.assets_id, ass.assets_name, i.amount, i.income_date 
+		FROM income AS i 
+		JOIN income_category AS ic ON i.ic_id=ic.ic_id 
+		JOIN assets AS ass ON ass.assets_id=i.assets_id 
+		WHERE i.user_key=#{userKey} AND i.income_date=#{incomeDate}
+	</select>
+	
+	<!-- user_key와 expense_date로 날짜별 지출 상세내역 반환 -->
+	<select id="selectEECAByUserKeyAndExpenseDate" resultType="EECA">
+		SELECT e.expense_id, e.ec_id, ec.ec_name, e.memo, ass.assets_id, ass.assets_name, e.amount, e.expense_date
+		FROM expense AS e 
+		JOIN expense_category AS ec ON e.ec_id=ec.ec_id 
+		JOIN assets AS ass ON ass.assets_id=e.assets_id 
+		WHERE e.user_key=#{userKey} AND e.expense_date=#{expenseDate}
+	</select>
+	
+	<!-- 모든 Income Category Select후 반환 -->
+	<select id="selectAllIncomeCategory" resultType="IC">
+		SELECT ic_id, ic_name FROM income_category
+	</select>
+	
+	<!-- 모든 expense_category select -->
+	<select id="selectAllExpenseCategory" resultType="EC">
+		SELECT ec_id, ec_name FROM expense_category
+	</select>
+	
+	<!-- userKey로 사용자의 자산항목과 자산명 가져오기 -->
+	<select id="selectAAOMByUserKey" resultType="AAOM">
+		SELECT aom.mem_asset_id, aom.assets_id, ass.assets_category, ass.assets_name, aom.memo 
+		FROM assets_of_member AS aom 
+		JOIN assets AS ass ON ass.assets_id=aom.assets_id 
+		WHERE aom.user_key=#{userKey}
+	</select>
+	
+	<!-- userKey와 assetsId로 user의 AOM 리스트 가져오기 -->
+	<select id="selectAOMByUserKeyAndAssetsId" resultType="AOM">
+		SELECT mem_asset_id, type, amount, assets_id, memo FROM assets_of_member 
+		WHERE user_key=#{userKey} AND assets_id=#{assetsId}
+	</select>
+	
+	<select id="selectSUMIncomeByDate" resultType="int">
+		SELECT sum(amount) FROM income 
+		WHERE user_key=#{userKey} AND income_date LIKE #{incomeDate}
+	</select>
+	
+	<select id="selectSUMExpenseByDate" resultType="int">
+		SELECT sum(amount) FROM expense 
+		WHERE user_key=#{userKey} AND expense_date LIKE #{expenseDate}
+	</select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.AssetOfMemberMapper">
+
+
+	<select id="selectAomById" resultType="assetOfMember">
+		select * from member
+		join assets_of_member on member.user_key = assets_of_member.user_key
+		join assets on assets_of_member.assets_id = assets.assets_id
+		where member.user_key = #{userKey};
+	</select>
+
+	<select id="getAssetById" resultType="assetOfMember">
+		select * from member
+		join assets_of_member on member.user_key = assets_of_member.user_key
+		join assets on assets_of_member.assets_id = assets.assets_id
+		where mem_asset_id = #{memAssetId};
+	
+	</select>
+
+	<insert id="addAsset" parameterType="assetOfMember">
+  		insert into assets_of_member (user_key, type, amount, assets_id, memo) 
+  		values(#{userKey}, #{type}, #{amount}, #{assetsId}, #{memo});
+	</insert>
+
+	<update id="editAsset" parameterType="assetOfMember">
+		update assets_of_member set amount=#{amount}, type=#{type}, 
+		assets_id=#{assetsId}, memo=#{memo} where mem_asset_id=#{memAssetId};
+	</update>
+
+	<delete id="delAsset" parameterType="assetOfMember">
+		delete from assets_of_member where mem_asset_id = #{memAssetId};
+	</delete>
+
+</mapper>
+
