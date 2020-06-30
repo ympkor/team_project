@@ -35,7 +35,7 @@
 			<list>
 				<value>classpath:mapper/main/mainPageMapper.xml</value>
 				<value>classpath:mapper/main/mainUpdateMapper.xml</value>
-				<value>classpath:mapper/assetMapper.xml</value>
+				<!-- <value>classpath:mapper/assetMapper.xml</value> -->
 				<!-- <value>classpath:mapper/expenseMapper.xml</value>
 				<value>classpath:mapper/incomeMapper.xml</value> -->
 				<value>classpath:mapper/memberMapper.xml</value>
