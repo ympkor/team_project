@@ -9,7 +9,7 @@
 		<!-- <setting name="useGeneratedKeys" value="true"/> -->
 	</settings>
 	<typeAliases>
-		<typeAlias type="dto.Assets" alias="assets" />
+		<!-- <typeAlias type="dto.Assets" alias="assets" /> -->
 		<typeAlias type="dto.Expense" alias="ex" />
 		<typeAlias type="dto.AssetOfMember" alias="assetOfMember" />
 		<typeAlias type="dto.ExpenseCategory" alias="expenseCategory" />
