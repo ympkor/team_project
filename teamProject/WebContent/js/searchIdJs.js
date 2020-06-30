@@ -10,18 +10,12 @@ $(function(){
 				console.log(data)
 				if(data=="없는 이메일"){
 					document.getElementById("message").innerHTML="해당하는 이메일의 정보가 없습니다.";
-					document.getElementById("message").innerHTML+="<br><button type='button' name='join'>회원가입하기</button>";
+					document.getElementById("message").innerHTML+="<br><a href='/member/searchId'>아이디 다시 찾기</a>";
 				} else {
 					document.getElementById("message").innerHTML=data;
 					document.getElementById("message").innerHTML+="<br><a href='/member/searchPw'>비밀번호찾기</a>";
 				}
 			}
 		})
-	});
-});
-
-$(function(){
-	$("button[name=join]").on("click", function(){
-		opener.parent.location="/member/join";
 	});
 });
