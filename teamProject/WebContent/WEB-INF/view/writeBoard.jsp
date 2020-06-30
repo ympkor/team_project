@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/writeboard.css">
 </head>
 <body>
-<form action="/board/show" method="post">
+<form class="writeboardtitle" action="/board/show" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	제목:<input class="writeboardtitle" type="text" name="title"><br>
 	내용:<TEXTAREA class="writeboardcontent" name="content" COLS=30 ROWS=3></TEXTAREA>

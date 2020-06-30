@@ -1,0 +1,4 @@
+@charset "UTF-8";
+.contentonehead{width:500px;}
+.boardcontent{width: 500px; min-height: 100px; border: 1px solid orange;}
+.udbutton{float: right;}

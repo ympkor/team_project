@@ -19,6 +19,7 @@
 		<typeAlias type="dto.DailyExpense" alias="DExpense" />
 		<typeAlias type="dto.DailyIncome" alias="DIncome" />
 		<typeAlias type="dto.Board" alias="Board" />
+		<typeAlias type="dto.Comment" alias="Comment" />
 		<typeAlias type="dto.main.MemberIncomeIncomeCategory" alias="MIIC"/>
 		<typeAlias type="dto.main.MemberExpenseExpenseCategory" alias="MEEC"/>
 		<typeAlias type="dto.main.IncomeIncomeCategoryAssets" alias="IICA"/>
