@@ -1,3 +1,4 @@
+<%@page import="org.json.JSONArray"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,7 +10,7 @@
 <title>내 자산</title>
 <script type="text/javascript" src="/js/searchIdJs.js">
 
-
+    
 </script>
 <style>
 </style>
@@ -41,14 +42,16 @@
 	<div>
 		
 		${newsList}
-
-		<%-- <c:forEach var="news" items="${newsList}">
-			${news.title}<br>
-			${news.pubDate}<br>
-			${news.description}<br>
-			${news.link}<br> %>
-		</c:forEach> --%>
 		
+		<%-- <c:set var="items" value="${requestScope['newsList'].items}"/>
+		
+		<c:forEach var="item" items="${items}" varStatus="status">
+
+		<c:out value="${item.title}"/>
+		<c:out value="${item.description}"/>
+		<c:out value="${item.pubDate}"/>
+
+		</c:forEach> --%>
 	</div>
 
 </body>

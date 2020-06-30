@@ -41,6 +41,7 @@ public class AssetNewsService {
         } catch (Exception e) {
             System.out.println(e);
         }
+        System.out.println(sb);
         return sb;
     }
 }
