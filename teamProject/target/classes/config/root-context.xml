@@ -33,14 +33,26 @@
 			value="classpath:config/mybatisConfig.xml" />
 		<property name="mapperLocations">
 			<list>
+				<value>classpath:mapper/main/mainPageMapper.xml</value>
+				<value>classpath:mapper/main/mainUpdateMapper.xml</value>
 				<value>classpath:mapper/assetMapper.xml</value>
 				<!-- <value>classpath:mapper/expenseMapper.xml</value>
-				<value>classpath:mapper/incomeMapper.xml</value>
-				<value>classpath:mapper/memberMapper.xml</value> -->
+				<value>classpath:mapper/incomeMapper.xml</value> -->
+				<value>classpath:mapper/memberMapper.xml</value>
+				<value>classpath:mapper/joinMapper.xml</value>
+				<value>classpath:mapper/assetOfMemberMapper.xml</value>
+				<value>classpath:mapper/boardMapper.xml</value>
 			</list>
 		</property>
 	</bean>
 
 	<mybatis-spring:scan base-package="mapper" />
 	<mvc:annotation-driven />
+	<mvc:resources location="/css/" mapping="/css/**"></mvc:resources>
+	<mvc:resources location="/js/" mapping="/js/**"></mvc:resources>
+	
+		<bean id="txManaber" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<tx:annotation-driven transaction-manager="txManaber"/>
 </beans>

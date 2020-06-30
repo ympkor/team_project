@@ -15,7 +15,7 @@
 <div class="basic"><a href="/statistics/show">가계부</a></div>
 <div class="statistics"><a href="/statistics/show">통계</a></div>
 <div class="assest"><a href="/asset/view">자산</a></div>
-<div class="board"><a href="board/show">게시판</a></div>
+<div class="board"><a href="/board/show">게시판</a></div>
 </div>
 <div id="content">
 <div>공지사항</div>
@@ -23,12 +23,12 @@
 <div> <h3>자유게시판</h3>
 <table>
 	<thead>
-		<tr><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>추천</th><th>조회</th></tr>
+		<tr ><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>추천</th><th>조회</th></tr>
 	</thead>
 	<tbody>
 		<c:forEach var="b" items="${bList}" varStatus="vs">
-		<tr><td></td><td>${b.title }</td><td>${b.writer }</td><td>${b.regDate}</td><td>${b.likes }</td><td>${b.hits}</td></tr>
-		<tr><td colspan="6"><div class="boardcontent">${b.content }</div></td></tr>
+		<tr class="boardtitlehead" onclick="showContent()"><td>${vs.count}</td><td>${b.title }</td><td>${b.writer }</td><td>${b.regDate}</td><td>${b.likes }</td><td>${b.hits}</td></tr>
+		<tr><td colspan="6"><div class="boardcontent"><pre>${b.content }</pre></div></td></tr>
 		</c:forEach>
 	</tbody>
 

@@ -187,11 +187,13 @@
 
 	<!-- 상단 메뉴 부분 -->
 	<header>
-		<div class="headContainer" style="height: 10vh;">
-			<hr>
-			<h3>상단 메뉴 DIV</h3>
-			<hr>
+		<div class="topmenu" style="height: 10vh;">
+			<div class="basic"><a href="/main/getCal">가계부</a></div>
+			<div class="statistics"><a href="/statistics/show">통계</a></div>
+			<div class="assest"><a href="/asset/view">자산</a></div>
+			<div class="board"><a href="/board/show">게시판</a></div>
 		</div>
+		
 	</header>
 
 	<!-- 측면 메뉴 부분 -->

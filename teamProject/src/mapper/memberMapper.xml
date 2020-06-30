@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="mapper.MemberMapper"> 
   	<!-- 인서트 했을때 들어간 아이디값을 객체에 넣어주는... -->
-  	<select id="selectOneEx" resultType="expense" >
+  	<select id="selectOneEx" resultType="ex" >
   		select * from expense
   		where user_key=#{userKey}
   	</select>

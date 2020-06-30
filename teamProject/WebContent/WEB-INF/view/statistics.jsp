@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="topmenu">
-<div class="basic"><a href="/statistics/show">가계부</a></div>
+<div class="basic"><a href="/main/getCal">가계부</a></div>
 <div class="statistics"><a href="/statistics/show">통계</a></div>
 <div class="assest"><a href="/asset/view">자산</a></div>
 <div class="board"><a href="/board/show">게시판</a></div>

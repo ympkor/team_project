@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="mapper.BoardMapper">
+  	<insert id="regBoard" parameterType="Board">
+  		insert into board(user_key,title,content) 
+  		values(#{userKey},#{title},#{content});  	
+  	</insert>
+  	<select id="selectAll" resultType="Board">
+  		sELECT user_id as writer,title,content,reg_date,likes,hits 
+  		FROM board as b
+		join member as m on b.user_key=m.user_key;
+  	</select>
+  </mapper>

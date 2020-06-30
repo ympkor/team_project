@@ -21,20 +21,20 @@ public class BoardController {
 	@GetMapping("/show")
 	public String showBoard(Model m) {
 		List<Board> bList = boardMapper.selectAll();
-		/*
-		 * for (Board b : bList) { System.out.println(b); }
-		 */
+		// for (Board b : bList) { System.out.println(b); }
 		m.addAttribute("bList", bList);
 		return "board";
 	}
 	@PostMapping(value ="/show" )
-	public String showBoard(Board board) {
+	public String showBoard(Model m,Board board) {
 		//System.out.println(board);
 		boardMapper.regBoard(board);
+		List<Board> bList = boardMapper.selectAll();
+		m.addAttribute("bList", bList);
 		return "board";
 	}
 	@RequestMapping("/write")
-	public String writeBoard() {
+	public String writeBoard() {		
 		return "writeBoard";
 	}
 }
