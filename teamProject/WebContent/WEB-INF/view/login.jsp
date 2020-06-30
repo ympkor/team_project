@@ -15,8 +15,8 @@
 		</form>
 	</div>
 	<div>
-		<div><a href="/member/searchId" onclick="window.open(this.href, '_blank', 'height=300px, width=500px'); return false">아이디찾기</a></div>
-		<div><a href="/member/searchPw" onclick="window.open(this.href, '_blank', 'height=300px, width=500px'); return false">비밀번호찾기</a></div>
+		<div><a href="/member/searchId" onclick="location.href='/member/searchId'">아이디찾기</a></div>
+		<div><a href="/member/searchPw" onclick="location.href='/member/searchPw'">비밀번호찾기</a></div>
 		<div><a href="/member/join">회원가입</a></div>
 	</div>
 	<div>
