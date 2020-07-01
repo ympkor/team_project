@@ -8,10 +8,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.main.AssetsAssetsOfMember;
 import dto.main.AssetsOfMember;
@@ -31,14 +33,15 @@ import service.main.MainUpdateService;
 
 @Controller
 @RequestMapping("/main")
+@SessionAttributes("userKey")
 public class MainPageController {
 	@Autowired
 	private MainPageService mainService;
-	int userKey = 1;//나중에 세션으로 받을 아이디에 해당되는 key값
+//	int userKey = 1;//나중에 세션으로 받을 아이디에 해당되는 key값
 	
 	//로그인후 보여줄 첫 화면
 	@GetMapping("/getCal")
-	public String getMain(Model m, @RequestParam(defaultValue = "1")String selecDate) {
+	public String getMain(@ModelAttribute("userKey")int userKey, Model m, @RequestParam(defaultValue = "1")String selecDate) {
 		if(selecDate.equals("1")) {
 			selecDate = LocalDate.now().toString();
 		}
@@ -77,7 +80,7 @@ public class MainPageController {
 	
 	//날짜가 변경되면 달력에 뿌려줄 날짜별 수입 데이터 객체 반환
 	@PostMapping(value = "/postMIIC")
-	public @ResponseBody List<MemberIncomeIncomeCategory> getMIICList(@RequestParam(name = "selecDate")String selecDate) {
+	public @ResponseBody List<MemberIncomeIncomeCategory> getMIICList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "selecDate")String selecDate) {
 //		System.out.println("컨트롤러 메서드 실행됨, 받은 selecDate 값 : "+selecDate);
 		List<MemberIncomeIncomeCategory> miicList = mainService.selectMIICByUserKeyAndDate(userKey, selecDate);
 //		System.out.println("컨트롤러에서 서비스 실행 후 반환된 리스트 : "+miicList);
@@ -86,28 +89,28 @@ public class MainPageController {
 	
 	//날짜가 변경되면 달력에 뿌려줄 날짜별 지출 데이터 객체 반환 
 	@PostMapping("/postMEEC")
-	public @ResponseBody List<MemberExpenseExpenseCategory> getMEECList(@RequestParam(name = "selecDate")String expenseDate) {
+	public @ResponseBody List<MemberExpenseExpenseCategory> getMEECList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "selecDate")String expenseDate) {
 		List<MemberExpenseExpenseCategory> meecList = mainService.selectMEECByUserKeyAndDate(userKey, expenseDate);
 		return meecList;
 	}
 	
 	//날짜를 선택하면 그 날에 해당되는 수입상세내역 반환
 	@PostMapping("/postIICA")
-	public @ResponseBody List<IncomeIncomeCategoryAssets> getIICAList(@RequestParam(name = "currentDate")String incomeDate) {
+	public @ResponseBody List<IncomeIncomeCategoryAssets> getIICAList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "currentDate")String incomeDate) {
 		List<IncomeIncomeCategoryAssets> iicaList = mainService.selectIICAByUserKeyAndDate(userKey, incomeDate);
 		return iicaList;
 	}
 	
 	//날짜를 선택하면 그 날에 해당되는 지출상세내역 반환
 	@PostMapping("/postEECA")
-	public @ResponseBody List<ExpenseExpenseCategoryAssets> getEECAList(@RequestParam(name = "currentDate")String expenseDate) {
+	public @ResponseBody List<ExpenseExpenseCategoryAssets> getEECAList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "currentDate")String expenseDate) {
 		List<ExpenseExpenseCategoryAssets> eecaList = mainService.selectEECAByUserKeyAndDate(userKey, expenseDate);
 		return eecaList;
 	}
 	
 	//assetsId를 받아서 assets of member 조회 후 반환
 	@PostMapping("/postAOM")
-	public @ResponseBody List<AssetsOfMember> getAOMList(@RequestParam(name = "assetsId")int assetsId) {
+	public @ResponseBody List<AssetsOfMember> getAOMList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "assetsId")int assetsId) {
 		List<AssetsOfMember> aomList =  mainService.selectAOMByUserKeyAndAssetsId(userKey, assetsId);
 		return aomList;
 	}

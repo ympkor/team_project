@@ -281,7 +281,7 @@
 	<div class="grid_container">
 		<!-- 상단 메뉴 부분 -->
 		<header class="grid_header">
-			<div class="topmenu" style="height: 10vh;">
+			<div class="topmenu">
 				<div class="basic"><a href="/main/getCal">가계부</a></div>
 				<div class="statistics"><a href="/statistics/show">통계</a></div>
 				<div class="assest"><a href="/asset/view">자산</a></div>
