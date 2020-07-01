@@ -3,7 +3,6 @@ package mapper.main;
 import org.apache.ibatis.annotations.Param;
 
 import dto.main.Expense;
-import dto.main.Income;
 import dto.main.IncomeUpdate;
 
 public interface MainUpdateMapper {
@@ -36,6 +35,6 @@ public interface MainUpdateMapper {
 	public void deleteExpenseByExpenseId(@Param("expenseId")int expenseId);
 
 	//Insert Income
-	public void insertIncome(Income income);
+	//public void insertIncome(Income income);
 
 }
