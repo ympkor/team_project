@@ -10,7 +10,7 @@ $(function(){
 				console.log(data);
 				if(data=="성공"){
 					alert("로그인 성공!!");
-					document.location.href="/member/money";
+					document.location.href="/main/getCal";
 				} else if(data=="패스워드 틀림"){
 					document.getElementById("error").innerHTML="잘못된 비밀번호입니다.";
 					$("input[name=password]").focus();

@@ -36,14 +36,14 @@ public class MemberController {
 	}
 	
 	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
-	@PostMapping("/money")
+	@PostMapping("/asset/view")
 	public String MemberAddproc(Model model, Member member) {
 		memberService.addMember(member);
 		Member m = joinMapper.selectById(member.getUserId());
 		//System.out.println("userkey : " + m.getUserKey());
 		Model uk = model.addAttribute("userKey", m.getUserKey());
 		//System.out.println("join:"+member);
-		return "money";
+		return "view";
 	}
 	
 	//아이디 중복체크
@@ -139,7 +139,7 @@ public class MemberController {
 	}
 	
 	//수정페이지에서 수정한 내용을 다시 DB로 보내줌
-	@PostMapping("/mypage")
+	@PostMapping("/update")
 	public String updateProc(Member member) {
 		memberService.updateMember(member);
 		return "mypage";
@@ -168,9 +168,9 @@ public class MemberController {
 		return str;
 	}
 	
-	//세션값이 넘어가는지 확인해주는페이지
-	@GetMapping("/money")
-	public String getMo() {
-		return "money";
-	}
+//	//세션값이 넘어가는지 확인해주는페이지
+//	@GetMapping("/money")
+//	public String getMo() {
+//		return "money";
+//	}
 }
