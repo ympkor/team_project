@@ -11,6 +11,7 @@
 		<form>
 			<div><input type="text"  name="userId" placeholder="ID"></div>
 			<div><input type="password" name="password" placeholder="password"></div>
+			<div id="error"></div>
 			<div><input type="submit" value="로그인"></div>
 		</form>
 	</div>

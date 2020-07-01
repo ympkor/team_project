@@ -12,11 +12,13 @@ $(function(){
 					alert("로그인 성공!!");
 					document.location.href="/member/money";
 				} else if(data=="패스워드 틀림"){
-					alert("잘못된 비밀번호입니다.");
+					document.getElementById("error").innerHTML="잘못된 비밀번호입니다.";
 					$("input[name=password]").focus();
-				} else {
-					alert("없는 아이디이거나, 아이디가 틀렸습니다.");
+				} else if(data=="아이디틀림") {
+					document.getElementById("error").innerHTML="없는 아이디이거나, 아이디가 틀렸습니다.";
 					$("input[name=userId]").focus();
+				} else {
+					document.getElementById("error").innerHTML="";
 				}
 			}
 		});
