@@ -15,13 +15,13 @@
 		<div>회원아이디</div>
 		<div><input type="text" name="userId" value="${member.userId}" readonly="readonly"></div>
 		<div>회원비밀번호</div>
-		<div><input type="password" name="password"></div>
+		<div><input type="password" name="password" maxlength="16"></div>
 		<div id="passtext"></div>
 		<div>비밀번호 재확인</div>
-		<div><input type="password" name="password_check"></div>
+		<div><input type="password" name="password_check" maxlength="16"></div>
 		<div id="passchtext"></div>
 		<div>이름</div>
-		<div><input type="text" name="name" value="${member.name}"></div>
+		<div><input type="text" name="name" value="${member.name}" maxlength="20"></div>
 		<div id="nametext"></div>
 		<div>이메일</div>
 		<div><input type="text" name="email" value="${member.email}" readonly="readonly"></div>

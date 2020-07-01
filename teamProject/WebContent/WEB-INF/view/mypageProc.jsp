@@ -31,7 +31,7 @@
 <body>
 	<form>
 		<div><input type="text" name="userId" value="${member.userId}" readonly="readonly"></div>
-		<div><input type="password" name="password" placeholder="비밀번호"></div>
+		<div><input type="password" name="password" placeholder="비밀번호"  maxlength="16"></div>
 		<div><input type="submit" value="확인"></div>
 	</form>
 </body>

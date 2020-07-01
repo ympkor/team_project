@@ -169,9 +169,9 @@ public class MemberController {
 		return str;
 	}
 	
-//	//세션값이 넘어가는지 확인해주는페이지
-//	@GetMapping("/money")
-//	public String getMo() {
-//		return "money";
-//	}
+	//세션값이 넘어가는지 확인해주는페이지
+	@GetMapping("/money")
+	public String getMo() {
+		return "money";
+	}
 }

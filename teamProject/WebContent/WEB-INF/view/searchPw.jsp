@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form>
-		<div>아이디 <input type="text" name="userId"></div>
+		<div>아이디 <input type="text" name="userId" maxlength="20"></div>
 		<div><input type="submit" value="비밀번호찾기"></div>
 	</form>
 		<div id="message"></div>

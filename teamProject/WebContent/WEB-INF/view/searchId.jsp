@@ -10,7 +10,7 @@
 </head>
 <body>
 	<form>
-		<div>이메일 <input type="text" name="email"></div>
+		<div>이메일 <input type="text" name="email" maxlength="50"></div>
 		<div><input type="submit" value="아이디찾기"></div>
 	</form>
 		<div id="message"></div>

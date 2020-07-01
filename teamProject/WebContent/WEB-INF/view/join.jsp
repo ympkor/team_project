@@ -12,28 +12,28 @@
 	<form method="post" action="/asset/view">
 		<div>
 			아이디<br>
-			<input type="text" name="userId">
+			<input type="text" name="userId" maxlength="20">
 			<button type="button" name="equalsId">중복확인</button>
 			<div id="idtext"></div>
 		</div>
 		<div>
 			비밀번호<br>
-			<input type="password" name="password">
+			<input type="password" name="password" maxlength="16">
 			<div id="passtext"></div>
 		</div>
 		<div>
 			비밀번호 재확인<br>
-			<input type="password" name="password_check">
+			<input type="password" name="password_check" maxlength="16">
 			<div id="passchtext"></div>
 		</div>
 		<div>
 			이름<br>
-			<input type="text" name="name">
+			<input type="text" name="name" maxlength="20">
 			<div id="nametext"></div>
 		</div>
 		<div>
 			이메일<br>
-			<input type="text" name="email">
+			<input type="text" name="email" maxlength="50">
 			<button type="button" name="equalsEmail">중복확인</button>
 			<div id="emailtext"></div>
 		</div>

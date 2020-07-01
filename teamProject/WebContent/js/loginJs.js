@@ -25,3 +25,16 @@ $(function(){
 		return false;
 	});
 });
+
+$(function(){
+	$(".login i").on("click", function(){
+		$("input[name=password]").toggleClass("active");
+		if($("input[name=password]").hasClass("active")){
+			$(this).attr("class", "far fa-eye-slash")
+			$("input[name=password]").attr("type", "text");
+		} else {
+			$(this).attr("class", "far fa-eye")
+			$("input[name=password]").attr("type", "password");
+		}
+	})
+})

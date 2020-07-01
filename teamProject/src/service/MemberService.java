@@ -116,7 +116,7 @@ public class MemberService {
 	}
 	
 	//회원가입시 현금 초기화
-		public void addCash(int userKey) {
-			joinMapper.insertCash(userKey);
-		}
+	public void addCash(int userKey) {
+		joinMapper.insertCash(userKey);
+	}
 }
