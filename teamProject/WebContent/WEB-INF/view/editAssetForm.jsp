@@ -14,7 +14,7 @@
 	<form action="/asset/editAsset?memAssetId=${aom.memAssetId}" method="post">
 	<div>
 	
-		금액<input type="number" name="amount" placeholder="${aom.amount}"><br><br>
+		금액<input type="number" name="amount" value="${aom.amount}"><br><br>
 		
 		구분
 		자산<input type="radio" name="type" value="자산">
@@ -33,7 +33,7 @@
         SC제일은행<input type="radio" name="assetsId" value="9">
         기타<input type="radio" name="assetsId" value="10"><br><br>
         
-        메모<input type="text" name="memo" placeholder="${aom.memo}"><br><br>
+        메모<input type="text" name="memo" value="${aom.memo}"><br><br>
 		
 		<input type="submit" value="수정하기"><br>
 		<input type="button" value="취소" onClick="location.href='view'">
