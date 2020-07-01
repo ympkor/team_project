@@ -78,7 +78,9 @@ chart.render();
 	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script><br><br>
 
+		<p style="font-size:10px;">
 		${newsList}
+		</p>
 		
 		<!-- json배열 꺼내서 출력하는 방법 찾는 중... -->
 		
