@@ -26,17 +26,21 @@
 	</thead>
 	<tbody>
 		<tr class="boardtitlehead"><td>${currentBoard.title }</td><td>${currentBoard.writer }</td><td>${currentBoard.regDate}</td><td>${currentBoard.likes }</td><td>${currentBoard.hits}</td></tr>
-		<tr><td colspan="5" class="boardcontent">
-			<div class="contentdiv" ><pre>${currentBoard.content }</pre></div>
-			<div class="udbutton"><button class="contentwriteshow">댓글</button> <label>죠아요<input type="checkbox"></label><button>수정</button><button>삭제</button></div></td>
+		<tr>
+			<td colspan="5" class="boardcontent">
+				<div class="contentdiv" ><pre>${currentBoard.content }</pre></div>
+				<div class="udbutton"><button class="contentwriteshow">댓글</button> <label>죠아요<input type="checkbox"></label>
+			 		<c:if test="${currentBoard.userKey==userKey }"><button class="boardupdate">수정</button><button class="boarddelete">삭제</button></c:if>
+				</div>
+			</td>
 		</tr>
 	</tbody>
 </table>
 <div class="commentListshow">
 <c:forEach var="co" items="${cList}">
-	<div>작성자: ${co.userId}<br>
+	<div>작성자: ${co.userId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${co.regDate}<br>
 		${co.comment}<br>
-		${co.regDate}
+		<c:if test="${co.userKey==userKey }"><button class="commentupdate">수정</button><button class="commentdelete">삭제</button></c:if>
 	</div>
 </c:forEach> 
 </div>

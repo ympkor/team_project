@@ -47,14 +47,13 @@ public class BoardController {
 		//System.out.println(boardId);
 		//현재글 가져오기
 		Board currentBoard = boardMapper.selecOneBoard(boardId);
+		//System.out.println(currentBoard);
 		//이전글, 다음글 제목가져오기
 		List<Board> bList = boardMapper.contentOneShow(boardId);
 		//for (Board b : bList) { System.out.println(b); }
 		//보드아이디에 있는 코멘트 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
-		for (Comment co : cList) {
-			System.out.println(co);
-		}
+		for (Comment co : cList) {System.out.println(co);}
 		m.addAttribute("currentBoard", currentBoard);
 		m.addAttribute("bList", bList);
 		m.addAttribute("currentboardId", boardId);
@@ -68,9 +67,7 @@ public class BoardController {
 		//System.out.println(comment);
 		boardMapper.writeComment(comment);
 		List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
-		for (Comment co : cList) {
-			System.out.println(co);
-		}
+		//for (Comment co : cList) { System.out.println(co); }		
 		Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
 		List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
 		m.addAttribute("currentBoard", currentBoard);

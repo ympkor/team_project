@@ -19,7 +19,7 @@
 		where board_id &gt;=#{boardId}-1 and board_id &lt;=#{boardId}+1;
   	</select>
   	<select id="selecOneBoard" resultType="Board">
-  		SELECT board_id, user_id as writer,title,content,reg_date,likes,hits 
+  		SELECT b.user_key,board_id, user_id as writer,title,content,reg_date,likes,hits 
   		FROM board as b
 		join member as m on b.user_key=m.user_key 
 		where board_id =#{boardId}
@@ -28,7 +28,7 @@
   		update board set hits=hits+1 where board_id=#{boardId}
   	</update>
   	<select id="selectbyBId" resultType="Comment">
-  		SELECT comment_id,board_id,user_id,comment,reg_date
+  		SELECT c.user_key,comment_id,board_id,user_id,comment,reg_date
   		FROM comment as c
 		join member as m on c.user_key=m.user_key 
 		where board_id =#{boardId}
