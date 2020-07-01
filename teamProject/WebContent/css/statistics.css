@@ -14,3 +14,6 @@ div.statistics{position:absolute;left:25%;top:10px; width:25%;}
 div.assest{position:absolute;left:50%;top:10px; width:25%;}
 div.board{position:absolute;right:0px;top:10px; width:25%;}
 div#content{position: absolute;top:70px;}
+#formbutton{display: none;}
+.gomypage{position: relative; top:0px; left:88%;}
+.gologout{position: relative; top:0px; left:88%;}

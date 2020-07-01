@@ -6,3 +6,5 @@ div.assest{position:absolute;left:50%;top:10px; width:25%;}
 div.board{position:absolute;right:0px;top:10px; width:25%;}
 div#boardcontent{position: absolute;top:70px;}
 div.boardtitlehead{width:500px;}
+.gomypage{position: relative; top:0px; left:88%;}
+.gologout{position: relative; top:0px; left:88%;}

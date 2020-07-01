@@ -286,6 +286,8 @@
 				<div class="statistics"><a href="/statistics/show">통계</a></div>
 				<div class="assest"><a href="/asset/view">자산</a></div>
 				<div class="board"><a href="/board/show">게시판</a></div>
+				<button class="gomypage">마이페이지</button>
+				<button class="gologout">로그아웃</button>
 			</div>
 		</header>
 

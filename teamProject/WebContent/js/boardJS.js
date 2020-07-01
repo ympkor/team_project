@@ -1,4 +1,10 @@
 $(function() {
+	document.querySelector(".gomypage").onclick = function(){
+		location.href="/member/mypage";
+	}
+	document.querySelector(".gologout").onclick = function(){
+		location.href="/member/logout";
+	}
  document.querySelector("#writeBoard").onclick = function(){
 	 location.href="/board/write";
  };

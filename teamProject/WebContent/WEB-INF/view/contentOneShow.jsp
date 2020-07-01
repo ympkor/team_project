@@ -11,6 +11,15 @@
 <link rel="stylesheet" href="/css/boardOneContent.css">
 </head>
 <body>
+<div id="topmenu">
+<div class="basic"><a href="/main/getCal">가계부</a></div>
+<div class="statistics"><a href="/statistics/show">통계</a></div>
+<div class="assest"><a href="/asset/view">자산</a></div>
+<div class="board"><a href="/board/show">게시판</a></div>
+<button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button>
+</div>
+<div id="middlecontent">
 <table>
 	<thead class="contentonehead">
 		<tr ><th>제목</th><th>작성자</th><th>작성일</th><th>추천</th><th>조회</th></tr>
@@ -44,6 +53,6 @@
 		<c:if test="${vs1.count==2 && b1.boardId==(currentboardId+1)}">다음글:<a href="/board/contentOneShow?boardId=${b1.boardId}">${b1.title}</a><br></c:if>
 	</c:forEach>
 <button class="showboardList">목록보기</button>
-
+</div>
 </body>
 </html>

@@ -24,7 +24,12 @@ String dataPoints = gsonObj.toJson(list);
 <title>내 자산</title>
 <script type="text/javascript">
 window.onload = function() { 
- 
+	document.querySelector(".gomypage").onclick = function(){
+		location.href="/member/mypage";
+	}
+	document.querySelector(".gologout").onclick = function(){
+		location.href="/member/logout";
+	}
 var chart = new CanvasJS.Chart("chartContainer", {
 	theme: "light2",
 	animationEnabled: true,
@@ -45,12 +50,19 @@ var chart = new CanvasJS.Chart("chartContainer", {
 chart.render();
 }
 </script>
-<style>
-</style>
+<link rel="stylesheet" href="/css/asset.css">
 </head>
 
 <body>
-	<div>
+<div id="topmenu">
+<div class="basic"><a href="/main/getCal">가계부</a></div>
+<div class="statistics"><a href="/statistics/show">통계</a></div>
+<div class="assest"><a href="/asset/view">자산</a></div>
+<div class="board"><a href="/board/show">게시판</a></div>
+<button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button>
+</div>
+	<div id="middleasset">
 		<div>
 			<h1>내 자산 현황</h1>
 			<h1>총 ${sumAsset}원</h1>
@@ -65,7 +77,8 @@ chart.render();
 					수정</a>
 					<a href="delete?memAssetId=${list.memAssetId}" onclick="return confirm('정말 삭제하시겠습니까?')">
 					삭제</a>
-					<!-- 수정, 삭제 클릭시 url에서 파라미터값 안보이게 하는법 아시는 분 도움 부탁드려요 -->
+					<!-- 수정, 삭제 클릭시 url에서 파라미터값 안보이게 하는법 아시는 분 도움 부탁드려요 
+						a링크에 겟방식으로 파라미터값이 보이게 걸어놓으셔서 안보이게 하려면 보내는방식을 바꾸시든지 하셔야 할것 같습니다...-->
 				</div>
 			</div>
 			<br>

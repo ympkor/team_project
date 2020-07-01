@@ -1,3 +1,12 @@
+$(function() {
+	document.querySelector(".gomypage").onclick = function(){
+		location.href="/member/mypage";
+	}
+	document.querySelector(".gologout").onclick = function(){
+		location.href="/member/logout";
+	}
+});
+
 function iFSwitchIFtoEF() {
 	document.querySelector('#update_income_category_switch_expense').classList.add('hidden');
 	document.querySelector('#update_income_category').classList.remove('hidden');

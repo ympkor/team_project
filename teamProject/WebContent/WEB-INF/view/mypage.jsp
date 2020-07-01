@@ -21,7 +21,7 @@
 	<div>
 		<button type="button" onclick="location.href='/member/update'">수정하기</button>
 		<button type="button" name="delete">탈퇴하기</button>
-		<button type="button" onclick="location.href='/member/money'">가계부로 돌아가기</button>
+		<button type="button" onclick="location.href='/main/getCal'">가계부로 돌아가기</button>
 	</div>
 </body>
 </html>

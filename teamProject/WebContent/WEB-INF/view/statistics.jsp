@@ -18,10 +18,14 @@
 <div class="statistics"><a href="/statistics/show">통계</a></div>
 <div class="assest"><a href="/asset/view">자산</a></div>
 <div class="board"><a href="/board/show">게시판</a></div>
+<button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button>
 </div>
 
 <div id="content">
-<form action="/statistics/show"><input id="date" type="date" name="date"><button id="formbutton" >일자선택</button></form>
+<form action="/statistics/show">
+<input id="date" type="date" name="date" max="9999-12-31">
+<button id="formbutton">일자선택</button></form>
 <div id="leftdayandweek">
 <div>
 <div id="daymove"><button id="lastday">&lt;</button>${date}<button id="nextday">&gt;</button></div>
@@ -103,25 +107,36 @@
 <div id="yearChart">
 </div>
 </div>
-<div id="chartData">
-	<div id="mExpense"><c:forEach var="me" items="${monthExpense}">
-<span>${me.ecName}</span><span>${me.amount}</span>
-</c:forEach></div>
-	<div id="mIncome"><c:forEach var="mi" items="${monthIncome}">
-<span>${mi.icName}</span><span>${mi.amount}</span>
-</c:forEach></div>
-<div id="yearE">
-<c:forEach var="ye" items="${yearExpenseData}"><span>${ye}</span></c:forEach>
-</div>
-<div id="yearI">
-<c:forEach var="yi" items="${yearIncomeData}"><span>${yi}</span></c:forEach>
-<div id="lastmonthdate">${lastmonth}</div>
-<div id="nextmonthdate">${nextmonth}</div>
-<div id="lastyeardate">${lastyear}</div>
-<div id="nextyeardate">${nextyear}</div>
-</div>
 
-</div>
+<script type="text/javascript">
+var monthExpenseAmountData =new Array();
+var monthExpenseNameData =new Array();
+<c:forEach var="me" items="${monthExpense}">
+monthExpenseAmountData.push(${me.amount});
+monthExpenseNameData.push("${me.ecName}");
+</c:forEach>
+
+var monthIncomeAmountData =new Array();
+var monthIncomeNameData =new Array();
+<c:forEach var="mi" items="${monthIncome}">
+monthIncomeAmountData.push(${mi.amount});
+monthIncomeNameData.push("${mi.icName}");
+</c:forEach>
+
+var yearIncomeAmountData =new Array();
+var yearExpenseAmountData =new Array();
+<c:forEach var="ydata" begin="0" end="11">
+yearIncomeAmountData.push(${yearIncomeData[ydata]});
+yearExpenseAmountData.push(${yearExpenseData[ydata]});
+</c:forEach>
+
+var lastmonth ="${lastmonth}";
+var nextmonth ="${nextmonth}";
+var lastyear ="${lastyear}";
+var nextyear ="${nextyear}";
+
+</script>
+
 </div>
 <a class="gotop" href="#topmenu" title="맨 위로">맨 위로</a> 
 </body>
