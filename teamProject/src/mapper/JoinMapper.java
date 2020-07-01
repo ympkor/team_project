@@ -28,4 +28,7 @@ public interface JoinMapper {
 	
 	//삭제하기
 	public void deleteByUserKey(int userKey);
+	
+	//회원가입시 처음에 현금값 초기화를 위한 추가
+	public void insertCash(int userKey);
 }

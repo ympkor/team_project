@@ -114,4 +114,9 @@ public class MemberService {
 			return "비밀번호틀림";
 		}
 	}
+	
+	//회원가입시 현금 초기화
+		public void addCash(int userKey) {
+			joinMapper.insertCash(userKey);
+		}
 }

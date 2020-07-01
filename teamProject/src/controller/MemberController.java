@@ -39,6 +39,7 @@ public class MemberController {
 	@PostMapping("/asset/view")
 	public String MemberAddproc(Model model, Member member) {
 		memberService.addMember(member);
+		memberService.addCash(member.getUserKey());
 		Member m = joinMapper.selectById(member.getUserId());
 		//System.out.println("userkey : " + m.getUserKey());
 		Model uk = model.addAttribute("userKey", m.getUserKey());

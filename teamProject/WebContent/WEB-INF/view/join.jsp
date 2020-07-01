@@ -38,6 +38,9 @@
 			<div id="emailtext"></div>
 		</div>
 		<div>
+			<input type="hidden" name="cash">
+		</div>
+		<div>
 			<input type="submit" value="가입하기">
 		</div>
 	</form>

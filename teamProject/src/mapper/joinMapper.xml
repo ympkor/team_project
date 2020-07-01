@@ -35,4 +35,8 @@
   	<delete id="deleteByUserKey">
   		delete from member where user_key=#{userKey}
   	</delete>
+  	
+  	<insert id="insertCash">
+  		insert into assets_of_member(user_key, type, amount, assets_id, memo) value(#{userKey}, "자산", 0, 24, "현금")  
+  	</insert>
   </mapper>
