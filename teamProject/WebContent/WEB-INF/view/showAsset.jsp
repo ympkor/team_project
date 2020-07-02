@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <title>내 자산</title>
 <style type="text/css">
-* {	color:;}
+div {border:solid black 1px;}
 </style>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -80,26 +80,29 @@ window.onload = function() {
 	document.getElementById('news9.link').innerHTML=newsList[9].link;
 	
 	let assetChtData = parseInt(document.getElementById('sumAsset').innerText);
-	let debtChtData = parseInt(document.getElementById('sumDebt').innerText);
+	let debtChtData = parseInt(document.getElementById('sumDebt').innerText)*-1;
+	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
+	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	
 	var chart = new CanvasJS.Chart("chartContainer", {
-	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	backgroundColor: "lightgrey",
+	theme: "light1", // "light1", "light2", "dark1", "dark2"
 	exportEnabled: true,
 	animationEnabled: true,
 	title: {
-		text: "자산/부채 비율"
+		text: "자산 - 부채 비율"
 	},
 	data: [{
 		type: "pie",
 		startAngle: 270,
-		toolTipContent: "<b>{label}</b>: {y}%",
+		toolTipContent: "<b>{label}</b>: {z}%",
 		showInLegend: "true",
 		legendText: "{label}",
 		indexLabelFontSize: 16,
-		indexLabel: "{label} {y}원",
+		indexLabel: "{label} {y}원 ({z}%)",
 		dataPoints: [
-			{ y: assetChtData, label: "자산", exploded : true},
-			{ y: debtChtData, label: "부채" },
+			{ y: assetChtData, z: aRatio, label: "자산"},
+			{ y: debtChtData, z: bRatio, label: "부채", exploded : true},
 		]
 	}]
 });
@@ -109,8 +112,8 @@ chart.render();
 <link rel="stylesheet" href="/css/asset.css">
 </head>
 
-<body>
-<div id="topmenu">
+<body style="background:lightgrey">
+<div id="topmenu" style="background:grey;">
 <div class="basic"><a href="/main/getCal">가계부</a></div>
 <div class="statistics"><a href="/statistics/show">통계</a></div>
 <div class="assest"><a href="/asset/view">자산</a></div>
@@ -138,18 +141,18 @@ chart.render();
 				<a href="edit?memAssetId=${list.memAssetId}">수정</a>
 				<a href="delete?memAssetId=${list.memAssetId}"
 					onClick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-			</div><br><br>
+			<br><br></div>
 		</c:forEach>
-
+	<div>
 	<input type="button" name="addAsset" value="내 자산 추가"
-		onClick="location.href='add'">
+		onClick="location.href='add'"></div>
 	</div>
 	<div>
 		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
 	</div>
 	<br>
 
-	<div>
+	<div style="background:lightgrey;">
 	<h1>자산 관련 뉴스</h1>(각 div 클릭시 링크 연결되도록 해야함)
 	<br><br>
 	<div style=font-size:12px;>
