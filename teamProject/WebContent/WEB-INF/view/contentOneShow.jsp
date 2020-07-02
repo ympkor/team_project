@@ -29,7 +29,7 @@
 		<tr>
 			<td colspan="5" class="boardcontent">
 				<div class="contentdiv" ><pre>${currentBoard.content }</pre></div>
-				<div class="udbutton"><button class="contentwriteshow">댓글</button> <label>죠아요<input type="checkbox"></label>
+				<div class="udbutton"><button class="commentwriteshow">댓글</button> <label>죠아요<input type="checkbox"></label>
 			 		<c:if test="${currentBoard.userKey==userKey }"><button class="boardupdate">수정</button><button class="boarddelete">삭제</button></c:if>
 				</div>
 			</td>
@@ -38,16 +38,16 @@
 </table>
 <div class="commentListshow">
 <c:forEach var="co" items="${cList}">
-	<div>작성자: ${co.userId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${co.regDate}<br>
-		${co.comment}<br>
-		<c:if test="${co.userKey==userKey }"><button class="commentupdate">수정</button><button class="commentdelete">삭제</button></c:if>
+	<div class="commentshow">작성자: ${co.userId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${co.regDate}
+		<c:if test="${co.userKey==userKey }"><span class="commentUDbuttons"><button class="commentupdate" name="${co.commentId}">수정</button><button class="commentdelete" name="${co.commentId}">삭제</button></span></c:if>
+		<div class="commentcontent">${co.comment}</div>				
 	</div>
 </c:forEach> 
 </div>
 <form class="commentwriteinput" action="/board/commentwrite" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	<input type="hidden" name="boardId" value="${currentboardId}">
-	<TEXTAREA class="writeboardcontent" name="comment" COLS=30 ROWS=3></TEXTAREA>
+	<TEXTAREA class="writeboardcontent" name="comment" COLS=30 ROWS=3 ></TEXTAREA>
 	<input type="submit" value="댓글등록">
 </form>
 
@@ -58,5 +58,8 @@
 	</c:forEach>
 <button class="showboardList">목록보기</button>
 </div>
+<script type="text/javascript">
+var boardId= ${currentBoard.boardId}
+</script>
 </body>
 </html>

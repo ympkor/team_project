@@ -19,4 +19,7 @@ public interface BoardMapper {
 	
 	public List<Comment> selectbyBId(int boardId);
 	public void writeComment(Comment comment);
+	public void updateComment(Comment comment);
+	public void deleteComment(int commentId);
+	
 }
