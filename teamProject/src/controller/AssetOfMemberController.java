@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import dto.AssetOfMember;
 import service.AssetNewsService;
 import service.AssetOfMemberService;
@@ -26,8 +23,7 @@ public class AssetOfMemberController {
 	@Autowired AssetOfMemberService aomService;
 
 	@RequestMapping("/view")
-	public String getMemberAsset(@ModelAttribute("userKey") int userKey, 
-			Model m) throws JsonProcessingException {
+	public String getMemberAsset(@ModelAttribute("userKey") int userKey, Model m){
 		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);	//userKey값에 해당하는 자산을 배열로 받음
 		int i = 0;
 
@@ -42,11 +38,9 @@ public class AssetOfMemberController {
 			i++;
 		}
 		int sumTotal = sumAssets + sumDebt;
+		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 
 		AssetNewsService ans = new AssetNewsService();
-		ObjectMapper mapper = new ObjectMapper();
-		String newsListJ = mapper.writeValueAsString(ans);
-
 		StringBuilder newsString = ans.getNews();
 		JSONObject jsonObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
