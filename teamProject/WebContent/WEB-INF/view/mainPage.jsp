@@ -24,95 +24,91 @@
 		<!-- 모달이 열렸을때 사용자에게 보여줄 content가 담길 div이다 -->
 		<div class="modal_content">
 			<!-- insert, expense용 form을 각각 만들어놓고, 사용자가 수입/지출 탭을 선택함에 따라 해당되는 input을 보여주자 -->
-			<!-- 여긴 수입 Form -->
+			
+			<!-- 수입 수정 Form -->
 			<form id="update_income_form" class="hidden">
-			<!-- 사용자가 선택할 수 있는 수입/지출 카테고리 -->
-			<div class="update_category_container">
 				<div class="update_category">
-					<label for="update_income">수입</label>
-					<input type="radio" id="update_income_category_income" name="category" value="1" onchange="iFSwitchIFtoEF()">
-					<label for="update_expense">지출</label>
-					<input type="radio" id="update_income_category_expense" name="category" value="2" onchange="iFSwitchEFtoIF()">
+					<label for="update_income_category_income">수입</label>
+					<input type="radio" id="update_income_category_income" name="category" value="1" onchange="updateIncomeFormSwitchToIncome()">
+					<label for="update_income_category_expense">지출</label>
+					<input type="radio" id="update_income_category_expense" name="category" value="2" onchange="updateIncomeFormSwitchToExpense()">
+					<label for="update_income_category_transfer">이체</label>
+					<input type="radio" id="update_income_category_transfer" name="category" value="3" onchange="updateIncomeFormSwitchToTransfer()">
 				</div>
-			</div>
 				<div id="update_form_container">
 					<input type="number" id="update_income_id" name="incomeId" class="hidden">
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
 						<label for="update_income_date">날짜</label>
-						<input type="date" id="update_income_date" class="update_income_date" name="incomeDate" value="" required="required" min="1950-01-01" max="2199-12-12">
+						<input type="date" id="update_income_date" class="update_income_date" name="incomeDate" value=""
+							required="required" min="1950-01-01" max="2199-12-12">
 					</div>
-					<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
+					<!-- 돈이 빠져나갈 계좌 선택 창 -->
 					<div class="update_assets">
-						<label for="update_assets_income">자산</label>
-						<select id="update_assets_income" name="assetsId" required="required">
-							<option id="update_assets_income_selected" value="" selected>선택하세요</option>
-							<!-- 로그인한 사용자의 자산 항목을 보여주자 -->
-							<c:forEach var="aaom" items="${aaomList}">
-								<script>
-									document.querySelector('#update_assets_income').innerHTML += '<option value=${aaom.assetsId}>${aaom.assetsName}</option>';
-								</script>
-							</c:forEach>
+						<input type="number" id="update_assets_income_memAssetIdFrom_origin" name="memAssetId" class="hidden">
+						<label for="update_assets_income_memAssetIdFrom" id="update_assets_income_memAssetIdFrom_label">자산</label>
+						<select id="update_assets_income_memAssetIdFrom" name="newMemAssetId" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputIncome()">
+							<option id="update_assets_income_memAssetIdFrom_selected" value="" selected>선택하세요</option>
 						</select>
-						<!-- 보유중인 자산 항목을 선택하면, 그 assets_id에서 보유중인 자산들 보여주기 -->
-						<input type="number" id="update_aom_income_origin" value="" name="memAssetId" class="hidden" required>
-						<select id="update_aom_income" name="newMemAssetId" required="required">
-							<option id="update_aom_income_selected" value="" selected>선택하세요</option>
-						</select>
-						<!-- update_assets_income이 변경되면 그 aom에서 user_key와 assets_id로 검색해서 그 값을 뿌려주는 기능을 넣어주자 -->
-						<script>
-							document.querySelector('#update_assets_income').addEventListener('change', function() {
-								let assetsId = Number(document.querySelector('#update_assets_income').value);
-								showUpdateIncomeAomBF(assetsId);
-							});
-						</script>
+						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
+						<input type="number" id="update_assets_income_assetsId" name="assetsId" class="hidden">
 					</div>
+					<!-- 돈이 들어올 계좌 선택 창 -->
 					<!-- income_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
-					<div class="update_income_category">
-						<label for="update_income_category">분류</label>
-						<select id="update_income_category" name="icId" required="required">
-							<option id="update_income_category_selected" value="" selected>선택하세요</option>
-							<c:forEach var="ic" items="${icList}">
-								<script>
-									document.querySelector('#update_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
-								</script>
-							</c:forEach>
+					<div class="update_expense_category">
+						<!-- <input type="number" id="update_assets_expense_memAssetIdTo_origin" name="memAssetIdTo" class="hidden"> -->
+						<label for="update_assets_income_memAssetIdTo" id="update_assets_income_memAssetIdTo_label" class="hidden">입금</label>
+						<select id="update_assets_income_memAssetIdTo" name="memAssetIdTo" class="hidden">
+							<option value="" selected id="update_assets_income_memAssetIdTo_selected">선택하세요</option>
 						</select>
-						<select name="ecId" id="update_income_category_switch_expense" required class="hidden">
+						<label for="update_income_expense_category" id="update_income_expense_category_label" class="hidden">분류</label>
+						<select id="update_income_expense_category" name="ecId" class="hidden">
 							<option value="0" selected>선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
-									document.querySelector('#update_income_category_switch_expense').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
+									document.querySelector('#update_income_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
+								</script>
+							</c:forEach>
+						</select>
+						<label for="update_income_income_category" id="update_income_income_category_label">분류</label>
+						<select id="update_income_income_category" name="icId" required>
+							<option value="0" selected class="update_income_income_category_selected">선택하세요</option>
+							<c:forEach var="ic" items="${icList}">
+								<script>
+									document.querySelector('#update_income_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
 								</script>
 							</c:forEach>
 						</select>
 					</div>
 					<!-- income_amount입력 창 -->
-					<div class="update_income_amount">
+					<div class="update_amount">
 						<label for="update_income_amount">금액</label>
 						<input type="number" id="update_income_amount_origin" name="amount" class="hidden">
-						<input type="number" id="update_income_amount" name="newAmount" required min="-999999999" max="999999999">
+						<input type="number" id="update_income_amount" name="newAmount" required min="0" max="999999999">
 					</div>
 					<!-- income_memo 입력 창 -->
-					<div class="update_income_memo">
+					<div class="update_memo">
 						<label for="update_income_memo">내용</label>
 						<input type="text" id="update_income_memo" name="memo" maxlength="22">
 					</div>
 					<!-- 입력하기 버튼 -->
-					<div class="update_income_button">
+					<div class="update_button">
 						<button type="submit" id="update_income_button">저장</button>
 						<button type="button" class="close_modal">닫기</button>
+						<button type="button" id="delete_income_button">삭제</button>
 					</div>
 				</div>
 			</form>
 
-			<!-- 여긴 지출 Form -->
+			<!-- 지출 수정 Form -->
 			<form id="update_expense_form" class="hidden">
 				<div class="update_category">
-					<label for="update_income">수입</label>
-					<input type="radio" id="update_expense_category_income" name="category" value="1" onchange="eFSwitchIFtoEF()">
-					<label for="update_expense">지출</label>
-					<input type="radio" id="update_expense_category_expense" name="category" value="2" onchange="eFSwitchEFtoIF()">
+					<label for="update_expense_category_income">수입</label>
+					<input type="radio" id="update_expense_category_income" name="category" value="1" onchange="updateExpenseFormSwitchToIncome()">
+					<label for="update_expense_category_expense">지출</label>
+					<input type="radio" id="update_expense_category_expense" name="category" value="2" onchange="updateExpenseFormSwitchToExpense()">
+					<label for="update_expense_category_transfer">이체</label>
+					<input type="radio" id="update_expense_category_transfer" name="category" value="3" onchange="updateExpenseFormSwitchToTransfer()">
 				</div>
 				<div id="update_form_container">
 					<input type="number" id="update_expense_id" name="expenseId" class="hidden">
@@ -122,162 +118,134 @@
 						<input type="date" id="update_expense_date" class="update_expense_date" name="expenseDate" value=""
 							required="required" min="1950-01-01" max="2199-12-12">
 					</div>
-					<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
+					<!-- 돈이 빠져나갈 계좌 선택 창 -->
 					<div class="update_assets">
-						<label for="update_assets_expense">자산</label>
-						<select id="update_assets_expense" name="assetsId" required="required">
-							<option id="update_assets_expense_selected" value="" selected>선택하세요</option>
-							<!-- 로그인한 사용자의 자산 항목을 보여주자 -->
-							<c:forEach var="aaom" items="${aaomList}">
-								<script>
-									document.querySelector('#update_assets_expense').innerHTML += '<option value=${aaom.assetsId}>${aaom.assetsName}</option>';
-								</script>
-							</c:forEach>
+						<input type="number" id="update_assets_expense_memAssetIdFrom_origin" name="memAssetId" class="hidden">
+						<label for="update_assets_expense_memAssetIdFrom" id="update_assets_expense_memAssetIdFrom_label">자산</label>
+						<select id="update_assets_expense_memAssetIdFrom" name="newMemAssetId" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputExpense()">
+							<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected>선택하세요</option>
 						</select>
-						<!-- 보유중인 자산 항목을 변경하면 그 자산항목의 id로 검색해서 AOM을 보여주자 -->
-						<input type="number" id="update_aom_expense_origin" name="memAssetId" class="hidden">
-						<select id="update_aom_expense" name="newMemAssetId" required="required">
-							<option id="update_aom_expense_selected" value="" selected>선택하세요</option>
-						</select>
-						<!-- update_assets_income이 변경되면 그 aom에서 user_key와 assets_id로 검색해서 그 값을 뿌려주는 기능을 넣어주자 -->
-						<script>
-							document.querySelector('#update_assets_expense').addEventListener('change', function() {
-								let assetsId = Number(document.querySelector('#update_assets_expense').value);
-								showUpdateExpenseAomBF(assetsId);
-							});
-						</script>
+						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
+						<input type="number" id="update_assets_expense_assetsId" name="assetsId" class="hidden">
 					</div>
+					<!-- 돈이 들어올 계좌 선택 창 -->
 					<!-- income_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
 					<div class="update_expense_category">
-						<label for="update_expense_category">분류</label>
-						<select id="update_expense_category" name="ecId" required="required">
-							<option id="update_expense_category_selected" value="" selected>선택하세요</option>
+						<!-- <input type="number" id="update_assets_expense_memAssetIdTo_origin" name="memAssetIdTo" class="hidden"> -->
+						<label for="update_assets_expense_memAssetIdTo" id="update_assets_expense_memAssetIdTo_label" class="hidden">입금</label>
+						<select id="update_assets_expense_memAssetIdTo" name="memAssetIdTo" required="required" class="hidden">
+							<option value="" selected id="update_assets_expense_memAssetIdTo_selected">선택하세요</option>
+						</select>
+						<label for="update_expense_expense_category" id="update_expense_expense_category_label">분류</label>
+						<select id="update_expense_expense_category" name="ecId">
+							<option value="0" selected id="update_expense_expense_category_selected">선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
-									document.querySelector('#update_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
+									document.querySelector('#update_expense_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
 								</script>
 							</c:forEach>
 						</select>
-						<select name="icId" id="update_expense_category_switch_income" class="hidden">
-							<option value="0" selected disabled>선택하세요</option>
+						<label for="update_expense_income_category" id="update_expense_income_category_label" class="hidden">분류</label>
+						<select id="update_expense_income_category" name="icId" required class="hidden">
+							<option value="0" selected>선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
-									document.querySelector('#update_expense_category_switch_income').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
+									document.querySelector('#update_expense_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
 								</script>
 							</c:forEach>
 						</select>
 					</div>
 					<!-- income_amount입력 창 -->
-					<div class="update_expense_amount">
+					<div class="update_amount">
 						<label for="update_expense_amount">금액</label>
 						<input type="number" id="update_expense_amount_origin" name="amount" class="hidden">
-						<input type="number" id="update_expense_amount" name="newAmount" required min="-999999999" max="999999999">
+						<input type="number" id="update_expense_amount" name="newAmount" required min="0" max="999999999">
 					</div>
 					<!-- income_memo 입력 창 -->
-					<div class="update_expense_memo">
+					<div class="update_memo">
 						<label for="update_expense_memo">내용</label>
 						<input type="text" id="update_expense_memo" name="memo" maxlength="22">
 					</div>
 					<!-- 입력하기 버튼 -->
-					<div class="update_expense_button">
+					<div class="update_button">
 						<button type="submit" id="update_expense_button">저장</button>
 						<button type="button" class="close_modal">닫기</button>
+						<button type="button" id="delete_expense_button">삭제</button>
 					</div>
 				</div>
 			</form>
 
-			<!-- 수입 삭제 폼 -->
-			<form id="delete_income_form" class="hidden">
-				<div class="delete_income_category">
-					<label for="delete_income_category">수입</label>
-					<input type="text" id="delete_income_category" name="type" value="수입" readonly>
+			<!-- 이체 수정 Form -->
+			<form id="update_transfer_form" class="hidden">
+				<div class="update_category">
+					<label for="update_transfer_category_income">수입</label>
+					<input type="radio" id="update_transfer_category_income" name="category" value="1" onchange="updateTransferFormSwitchToIncome()">
+					<label for="update_transfer_category_expense">지출</label>
+					<input type="radio" id="update_transfer_category_expense" name="category" value="2" onchange="updateTransferFormSwitchToExpense()">
+					<label for="update_transfer_category_transfer">이체</label>
+					<input type="radio" id="update_transfer_category_transfer" name="category" value="3" onchange="updateTransferFormSwitchToTransfer()">
 				</div>
-				<div id="delete_form_container">
-					<input type="number" id="delete_income_id" name="incomeId" class="hidden">
+				<div id="update_form_container">
+					<input type="number" id="update_transfer_id" name="transferId" class="hidden">
 					<!-- 날짜 선택 창 -->
-					<div class="delete_income_date">
-						<label for="delete_income_date">날짜</label>
-						<input type="text" id="delete_income_date" name="incomeDate" value="" readonly>
+					<div class="update_date">
+						<label for="update_transfer_date">날짜</label>
+						<input type="date" id="update_transfer_date" class="update_transfer_date" name="transferDate" value=""
+							required="required" min="1950-01-01" max="2199-12-12">
 					</div>
-					<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
-					<div class="delete_income_assets">
-						<label for="delete_income_assets">자산</label>
-							<select id="delete_income_assets_id" name="assetsId" aria-readonly="true">
-								<option id="delete_income_assets_id_selected" value="" selected></option>
-							</select>
-							<select id="delete_income_memAssetId" name="memAssetId" aria-readonly="true">
-								<option id="delete_income_memAssetId_selected" value="" selected></option>
-							</select>
+					<!-- 돈이 빠져나갈 계좌 선택 창 -->
+					<div class="update_assets">
+						<input type="number" id="update_assets_transfer_memAssetIdFrom_origin" name="memAssetIdFrom" class="hidden">
+						<label for="update_assets_transfer_memAssetIdFrom" id="update_assets_transfer_memAssetIdFrom_label">출금</label>
+						<select id="update_assets_transfer_memAssetIdFrom" name="newMemAssetIdFrom" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputTransfer()">
+							<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected>선택하세요</option>
+						</select>
+						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
+						<input type="number" id="update_assets_transfer_assetsId" name="assetsId" class="hidden">
 					</div>
+					<!-- 돈이 들어올 계좌 선택 창 -->
 					<!-- income_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
-					<div class="delete_income_category">
-						<label for="delete_income_category_id">분류</label>
-						<select id="delete_income_category_id" name="icId" aria-readonly="true">
-							<option id="delete_income_category_id_selected" value="" selected></option>
+					<div class="update_expense_category">
+						<input type="number" id="update_assets_transfer_memAssetIdTo_origin" name="memAssetIdTo" class="hidden">
+						<label for="update_assets_transfer_memAssetIdTo" id="update_assets_transfer_memAssetIdTo_label">입금</label>
+						<select id="update_assets_transfer_memAssetIdTo" name="newMemAssetIdTo" required="required">
+							<option id="update_assets_transfer_memAssetIdto_selected" value="" selected>선택하세요</option>
+						</select>
+						<label for="update_transfer_expense_category" id="update_transfer_expense_category_label" class="hidden">분류</label>
+						<select id="update_transfer_expense_category" name="ecId" required="required" class="hidden">
+							<option value="0" selected>선택하세요</option>
+							<c:forEach var="ec" items="${ecList}">
+								<script>
+									document.querySelector('#update_transfer_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
+								</script>
+							</c:forEach>
+						</select>
+						<label for="update_transfer_income_category" id="update_transfer_income_category_label" class="hidden">분류</label>
+						<select id="update_transfer_income_category" name="icId" required class="hidden">
+							<option value="0" selected></option>선택하세요</option>
+							<c:forEach var="ic" items="${icList}">
+								<script>
+									document.querySelector('#update_transfer_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
+								</script>
+							</c:forEach>
 						</select>
 					</div>
 					<!-- income_amount입력 창 -->
-					<div class="delete_income_amount">
-						<label for="delete_income_amount">금액</label>
-						<input type="number" id="delete_income_amount" name="amount" readonly>
+					<div class="update_amount">
+						<label for="update_transfer_amount">금액</label>
+						<input type="number" id="update_transfer_amount_origin" name="amount" class="hidden">
+						<input type="number" id="update_transfer_amount" name="newAmount" required min="0" max="999999999">
 					</div>
 					<!-- income_memo 입력 창 -->
-					<div class="delete_income_memo">
-						<label for="delete_income_memo">내용</label>
-						<input type="text" id="delete_income_memo" name="memo" readonly>
+					<div class="update_memo">
+						<label for="update_transfer_memo">내용</label>
+						<input type="text" id="update_transfer_memo" name="memo" maxlength="22">
 					</div>
 					<!-- 입력하기 버튼 -->
-					<div class="update_expense_button">
-						<button type="submit" id="detele_income_button_confirm">삭제</button>
+					<div class="update_button">
+						<button type="submit" id="update_transfer_button">저장</button>
 						<button type="button" class="close_modal">닫기</button>
-					</div>
-				</div>
-			</form>
-
-			<!-- 지출 삭제 폼 -->
-			<form id="delete_expense_form"  class="hidden">
-				<div class="delete_expense_category">
-					<label for="delete_expense_category">지출</label>
-					<input type="text" id="delete_expense_category" name="type" value="지출" readonly>
-				</div>
-				<div id="delete_form_container">
-					<input type="number" id="delete_expense_id" name="expenseId" class="hidden">
-					<!-- 날짜 선택 창 -->
-					<div class="delete_expense_date">
-						<label for="delete_expense_date">날짜</label>
-						<input type="text" id="delete_expense_date" name="expenseDate" value="" readonly>
-					</div>
-					<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
-					<div class="delete_expense_assets">
-						<label for="delete_expense_assets">자산</label>
-							<select id="delete_expense_assets_id" name="assetsId" aria-readonly="true">
-								<option id="delete_expense_assets_id_selected" value="" selected></option>
-							</select>
-							<select id="delete_expense_memAssetId" name="memAssetId" required aria-readonly="true">
-								<option id="delete_expense_memAssetId_selected" value="" selected></option>
-							</select>
-					</div>
-					<!-- expense_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
-					<div class="delete_expense_category">
-						<label for="delete_expense_category_id">분류</label>
-						<select id="delete_expense_category_id" name="ecId" aria-readonly="true">
-							<option id="delete_expense_category_id_selected" value="" selected></option>
-						</select>
-					</div>
-					<!-- expense_amount입력 창 -->
-					<div class="delete_expense_amount">
-						<label for="delete_expense_amount">금액</label>
-						<input type="number" id="delete_expense_amount" name="amount" readonly>
-					</div>
-					<!-- expense_memo 입력 창 -->
-					<div class="delete_expense_memo">
-						<label for="delete_expense_memo">내용</label>
-						<input type="text" id="delete_expense_memo" name="memo" readonly>
-					</div>
-					<!-- 입력하기 버튼 -->
-					<div class="update_expense_button">
-						<button type="submit" id="detele_expense_button_confirm">삭제</button>
-						<button type="button" class="close_modal">닫기</button>
+						<button type="button" id="delete_transfer_button">삭제</button>
 					</div>
 				</div>
 			</form>
@@ -452,16 +420,16 @@
 				<table>
 					<thead>
 						<tr>
-							<th class="hidden">
+							<th>
 								<div><button type="button" id="prevMonth">전월</button></div>
 							</th>
-							<th colspan="7">
+							<th colspan="5">
 								<div>
-									<input type="text" id="selecDate" name="selecDate" value="">
+									<input type="text" id="selecDate" name="selecDate" value="" readonly="readonly">
 								</div>
 							</th>
-							<th class="hidden">
-								<div><button type="button" id="nextMonth">다음월</button></div>
+							<th>
+								<div><button type="button" id="nextMonth">익월</button></div>
 							</th>
 						</tr>
 						<tr>
@@ -518,6 +486,10 @@
 						entry.innerHTML += '<div class=expense><span class=ecName>${meec.ecName}</span> <span class=ecAmount>${meec.amount}원</span></div>';
 					</script>
 				</c:forEach>
+				<script>
+					const tbmListJ = JSON.parse('${tbmListJ}');
+					showThisMonthTransfer(tbmListJ);
+				</script>
 			</div>
 		</main>
 
@@ -559,46 +531,8 @@
 					<c:set var="i" value="${i+1}"/>
 				</c:forEach>
 				<script type="text/javascript">
-					document.querySelector('span.detailSumI').innerText = '${sumI}';				
+					document.querySelector('span.detailSumI').innerText = '${sumI}';
 				</script>
-				<!-- <c:set var="i" value="0"/>
-					<c:forEach var="iica" items="${iicaList}">
-					<script>
-						button = 'button.delete_income_button${i}';
-						document.querySelector(button).addEventListener('click', function() {
-							event.stopPropagation();
-							document.querySelector('#modal').classList.remove('hidden');
-							document.querySelector('#delete_income_Form').classList.remove('hidden');
-							let assetsId = '${iica.assetsId}';
-							let jsonData = {"assetsId":assetsId};
-							let deleteIncomeMemAssetId = document.querySelector('#delete_income_memAssetId');
-							$.ajax({
-								url:'/main/postAOM',
-								type:'post',
-								data:jsonData,
-								success:function(aomList) {
-									let deleteAOMStr = '<option id="delete_income_memAssetId_selected" value="" selected>선택하세요</option>';
-									if(aomList == null) {deleteIncomeMemAssetId.innerHTML = deleteAOMStr;
-									}else {
-										for(let i = 0; i < aomList.length; i++) {
-											deleteAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
-										}
-										deleteIncomeMemAssetId.innerHTML = deleteAOMStr;
-									}
-								}
-							});
-							document.querySelector('#delete_income_id').value = '${iica.incomeId}';
-							document.querySelector('#delete_income_date').value = new Date().toISOString().substring(0, 10);
-							document.querySelector('#delete_income_assets_id_selected').value = '${iica.assetsId}';
-							document.querySelector('#delete_income_assets_id_selected').innerText = '${iica.assetsName}';
-							document.querySelector('#delete_income_category_id_selected').value = '${iica.icId}';
-							document.querySelector('#delete_income_category_id_selected').innerText = '${iica.icName}';
-							document.querySelector('#delete_income_amount').value = '${iica.amount}';
-							document.querySelector('#delete_income_memo').value = '${iica.memo}';
-						});
-					</script>
-					<c:set var="i" value="${i+1}"/> -->
-				</c:forEach>
 				<c:set var="sumE" value="0"/>
 				<c:set var="i" value="0"/>
 				<c:forEach var="eeca" items="${eecaList}">
@@ -612,135 +546,8 @@
 					<c:set var="i" value="${i+1}"/>
 				</c:forEach>
 				<script type="text/javascript">
-					console.dir(document.querySelector('span.detailSumE'));
 					document.querySelector('span.detailSumE').innerText = '${sumE}';
-
-					const iicaListJ = JSON.parse('${iicaListJ}');
-					const eecaListJ = JSON.parse('${eecaListJ}');
-					addEvnetToIncomeDeleteButtonBF(iicaListJ);
-					addEvnetToExpenseDeleteButtonBF(eecaListJ);
-					//이제부터는 출력된 오늘 날짜의 상세데이터에 onclick시 modal창을 불러오는 fucntion을 주입
-					putIncomeDataToUpdateFormBF(iicaListJ);
-					putExpenseDataToUpdateFormBF(eecaListJ);
 				</script>
-				<!-- <c:set var="i" value="0"/>
-				<c:forEach var="eeca" items="${eecaList}">
-					<script>
-						button = 'button.delete_expense_button${i}';
-						document.querySelector(button).addEventListener('click', function() {
-							event.stopPropagation();
-							document.querySelector('#modal').classList.remove('hidden');
-							document.querySelector('#delete_expense_Form').classList.remove('hidden');
-							let assetsId = '${eeca.assetsId}';
-							let jsonData = {"assetsId":assetsId};
-							let deleteExpenseMemAssetId = document.querySelector('#delete_expense_memAssetId');
-							$.ajax({
-								url:'/main/postAOM',
-								type:'post',
-								data:jsonData,
-								success:function(aomList) {
-									let deleteAOMStr = '<option id="delete_expense_memAssetId_selected" value="" selected>선택하세요</option>';
-									if(aomList == null) {deleteExpenseMemAssetId.innerHTML = deleteAOMStr;
-									}else {
-										for(let i = 0; i < aomList.length; i++) {
-											deleteAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
-										}
-										deleteExpenseMemAssetId.innerHTML = deleteAOMStr;
-									}
-								}
-							});
-							document.querySelector('#delete_expense_id').value = '${eeca.expenseId}';
-							document.querySelector('#delete_expense_date').value = new Date().toISOString().substring(0, 10);
-							document.querySelector('#delete_expense_assets_id_selected').value = '${eeca.assetsId}';
-							document.querySelector('#delete_expense_assets_id_selected').innerText = '${eeca.assetsName}';
-							document.querySelector('#delete_expense_category_id_selected').value = '${eeca.ecId}';
-							document.querySelector('#delete_expense_category_id_selected').innerText = '${eeca.ecName}';
-							document.querySelector('#delete_expense_amount').value = '${eeca.amount}';
-							document.querySelector('#delete_expense_memo').value = '${eeca.memo}';
-						});
-					</script>
-					<c:set var="i" value="${i+1}"/>
-				</c:forEach> -->
-				<!-- <script>
-					let classStr;
-					let detailItem;
-				</script>
-				<c:set var="i" value="0" />
-				<c:forEach var="iica" items="${iicaList}">
-					<c:if test="${iicaList != null}">
-						<script type="text/javascript">
-							classStr = 'div.di_income'+i;
-							detailItem = document.querySelector(classStr);
-							detailItem.addEventListener('click', function() {
-								document.querySelector('#modal').classList.remove('hidden');
-								document.querySelector('#update_income_category_income').checked = true;
-								document.querySelector('#update_income_form').classList.remove('hidden');
-								document.querySelector('#update_expense_form').classList.add('hidden');
-								let thisDate;
-								if(iicaList[i].incomeDate.monthValue < 10) {
-									if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-									}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-								}else{
-									if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-									}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-								}
-					
-								document.querySelector('#update_income_id').value = iicaList[i].incomeId;
-								document.querySelector('#update_income_date').value = thisDate;
-								document.querySelector('#update_assets_income_selected').value = iicaList[i].assetsId;
-								document.querySelector('#update_assets_income_selected').innerText = iicaList[i].assetsName;
-								showUpdateIncomeAom(iicaList[i].assetsId);
-								document.querySelector('#update_aom_income_origin').value = iicaList[i].memAssetId;
-								document.querySelector('#update_aom_income_selected').value = iicaList[i].memAssetId;
-								document.querySelector('#update_aom_income_selected').innerHTML = iicaList[i].aomName;
-								document.querySelector('#update_income_category_selected').value = iicaList[i].icId;
-								document.querySelector('#update_income_category_selected').innerText = iicaList[i].icName;
-								document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
-								document.querySelector('#update_income_amount').value = iicaList[i].amount;
-								document.querySelector('#update_income_memo').value = iicaList[i].memo;
-							});
-						</script>
-					</c:if>
-					<c:set var="i" value="${i+1}"/>
-				</c:forEach> -->
-				<!-- <c:set var="i" value="0" />
-				<c:forEach var="eeca" items="${eecaList}">
-					<c:if test="${eecaList != null}">
-						<script type="text/javascript">
-							classStr = 'div.di_expense${i}';
-							detailItem = document.querySelector(classStr);
-							detailItem.addEventListener('click', function() {
-								event.stopPropagation();
-								document.querySelector('#modal').classList.remove('hidden');
-								document.querySelector('#update_expense_category_expense').checked = true;
-								document.querySelector('#update_income_form').classList.add('hidden');
-								document.querySelector('#update_expense_form').classList.remove('hidden');
-								let thisDate;
-								if(eecaList[i].expenseDate.monthValue < 10) {
-									if(eecaList[i].expenseDate.dayOfMonth < 10) {thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-									}else{thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-								}else{
-									if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-									}else {thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-								}
-								document.querySelector('#update_expense_id').value = eecaList[i].expenseId;
-								document.querySelector('#update_expense_date').value = thisDate;
-								document.querySelector('#update_assets_expense_selected').value = eecaList[i].assetsId;
-								document.querySelector('#update_assets_expense_selected').innerText = eecaList[i].assetsName;
-								showUpdateExpenseAom(eecaList[i].assetsId);
-								document.querySelector('#update_aom_expense_origin').value = eecaList[i].memAssetId;
-								document.querySelector('#update_aom_expense').value = eecaList[i].memAssetId;
-								document.querySelector('#update_aom_expense').innerText = eecaList[i].aomName;
-								document.querySelector('#update_expense_category_selected').value = eecaList[i].ecId;
-								document.querySelector('#update_expense_category_selected').innerText = eecaList[i].ecName;
-								document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
-								document.querySelector('#update_expense_amount').value = eecaList[i].amount;
-								document.querySelector('#update_expense_memo').value = eecaList[i].memo;
-							});
-						</script>
-					</c:if>
-					<c:set var="i" value="${i+1}"/>
-				</c:forEach> -->
 			</div>
 		</section>
 		

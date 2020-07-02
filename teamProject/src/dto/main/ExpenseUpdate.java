@@ -13,26 +13,34 @@ public class ExpenseUpdate {
 	private int assetsId;
 	private int memAssetId;
 	private int newMemAssetId;
+	private int memAssetIdTo;
 	private int ecId;
 	private int icId;
 	private int amount;
 	private int newAmount;
 	private String memo;
 	public ExpenseUpdate() {}
-	public ExpenseUpdate(int userKey, int category, int expenseId, LocalDate expenseDate, int assetsId, int memAssetId, int newMemAssetId, int ecId,
-			int icId, int amount, int newAmount, String memo) {
-		this.userkey = userKey;
+	public ExpenseUpdate(int userkey, int category, int expenseId, LocalDate expenseDate, int assetsId, int memAssetId,
+			int newMemAssetId, int memAssetIdTo, int ecId, int icId, int amount, int newAmount, String memo) {
+		this.userkey = userkey;
 		this.category = category;
 		this.expenseId = expenseId;
 		this.expenseDate = expenseDate;
 		this.assetsId = assetsId;
 		this.memAssetId = memAssetId;
 		this.newMemAssetId = newMemAssetId;
+		this.memAssetIdTo = memAssetIdTo;
 		this.ecId = ecId;
 		this.icId = icId;
 		this.amount = amount;
 		this.newAmount = newAmount;
 		this.memo = memo;
+	}
+	public int getMemAssetIdTo() {
+		return memAssetIdTo;
+	}
+	public void setMemAssetIdTo(int memAssetIdTo) {
+		this.memAssetIdTo = memAssetIdTo;
 	}
 	public int getNewAmount() {
 		return newAmount;
@@ -110,7 +118,7 @@ public class ExpenseUpdate {
 	public String toString() {
 		return "ExpenseUpdate [userkey=" + userkey + ", category=" + category + ", expenseId=" + expenseId
 				+ ", expenseDate=" + expenseDate + ", assetsId=" + assetsId + ", memAssetId=" + memAssetId
-				+ ", newMemAssetId=" + newMemAssetId + ", ecId=" + ecId + ", icId=" + icId + ", amount=" + amount
-				+ ", newAmount=" + newAmount + ", memo=" + memo + "]";
+				+ ", newMemAssetId=" + newMemAssetId + ", memAssetIdTo=" + memAssetIdTo + ", ecId=" + ecId + ", icId="
+				+ icId + ", amount=" + amount + ", newAmount=" + newAmount + ", memo=" + memo + "]";
 	}
 }

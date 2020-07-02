@@ -32,6 +32,8 @@
 		<typeAlias type="dto.main.Expense" alias="MainExpense"/>
 		<typeAlias type="dto.main.ExpenseUpdate" alias="ExpenseUpdate"/>
 		<typeAlias type="dto.main.Income" alias="MainIncome"/>
+		<typeAlias type="dto.main.Transfer" alias="MainTransfer"/>
+		<typeAlias type="dto.main.TransferAssetsOfMemeberFromAssetsOfMemeberTo" alias="TAOMFAOMT"/>
 	</typeAliases>
 
 </configuration>

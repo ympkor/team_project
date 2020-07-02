@@ -32,6 +32,12 @@
 		WHERE expense_id=#{expenseId}
 	</update>
 	
+	<update id="updateTransferByTransferId" parameterType="MainTransfer">
+		UPDATE tp.transfer SET mem_asset_id_from=#{memAssetIdFrom}, mem_asset_id_to=#{memAssetIdTo},  
+		amount=#{amount}, transfer_date=#{transferDate}, memo=#{memo} 
+		WHERE transfer_id=#{transferId}
+	</update>
+	
 	<update id="plusAOMAmountById">
 		UPDATE tp.assets_of_member SET amount=amount+#{amount}
 		WHERE mem_asset_id=#{memAssetId}
@@ -48,5 +54,9 @@
 	
 	<delete id="deleteExpenseByExpenseId">
 		DELETE FROM tp.expense WHERE expense_id=#{expenseId}
+	</delete>
+	
+	<delete id="deleteTransferByTransferId">
+		DELETE FROM tp.transfer WHERE transfer_id=#{transferId}
 	</delete>
 </mapper>

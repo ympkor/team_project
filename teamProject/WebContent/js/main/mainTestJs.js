@@ -1,183 +1,315 @@
-function iFSwitchIFtoEF() {
-	document.querySelector('#update_income_category_switch_expense').classList.add('hidden');
-	document.querySelector('#update_income_category').classList.remove('hidden');
-}
-function iFSwitchEFtoIF() {
-	document.querySelector('#update_income_category_switch_expense').classList.remove('hidden');
-	document.querySelector('#update_income_category').classList.add('hidden');
-}
-function eFSwitchIFtoEF() {
-	document.querySelector('#update_expense_category_switch_income').classList.remove('hidden');
-	document.querySelector('#update_expense_category').classList.add('hidden');
-}
-function eFSwitchEFtoIF() {
-	document.querySelector('#update_expense_category_switch_income').classList.add('hidden');
-	document.querySelector('#update_expense_category').classList.remove('hidden');
-}
-//수입이 체크되면 수입 폼을 보여주고 지출 폼은 hidden
-function showIncomeForm() {
-  document.querySelector('#insert_income_form').classList.remove('hidden');
-  document.querySelector('#insert_expense_form').classList.add('hidden');
-}
-//지출이 체크되면 지출 폼을 보여주고 수입 폼은 hidden
-function showExpenseForm() {
-  document.querySelector('#insert_expense_form').classList.remove('hidden');
-  document.querySelector('#insert_income_form').classList.add('hidden');
-}
-//상세데이터 수입 클릭시 업데이트 창을 보여주고 form안에 값을 넣어주는 기능
-function putIncomeDataToUpdateFormBF(iicaList) {
-	if(iicaList != null) {
-		for(let i = 0; i < iicaList.length; i++){
-			let classStr = 'div.di_income'+i;
-			let detailItem = document.querySelector(classStr);
-			detailItem.addEventListener('click', function() {
-				event.stopPropagation();
-				document.querySelector('#modal').classList.remove('hidden');
-				document.querySelector('#update_income_category_income').checked = true;
-				document.querySelector('#update_income_form').classList.remove('hidden');
-				document.querySelector('#update_expense_form').classList.add('hidden');
-				let thisDate;
-				if(iicaList[i].incomeDate.monthValue < 10) {
-					if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}else{
-					if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}
-
-				document.querySelector('#update_income_id').value = iicaList[i].incomeId;
-				document.querySelector('#update_income_date').value = thisDate;
-				document.querySelector('#update_assets_income_selected').value = iicaList[i].assetsId;
-				document.querySelector('#update_assets_income_selected').innerText = iicaList[i].assetsName;
-				showUpdateIncomeAomBF(iicaList[i]);
-				document.querySelector('#update_aom_income_origin').value = iicaList[i].memAssetId;
-				// document.querySelector('#update_aom_income_selected').value = iicaList[i].memAssetId;
-				// document.querySelector('#update_aom_income_selected').innerText = iicaList[i].aomName;
-				document.querySelector('#update_income_category_selected').value = iicaList[i].icId;
-				document.querySelector('#update_income_category_selected').innerText = iicaList[i].icName;
-				document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
-				document.querySelector('#update_income_amount').value = iicaList[i].amount;
-				document.querySelector('#update_income_memo').value = iicaList[i].memo;
-			});
+//월별 이체 데이터를 만들어진 달력에 뿌려주는 기능
+function showThisMonthTransfer(tbmList) {
+	let classStr;
+	if(tbmList != null){
+		for(let i = 0; i < tbmList.length; i++){
+			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
+			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
+			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+tbmList[i].amount+'원</span></div>';
 		}
 	}
 }
-//상세데이터 지출 클릭시 업데이트 창을 보여주고 form안에 값을 넣어주는 기능
-function putExpenseDataToUpdateFormBF(eecaList) {
-	if(eecaList != null){
-			for(let i = 0; i < eecaList.length; i++) {
-				let classStr = 'div.di_expense'+i;
-				let detailItem = document.querySelector(classStr);
-				detailItem.addEventListener('click', function() {
-					event.stopPropagation();
-					document.querySelector('#modal').classList.remove('hidden');
-					document.querySelector('#update_expense_category_expense').checked = true;
-				document.querySelector('#update_income_form').classList.add('hidden');
-				document.querySelector('#update_expense_form').classList.remove('hidden');
-				let thisDate;
-				if(eecaList[i].expenseDate.monthValue < 10) {
-					if(eecaList[i].expenseDate.dayOfMonth < 10) {thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
+//수입 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
+function putIncomeDataToUpdateForm(iicaList) {
+	event.stopPropagation();
+	for(let i = 0; i < iicaList.length; i++){
+		let classStr = 'div.di_income'+i;;
+		document.querySelector(classStr).addEventListener('click', function() {
+			event.stopPropagation();
+			document.querySelector('#modal').classList.remove('hidden');
+			document.querySelector('#update_income_category_income').checked = true;
+			document.querySelector('#update_income_form').classList.remove('hidden');
+			document.querySelector('#update_expense_form').classList.add('hidden');
+			document.querySelector('#update_transfer_form').classList.add('hidden');
+			let thisDate;
+			if(iicaList[i].incomeDate.monthValue < 10) {
+				if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
+				}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
+			}else{if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
+			}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
+			}
+			document.querySelector('#update_income_id').value = iicaList[i].incomeId;
+			document.querySelector('#update_income_date').value = thisDate;
+			document.querySelector('#update_assets_income_memAssetIdFrom_origin').value = iicaList[i].memAssetId;
+			document.querySelector('#update_assets_income_memAssetIdFrom').value = iicaList[i].memAssetId;
+			showUpdateTransferFromAomIncome(iicaList[i]);
+			document.querySelector('#update_assets_income_assetsId').value = iicaList[i].assetsId;
+			showUpdateTransferToAomIncome(iicaList[i]);
+			makeIncomeCategoryOption(iicaList[i]);
+			document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
+			document.querySelector('#update_income_amount').value = iicaList[i].amount;
+			document.querySelector('#update_income_memo').value = iicaList[i].memo;
+		});
+	}
+}
+//수입업데이트 폼에 이체 카테고리를 현재 값으로 선택시켜준다.
+function makeIncomeCategoryOption(iica) {
+	$.ajax({
+		url:'/main/postICList',
+		type:'post',
+		success:function(icList) {
+			let str = '<option value='+iica.icId+' selected id="update_income_expense_category_selected">'+iica.icName+'</option>';
+			for(let i = 0; i < icList.length; i++) {
+				if(icList[i].icId != iica.icId) {
+					str += '<option value='+icList[i].icId+'>'+icList[i].icName+'</option>';
+				}
+			}
+		}
+	});
+}
+//지출 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
+function putExpenseDataToUpdateForm(eecaList) {
+	event.stopPropagation();
+	for(let i = 0; i < eecaList.length; i++){
+		let classStr = 'div.di_expense'+i;;
+		document.querySelector(classStr).addEventListener('click', function() {
+			event.stopPropagation();
+			document.querySelector('#modal').classList.remove('hidden');
+			document.querySelector('#update_expense_category_expense').checked = true;
+			document.querySelector('#update_income_form').classList.add('hidden');
+			document.querySelector('#update_expense_form').classList.remove('hidden');
+			document.querySelector('#update_transfer_form').classList.add('hidden');
+			let thisDate;
+			if(eecaList[i].expenseDate.monthValue < 10) {
+				if(eecaList[i].expenseDate.dayOfMonth < 10) {thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
 				}else{thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-			}else{
-				if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else {thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
+			}else{if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
+			}else {thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
+			}
+			document.querySelector('#update_expense_id').value = eecaList[i].expenseId;
+			document.querySelector('#update_expense_date').value = thisDate;
+			document.querySelector('#update_assets_expense_memAssetIdFrom_origin').value = eecaList[i].memAssetId;
+			document.querySelector('#update_assets_expense_memAssetIdFrom').value = eecaList[i].memAssetId;
+			showUpdateTransferFromAomExpense(eecaList[i]);
+			document.querySelector('#update_assets_expense_assetsId').value = eecaList[i].assetsId;
+			showUpdateTransferToAomExpense(eecaList[i]);
+			makeExpenseCategoryOption(eecaList[i]);
+			document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
+			document.querySelector('#update_expense_amount').value = eecaList[i].amount;
+			document.querySelector('#update_expense_memo').value = eecaList[i].memo;
+		});
+	}
+}
+//지출 업데이트 폼에 이체 카테고리를 현재 값으로 선택시켜준다.
+function makeExpenseCategoryOption(eeca) {
+	$.ajax({
+		url:'/main/postECList',
+		type:'post',
+		success:function(ecList) {
+			let str = '<option value='+eeca.ecId+' selected id="update_expense_expense_category_selected">'+eeca.ecName+'</option>';
+			for(let i = 0; i < ecList; i++) {
+				if(ecList[i].ecId != eeca.ecId) {
+					str += '<option value='+ecList[i].ecId+'>'+ecList[i].ecName+'</option>';
 				}
-				document.querySelector('#update_expense_id').value = eecaList[i].expenseId;
-				document.querySelector('#update_expense_date').value = thisDate;
-				document.querySelector('#update_assets_expense_selected').value = eecaList[i].assetsId;
-				document.querySelector('#update_assets_expense_selected').innerText = eecaList[i].assetsName;
-				showUpdateExpenseAomBF(eecaList[i]);
-				document.querySelector('#update_aom_expense_origin').value = eecaList[i].memAssetId;
-				// document.querySelector('#update_aom_expense_selected').value = eecaList[i].memAssetId;
-				// document.querySelector('#update_aom_expense_selected').innerText = eecaList[i].aomName;
-				document.querySelector('#update_expense_category_selected').value = eecaList[i].ecId;
-				document.querySelector('#update_expense_category_selected').innerText = eecaList[i].ecName;
-				document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
-				document.querySelector('#update_expense_amount').value = eecaList[i].amount;
-				document.querySelector('#update_expense_memo').value = eecaList[i].memo;
-			});
+			}
 		}
-	}
+	});
 }
-//수입 업데이트 폼에서 자산카테고리 변경시 해당 카테고리중에서 보유중인 자산 보여주기
-function showUpdateIncomeAomBF(iica) {
-	if(typeof(iica) === 'number'){
-		let jsonData = {"assetsId":iica};
-		let updateAOMIncome = document.querySelector('#update_aom_income');
-		$.ajax({
-			url:'/main/postAOM',
-			type:'post',
-			data:jsonData,
-			success:function(aomList) {
-				let updateAOMStr = '<option id="update_aom_income_selected" value="" selected disabled>선택하세요</option>';
-				if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-				}else {
-					for(let i = 0; i < aomList.length; i++) {
-						updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
-					}
-					updateAOMIncome.innerHTML = updateAOMStr;
-				}
+//이체 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
+function putTransferDataToUpdateForm(taomfaomtList) {
+	event.stopPropagation();
+	for(let i = 0; i < taomfaomtList.length; i++){
+		let classStr = 'div.di_transfer'+i;;
+		document.querySelector(classStr).addEventListener('click', function() {
+			event.stopPropagation();
+			document.querySelector('#modal').classList.remove('hidden');
+			document.querySelector('#update_transfer_category_transfer').checked = true;
+			document.querySelector('#update_income_form').classList.add('hidden');
+			document.querySelector('#update_expense_form').classList.add('hidden');
+			document.querySelector('#update_transfer_form').classList.remove('hidden');
+			let thisDate;
+			if(taomfaomtList[i].transferDate.monthValue < 10) {
+				if(taomfaomtList[i].transferDate.dayOfMonth < 10) {thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
+				}else{thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
+			}else{if(taomfaomtList[i].transferDate.dayOfMonth < 10){thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
+			}else {thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
 			}
-		});
-	}else{
-		let jsonData = {"assetsId":iica.assetsId};
-		let updateAOMIncome = document.querySelector('#update_aom_income');
-		$.ajax({
-			url:'/main/postAOM',
-			type:'post',
-			data:jsonData,
-			success:function(aomList) {
-				let updateAOMStr = '<option id="update_aom_income_selected" value='+iica.memAssetId+' selected>'+iica.aomName+'</option>';
-				if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-				}else {
-					for(let i = 0; i < aomList.length; i++) {
-						if(iica.memAssetId != aomList[i].memAssetId){updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";}
-					}
-					updateAOMIncome.innerHTML = updateAOMStr;
-				}
-			}
+			document.querySelector('#update_transfer_id').value = taomfaomtList[i].transferId;
+			document.querySelector('#update_transfer_date').value = thisDate;
+			document.querySelector('#update_assets_transfer_memAssetIdFrom_origin').value = taomfaomtList[i].memAssetIdFrom;
+			document.querySelector('#update_assets_transfer_memAssetIdFrom').value = taomfaomtList[i].memAssetIdFrom;
+			showUpdateTransferFromAomTransfer(taomfaomtList[i]);
+			document.querySelector('#update_assets_transfer_assetsId').value = taomfaomtList[i].assetsId;
+			document.querySelector('#update_assets_transfer_memAssetIdTo_origin').value = taomfaomtList[i].memAssetIdTo;
+			showUpdateTransferToAomTransfer(taomfaomtList[i]);
+			document.querySelector('#update_transfer_amount_origin').value = taomfaomtList[i].amount;
+			document.querySelector('#update_transfer_amount').value = taomfaomtList[i].amount;
+			document.querySelector('#update_transfer_memo').value = taomfaomtList[i].memo;
 		});
 	}
 }
-//지출 업데이트 폼에서 자산카테고리 변경 시 해당 자산중에서 보유중인 자산명 보여주기
-function showUpdateExpenseAomBF(eeca) {
-	if(typeof(eeca) === 'number'){
-		let jsonData = {"assetsId":eeca};
-		let updateAOMIncome = document.querySelector('#update_aom_expense');
-		$.ajax({
-			url:'/main/postAOM',
-			type:'post',
-			data:jsonData,
-			success:function(aomList) {
-				let updateAOMStr = '<option id="update_aom_expense_selected" value="" selected disabled>선택하세요</option>';
-				if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-				}else {
-					for(let i = 0; i < aomList.length; i++) {
-						updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
+//수입업데이트 선택창에서 자산 선택지가 변경되면 assets_id를 자동으로 변경해주는 기능
+function getAssetsIdAndPutAssetsIdToHiddenInputIncome(){
+	let memAssetId = document.querySelector('#update_assets_income_memAssetIdFrom').value;
+	let jsonData = {"memAssetId":memAssetId};
+	$.ajax({
+		url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+			document.querySelector('#update_assets_income_assetsId').value = aom.assetsId;
+		}
+	});
+}
+//지출업데이트 선택창에서 자산 선택지가 변경되면 assets_id를 자동으로 변경해주는 기능
+function getAssetsIdAndPutAssetsIdToHiddenInputExpense(){
+	let memAssetId = document.querySelector('#update_assets_expense_memAssetIdFrom').value;
+	let jsonData = {"memAssetId":memAssetId};
+	$.ajax({
+		url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+			document.querySelector('#update_assets_expense_assetsId').value = aom.assetsId;
+		}
+	});
+}
+//이체 업데이트 선택창에서 자산 선택지가 변경되면 assets_id를 자동으로 변경해주는 기능
+function getAssetsIdAndPutAssetsIdToHiddenInputTransfer(){
+	let memAssetId = document.querySelector('#update_assets_transfer_memAssetIdFrom').value;
+	let jsonData = {"memAssetId":memAssetId};
+	$.ajax({
+		url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+			document.querySelector('#update_assets_transfer_assetsId').value = aom.assetsId;
+		}
+	});
+}
+//수입 업데이트 폼 출금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferFromAomIncome(iica) {
+	event.stopPropagation();
+	let jsonData = {"userKey":iica.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value='+iica.memAssetId+' selected>'+iica.assetsName+' '+iica.aomName+'</option>';
+				for(let i = 0; i < aaomList.length; i++) {
+					if(aaomList[i].memAssetId != iica.memAssetId){
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
-					updateAOMIncome.innerHTML = updateAOMStr;
 				}
+				document.querySelector('#update_assets_income_memAssetIdFrom').innerHTML = updateAOMStr;
 			}
-		});
-	}else{
-		let jsonData = {"assetsId":eeca.assetsId};
-		let updateAOMIncome = document.querySelector('#update_aom_expense');
-		$.ajax({
-			url:'/main/postAOM',
-			type:'post',
-			data:jsonData,
-			success:function(aomList) {
-				let updateAOMStr = '<option id="update_aom_expense_selected" value='+eeca.memAssetId+' selected>'+eeca.aomName+'</option>';
-				if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-				}else {
-					for(let i = 0; i < aomList.length; i++) {
-						if(eeca.memAssetId != aomList[i].memAssetId) {updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";}
+		}
+	});
+}
+//수입 업테이트 폼 입금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferToAomIncome(iica) {
+	event.stopPropagation();
+	let jsonData = {"userKey":iica.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = ' ';
+				for(let i = 0; i < aaomList.length; i++) {
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+				}
+				document.querySelector('#update_assets_income_memAssetIdTo').innerHTML = updateAOMStr;
+			}
+		}
+	});
+}
+//지출 업데이트 폼 출금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferFromAomExpense(eeca) {
+	event.stopPropagation();
+	let jsonData = {"userKey":eeca.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetIdTo+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';
+				for(let i = 0; i < aaomList.length; i++) {
+					if(aaomList[i].memAssetId != eeca.memAssetId){
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
-					updateAOMIncome.innerHTML = updateAOMStr;
 				}
+				document.querySelector('#update_assets_expense_memAssetIdFrom').innerHTML = updateAOMStr;
 			}
-		});
-	}
+		}
+	});
+}
+//지출 업테이트 폼 입금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferToAomExpense(eeca) {
+	event.stopPropagation();
+	let jsonData = {"userKey":eeca.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = ' ';
+				for(let i = 0; i < aaomList.length; i++) {
+					updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+				}
+				document.querySelector('#update_assets_expense_memAssetIdTo').innerHTML = updateAOMStr;
+			}
+		}
+	});
+}
+//이체 업데이트 폼 출금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferFromAomTransfer(taomfaomt) {
+	event.stopPropagation();
+	let jsonData = {"userKey":taomfaomt.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value='+taomfaomt.memAssetIdFrom+' selected>'+taomfaomt.assetsNameFrom+' '+taomfaomt.aomNameFrom+'</option>';
+				for(let i = 0; i < aaomList.length; i++) {
+					if(aaomList[i].memAssetId != taomfaomt.memAssetIdFrom){
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+					}
+				}
+				document.querySelector('#update_assets_transfer_memAssetIdFrom').innerHTML = updateAOMStr;
+			}
+		}
+	});
+}
+//이체 업테이트 폼 입금란에 해당 유저의 자산목록을 뿌려주는 기능
+function showUpdateTransferToAomTransfer(taomfaomt) {
+	event.stopPropagation();
+	let jsonData = {"userKey":taomfaomt.userKey};
+	$.ajax({
+		url:'/main/postAAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aaomList) {
+			let updateAOMStr;
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			}else {
+				updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value='+taomfaomt.memAssetIdTo+' selected>'+taomfaomt.assetsNameTo+' '+taomfaomt.aomNameTo+'</option>';
+				for(let i = 0; i < aaomList.length; i++) {
+					if(aaomList[i].memAssetId != taomfaomt.memAssetIdTo){
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+					}
+				}
+				document.querySelector('#update_assets_transfer_memAssetIdTo').innerHTML = updateAOMStr;
+			}
+		}
+	});
 }
 function showInsertIncomeAomBF(assetsId) {
   let jsonData = {"assetsId":assetsId};
@@ -217,67 +349,15 @@ function showInsertExpenseAomBF(assetsId) {
     }
   })
 }
-//수입 상세란의 삭제버튼에 이벤트를 걸어주는 기능
-function addEvnetToIncomeDeleteButtonBF(iicaList) {
-	if(iicaList != null) {
-			for(let i = 0; i < iicaList.length; i++) {
-				let button = 'button.delete_income_button'+i;
-				document.querySelector(button).addEventListener('click', function() {
-					event.stopPropagation();
-					document.querySelector('#modal').classList.remove('hidden');
-					document.querySelector('#delete_income_form').classList.remove('hidden');
-					document.querySelector('#delete_income_id').value = iicaList[i].incomeId;
-					document.querySelector('#delete_income_memAssetId_selected').value = iicaList[i].memAssetId;
-					document.querySelector('#delete_income_memAssetId_selected').innerText = iicaList[i].aomName;
-					let incomeDate;
-					if(iicaList[i].incomeDate.monthValue < 10) {
-						if(iicaList[i].incomeDate.dayOfMonth < 10) {incomeDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else{incomeDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}else{
-					if(iicaList[i].incomeDate.dayOfMonth < 10){incomeDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else {incomeDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}
-				document.querySelector('#delete_income_date').value = incomeDate;
-				document.querySelector('#delete_income_assets_id_selected').value = iicaList[i].assetsId;
-				document.querySelector('#delete_income_assets_id_selected').innerText = iicaList[i].assetsName;
-				document.querySelector('#delete_income_category_id_selected').value = iicaList[i].icId;
-				document.querySelector('#delete_income_category_id_selected').innerText = iicaList[i].icName;
-				document.querySelector('#delete_income_amount').value = iicaList[i].amount;
-				document.querySelector('#delete_income_memo').value = iicaList[i].memo;
-			});
-		}
-	}
-}
-//지출 상세란의 삭제버튼에 이벤트를 걸어주는 기능
-function addEvnetToExpenseDeleteButtonBF(eecaList) {
-	if(eecaList != null) {
-		for(let i = 0; i < eecaList.length; i++) {
-			let button = 'button.delete_expense_button'+i;
-			document.querySelector(button).addEventListener('click', function() {
-				event.stopPropagation();
-				document.querySelector('#modal').classList.remove('hidden');
-				document.querySelector('#delete_expense_form').classList.remove('hidden');
-				document.querySelector('#delete_expense_id').value = eecaList[i].expenseId;
-				document.querySelector('#delete_expense_memAssetId_selected').value = eecaList[i].memAssetId;
-				document.querySelector('#delete_expense_memAssetId_selected').innerText = eecaList[i].aomName;
-				let expenseDate;
-				if(eecaList[i].expenseDate.monthValue < 10) {
-						if(eecaList[i].expenseDate.dayOfMonth < 10) {expenseDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else{expenseDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-					}else{
-						if(eecaList[i].expenseDate.dayOfMonth < 10){expenseDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else {expenseDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-				}
-				console.log(expenseDate);
-				document.querySelector('#delete_expense_date').value = expenseDate;
-				document.querySelector('#delete_expense_assets_id_selected').value = eecaList[i].assetsId;
-				document.querySelector('#delete_expense_assets_id_selected').innerText = eecaList[i].assetsName;
-				document.querySelector('#delete_expense_category_id_selected').value = eecaList[i].ecId;
-				document.querySelector('#delete_expense_category_id_selected').innerText = eecaList[i].ecName;
-				document.querySelector('#delete_expense_amount').value = eecaList[i].amount;
-				document.querySelector('#delete_expense_memo').value = eecaList[i].memo;
-			});
-		}
+//이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
+function makeDetailTransferDIV(taomfaomtList) {
+	document.querySelector('div.detail_context_transfer').innerHTML = null;
+	for(let i = 0; i < taomfaomtList.length; i++) {
+		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
+		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
+		str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';
+		str += '<div class=detailTAmount><span class=detailTAmount>'+taomfaomtList[i].amount+'</span></div<</div>';
+		document.querySelector('div.detail_context_transfer').innerHTML += str;
 	}
 }
 
@@ -285,180 +365,13 @@ function addEvnetToExpenseDeleteButtonBF(eecaList) {
 window.addEventListener('DOMContentLoaded', function () {
   //필요한 태그들 변수 선언해두었다.
 	const modal = document.getElementById('modal');
-	const updateIncomeForm = document.querySelector('#update_income_form');
-	const updateIncomeDate = document.querySelector('#update_income_date');
-	const updateAssetsIncomeSelected = document.querySelector('#update_assets_income_selected');
-	const updateIncomeCategorySelected = document.querySelector('#update_income_category_selected');
-	const updateIncomeCategoryIncome = document.querySelector('#update_income_category_income');
-	const updateExpenseCategoryExpense = document.querySelector('#update_expense_category_expense');
-	const updateIncomeAmount = document.querySelector('#update_income_amount');
-	const updateIncomeMemo = document.querySelector('#update_income_memo');
-	const updateExpenseForm = document.querySelector('#update_expense_form');
-	const updateExpenseDate = document.querySelector('#update_expense_date');
-	const updateAssetsExpenseSelected = document.querySelector('#update_assets_expense_selected');
-	const updateExpenseCategorySelected = document.querySelector('#update_expense_category_selected');
-	const updateExpenseAmount = document.querySelector('#update_expense_amount');
-  const updateExpenseMemo = document.querySelector('#update_expense_memo');
-  const updateExpenseId = document.querySelector('#update_expense_id');
-	const updateIncomeId = document.querySelector('#update_income_id');
   const detailContextIncome = document.querySelector('div.detail_context_income');
   const detailContextExpense = document.querySelector('div.detail_context_expense');
   const selecDate = document.querySelector('#selecDate');
   const prevMonth = document.querySelector("#prevMonth");
   const nextMonth = document.querySelector('#nextMonth');
   const tbody = document.querySelector("#tbody");
-    
-  //수입 업데이트 폼에서 자산카테고리 변경시 해당 카테고리중에서 보유중인 자산 보여주기
-  function showUpdateIncomeAom(iica) {
-		if(typeof(iica) === 'number'){
-			let jsonData = {"assetsId":iica};
-			let updateAOMIncome = document.querySelector('#update_aom_income');
-			$.ajax({
-				url:'/main/postAOM',
-				type:'post',
-				data:jsonData,
-				success:function(aomList) {
-					let updateAOMStr = '<option id="update_aom_income_selected" value="" selected disabled>선택하세요</option>';
-					if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-					}else {
-						for(let i = 0; i < aomList.length; i++) {
-							updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
-						}
-						updateAOMIncome.innerHTML = updateAOMStr;
-					}
-				}
-			});
-		}else{
-			let jsonData = {"assetsId":iica.assetsId};
-			let updateAOMIncome = document.querySelector('#update_aom_income');
-			$.ajax({
-				url:'/main/postAOM',
-				type:'post',
-				data:jsonData,
-				success:function(aomList) {
-					let updateAOMStr = '<option id="update_aom_income_selected" value='+iica.memAssetId+' selected>'+iica.aomName+'</option>';
-					if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-					}else {
-						for(let i = 0; i < aomList.length; i++) {
-							if(iica.memAssetId != aomList[i].memAssetId){updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";}
-						}
-						updateAOMIncome.innerHTML = updateAOMStr;
-					}
-				}
-			});
-		}
-  }
-  //지출 업데이트 폼에서 자산카테고리 변경 시 해당 자산중에서 보유중인 자산명 보여주기
-	function showUpdateExpenseAom(eeca) {
-		if(typeof(eeca) === 'number'){
-			let jsonData = {"assetsId":eeca};
-			let updateAOMIncome = document.querySelector('#update_aom_expense');
-			$.ajax({
-				url:'/main/postAOM',
-				type:'post',
-				data:jsonData,
-				success:function(aomList) {
-					let updateAOMStr = '<option id="update_aom_expense_selected" value="" selected disabled>선택하세요</option>';
-					if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-					}else {
-						for(let i = 0; i < aomList.length; i++) {
-							updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
-						}
-						updateAOMIncome.innerHTML = updateAOMStr;
-					}
-				}
-			});
-		}else{
-			let jsonData = {"assetsId":eeca.assetsId};
-			let updateAOMIncome = document.querySelector('#update_aom_expense');
-			$.ajax({
-				url:'/main/postAOM',
-				type:'post',
-				data:jsonData,
-				success:function(aomList) {
-					let updateAOMStr = '<option id="update_aom_expense_selected" value='+eeca.memAssetId+' selected>'+eeca.aomName+'</option>';
-					if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
-					}else {
-						for(let i = 0; i < aomList.length; i++) {
-							if(eeca.memAssetId != aomList[i].memAssetId) {updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";}
-						}
-						updateAOMIncome.innerHTML = updateAOMStr;
-					}
-				}
-			});
-		}
-	}
-	//상세데이터에 표시된 지출 아이템을 클릭하면 updateModal창을 열어주고, form안에 값을 넣어주는 메서드
-	function putExpenseDataToUpdateForm(eecaList) {
-		for (let i = 0; i < eecaList.length; i++) {
-			let classStr = 'div.di_expense' + i;
-			let detailItem = document.querySelector(classStr);
-			detailItem.addEventListener('click', function() {
-				//상세데이터가 뿌려지면 상세데이터를 클릭시 그 데이터를 수정할 수 있는 이벤트를 걸어주자
-				//모달창을 보여주고
-				modal.classList.remove('hidden');
-				//모달창의 수입 박스를 체크해주고, update_income_form의 hidden클래스를 없애준다.
-				updateExpenseCategoryExpense.checked = true;
-				updateExpenseForm.classList.remove('hidden');
-				updateIncomeForm.classList.add('hidden');
-				//form안의 input창들의 value에 선택한 날짜의 value를 넣어주자.
-				let thisDate;
-				if(eecaList[i].expenseDate.monthValue < 10) {
-					if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else{thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-				}else{
-					if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else{thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;}
-				}
-				updateExpenseId.value = eecaList[i].expenseId;
-				updateExpenseDate.value = thisDate; //날짜
-				updateAssetsExpenseSelected.value = eecaList[i].assetsId; //자산(value)
-				updateAssetsExpenseSelected.innerText = eecaList[i].assetsName; //자산(name)
-				showUpdateExpenseAom(eecaList[i]);
-				document.querySelector('#update_aom_expense_origin').value = eecaList[i].memAssetId;
-				updateExpenseCategorySelected.value = eecaList[i].ecId; //지출분류(value)
-				updateExpenseCategorySelected.innerText = eecaList[i].ecName; //지출분류(name)
-				document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
-				updateExpenseAmount.value = eecaList[i].amount;//금액
-				updateExpenseMemo.value = eecaList[i].memo;//내용
-			});
-		}
-	}
-	//상세데이터에 표시된 수입 아이템을 클릭하면 updateModal창을 열어주고, form안에 값을 넣어주는 메서드
-	function putIncomeDataToUpdateForm(iicaList) {
-		for (let i = 0; i < iicaList.length; i++) {
-			let classStr = 'div.di_income' + i;
-			let detailItem = document.querySelector(classStr);
-			detailItem.addEventListener('click', function () {
-				//모달창을 보여주고
-				modal.classList.remove('hidden');
-				//모달창의 수입 박스를 체크해주고, update_income_form의 hidden클래스를 없애준다.
-				updateIncomeCategoryIncome.checked = true;
-				updateIncomeForm.classList.remove('hidden');
-				updateExpenseForm.classList.add('hidden');
-				//form안의 input창들의 value에 선택한 날짜의 value를 넣어주자.
-				let thisDate;
-				if(iicaList[i].incomeDate.monthValue < 10) {
-					if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}else{
-					if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}
-				updateIncomeId.value = iicaList[i].incomeId;
-				updateIncomeDate.value = thisDate; //날짜
-				updateAssetsIncomeSelected.value = iicaList[i].assetsId; //자산(value)
-				updateAssetsIncomeSelected.innerText = iicaList[i].assetsName; //자산(name)
-				showUpdateIncomeAom(iicaList[i]);
-				document.querySelector('#update_aom_income_origin').value = iicaList[i].memAssetId;
-				updateIncomeCategorySelected.value = iicaList[i].icId; //수입분류(value)
-				updateIncomeCategorySelected.innerText = iicaList[i].icName; //수입분류(name)
-				document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
-				updateIncomeAmount.value = iicaList[i].amount;//금액
-				updateIncomeMemo.value = iicaList[i].memo;//내용
-			});
-		}
-  }
+
   //캘린더 객체를 전달받아 해당 월에 맞는 달력을 만들어주는 기능
   function makecalendar(cal) {
 		let currentMonth = cal.year;
@@ -507,68 +420,6 @@ window.addEventListener('DOMContentLoaded', function () {
       entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + ecAmount + '원</span></div>';
     }
 	}
-	//수입 상세란의 삭제버튼에 이벤트를 걸어주는 기능
-	function addEvnetToIncomeDeleteButton(iicaList) {
-		for(let i = 0; i < iicaList.length; i++) {
-			let button = 'button.delete_income_button'+i;
-			document.querySelector(button).addEventListener('click', function() {
-				event.stopPropagation();
-				document.querySelector('#modal').classList.remove('hidden');
-				document.querySelector('#delete_income_form').classList.remove('hidden');
-				document.querySelector('#delete_income_id').value = iicaList[i].incomeId;
-				document.querySelector('#delete_income_memAssetId_selected').value = iicaList[i].memAssetId;
-				document.querySelector('#delete_income_memAssetId_selected').innerText = iicaList[i].aomName;
-				let incomeDate;
-				if(iicaList[i].incomeDate.monthValue < 10) {
-						if(iicaList[i].incomeDate.dayOfMonth < 10) {incomeDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else{incomeDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-					}else{
-						if(iicaList[i].incomeDate.dayOfMonth < 10){incomeDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-					}else {incomeDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-				}
-				console.log(incomeDate);
-				document.querySelector('#delete_income_date').value = incomeDate;
-				console.log(document.querySelector('#delete_income_date').value);
-				document.querySelector('#delete_income_assets_id_selected').value = iicaList[i].assetsId;
-				document.querySelector('#delete_income_assets_id_selected').innerText = iicaList[i].assetsName;
-				document.querySelector('#delete_income_category_id_selected').value = iicaList[i].icId;
-				document.querySelector('#delete_income_category_id_selected').innerText = iicaList[i].icName;
-				document.querySelector('#delete_income_amount').value = iicaList[i].amount;
-				document.querySelector('#delete_income_memo').value = iicaList[i].memo;
-			});
-		}
-	}
-	//지출 상세란의 삭제버튼에 이벤트를 걸어주는 기능
-	function addEvnetToExpenseDeleteButton(eecaList) {
-		for(let i = 0; i < eecaList.length; i++) {
-			let button = 'button.delete_expense_button'+i;
-			document.querySelector(button).addEventListener('click', function() {
-				event.stopPropagation();
-				document.querySelector('#modal').classList.remove('hidden');
-				document.querySelector('#delete_expense_form').classList.remove('hidden');
-				document.querySelector('#delete_expense_id').value = eecaList[i].expenseId;
-				document.querySelector('#delete_expense_memAssetId_selected').value = eecaList[i].memAssetId;
-				document.querySelector('#delete_expense_memAssetId_selected').innerText = eecaList[i].aomName;
-				let expenseDate;
-				if(eecaList[i].expenseDate.monthValue < 10) {
-						if(eecaList[i].expenseDate.dayOfMonth < 10) {expenseDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else{expenseDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-					}else{
-						if(eecaList[i].expenseDate.dayOfMonth < 10){expenseDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-					}else {expenseDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-				}
-				console.log(expenseDate);
-				document.querySelector('#delete_expense_date').value = expenseDate;
-				console.log(document.querySelector('#delete_expense_date').value);
-				document.querySelector('#delete_expense_assets_id_selected').value = eecaList[i].assetsId;
-				document.querySelector('#delete_expense_assets_id_selected').innerText = eecaList[i].assetsName;
-				document.querySelector('#delete_expense_category_id_selected').value = eecaList[i].ecId;
-				document.querySelector('#delete_expense_category_id_selected').innerText = eecaList[i].ecName;
-				document.querySelector('#delete_expense_amount').value = eecaList[i].amount;
-				document.querySelector('#delete_expense_memo').value = eecaList[i].memo;
-			});
-		}
-	}
   //상세란에 상세 수입을 뿌려주는 기능
   function makeDetailIncomeDIV(iicaList) {
 		let sumI = 0;
@@ -578,17 +429,15 @@ window.addEventListener('DOMContentLoaded', function () {
 				sumI += iicaList[i].amount;
 				str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
 				str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
-				str += '<div class=detailIAmount><span class=detailIAmount>' + iicaList[i].amount + '</span></div><div class=delete_income_button><button type=button class="delete_income_button'+i+'">삭제</button></div></div>';
+				str += '<div class=detailIAmount><span class=detailIAmount>' + iicaList[i].amount + '</span></div></div>';
 			}
 			detailContextIncome.innerHTML = str;
-			addEvnetToIncomeDeleteButton(iicaList);
 		}
 		document.querySelector('span.detailSumI').innerText = sumI;
 
   }
   //상세란에 상세 지출을 뿌려주는 기능
   function makeDetailExpenseDIV(eecaList) {
-
 		let sumE = 0;
 		let str = '';
 		if(eecaList != null){
@@ -596,10 +445,9 @@ window.addEventListener('DOMContentLoaded', function () {
 				sumE += eecaList[i].amount;
 				str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
 				str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
-				str += '<div class=detailEAmount><span class=detailEAmount>' + eecaList[i].amount + '</span></div><div class=delete_expense_button><button type=button class="delete_expense_button'+i+'">삭제</button></div></div>';
+				str += '<div class=detailEAmount><span class=detailEAmount>' + eecaList[i].amount + '</span></div></div>';
 			}
 			detailContextExpense.innerHTML = str;
-			addEvnetToExpenseDeleteButton(eecaList);
 		}
     document.querySelector('span.detailSumE').innerText = sumE;
   }
@@ -620,13 +468,13 @@ window.addEventListener('DOMContentLoaded', function () {
         //ajax로 전송할 json data로 셋팅하자.
         let detailData = { 'currentDate': currentDate }
         dateTd[i].onclick = function () {
+					event.stopPropagation();
           //일단 상세내역 데이터들 초기화 해줘야함.
           detailContextIncome.innerHTML = null;
           detailContextExpense.innerHTML = null;
 					detailDateSpan.innerHTML = currentDate;
 					document.querySelector('#insert_income_date').value = currentDate;
 					document.querySelector('#insert_expense_date').value = currentDate;
-					
           //이건 날짜별 수입 데이터들
           $.ajax({
             url: '/main/postIICA',
@@ -645,8 +493,19 @@ window.addEventListener('DOMContentLoaded', function () {
                   let eecaList = data;
                   makeDetailExpenseDIV(eecaList);
                   if(eecaList.length>0){putExpenseDataToUpdateForm(eecaList);}
-                }
-              });
+									//이건 날짜별 이체 데이터들
+									$.ajax({
+										url:'/main/postTAOMFAOMT',
+										type:'post',
+										data: detailData,
+										success: function (data) {
+											let taomfaomtList = data;
+											makeDetailTransferDIV(taomfaomtList);
+											if(taomfaomtList.length>0){putTransferDataToUpdateForm(taomfaomtList)}
+										}
+									});
+								}
+							});
             }
           });
         }
@@ -657,15 +516,16 @@ window.addEventListener('DOMContentLoaded', function () {
 	function refreshData(UpdateAndRefreshData){
 		modal.classList.add('hidden');
 		tbody.innerHTML=null;
-		document.querySelector('#delete_income_form').classList.add('hidden');
-		document.querySelector('#delete_expense_form').classList.add('hidden');
 		document.querySelector('#update_income_form').classList.add('hidden');
 		document.querySelector('#update_expense_form').classList.add('hidden');
+		document.querySelector('#update_transfer_form').classList.add('hidden');
 		document.querySelector('#insert_income_form').reset();
 		document.querySelector('#insert_expense_form').reset();
+		// document.querySelector('#insert_transfer_form').reset();
 		let cal = UpdateAndRefreshData.cal;
 		let meecList = UpdateAndRefreshData.meecList;
 		let miicList = UpdateAndRefreshData.miicList;
+		let tbmList = UpdateAndRefreshData.tbmList;
 		makecalendar(cal);
 		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
 			let classStr;
@@ -677,9 +537,11 @@ window.addEventListener('DOMContentLoaded', function () {
 			if(i < 10){classStr = '.de0'+i;}else{classStr = '.de'+i;}
 			document.querySelector(classStr).innerHTML = null;
 		}}
+		showThisMonthTransfer(tbmList);
+		let updateDate = document.querySelector('span.detailDate').innerText;
 		document.querySelector('#insert_income_date').value = updateDate;
 		document.querySelector('#insert_expense_date').value = updateDate;
-		let updateDate = document.querySelector('span.detailDate').innerText;
+		// document.querySelector('#insert_transfer_form').value = updateDate;
 		let detailData = {"currentDate":updateDate};
 		//이건 날짜별 수입 데이터들
 		$.ajax({
@@ -688,7 +550,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			data: detailData,
 			success: function (data) {
 				let iicaList = data;
-				if(iicaList != null){makeDetailIncomeDIV(iicaList);putIncomeDataToUpdateForm(iicaList);}else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
+				if(iicaList != null){makeDetailIncomeDIV(iicaList);putIncomeDataToUpdateForm(iicaList);}
+				else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
 				//이건 날짜별 지출 데이터들
 				$.ajax({
 					url: '/main/postEECA',
@@ -696,7 +559,19 @@ window.addEventListener('DOMContentLoaded', function () {
 					data: detailData,
 					success: function (data) {
 						let eecaList = data;
-						if(eecaList != null){makeDetailExpenseDIV(eecaList);putExpenseDataToUpdateForm(eecaList);}else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
+						if(eecaList != null){makeDetailExpenseDIV(eecaList);putExpenseDataToUpdateForm(eecaList);}
+						else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
+						//이건 날짜별 이체 데이터들
+						$.ajax({
+							url:'/main/postTAOMFAOMT',
+							type:'post',
+							data: detailData,
+							success: function (data) {
+								let taomfaomtList = data;
+								if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);putTransferDataToUpdateForm(taomfaomtList)}
+								else{document.querySelector('div.detail_context_transfer').innerHTML = null;}
+							}
+						});
 					}
 				});
 			}
@@ -704,11 +579,9 @@ window.addEventListener('DOMContentLoaded', function () {
 		let dateTd = document.querySelectorAll('.dateTd');
 		put_MakeDetailDiv_to_dateTd(dateTd);
 	}
-	//인서트시에 업데이트 해주는 기능
+	//인서트시, 딜리트 시 업데이트 해주는 기능
 	function refreshDataWhenInsert(UpdateAndRefreshData){
 		modal.classList.add('hidden');
-		document.querySelector('#delete_income_form').classList.add('hidden');
-		document.querySelector('#delete_expense_form').classList.add('hidden');
 		document.querySelector('#update_income_form').classList.add('hidden');
 		document.querySelector('#update_expense_form').classList.add('hidden');
 		document.querySelector('#insert_income_form').reset();
@@ -737,41 +610,8 @@ window.addEventListener('DOMContentLoaded', function () {
 		if(eecaList != null){makeDetailExpenseDIV(eecaList); putExpenseDataToUpdateForm(eecaList);}else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
 		put_MakeDetailDiv_to_dateTd(dateTd);
 	}
-	//Income데이터 삭제 기능
-	function confirmDeleteIncome(really) {
-		if(really == true){
-			let formData = $('#delete_income_form').eq(0).serialize();
-			$.ajax({
-				url:'/main/postDeleteIncome',
-				type:'post',
-				data:formData,
-				success:function(UR) {
-					refreshDataWhenInsert(UR);
-				},
-				error:function(e) {
-					alert('수입 내역을 삭제하는 도중 오류가 발생했습니다.');
-				}
-			});
-		}
-	}
-	//Expense데이터 삭제 기능
-	function confirmDeleteExpense(really) {
-		if(really == true){
-			let formData = $('#delete_expense_form').eq(0).serialize();
-			$.ajax({
-				url:'/main/postDeleteExpense',
-				type:'post',
-				data:formData,
-				success:function(UR) {
-					refreshDataWhenInsert(UR);
-				},
-				error:function(e) {
-					alert('지출 내역을 삭제하는 도중 오류가 발생했습니다.');
-				}
-			});
-		}
-	}
-	//데이트picker
+
+	//################## DateLicker ####################
 	let currentMonth = new Date().getUTCMonth()+1;
   currentMonth +='월로...';
   $("#selecDate").datepicker({
@@ -804,7 +644,6 @@ window.addEventListener('DOMContentLoaded', function () {
 							showThisMonthIncome(miicList);
 						}
 					});
-					//캘린더가 만들어진 후, 해당 월에 맞는 expense 자료를 가져와서 뿌려주는 기능
 					$.ajax({
 						url: '/main/postMEEC',
 						type: 'post',
@@ -813,8 +652,14 @@ window.addEventListener('DOMContentLoaded', function () {
 							showThisMonthExpense(meecList);
 						}
 					});
-					//날짜별 걸어줄 이벤트 실행
-					//테이블이 생성되고 나면 각 테이블마다 onclick function을 걸어주자
+					$.ajax({
+						url: '/main/postTBM',
+						type: 'post',
+						data: formData,
+						success: function (tbmList) {
+							showThisMonthTransfer(tbmList);
+						}
+					});
 					let dateTd = document.querySelectorAll('.dateTd');
 					put_MakeDetailDiv_to_dateTd(dateTd);
 				}
@@ -825,42 +670,6 @@ window.addEventListener('DOMContentLoaded', function () {
 	// 페이지 처음 load시, td에 이벤트 걸어준다.
 	let dateTd = document.querySelectorAll('.dateTd');
 	put_MakeDetailDiv_to_dateTd(dateTd);
-
-/*########## grid_main 관련 기능 ##########*/
-  //월을 변경하면, 해당 월에 맞는 날짜로 Calendar객체를 생성후 받아와서, 뿌려주는기능
-  selecDate.addEventListener('change', function () {
-  //날짜가 변경되었을 때, 날짜에 맞는 캘린더를 뿌려주는 기능
-    let formData = $('#selecDate').eq(0).serialize();
-    $.ajax({
-      url: '/main/postCal',
-      type: 'post',
-      data: formData,
-      success: function (cal) {
-        makecalendar(cal);
-        $.ajax({
-          url: '/main/postMIIC',
-          type: 'post',
-          data: formData,
-          success: function (miicList) {
-            showThisMonthIncome(miicList);
-          }
-        });
-        //캘린더가 만들어진 후, 해당 월에 맞는 expense 자료를 가져와서 뿌려주는 기능
-        $.ajax({
-          url: '/main/postMEEC',
-          type: 'post',
-          data: formData,
-          success: function (meecList) {
-            showThisMonthExpense(meecList);
-          }
-        });
-        //날짜별 걸어줄 이벤트 실행
-        //테이블이 생성되고 나면 각 테이블마다 onclick function을 걸어주자
-        let dateTd = document.querySelectorAll('.dateTd');
-        put_MakeDetailDiv_to_dateTd(dateTd);
-      }
-    });
-  });
 
   //이전 월 버튼을 선택하면, 이전 월에 해당하는 캘린더를 뿌려주는 기능
   prevMonth.addEventListener('click', function () {
@@ -896,7 +705,15 @@ window.addEventListener('DOMContentLoaded', function () {
           success: function (meecList) {
             showThisMonthExpense(meecList);
           }
-        });
+				});
+				$.ajax({
+					url: '/main/postTBM',
+					type: 'post',
+					data: formData,
+					success: function (tbmList) {
+						showThisMonthTransfer(tbmList);
+					}
+				});
         //날짜별 걸어줄 이벤트 실행
         //테이블이 생성되고 나면 각 테이블마다 onclick function을 걸어주자
         let dateTd = document.querySelectorAll('.dateTd');
@@ -939,7 +756,15 @@ window.addEventListener('DOMContentLoaded', function () {
           success: function (meecList) {
             showThisMonthExpense(meecList);
           }
-        });
+				});
+				$.ajax({
+					url: '/main/postTBM',
+					type: 'post',
+					data: formData,
+					success: function (tbmList) {
+						showThisMonthTransfer(tbmList);
+					}
+				});
         //날짜별 걸어줄 이벤트 실행
         //테이블이 생성되고 나면 각 테이블마다 onclick function을 걸어주자
         let dateTd = document.querySelectorAll('.dateTd');
@@ -969,7 +794,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			},
 			success:function(UR) {
 				refreshData(UR);
-			}
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 		});
 		return false;
 	});
@@ -985,23 +811,71 @@ window.addEventListener('DOMContentLoaded', function () {
 			},
 			success:function(UR) {
 				refreshData(UR);
-			}
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
 		});
 		return false;
 	});
-	//수입 삭제버튼
-	$('#delete_income_form').on('submit', function() {
-		let really = confirm('삭제하시겠습니까');
-		event.stopPropagation();
-		confirmDeleteIncome(really);
+	//이체 업데이트
+	$('#update_transfer_form').on('submit', function() {
+		let formData = $('#update_transfer_form').eq(0).serialize();
+		$.ajax({
+			url:'/main/postUpdateTransfer',
+			type:'post',
+			data:formData,
+			success:function(UR) {
+				refreshData(UR);
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		});
 		return false;
 	});
-	//지출 삭제버튼
-	$('#delete_expense_form').on('submit', function() {
+	// //수입 삭제버튼
+	$('#delete_income_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
-		event.stopPropagation();
-		confirmDeleteExpense(really);
-		return false;
+		if(really == true) {
+			let formData = $('#update_income_form').eq(0).serialize();
+			$.ajax({
+				url:'/main/postDeleteIncome',
+				type:'post',
+				data:formData,
+				success:function(UR) {
+					refreshData(UR);
+				},error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			});
+		}
+	});
+	// //지출 삭제버튼
+	$('#delete_expense_button').on('click', function(){
+		let really = confirm('삭제하시겠습니까?');
+		if(really == true) {
+			let formData = $('#update_expense_form').eq(0).serialize();
+			$.ajax({
+				url:'/main/postDeleteExpense',
+				type:'post',
+				data:formData,
+				success:function(UR) {
+					refreshData(UR);
+				},error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			});
+		}
+	});
+	$('#delete_transfer_button').on('click', function(){
+		let really = confirm('삭제하시겠습니까?');
+		if(really == true) {
+			let formData = $('#update_transfer_form').eq(0).serialize();
+			$.ajax({
+				url:'/main/postDeleteTransfer',
+				type:'post',
+				data:formData,
+				success:function(UR) {
+					refreshData(UR);
+				},error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+			});
+		}
 	});
 
 /*########## grid_aside 관련 기능 ##########*/

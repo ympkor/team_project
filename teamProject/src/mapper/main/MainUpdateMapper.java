@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 
 import dto.main.Expense;
 import dto.main.Income;
+import dto.main.Transfer;
 
 public interface MainUpdateMapper {
 	//Insert Income
@@ -18,6 +19,9 @@ public interface MainUpdateMapper {
 	//ExpenseId로 Expense update
 	public void updateExpenseByExpenseId(Expense expense);
 	
+	//transferId로  transfer update
+	public void updateTransferByTransferId(Transfer transfer);
+
 	//해당 유저의 모든 income SUM
 	public Integer selectSUMINCOMEByUserKeyAndAssetsId(@Param("userKey")int userKey, @Param("assetsId") int assetsId);
 
@@ -35,4 +39,8 @@ public interface MainUpdateMapper {
 	
 	//DELETE expense By Expense id
 	public void deleteExpenseByExpenseId(@Param("expenseId")int expenseId);
+
+	//DELETE transfer By transfer id
+	public void deleteTransferByTransferId(int transferId);
+
 }

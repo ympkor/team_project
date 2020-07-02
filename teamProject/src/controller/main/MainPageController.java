@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,18 +20,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dto.main.AssetsAssetsOfMember;
 import dto.main.AssetsOfMember;
 import dto.main.Calendar;
-import dto.main.Expense;
 import dto.main.ExpenseCategory;
 import dto.main.ExpenseExpenseCategoryAssets;
-import dto.main.IncomeUpdate;
 import dto.main.IncomeCategory;
 import dto.main.IncomeIncomeCategoryAssets;
-import dto.main.UpdateAndRefresh;
 import dto.main.MemberExpenseExpenseCategory;
 import dto.main.MemberIncomeIncomeCategory;
 import dto.main.SumAmounts;
+import dto.main.Transfer;
+import dto.main.TransferAssetsOfMemeberFromAssetsOfMemeberTo;
 import service.main.MainPageService;
-import service.main.MainUpdateService;
 
 @Controller
 @SessionAttributes("userKey")
@@ -61,8 +58,10 @@ public class MainPageController {
 		//페이지가 처음 생성되었을 때 뿌려줄 데이터들을 전부 설정
 		List<MemberIncomeIncomeCategory> miicList = mainService.selectMIICByUserKeyAndDate(userKey, curDate); //달력에 뿌려줄 날짜별 수입 데이터
 		List<MemberExpenseExpenseCategory> meecList = mainService.selectMEECByUserKeyAndDate(userKey, curDate);//달력에 뿌려줄 날짜별 지출 데이터
+		List<Transfer> transferByMonthList = mainService.selectTransferByUserKeyAndDate(userKey, curDate);
 		List<IncomeIncomeCategoryAssets> iicaList = mainService.selectIICAByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 수입 상세 데이터
 		List<ExpenseExpenseCategoryAssets> eecaList = mainService.selectEECAByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 지출 상세 데이터
+//		List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList = mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 이체 상세 데이터
 		List<IncomeCategory> icList = mainService.selectAllIC();//insert, update에서 사용자에게 보여줄 수입카테고리
 		List<ExpenseCategory> ecList = mainService.selectAllEc();//insert, update에서 사용자에게 보여줄 지출 카테고리
 		List<AssetsAssetsOfMember> aaomList = mainService.selectAAOMByUserKey(userKey);//insert,update에서 사용자에게 보여줄 사용자가 등록한 자산항목들
@@ -72,7 +71,11 @@ public class MainPageController {
 		ObjectMapper mapper = new ObjectMapper();
 		String iicaListJ = mapper.writeValueAsString(iicaList);
 		String eecaListJ = mapper.writeValueAsString(eecaList);
+		String tbmListJ = mapper.writeValueAsString(transferByMonthList);
+//		String taomfaomtJ = mapper.writeValueAsString(taomfaomtList);
 		
+//		m.addAttribute("taomfaomtJ", taomfaomtJ);
+		m.addAttribute("tbmListJ", tbmListJ);
 		m.addAttribute("iicaListJ", iicaListJ);
 		m.addAttribute("eecaListJ", eecaListJ);
 		m.addAttribute("cal", cal);
@@ -112,6 +115,13 @@ public class MainPageController {
 		return meecList;
 	}
 	
+	//날짜가 변경되면 달력에 뿌려줄 날짜별 이체 데이터 반환 
+	@PostMapping("/postTBM")
+	public @ResponseBody List<Transfer> getTBMList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "selecDate")String transferDate) {
+		List<Transfer> tbmList = mainService.selectTransferByUserKeyAndDate(userKey, transferDate);
+		return tbmList;
+	}
+	
 	//날짜를 선택하면 그 날에 해당되는 수입상세내역 반환
 	@PostMapping("/postIICA")
 	public @ResponseBody List<IncomeIncomeCategoryAssets> getIICAList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "currentDate")String incomeDate) {
@@ -126,10 +136,45 @@ public class MainPageController {
 		return eecaList;
 	}
 	
+	//상세데이터에 출력할 이체 데이터 반환
+	@PostMapping("/postTAOMFAOMT")
+	public @ResponseBody List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> getTAOMFAOMTList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "currentDate")String transferDate) {
+		List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList = mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, transferDate);
+		return taomfaomtList;
+	}
+	
+	//IncomeCategory List를 반환
+	@PostMapping("/postICList")
+	public @ResponseBody List<IncomeCategory> getICList() {
+		List<IncomeCategory> icList = mainService.selectAllIC();
+		return icList;
+	}
+
+	//ExpenseCategory List를 반환
+	@PostMapping("/postECList")
+	public @ResponseBody List<ExpenseCategory> getECList() {
+		List<ExpenseCategory> ecList = mainService.selectAllEc();
+		return ecList;
+	}
+	
+	//userKey에 해당하는 자산과 자산항목을 반환(자산항목 보여주기용)
+	@PostMapping("/postAAOM")
+	public @ResponseBody List<AssetsAssetsOfMember> getAAOMList(int userKey) {
+		List<AssetsAssetsOfMember> aaomList = mainService.selectAAOMByUserKey(userKey);
+		return aaomList;
+	}
+	
 	//assetsId를 받아서 assets of member 조회 후 반환
 	@PostMapping("/postAOM")
 	public @ResponseBody List<AssetsOfMember> getAOMList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "assetsId")int assetsId) {
 		List<AssetsOfMember> aomList =  mainService.selectAOMByUserKeyAndAssetsId(userKey, assetsId);
 		return aomList;
+	}
+	
+	//memAssetId로 AOM조회후 객체 반환
+	@PostMapping("/postGetAOM")
+	public @ResponseBody AssetsOfMember selectAOMById(@RequestParam(name = "memAssetId")int memAssetId) {
+		AssetsOfMember aom = mainService.selectAOMByMemAssetId(memAssetId);
+		return aom;
 	}
 }

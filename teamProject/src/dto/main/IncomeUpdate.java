@@ -14,13 +14,14 @@ public class IncomeUpdate {
 	private LocalDate incomeDate;
 	private int memAssetId;
 	private int newMemAssetId;
+	private int memAssetIdTo;
 	private int assetsId;
 	private int icId;
 	private int ecId;
 	private String memo;
 	public IncomeUpdate() {}
-	public IncomeUpdate(int category, int incomeId, int userKey, int amount, int newAmount, LocalDate incomeDate, int memAssetId, int newMemAssetId, int assetsId, int icId, int ecId, 
-			String memo) {
+	public IncomeUpdate(int category, int incomeId, int userKey, int amount, int newAmount, LocalDate incomeDate,
+			int memAssetId, int newMemAssetId, int memAssetIdTo, int assetsId, int icId, int ecId, String memo) {
 		this.category = category;
 		this.incomeId = incomeId;
 		this.userKey = userKey;
@@ -29,11 +30,19 @@ public class IncomeUpdate {
 		this.incomeDate = incomeDate;
 		this.memAssetId = memAssetId;
 		this.newMemAssetId = newMemAssetId;
+		this.memAssetIdTo = memAssetIdTo;
 		this.assetsId = assetsId;
 		this.icId = icId;
 		this.ecId = ecId;
 		this.memo = memo;
 	}
+	public int getMemAssetIdTo() {
+		return memAssetIdTo;
+	}
+	public void setMemAssetIdTo(int memAssetIdTo) {
+		this.memAssetIdTo = memAssetIdTo;
+	}
+
 	public int getNewAmount() {
 		return newAmount;
 	}
@@ -110,7 +119,7 @@ public class IncomeUpdate {
 	public String toString() {
 		return "IncomeUpdate [category=" + category + ", incomeId=" + incomeId + ", userKey=" + userKey + ", amount="
 				+ amount + ", newAmount=" + newAmount + ", incomeDate=" + incomeDate + ", memAssetId=" + memAssetId
-				+ ", newMemAssetId=" + newMemAssetId + ", assetsId=" + assetsId + ", icId=" + icId + ", ecId=" + ecId
-				+ ", memo=" + memo + "]";
+				+ ", newMemAssetId=" + newMemAssetId + ", memAssetIdTo=" + memAssetIdTo + ", assetsId=" + assetsId
+				+ ", icId=" + icId + ", ecId=" + ecId + ", memo=" + memo + "]";
 	}
 }
