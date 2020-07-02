@@ -60,37 +60,62 @@ $(function(){
  			return false;
  		}
 	})
-	
 });
 
 $(function(){
 	$("form").submit(function(){
-		//수정폼제출시 실행
 		var updateData = $("form").eq(0).serialize();
-		var name=$("input[name=name]").val().trim();
-		var pass = $("input[name=password]").val().trim();
-		var pass_check=$("input[name=password_check]").val().trim();
 		$.ajax({
 			url:"/member/update",
 			type:"post",
 			data:updateData,
 			success:function(data){
+				//수정폼제출시 실행
+				var pass = $("input[name=password]").val().trim();
+				var id = $("input[name=userId]").val().trim();
+				var pass_check=$("input[name=password_check]").val().trim();
+				var name=$("input[name=name]").val().trim();
+		 		var num = pass.search(/[0-9]/g);
+			 	var eng = pass.search(/[a-z]/ig);
+			 	var spe = pass.search(/[~!@#$%^&*()_]/gi);
+			 	//비밀번호 유효성체크(8~16자리, 공백없음, 같은문자 반복안됨, 문자+숫자 또는 문자+특수문자 조합으로만 가능, 아이디와 동일하면 안됨)
 				if(pass == ""){
 					alert("비밀번호를 입력해주세요");
+					$("input[name=password]").focus();
 					return false;
-				} else if(pass_check==""){
+				} else if(pass.length < 8 || pass.length > 16){
+					$("input[name=password]").focus();
+					return false;
+			 	} else if(pass.search(/\s/) != -1){
+			 		$("input[name=password]").focus();
+			 		return false;
+			 	} else if(/(\w)\1\1\1/.test(pass)){
+			 		$("input[name=password]").focus(); 
+			 		return false;
+				 } else if((num < 0 || eng < 0) && (eng < 0 || spe < 0)){
+					$("input[name=password]").focus();
+			 		return false;
+				 } else if(pass.search(id) > -1){
+					$("input[name=password]").focus();
+					return false;
+				 //비밀번호 유효성체크
+				 } else if(pass_check==""){
 					alert("비밀번호확인을 입력해주세요");
+					$("input[name=password_check]").focus();
 					return false;
-				} else if(name==""){
-					alert("이름을 입력해주세요");
-					return false;
-				} else if(pass != pass_check){
+				 } else if(pass != pass_check){
 					alert("비밀번호와 비밀번호 확인창이 일치하지 않습니다.");
-					return false;	
-				} else {
-					alert("수정되었습니다.");
-					location.href="/member/mypage";
-				}
+					$("input[name=password_check]").focus();
+					return false;
+				 //이름 유효성체크
+				 } else if(name==""){
+					alert("이름을 입력해주세요");
+					$("input[name=name]").focus();
+					return false;
+				 } else {
+					 alert("수정완료되었습니다.");
+					 location.href="/member/mypage";
+				 }
 			}
 		});
 		return false;

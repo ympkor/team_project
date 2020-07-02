@@ -43,32 +43,13 @@ public class MemberController {
 	
 	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
 	@RequestMapping("/asset/view")
-	public String MemberAddproc(Model model, Member member) {
+	@ResponseBody
+	public Member MemberAddproc(Model model, Member member) {
 		memberService.addMember(member);//회원추가
 		memberService.addCash(member.getUserKey());//추가된 회원의 회원번호를 넣어서 추가해줌
 		Member m = joinMapper.selectById(member.getUserId());//회원아이디로 회원의 전체 정보를 조회후
-		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌
-		
-		//회원 추가후 자산을 추가하는 창을 보여줌(AssetOfMemberController에서 가져옴)
-		List<AssetOfMember> aomList = aomService.getAssetOfMember(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
-		int i = 0;
-		int sumAssets = 0;
-		while(aomList.size() > i) {
-			sumAssets += aomList.get(i).getAmount();
-			i++;
-		}
-
-		AssetNewsService ans = new AssetNewsService();
-		StringBuilder newsString = ans.getNews();
-
-		JSONObject jsonObject = new JSONObject(newsString.toString());
-		JSONArray jsonArray = jsonObject.getJSONArray("items");
-
-		model.addAttribute("aomList", aomList);
-		model.addAttribute("sumAsset", sumAssets);
-		model.addAttribute("newsList", jsonArray);
-		
-		return "showAsset";
+		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌	
+		return member;
 	}
 	
 	//아이디 중복체크
@@ -162,9 +143,10 @@ public class MemberController {
 	
 	//수정페이지에서 수정한 내용을 다시 DB로 보내줌
 	@PostMapping("/update")
-	public String updateProc(Member member) {
+	@ResponseBody
+	public Member updateProc(Member member) {
 		memberService.updateMember(member);
-		return "mypage";
+		return member;
 	}
 	
 	//삭제버튼시 넘어감
@@ -190,9 +172,9 @@ public class MemberController {
 		return str;
 	}
 	
-//	//세션값이 넘어가는지 확인해주는페이지
-//	@GetMapping("/money")
-//	public String getMo() {
-//		return "money";
-//	}
+	//세션값이 넘어가는지 확인해주는페이지
+	@GetMapping("/money")
+	public String getMo() {
+		return "money";
+	}
 }

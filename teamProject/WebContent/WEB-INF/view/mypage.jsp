@@ -9,8 +9,7 @@
 <script type="text/javascript" src="/js/mypageJs.js"></script>
 </head>
 <body>
-	<div>회원번호</div>
-	<div>${member.userKey}</div>
+	<div><input type="hidden" name="userKey"></div>
 	<div>회원아이디</div>
 	<div>${member.userId}</div>
 	<div>이름</div>
