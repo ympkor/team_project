@@ -23,7 +23,7 @@ public class DeleteExpense {
 		this.expenseId = expenseId;
 		this.expenseDate = expenseDate;
 		this.assetsId = assetsId;
-		this.memAssetId = memAssetId; 
+		this.memAssetId = memAssetId;
 		this.ecId = ecId;
 		this.amout = amout;
 		this.memo = memo;

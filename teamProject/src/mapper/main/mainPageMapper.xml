@@ -21,19 +21,21 @@
 	
 	<!-- user_key와 income_date로 날짜별 수입 상세내역 반환 -->
 	<select id="selectIICAByUserKeyAndIncomeDate" resultType="IICA">
-		SELECT i.income_id, i.ic_id, ic.ic_name, i.memo, ass.assets_id, ass.assets_name, i.amount, i.income_date 
+		SELECT i.income_id, i.ic_id, ic.ic_name, i.memo, i.mem_asset_id, aom.memo AS aom_name, ass.assets_id, ass.assets_name, i.amount, i.income_date 
 		FROM income AS i 
 		JOIN income_category AS ic ON i.ic_id=ic.ic_id 
-		JOIN assets AS ass ON ass.assets_id=i.assets_id 
+		JOIN assets AS ass ON ass.assets_id=i.assets_id  
+		JOIN assets_of_member AS aom ON aom.mem_asset_id=i.mem_asset_id 
 		WHERE i.user_key=#{userKey} AND i.income_date=#{incomeDate}
 	</select>
 	
 	<!-- user_key와 expense_date로 날짜별 지출 상세내역 반환 -->
 	<select id="selectEECAByUserKeyAndExpenseDate" resultType="EECA">
-		SELECT e.expense_id, e.ec_id, ec.ec_name, e.memo, ass.assets_id, ass.assets_name, e.amount, e.expense_date
+		SELECT e.expense_id, e.ec_id, ec.ec_name, e.memo, e.mem_asset_id, aom.memo AS aom_name, ass.assets_id, ass.assets_name, e.amount, e.expense_date
 		FROM expense AS e 
 		JOIN expense_category AS ec ON e.ec_id=ec.ec_id 
 		JOIN assets AS ass ON ass.assets_id=e.assets_id 
+		JOIN assets_of_member AS aom ON aom.mem_asset_id=e.mem_asset_id 
 		WHERE e.user_key=#{userKey} AND e.expense_date=#{expenseDate}
 	</select>
 	

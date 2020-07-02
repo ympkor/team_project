@@ -9,18 +9,22 @@ public class IncomeIncomeCategoryAssets {
 	private int icId;
 	private String icName;
 	private String memo;
+	private int memAssetId;
+	private String aomName;
 	private int assetsId;
 	private String assetsName;
 	private int amount;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate incomeDate;
 	public IncomeIncomeCategoryAssets() {}
-	public IncomeIncomeCategoryAssets(int incomeId, int icId, String icName, String memo, int assetsId, String assetsName, int amount,
+	public IncomeIncomeCategoryAssets(int incomeId, int icId, String icName, String memo, int memAssetId, String aomName, int assetsId, String assetsName, int amount,
 			LocalDate incomeDate) {
 		this.incomeId = incomeId;
 		this.icId = icId;
 		this.icName = icName;
 		this.memo = memo;
+		this.memAssetId = memAssetId;
+		this.aomName = aomName;
 		this.assetsId = assetsId;
 		this.assetsName = assetsName;
 		this.amount = amount;
@@ -62,6 +66,18 @@ public class IncomeIncomeCategoryAssets {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	public int getMemAssetId() {
+		return memAssetId;
+	}
+	public void setMemAssetId(int memAssetId) {
+		this.memAssetId = memAssetId;
+	}
+	public String getAomName() {
+		return aomName;
+	}
+	public void setAomName(String aomName) {
+		this.aomName = aomName;
+	}
 	public int getAmount() {
 		return amount;
 	}
@@ -76,7 +92,8 @@ public class IncomeIncomeCategoryAssets {
 	}
 	@Override
 	public String toString() {
-		return "IncomeIncomeCategoryAssets [icId=" + icId + ", icName=" + icName + ", memo=" + memo + ", assetsId="
-				+ assetsId + ", assetsName=" + assetsName + ", amount=" + amount + ", incomeDate=" + incomeDate + "]";
+		return "IncomeIncomeCategoryAssets [incomeId=" + incomeId + ", icId=" + icId + ", icName=" + icName + ", memo="
+				+ memo + ", memAssetId=" + memAssetId + ", aomName=" + aomName + ", assetsId=" + assetsId
+				+ ", assetsName=" + assetsName + ", amount=" + amount + ", incomeDate=" + incomeDate + "]";
 	}
 }

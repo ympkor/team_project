@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dto.main.AssetsAssetsOfMember;
 import dto.main.AssetsOfMember;
 import dto.main.Calendar;
@@ -32,16 +35,23 @@ import service.main.MainPageService;
 import service.main.MainUpdateService;
 
 @Controller
-@RequestMapping("/main")
 @SessionAttributes("userKey")
+@RequestMapping("/main")
 public class MainPageController {
 	@Autowired
 	private MainPageService mainService;
 //	int userKey = 1;//나중에 세션으로 받을 아이디에 해당되는 key값
 	
+//	로그인 없이 사용하기 위한 임시 세션값 설정
+	@GetMapping("/getSession")
+	public String getSession(Model m) {
+		m.addAttribute("userKey", 1);
+		return "getSession";
+	}
+	
 	//로그인후 보여줄 첫 화면
 	@GetMapping("/getCal")
-	public String getMain(@ModelAttribute("userKey")int userKey, Model m, @RequestParam(defaultValue = "1")String selecDate) {
+	public String getMain(@ModelAttribute("userKey")int userKey, Model m, @RequestParam(defaultValue = "1")String selecDate) throws JsonProcessingException {
 		if(selecDate.equals("1")) {
 			selecDate = LocalDate.now().toString();
 		}
@@ -56,7 +66,15 @@ public class MainPageController {
 		List<IncomeCategory> icList = mainService.selectAllIC();//insert, update에서 사용자에게 보여줄 수입카테고리
 		List<ExpenseCategory> ecList = mainService.selectAllEc();//insert, update에서 사용자에게 보여줄 지출 카테고리
 		List<AssetsAssetsOfMember> aaomList = mainService.selectAAOMByUserKey(userKey);//insert,update에서 사용자에게 보여줄 사용자가 등록한 자산항목들
-		SumAmounts sumAmounts = mainService.selectSUMIEByUserKeyAndDate(userKey, curDate);
+		SumAmounts sumAmounts = mainService.selectSUMIEByUserKeyAndDate(userKey, curDate);//해당 월의 수입과 지출의 총 내역
+		
+		//페이지 로드 시 리스트를 함수에 변수로 넣기 위해서 JSON으로 변환 첨부했다.
+		ObjectMapper mapper = new ObjectMapper();
+		String iicaListJ = mapper.writeValueAsString(iicaList);
+		String eecaListJ = mapper.writeValueAsString(eecaList);
+		
+		m.addAttribute("iicaListJ", iicaListJ);
+		m.addAttribute("eecaListJ", eecaListJ);
 		m.addAttribute("cal", cal);
 		m.addAttribute("miicList", miicList);
 		m.addAttribute("meecList", meecList);

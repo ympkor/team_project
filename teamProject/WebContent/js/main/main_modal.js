@@ -7,15 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
       modal.classList.add('hidden');
       document.querySelector('#update_expense_form').classList.add('hidden');
       document.querySelector('#update_income_form').classList.add('hidden');
-      document.querySelector('#delete_income_Form').classList.add('hidden');
-      document.querySelector('#delete_expense_Form').classList.add('hidden');
+      document.querySelector('#delete_income_form').classList.add('hidden');
+      document.querySelector('#delete_expense_form').classList.add('hidden');
     })
   }
   modalOverlay.addEventListener('click', function() {
     modal.classList.add('hidden');
     document.querySelector('#update_expense_form').classList.add('hidden');
     document.querySelector('#update_income_form').classList.add('hidden');
-    document.querySelector('#delete_income_Form').classList.add('hidden');
-    document.querySelector('#delete_expense_Form').classList.add('hidden');
+    document.querySelector('#delete_income_form').classList.add('hidden');
+    document.querySelector('#delete_expense_form').classList.add('hidden');
   })
 });

@@ -22,8 +22,8 @@ import service.main.MainPageService;
 import service.main.MainUpdateService;
 
 @Controller
-@RequestMapping("/main")
 @SessionAttributes("userKey")
+@RequestMapping("/main")
 public class MainUpdateController {
 	@Autowired
 	private MainUpdateService mainUpdateService;
