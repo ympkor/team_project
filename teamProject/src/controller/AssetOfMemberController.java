@@ -76,12 +76,21 @@ public class AssetOfMemberController {
 	}
 
 	@RequestMapping("/addAsset")
-	public String addAsset(@ModelAttribute("userKey")int userKey, Model m, AssetOfMember aom) {
+	public String addAsset(@ModelAttribute("userKey")int userKey, 
+			Model m, AssetOfMember aom, AssetOfMember toCal) {
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
 		if (assetType.equals("부채")) {	//자산타입이 "부채"인 경우 마이너스 값으로 변경한 다음 db저장
 			amount*=-1;
 		}
+
+		String assetTypeForToCal = toCal.getType();
+		if (assetTypeForToCal.equals("자산")) {
+			aomService.addAssetToIncome(toCal);
+		} else {
+			aomService.addAssetToExpense(toCal);
+		}
+		
 		aom.setAmount(amount);
 		aomService.addAsset(aom);
 		m.addAttribute("aom", aom);
@@ -91,9 +100,6 @@ public class AssetOfMemberController {
 	@RequestMapping("/edit")
 	public String showeditForm(int memAssetId, Model m, AssetOfMember aom) {
 		aom = aomService.getAssetById(memAssetId);
-		String assetType = aom.getAssetsName();
-
-		System.out.println(assetType);
 		m.addAttribute("aom", aom);
 		return "editAssetForm";
 	}
@@ -102,8 +108,14 @@ public class AssetOfMemberController {
 	public String editAsset(int memAssetId, Model m,  AssetOfMember aom) {
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
-		if (assetType.equals("부채")) {	//자산 수정할때도 마찬가지로 부채인 경우 마이너스 처리
+		if (assetType.equals("자산") && amount>0) {	//자산인 경우 플러스, 부채는 마이너스로 저장
+			amount*=1;
+		} else if (assetType.equals("자산") && amount<0) {
 			amount*=-1;
+		} else if (assetType.equals("부채") && amount>0) {
+			amount*=-1;
+		} else if (assetType.equals("부채") && amount<0) {
+			amount*=1;
 		}
 		aom.setAmount(amount);
 		aomService.editAsset(aom);
