@@ -9,7 +9,7 @@
 <script type="text/javascript" src="/js/joinJs.js"></script>
 </head>
 <body>
-	<form method="post" action="/asset/view">
+	<form method="post" action="/member/asset/view">
 		<div>
 			아이디<br>
 			<input type="text" name="userId" maxlength="20">

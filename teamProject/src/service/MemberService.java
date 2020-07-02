@@ -16,8 +16,8 @@ public class MemberService {
 	//회원가입시 아이디 중복체크
 	public String equalId(Member member) {
 		Member dbId = joinMapper.selectById(member.getUserId());
-		System.out.println("dbMember: " + dbId);
-		System.out.println("member: " +member.getUserId());
+//		System.out.println("dbMember: " + dbId);
+//		System.out.println("member: " +member.getUserId());
 		if(dbId == null) {
 			dbId = new Member(0, "", "", "", "");
 		}
@@ -117,6 +117,7 @@ public class MemberService {
 	
 	//회원가입시 현금 초기화
 	public void addCash(int userKey) {
+		System.out.println("serviceuserkey:"+userKey);
 		joinMapper.insertCash(userKey);
 	}
 }

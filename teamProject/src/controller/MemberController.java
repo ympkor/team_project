@@ -2,7 +2,8 @@ package controller;
 
 import java.util.List;
 
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +11,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import dto.AssetOfMember;
 import dto.Member;
 import mapper.JoinMapper;
+import service.AssetNewsService;
+import service.AssetOfMemberService;
 import service.MemberService;
 
 @Controller
@@ -29,6 +32,9 @@ public class MemberController {
 	@Autowired
 	JoinMapper joinMapper;
 	
+	@Autowired 
+	AssetOfMemberService aomService;
+	
 	//회원가입버튼 눌렀을 때, 회원가입폼으로 이동
 	@GetMapping("/join")
 	public String getMemberAddForm() {
@@ -36,24 +42,39 @@ public class MemberController {
 	}
 	
 	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
-	@PostMapping("/asset/view")
+	@RequestMapping("/asset/view")
 	public String MemberAddproc(Model model, Member member) {
-		memberService.addMember(member);
-		memberService.addCash(member.getUserKey());
-		Member m = joinMapper.selectById(member.getUserId());
-		//System.out.println("userkey : " + m.getUserKey());
-		Model uk = model.addAttribute("userKey", m.getUserKey());
-		//System.out.println("join:"+member);
-		return "view";
+		memberService.addMember(member);//회원추가
+		memberService.addCash(member.getUserKey());//추가된 회원의 회원번호를 넣어서 추가해줌
+		Member m = joinMapper.selectById(member.getUserId());//회원아이디로 회원의 전체 정보를 조회후
+		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌
+		
+		//회원 추가후 자산을 추가하는 창을 보여줌(AssetOfMemberController에서 가져옴)
+		List<AssetOfMember> aomList = aomService.getAssetOfMember(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
+		int i = 0;
+		int sumAssets = 0;
+		while(aomList.size() > i) {
+			sumAssets += aomList.get(i).getAmount();
+			i++;
+		}
+
+		AssetNewsService ans = new AssetNewsService();
+		StringBuilder newsString = ans.getNews();
+
+		JSONObject jsonObject = new JSONObject(newsString.toString());
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		model.addAttribute("aomList", aomList);
+		model.addAttribute("sumAsset", sumAssets);
+		model.addAttribute("newsList", jsonArray);
+		
+		return "showAsset";
 	}
 	
 	//아이디 중복체크
 	@PostMapping(value="/equalsId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String EqualsId(Member member) {
-		//System.out.println("Test");
-		//System.out.println("equalId : "+member);
 		String equalId = memberService.equalId(member);
-		//System.out.println(equalId);
 		return equalId;
 	}
 	
@@ -82,15 +103,15 @@ public class MemberController {
 		//세션값을 저장하기 위해서 사용
 		Member m = joinMapper.selectById(member.getUserId());
 		if(m!=null) {
-			System.out.println(m.getUserKey());
+			//System.out.println(m.getUserKey());
 			Model uk = model.addAttribute("userKey", m.getUserKey());
-			System.out.println("세션:"+uk);
+			//System.out.println("세션:"+uk);
 			String str=memberService.login(member);
-			System.out.println(str);
+			//System.out.println(str);
 			return str;
 		} else {
 			String str=memberService.login(member);
-			System.out.println(str);
+			//System.out.println(str);
 			return str;
 		}
 	}
@@ -105,7 +126,7 @@ public class MemberController {
 	@PostMapping(value="/searchId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String searchIdproc(String email) {
 		String str = memberService.searchId(email);
-		System.out.println(str);
+		//System.out.println(str);
 		return str;
 	}
 	
@@ -163,15 +184,15 @@ public class MemberController {
 	
 	@PostMapping(value="/mypageProc", produces="text/html;charset=UTF-8")
 	public @ResponseBody String mypageProc(Member member) {
-		System.out.println(member);
+		//System.out.println(member);
 		String str = memberService.mypagePw(member);
-		System.out.println(str);
+		//System.out.println(str);
 		return str;
 	}
 	
-	//세션값이 넘어가는지 확인해주는페이지
-	@GetMapping("/money")
-	public String getMo() {
-		return "money";
-	}
+//	//세션값이 넘어가는지 확인해주는페이지
+//	@GetMapping("/money")
+//	public String getMo() {
+//		return "money";
+//	}
 }

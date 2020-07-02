@@ -6,7 +6,7 @@
 <configuration>
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
-		<!-- <setting name="useGeneratedKeys" value="true"/> -->
+		<setting name="useGeneratedKeys" value="true"/>
 	</settings>
 	<typeAliases>
 		<!-- <typeAlias type="dto.Assets" alias="assets" /> -->
