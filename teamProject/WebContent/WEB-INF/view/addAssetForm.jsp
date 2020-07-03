@@ -8,22 +8,6 @@
 <title>내 자산 추가</title> 
 </head>
 <body>
-	<%-- <div>
-			<h1>내 자산 현황</h1>
-			<h1>총 ${sumAsset}원</h1>
-			<br>
-		</div>
-		<c:forEach items="${aomList}" var="list">
-			<div>
-				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
-				${list.amount}원<br> ${list.memo}
-				<div>
-					<input type="button" name="editAsset" value="수정"> <input
-						type="button" name="deleteAsset" value="삭제">
-				</div>
-			</div>
-			<br>
-		</c:forEach> --%>
 
 	<h1>자산 추가</h1>
 	<form action="/asset/addAsset" method="post">
