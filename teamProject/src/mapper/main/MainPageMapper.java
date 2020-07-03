@@ -12,6 +12,8 @@ import dto.main.IncomeCategory;
 import dto.main.IncomeIncomeCategoryAssets;
 import dto.main.MemberExpenseExpenseCategory;
 import dto.main.MemberIncomeIncomeCategory;
+import dto.main.Transfer;
+import dto.main.TransferAssetsOfMemeberFromAssetsOfMemeberTo;
 
 public interface MainPageMapper {
 	//달력에 뿌려줄 income 정보 반환
@@ -20,11 +22,17 @@ public interface MainPageMapper {
 	//달력에 뿌려줄 expense 정보 반환
 	public List<MemberExpenseExpenseCategory> selectMEECBYUserKeyAndExpenseDate(@Param("userKey")int userKey, @Param("expenseDate")String expenseDate);
 
+	//달력에 뿌려줄 tranfer 정보 반환
+	public List<Transfer> selectTranferByUserKeyAndTransferDate(@Param("userKey")int userKey, @Param("transferDate")String transferDate);
+
 	//상세데이터에 뿌려줄 income 정보 반환
 	public List<IncomeIncomeCategoryAssets> selectIICAByUserKeyAndIncomeDate(@Param("userKey")int userKey, @Param("incomeDate")String incomeDate);
 	
 	//상세데이터 뿌려줄 expense 정보 반환
 	public List<ExpenseExpenseCategoryAssets> selectEECAByUserKeyAndExpenseDate(@Param("userKey")int userKey, @Param("expenseDate")String expenseDate);
+
+	//userKey와 날짜로 상세데이터에 뿌려줄 transfer 정보 반환
+	public List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> selectTAOMFAOMTByUserKeyAndTransferDate(@Param("userKey")int userKey, @Param("transferDate")String transferDate);
 
 	//모든 Income Category 반환
 	public List<IncomeCategory> selectAllIncomeCategory();
@@ -43,5 +51,10 @@ public interface MainPageMapper {
 
 //	userKey와 년-월로 expense의 sum가져오기
 	public Integer selectSUMExpenseByDate(@Param("userKey")int userKey, @Param("expenseDate")String yearMonth);
+
+	//memAssetId로 AOM 조회해서 반환
+	public AssetsOfMember selectAOMByMemAssetId(@Param("memAssetId")int memAssetId);
+
+
 		
 }

@@ -5,26 +5,39 @@ import java.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class ExpenseExpenseCategoryAssets {
+	private int userKey;
 	private int expenseId;
 	private int ecId;
 	private String ecName;
 	private String memo;
+	private int memAssetId;
+	private String aomName;
 	private int assetsId;
 	private String assetsName;
 	private int amount;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expenseDate;
 	public ExpenseExpenseCategoryAssets() {}
-	public ExpenseExpenseCategoryAssets(int expensdId, int ecId, String ecName, String memo, int assetsId, String assetsName,
-			int amount, LocalDate expenseDate) {
-		this.expenseId = expensdId;
+	public ExpenseExpenseCategoryAssets(int userKey, int expenseId, int ecId, String ecName, String memo,
+			int memAssetId, String aomName, int assetsId, String assetsName, int amount, LocalDate expenseDate) {
+		super();
+		this.userKey = userKey;
+		this.expenseId = expenseId;
 		this.ecId = ecId;
 		this.ecName = ecName;
 		this.memo = memo;
+		this.memAssetId = memAssetId;
+		this.aomName = aomName;
 		this.assetsId = assetsId;
 		this.assetsName = assetsName;
 		this.amount = amount;
 		this.expenseDate = expenseDate;
+	}
+	public int getUserKey() {
+		return userKey;
+	}
+	public void setUserKey(int userKey) {
+		this.userKey = userKey;
 	}
 	public int getExpenseId() {
 		return expenseId;
@@ -50,6 +63,18 @@ public class ExpenseExpenseCategoryAssets {
 	public void setMemo(String memo) {
 		this.memo = memo;
 	}
+	public int getMemAssetId() {
+		return memAssetId;
+	}
+	public void setMemAssetId(int memAssetId) {
+		this.memAssetId = memAssetId;
+	}
+	public String getAomName() {
+		return aomName;
+	}
+	public void setAomName(String aomName) {
+		this.aomName = aomName;
+	}
 	public int getAssetsId() {
 		return assetsId;
 	}
@@ -73,5 +98,12 @@ public class ExpenseExpenseCategoryAssets {
 	}
 	public void setExpenseDate(LocalDate expenseDate) {
 		this.expenseDate = expenseDate;
+	}
+	@Override
+	public String toString() {
+		return "ExpenseExpenseCategoryAssets [userKey=" + userKey + ", expenseId=" + expenseId + ", ecId=" + ecId
+				+ ", ecName=" + ecName + ", memo=" + memo + ", memAssetId=" + memAssetId + ", aomName=" + aomName
+				+ ", assetsId=" + assetsId + ", assetsName=" + assetsName + ", amount=" + amount + ", expenseDate="
+				+ expenseDate + "]";
 	}
 }

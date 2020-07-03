@@ -12,7 +12,6 @@ public class MemberExpenseExpenseCategory {
 	private LocalDate expenseDate;
 	public MemberExpenseExpenseCategory() {}
 	public MemberExpenseExpenseCategory(int userKey, String ecName, int amount, LocalDate expenseDate) {
-		super();
 		this.userKey = userKey;
 		this.ecName = ecName;
 		this.amount = amount;

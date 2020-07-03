@@ -1,17 +1,20 @@
 @charset "UTF-8";
 *{padding: 0; margin: 0; box-sizing: border-box;}
 body{width: 100vw; height: 100vh;}
+.ui-datepicker table{
+      display: none;
+  }
 .grid_container{
   display: grid;
   grid-template-areas: 
-  "header header header"
+  "top top top"
   "aside main main"
   "aside main main"
   "aside section section"
   "footer footer footer";
 }
 .grid_header{
-  grid-area: header;
+  grid-area: top;
 }
 .grid_aside{
   grid-area: aside;
@@ -35,11 +38,16 @@ div.detailDateDiv{
   justify-content: space-between;
   align-items: baseline;
 }
+.topmenu{
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
 /*div.topmenu{position:absolute;top:0px; width:100%; background-color: white;}
 div.basic{position:absolute;left:0px;top:10px; width:25%;}
 div.statistics{position:absolute;left:25%;top:10px; width:25%;}
 div.assest{position:absolute;left:50%;top:10px; width:25%;}
-div.board{position:absolute;right:0px;top:10px; width:25%;}*/
+div.board{position:absolute;right:0px;top:10px; width:25%;} */
 div.detailSumI{margin-left: auto;}
 div.detailSumE{margin-left: auto;}
 div.detailItem{

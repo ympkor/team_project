@@ -15,8 +15,8 @@ public class AssetNewsService {
         String clientSecret = "QPGjM29nTw";
         int display = 10;
         try {
-            String text = URLEncoder.encode("자산 관리 운용 주식 펀드 부동산 투자 예금 저축 청약", "utf-8");
-            String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + display + "&";
+            String text = URLEncoder.encode("자산 저축 부동산 주식", "utf-8");
+            String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + display + "&sort=sim";
  
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -41,7 +41,7 @@ public class AssetNewsService {
         } catch (Exception e) {
             System.out.println(e);
         }
-        System.out.println(sb);
+        
         return sb;
     }
 }

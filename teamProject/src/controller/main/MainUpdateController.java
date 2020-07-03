@@ -11,19 +11,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.main.Calendar;
-import dto.main.DeleteExpense;
-import dto.main.DeleteIncome;
 import dto.main.Expense;
 import dto.main.ExpenseUpdate;
 import dto.main.Income;
 import dto.main.IncomeUpdate;
+import dto.main.TransferUpdate;
 import dto.main.UpdateAndRefresh;
 import service.main.MainPageService;
 import service.main.MainUpdateService;
 
 @Controller
-@RequestMapping("/main")
 @SessionAttributes("userKey")
+@RequestMapping("/main")
 public class MainUpdateController {
 	@Autowired
 	private MainUpdateService mainUpdateService;
@@ -45,6 +44,8 @@ public class MainUpdateController {
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(incomeUpdate.getIncomeDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
 		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
@@ -63,9 +64,33 @@ public class MainUpdateController {
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(expenseUpdate.getExpenseDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
 		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
+	@PostMapping("/postUpdateTransfer")
+	public @ResponseBody UpdateAndRefresh updateTransfer(@ModelAttribute("userKey")int userKey, TransferUpdate transferUpdate) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		transferUpdate.setUserKey(userKey);
+		if(transferUpdate.getCategory() == 3) {//그대로 이체인것
+			mainUpdateService.updateTransferAndAmount(transferUpdate);
+		}else if(transferUpdate.getCategory() == 2) {//이체를 지출로 변경한것
+			mainUpdateService.deleteTransferInsertExpenseUpdateAom(transferUpdate);
+		}else {//이체를 수입으로 변경한것
+			mainUpdateService.deleteTransferInsertIncomeUpdateAom(transferUpdate);
+		}
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(transferUpdate.getTransferDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
 		return updateAndRefresh;
 	}
 	
@@ -77,6 +102,8 @@ public class MainUpdateController {
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(income.getIncomeDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 7)));
 		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 10)));
 		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, income.getIncomeDate().toString().substring(0, 7)));
@@ -91,6 +118,8 @@ public class MainUpdateController {
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(expense.getExpenseDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 7)));
 		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 10)));
 		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, expense.getExpenseDate().toString().substring(0, 7)));
@@ -98,30 +127,50 @@ public class MainUpdateController {
 	}
 	
 	@PostMapping("/postDeleteIncome")
-	public @ResponseBody UpdateAndRefresh deleteIncome(@ModelAttribute("userKey")int userKey, DeleteIncome deleteIncome) {
+	public @ResponseBody UpdateAndRefresh deleteIncome(@ModelAttribute("userKey")int userKey, IncomeUpdate incomeUpdate) {
 		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
-		deleteIncome.setUserKey(userKey);
-		mainUpdateService.deleteIncomeAndUpdateAOM(deleteIncome);
-		updateAndRefresh.setCal(new Calendar(LocalDate.parse(deleteIncome.getIncomeDate().toString())));
-		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, deleteIncome.getIncomeDate().toString().substring(0, 7)));
-		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, deleteIncome.getIncomeDate().toString().substring(0, 7)));
-		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, deleteIncome.getIncomeDate().toString().substring(0, 10)));
-		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, deleteIncome.getIncomeDate().toString().substring(0, 10)));
-		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, deleteIncome.getIncomeDate().toString().substring(0, 7)));
+		incomeUpdate.setUserKey(userKey);
+		mainUpdateService.deleteIncomeAndUpdateAOM(incomeUpdate);
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(incomeUpdate.getIncomeDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
 		return updateAndRefresh;
 	}
 	
 	@PostMapping("/postDeleteExpense")
-	public @ResponseBody UpdateAndRefresh deleteExpense(@ModelAttribute("userKey")int userKey, DeleteExpense deleteExpense) {
+	public @ResponseBody UpdateAndRefresh deleteExpense(@ModelAttribute("userKey")int userKey, ExpenseUpdate expenseUpdate) {
 		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
-		deleteExpense.setUserKey(userKey);
-		mainUpdateService.deleteExpenseAndUpdateAOM(deleteExpense);
-		updateAndRefresh.setCal(new Calendar(LocalDate.parse(deleteExpense.getExpenseDate().toString())));
-		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, deleteExpense.getExpenseDate().toString().substring(0, 7)));
-		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, deleteExpense.getExpenseDate().toString().substring(0, 7)));
-		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, deleteExpense.getExpenseDate().toString().substring(0, 10)));
-		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, deleteExpense.getExpenseDate().toString().substring(0, 10)));
-		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, deleteExpense.getExpenseDate().toString().substring(0, 7)));
+		expenseUpdate.setUserkey(userKey);
+		mainUpdateService.deleteExpenseAndUpdateAOM(expenseUpdate);
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(expenseUpdate.getExpenseDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
+	@PostMapping("/postDeleteTransfer")
+	public @ResponseBody UpdateAndRefresh deleteTransfer(@ModelAttribute("userKey")int userKey, TransferUpdate transferUpdate) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		transferUpdate.setUserKey(userKey);
+		mainUpdateService.deleteTransferAndUpdateAOM(transferUpdate);
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(transferUpdate.getTransferDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
 		return updateAndRefresh;
 	}
 }

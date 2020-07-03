@@ -10,8 +10,7 @@
 </head>
 <body>
 	<form method="post" action="/member/mypage">
-		<div>회원번호</div>
-		<div><input type="text" name="userKey" value="${member.userKey}" readonly="readonly"></div>
+		<div><input type="hidden" name="userKey" value="${member.userKey}"></div>
 		<div>회원아이디</div>
 		<div><input type="text" name="userId" value="${member.userId}" readonly="readonly"></div>
 		<div>회원비밀번호</div>

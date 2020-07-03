@@ -8,17 +8,35 @@ public class UpdateAndRefresh {
 	private List<MemberExpenseExpenseCategory> meecList;
 	private List<IncomeIncomeCategoryAssets> iicaList;
 	private List<ExpenseExpenseCategoryAssets> eecaList;
+	private List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList;
+	private List<Transfer> tbmList;
 	private SumAmounts sumAmounts;
 	public UpdateAndRefresh() {}
-	public UpdateAndRefresh(Calendar cal, List<MemberIncomeIncomeCategory> miicList, List<MemberExpenseExpenseCategory> meecList,
-			List<IncomeIncomeCategoryAssets> iicaList, List<ExpenseExpenseCategoryAssets> eecaList,
+	public UpdateAndRefresh(Calendar cal, List<MemberIncomeIncomeCategory> miicList,
+			List<MemberExpenseExpenseCategory> meecList, List<IncomeIncomeCategoryAssets> iicaList,
+			List<ExpenseExpenseCategoryAssets> eecaList,
+			List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList, List<Transfer> tbmList,
 			SumAmounts sumAmounts) {
 		this.cal = cal;
 		this.miicList = miicList;
 		this.meecList = meecList;
 		this.iicaList = iicaList;
 		this.eecaList = eecaList;
+		this.taomfaomtList = taomfaomtList;
+		this.tbmList = tbmList;
 		this.sumAmounts = sumAmounts;
+	}
+	public List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> getTaomfaomtList() {
+		return taomfaomtList;
+	}
+	public void setTaomfaomtList(List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList) {
+		this.taomfaomtList = taomfaomtList;
+	}
+	public List<Transfer> getTbmList() {
+		return tbmList;
+	}
+	public void setTbmList(List<Transfer> tbmList) {
+		this.tbmList = tbmList;
 	}
 	public Calendar getCal() {
 		return cal;
@@ -62,6 +80,7 @@ public class UpdateAndRefresh {
 	@Override
 	public String toString() {
 		return "UpdateAndRefresh [cal=" + cal + ", miicList=" + miicList + ", meecList=" + meecList + ", iicaList="
-				+ iicaList + ", eecaList=" + eecaList + ", sumAmounts=" + sumAmounts + "]";
+				+ iicaList + ", eecaList=" + eecaList + ", taomfaomtList=" + taomfaomtList + ", tbmList=" + tbmList
+				+ ", sumAmounts=" + sumAmounts + "]";
 	}
 }

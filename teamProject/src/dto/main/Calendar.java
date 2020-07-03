@@ -1,6 +1,7 @@
 package dto.main;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -60,5 +61,11 @@ public class Calendar {
 	}
 	public String getDayOfFirst() {
 		return dayOfFirst;
+	}
+	@Override
+	public String toString() {
+		return "Calendar [selecDate=" + selecDate + ", daysOfMonth=" + Arrays.toString(daysOfMonth) + ", year=" + year
+				+ ", month=" + month + ", firstDay=" + firstDay + ", cntDay=" + cntDay + ", dayOfFirst=" + dayOfFirst
+				+ "]";
 	}
 }

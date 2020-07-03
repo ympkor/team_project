@@ -14,6 +14,8 @@ import dto.main.IncomeIncomeCategoryAssets;
 import dto.main.MemberExpenseExpenseCategory;
 import dto.main.MemberIncomeIncomeCategory;
 import dto.main.SumAmounts;
+import dto.main.Transfer;
+import dto.main.TransferAssetsOfMemeberFromAssetsOfMemeberTo;
 import mapper.main.MainPageMapper;
 
 @Service
@@ -39,11 +41,27 @@ public class MainPageService {
 		else {return meecList;}
 	}
 	
+	//userKey와 년-월에 해당되는 이체내역을 리스트로 반환
+	public List<Transfer> selectTransferByUserKeyAndDate(int userKey, String transferDate) {
+		transferDate = transferDate+"%";
+		List<Transfer> transferByMonthList = mainPageMapper.selectTranferByUserKeyAndTransferDate(userKey, transferDate);
+		if(transferByMonthList.size() == 0) {return null;}
+		else {return transferByMonthList;}
+	}
+	
 	//userKey와 선택한 날짜로 그 날짜에 해당되는 수입을 리스트로 반환
 	public List<IncomeIncomeCategoryAssets> selectIICAByUserKeyAndDate(int userKey, String incomeDate) {
 		List<IncomeIncomeCategoryAssets> iicaList = mainPageMapper.selectIICAByUserKeyAndIncomeDate(userKey, incomeDate);
 		if(iicaList.size()==0) {return null;}
 		else {return iicaList;}
+	}
+	
+	//userKey와 선택한 날짜로 그 날짜에 해당하는 이체내역을 리스트로 반환
+	public List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> selectTAOMFAOMTByUserKeyAndDate(int userKey,
+			String transferDate) {
+		List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList = mainPageMapper.selectTAOMFAOMTByUserKeyAndTransferDate(userKey, transferDate);
+		if(taomfaomtList.size() == 0) {return null;}
+		else {return taomfaomtList;}
 	}
 	
 	//userKey와 선택한 날짜로 그 날짜에 해당되는 지출을 리스트로 반환
@@ -90,5 +108,11 @@ public class MainPageService {
 		sumAmounts.setSumIncome(sumIncome);
 		sumAmounts.setSumExpense(sumExpense);
 		return null;
+	}
+
+	//memAssetId로 AOM객체 조회 후 반환
+	public AssetsOfMember selectAOMByMemAssetId(int memAssetId) {
+		AssetsOfMember aom = mainPageMapper.selectAOMByMemAssetId(memAssetId);
+		return aom;
 	}
 }

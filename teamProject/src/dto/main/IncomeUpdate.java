@@ -9,26 +9,45 @@ public class IncomeUpdate {
 	private int incomeId;
 	private int userKey;
 	private int amount;
+	private int newAmount;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate incomeDate;
 	private int memAssetId;
+	private int newMemAssetId;
+	private int memAssetIdTo;
 	private int assetsId;
 	private int icId;
 	private int ecId;
 	private String memo;
 	public IncomeUpdate() {}
-	public IncomeUpdate(int category, int incomeId, int userKey, int amount, LocalDate incomeDate, int memAssetId, int assetsId, int icId, int ecId, 
-			String memo) {
+	public IncomeUpdate(int category, int incomeId, int userKey, int amount, int newAmount, LocalDate incomeDate,
+			int memAssetId, int newMemAssetId, int memAssetIdTo, int assetsId, int icId, int ecId, String memo) {
 		this.category = category;
 		this.incomeId = incomeId;
 		this.userKey = userKey;
 		this.amount = amount;
+		this.newAmount = newAmount;
 		this.incomeDate = incomeDate;
 		this.memAssetId = memAssetId;
+		this.newMemAssetId = newMemAssetId;
+		this.memAssetIdTo = memAssetIdTo;
 		this.assetsId = assetsId;
 		this.icId = icId;
 		this.ecId = ecId;
 		this.memo = memo;
+	}
+	public int getMemAssetIdTo() {
+		return memAssetIdTo;
+	}
+	public void setMemAssetIdTo(int memAssetIdTo) {
+		this.memAssetIdTo = memAssetIdTo;
+	}
+
+	public int getNewAmount() {
+		return newAmount;
+	}
+	public void setNewAmount(int newAmount) {
+		this.newAmount = newAmount;
 	}
 	public int getCategory() {
 		return category;
@@ -66,6 +85,12 @@ public class IncomeUpdate {
 	public void setMemAssetId(int memAssetId) {
 		this.memAssetId = memAssetId;
 	}
+	public int getNewMemAssetId() {
+		return newMemAssetId;
+	}
+	public void setNewMemAssetId(int newMemAssetId) {
+		this.newMemAssetId = newMemAssetId;
+	}
 	public int getAssetsId() {
 		return assetsId;
 	}
@@ -93,7 +118,8 @@ public class IncomeUpdate {
 	@Override
 	public String toString() {
 		return "IncomeUpdate [category=" + category + ", incomeId=" + incomeId + ", userKey=" + userKey + ", amount="
-				+ amount + ", incomeDate=" + incomeDate + ", memAssetId=" + memAssetId + ", assetsId=" + assetsId
+				+ amount + ", newAmount=" + newAmount + ", incomeDate=" + incomeDate + ", memAssetId=" + memAssetId
+				+ ", newMemAssetId=" + newMemAssetId + ", memAssetIdTo=" + memAssetIdTo + ", assetsId=" + assetsId
 				+ ", icId=" + icId + ", ecId=" + ecId + ", memo=" + memo + "]";
 	}
 }
