@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글쓰기</title>
-
+<link rel="stylesheet" href="/css/writeboard.css?ver=1">
 </head>
 <body>
 <form class="writeboardtitle" action="/board/show" method="post">

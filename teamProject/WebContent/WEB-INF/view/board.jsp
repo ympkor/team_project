@@ -7,8 +7,8 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/boardJS.js"></script>
-<link rel="stylesheet" href="/css/board.css">
+<script type="text/javascript" src="/js/boardJS.js?ver=1"></script>
+<link rel="stylesheet" href="/css/board.css?ver=1">
 </head>
 <body>
 <div id="topmenu">

@@ -62,4 +62,7 @@
   	<delete id="deleteExpenseByuserkeyAll">
   		delete from expense where user_key=#{userKey}
   	</delete> 
+  	<delete id="deleteTransferByuserkeyAll">
+  		delete from transfer where user_key=#{userKey}
+  	</delete> 
   </mapper>

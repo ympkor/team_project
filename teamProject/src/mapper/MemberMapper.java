@@ -38,4 +38,7 @@ public interface MemberMapper {
 	//탈퇴시 수입,지출 전부 삭제
 	public void deleteIncomeByuserkeyAll(int userKey);
 	public void deleteExpenseByuserkeyAll(int userKey);
+	
+	//탈퇴시 이체기록 전부삭제
+	public void deleteTransferByuserkeyAll(int userKey);
 }
