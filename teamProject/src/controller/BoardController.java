@@ -22,11 +22,10 @@ public class BoardController {
 	@GetMapping("/show")
 	public String showBoard(Model m) {
 		List<Board> bList = boardMapper.selectAll();
-		// for (Board b : bList) { System.out.println(b); }
+		for (Board b : bList) { System.out.println("그냥보기"+b); }
 		m.addAttribute("bList", bList);
 		return "board";
 	}
-	//글등록 누르면 디비에 글등록후 글목록 리스트보여주기
 	@PostMapping(value ="/show" )
 	public String showBoard(Model m,Board board) {
 		//System.out.println(board);
@@ -51,10 +50,10 @@ public class BoardController {
 		//System.out.println(currentBoard);
 		//이전글, 다음글 제목가져오기
 		List<Board> bList = boardMapper.contentOneShow(boardId);
-		//for (Board b : bList) { System.out.println(b); }
+		for (Board b : bList) { System.out.println("게시판하나보기"+b); }
 		//보드아이디에 있는 코멘트 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
-		for (Comment co : cList) {System.out.println(co);}
+		//for (Comment co : cList) {System.out.println(co);}
 		m.addAttribute("currentBoard", currentBoard);
 		m.addAttribute("bList", bList);
 		m.addAttribute("currentboardId", boardId);
@@ -77,37 +76,4 @@ public class BoardController {
 		m.addAttribute("cList", cList);
 		return "contentOneShow";
 	}
-	//코멘수정
-	@PostMapping("/commentupdate")
-	public String  updateComment(Comment comment, Model m) {
-		System.out.println(comment);
-		boardMapper.updateComment(comment);
-		List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
-		//for (Comment co : cList) { System.out.println(co); }		
-		Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
-		List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
-		m.addAttribute("currentBoard", currentBoard);
-		m.addAttribute("bList", bList);
-		m.addAttribute("currentboardId", comment.getBoardId());
-		m.addAttribute("cList", cList);
-		return "contentOneShow";
-	}
-	//코멘삭제
-	@RequestMapping("/deletecomment")
-	public String  deleteComment(Model m, int boardId, int commentId) {
-		//선택된 코멘트 삭제
-		boardMapper.deleteComment(commentId);
-		Board currentBoard = boardMapper.selecOneBoard(boardId);
-		//이전글, 다음글 제목가져오기
-		List<Board> bList = boardMapper.contentOneShow(boardId);
-		//보드아이디에 있는 코멘트 가져오기
-		List<Comment> cList = boardMapper.selectbyBId(boardId);
-		m.addAttribute("currentBoard", currentBoard);
-		m.addAttribute("bList", bList);
-		m.addAttribute("currentboardId", boardId);
-		m.addAttribute("cList", cList);
-		return "contentOneShow";
-	}
-	
-	
 }

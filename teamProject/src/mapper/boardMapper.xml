@@ -33,13 +33,13 @@
 		join member as m on c.user_key=m.user_key 
 		where board_id =#{boardId}
   	</select>
-  	<insert id="writeComment" parameterType="Comment">
+  	<update id="writeComment" parameterType="Comment">
   		insert into comment values(0,#{boardId},#{userKey},#{comment},now());
-  	</insert>  	
-  	<update id="updateComment" parameterType="Comment">
-  		update comment set comment=#{comment} where comment_id=#{commentId}
   	</update>
-  	<delete id="deleteComment">
-  		delete from comment where comment_id=#{commentId}
-  	</delete>  	
+  	<delete id="deleteBoardbyuserkeyAll">
+  		delete from board where user_key=#{userKey}
+  	</delete>
+  	<delete id="deleteCommentbyuserkeyAll">
+  		delete from comment where user_key=#{userKey}
+  	</delete>  	 	
   </mapper>

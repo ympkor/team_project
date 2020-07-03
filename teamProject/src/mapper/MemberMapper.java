@@ -34,4 +34,8 @@ public interface MemberMapper {
 			, @Param("year")int year);
 	public List<DailyIncome> selectYearIncome(@Param("userKey")int userKey
 			, @Param("year")int year);	
+	
+	//탈퇴시 수입,지출 전부 삭제
+	public void deleteIncomeByuserkeyAll(int userKey);
+	public void deleteExpenseByuserkeyAll(int userKey);
 }

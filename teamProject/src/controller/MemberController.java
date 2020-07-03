@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -151,9 +152,16 @@ public class MemberController {
 	
 	//삭제버튼시 넘어감
 	@GetMapping("/delete")
-	public String delProc(@ModelAttribute("userKey")int userKey) {
-		joinMapper.deleteByUserKey(userKey);
-		return "login";
+	public String delProc(@ModelAttribute("userKey")int userKey,Model m) {
+		//joinMapper.deleteByUserKey(userKey);
+		String result=null;
+		try {
+			result=	memberService.deleteMember(userKey);
+		} catch (Exception e) {
+			result = "데이터 삭제 실패했습니다" ;
+		}				
+		m.addAttribute("result", result);
+		return "deleteConfirm";
 	}
 	
 	//마이페이지 넘어갈 때 본인확인용 비밀번호

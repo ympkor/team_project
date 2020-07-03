@@ -3,7 +3,7 @@ a.gotop{display:scroll;position:fixed;bottom:10px;right:10px;}
 table{border-collapse: collapse; width:500px;}
 th,td{border: 1px solid black;}
 div#leftdayandweek, div#rightmonth{float: left;}
-div#ExpenseChart, div#profitChart{width:500px; height: 270px;}
+div#ExpenseChart, div#profitChart{width:600px; height: 350px;}
 div#bottomyear{position:relative; float:left; width: 900px; height: 400px;}
 div#yearChart{height:90%;}
 #chartData div{display: none;}

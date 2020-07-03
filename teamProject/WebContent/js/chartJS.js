@@ -9,6 +9,9 @@ $(function() {
 		input.addEventListener("mouseout", function() {	
 		document.getElementById("formbutton").click();
 		});
+		input.addEventListener("focusout", function() {	
+			document.getElementById("formbutton").click();
+		});
 	});
 	
 	document.querySelector(".gomypage").onclick = function(){
@@ -89,7 +92,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 		  data.addColumn('number', 'price');     	                 
 	  	for (var i = 0; i < monthExpenseAmountData.length ; i++) {
 	  		data.addRows([
-	  			[ monthExpenseNameData[i] , monthExpenseAmountData[i] ]
+	  			[ monthExpenseNameData[i]+": "+monthExpenseAmountData[i]+"원" , monthExpenseAmountData[i] ]
  		   	]);
 		}       	  
 		  var options = {
@@ -104,7 +107,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 		  dataincome.addColumn('number', 'money'); 
 		  for (var i = 0; i < monthIncomeAmountData.length ; i++) {
 			  dataincome.addRows([
-	  		   [ monthIncomeNameData[i] , monthIncomeAmountData[i] ]
+	  		   [ monthIncomeNameData[i]+": "+monthIncomeAmountData[i]+"원" , monthIncomeAmountData[i] ]
 	  		 ]);
 			}      
 		var options = {

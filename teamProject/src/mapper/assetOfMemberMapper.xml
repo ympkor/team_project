@@ -34,6 +34,9 @@
 	<delete id="delAsset" parameterType="assetOfMember">
 		delete from assets_of_member where mem_asset_id = #{memAssetId};
 	</delete>
+	<delete id="delAssetByuserkeyAll" >
+		delete from assets_of_member where user_key=#{userKey}
+	</delete>
 
 </mapper>
 

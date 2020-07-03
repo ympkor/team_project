@@ -56,4 +56,10 @@
   		from income where year(income_date)=#{year} and user_key=#{userKey} 
   		group by month(income_date);
   	</select>
+  	<delete id="deleteIncomeByuserkeyAll">
+  		delete from income where user_key=#{userKey}
+  	</delete>
+  	<delete id="deleteExpenseByuserkeyAll">
+  		delete from expense where user_key=#{userKey}
+  	</delete> 
   </mapper>

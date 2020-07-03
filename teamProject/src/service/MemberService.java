@@ -4,15 +4,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dto.Member;
+import mapper.AssetOfMemberMapper;
+import mapper.BoardMapper;
 import mapper.JoinMapper;
+import mapper.MemberMapper;
 
 @Service
 public class MemberService {
 	
 	@Autowired
 	JoinMapper joinMapper;
+	@Autowired
+	BoardMapper boardMapper;
+	@Autowired
+	MemberMapper memberMapper;
+	@Autowired
+	AssetOfMemberMapper aomMapper;
 	//회원가입시 아이디 중복체크
 	public String equalId(Member member) {
 		Member dbId = joinMapper.selectById(member.getUserId());
@@ -97,8 +107,19 @@ public class MemberService {
 	}
 	
 	//탈퇴하기 
-	public void deleteMember(int userKey) {
+	@Transactional
+	public String deleteMember(int userKey) {
+		//코멘트 보드 지우기
+		boardMapper.deleteBoardbyuserkeyAll(userKey);
+		boardMapper.deleteCommentbyuserkeyAll(userKey);
+		//수입,지출 지우기
+		memberMapper.deleteExpenseByuserkeyAll(userKey);
+		memberMapper.deleteIncomeByuserkeyAll(userKey);
+		//자산지우기
+		aomMapper.delAssetByuserkeyAll(userKey);
+		//멤버에서 지우기
 		joinMapper.deleteByUserKey(userKey);
+		return "삭제성공";
 	}
 	
 	//마이페이지 진입시 비밀번호 비교
