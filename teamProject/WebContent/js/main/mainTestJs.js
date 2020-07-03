@@ -9,6 +9,15 @@ function showThisMonthTransfer(tbmList) {
 		}
 	}
 }
+//월별 통합 데이터 뿌려주는 기능
+function getThisMonthSumData(sumAmounts) {
+	document.querySelector('span.monthly_data_month').innerText = sumAmounts.selecDate.substring(5, 7)+'월';
+	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = sumAmounts.sumIncome+'원';
+		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0원';}
+	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = sumAmounts.sumExpense+'원';
+		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0원';}
+	document.querySelector('span.monthly_data_amount_sum').innerText = sumAmounts.sumIncome - sumAmounts.sumExpense+'원';
+}
 //수입 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putIncomeDataToUpdateForm(iicaList) {
 	event.stopPropagation();
@@ -392,7 +401,15 @@ window.addEventListener('DOMContentLoaded', function () {
       if (cal.cntDay % 7 == 0) { calendarStr += '</tr><tr>' }
     }
     calendarStr += '</tr>';
-    tbody.innerHTML = calendarStr;
+		tbody.innerHTML = calendarStr;
+		$.ajax({
+			url:'/main/postSumAmounts',
+			type:'post',
+			data:{"currentDate":currentMonth},
+			success:function(sumAmounts) {
+				getThisMonthSumData(sumAmounts);
+			}
+		}); 
   }
   //해당월에 맞는 income data들을 전달받아 만들어진 달력에 뿌려주는 기능
   function showThisMonthIncome(miicList){
@@ -475,7 +492,8 @@ window.addEventListener('DOMContentLoaded', function () {
 					detailDateSpan.innerHTML = currentDate;
 					document.querySelector('#insert_income_date').value = currentDate;
 					document.querySelector('#insert_expense_date').value = currentDate;
-          //이건 날짜별 수입 데이터들
+					document.querySelector('#insert_transfer_date').value = currentDate;
+					//이건 날짜별 수입 데이터들
           $.ajax({
             url: '/main/postIICA',
             type: 'post',
@@ -521,12 +539,14 @@ window.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('#update_transfer_form').classList.add('hidden');
 		document.querySelector('#insert_income_form').reset();
 		document.querySelector('#insert_expense_form').reset();
-		// document.querySelector('#insert_transfer_form').reset();
+		document.querySelector('#insert_transfer_form').reset();
 		let cal = UpdateAndRefreshData.cal;
 		let meecList = UpdateAndRefreshData.meecList;
 		let miicList = UpdateAndRefreshData.miicList;
 		let tbmList = UpdateAndRefreshData.tbmList;
+		let sumAmounts = UpdateAndRefreshData.sumAmounts;
 		makecalendar(cal);
+		let dateTd = document.querySelectorAll('.dateTd');
 		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
 			let classStr;
 			if(i < 10){classStr = '.di0'+i;}else{classStr = '.di'+i;}
@@ -537,11 +557,15 @@ window.addEventListener('DOMContentLoaded', function () {
 			if(i < 10){classStr = '.de0'+i;}else{classStr = '.de'+i;}
 			document.querySelector(classStr).innerHTML = null;
 		}}
-		showThisMonthTransfer(tbmList);
+		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 0; i< dateTd.length; i++){
+			let classStr;
+			if(i < 10){classStr = '.dt0'+i;}else{classStr = '.dt'+i;}
+			document.querySelector(classStr).innerHTML = null;
+		}}
 		let updateDate = document.querySelector('span.detailDate').innerText;
 		document.querySelector('#insert_income_date').value = updateDate;
 		document.querySelector('#insert_expense_date').value = updateDate;
-		// document.querySelector('#insert_transfer_form').value = updateDate;
+		document.querySelector('#insert_transfer_form').value = updateDate;
 		let detailData = {"currentDate":updateDate};
 		//이건 날짜별 수입 데이터들
 		$.ajax({
@@ -576,24 +600,36 @@ window.addEventListener('DOMContentLoaded', function () {
 				});
 			}
 		});
-		let dateTd = document.querySelectorAll('.dateTd');
 		put_MakeDetailDiv_to_dateTd(dateTd);
 	}
-	//인서트시, 딜리트 시 업데이트 해주는 기능
+	//인서트시 데이터 새로 불러와서 뿌려주는 해주는 기능(입력한 날짜로 상세데이터 뿌려주기 위해서)
 	function refreshDataWhenInsert(UpdateAndRefreshData){
 		modal.classList.add('hidden');
+		tbody.innerHTML = null;
 		document.querySelector('#update_income_form').classList.add('hidden');
 		document.querySelector('#update_expense_form').classList.add('hidden');
+		document.querySelector('#update_transfer_form').classList.add('hidden');
 		document.querySelector('#insert_income_form').reset();
 		document.querySelector('#insert_expense_form').reset();
-		document.querySelector('#insert_income_date').value = document.querySelector('span.detailDate').innerText;
-		document.querySelector('#insert_expense_date').value = document.querySelector('span.detailDate').innerText;
-		tbody.innerHTML = null;
+		document.querySelector('#insert_transfer_form').reset();
 		let cal = UpdateAndRefreshData.cal;
 		let meecList = UpdateAndRefreshData.meecList;
 		let miicList = UpdateAndRefreshData.miicList;
 		let iicaList = UpdateAndRefreshData.iicaList;
 		let eecaList = UpdateAndRefreshData.eecaList;
+		let tbmList = UpdateAndRefreshData.tbmList;
+		let taomfaomtList = UpdateAndRefreshData.taomfaomtList;
+		let sumAmounts = UpdateAndRefreshData.sumAmounts;
+		let insertDate;
+		if(cal.selecDate.monthValue < 10){if(cal.selecDate.dayOfMonth < 10){insertDate = cal.selecDate.year+'\-0'+cal.selecDate.monthValue+'\-0'+cal.selecDate.dayOfMonth;				
+			}else{insertDate = cal.selecDate.year+'\-0'+cal.selecDate.monthValue+'\-'+cal.selecDate.dayOfMonth}
+		}else{if(cal.selecDate.dayOfMonth < 10){insertDate = cal.selecDate.year+'\-'+cal.selecDate.monthValue+'\-0'+cal.selecDate.dayOfMonth;				
+			}else{insertDate = cal.selecDate.year+'\-'+cal.selecDate.monthValue+'\-'+cal.selecDate.dayOfMonth}
+		}
+		document.querySelector('span.detailDate').innerText = insertDate;
+		document.querySelector('#insert_income_date').value = insertDate;
+		document.querySelector('#insert_expense_date').value = insertDate;
+		document.querySelector('#insert_transfer_date').value = insertDate;
 		makecalendar(cal);
 		let dateTd = document.querySelectorAll('.dateTd');
 		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
@@ -606,8 +642,14 @@ window.addEventListener('DOMContentLoaded', function () {
 				if(i < 10){classStr = '.de0'+i;}else{classStr = '.de'+i;}
 				document.querySelector(classStr).innerHTML = null;
 		}}
+		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 0; i< dateTd.length; i++){
+			let classStr;
+			if(i < 10){classStr = '.dt0'+i;}else{classStr = '.dt'+i;}
+			document.querySelector(classStr).innerHTML = null;
+		}}
 		if(iicaList != null){makeDetailIncomeDIV(iicaList); putIncomeDataToUpdateForm(iicaList);}else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
 		if(eecaList != null){makeDetailExpenseDIV(eecaList); putExpenseDataToUpdateForm(eecaList);}else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
+		if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);putTransferDataToUpdateForm(taomfaomtList)}else{document.querySelector('div.detail_context_transfer').innerHTML = null;}
 		put_MakeDetailDiv_to_dateTd(dateTd);
 	}
 
@@ -782,6 +824,46 @@ window.addEventListener('DOMContentLoaded', function () {
 	
 /*########## grid_detail 관련 기능 ##########*/
 	//업데이트 버튼 눌렀을 때 실행할 메서드 정의
+
+	//수입 업데이트 폼에서 인서트
+	document.querySelector('#update_income_button_insert').addEventListener('click', function() {
+		let formData = $('#update_Income_form').eq(0).serialize();
+		$.ajax({
+			url:'/main/postUpdateIncomeInsert',
+			type:'post',
+			data:formData,
+			success:function(UR) {
+				refreshDataWhenInsert(UR);
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		});
+	});
+	//지출 업데이트 폼에서 인서트
+	document.querySelector('#update_expense_button_insert').addEventListener('click', function() {
+		let formData = $('#update_expense_form').eq(0).serialize();
+		$.ajax({
+			url:'/main/postUpdateExpenseInsert',
+			type:'post',
+			data:formData,
+			success:function(UR) {
+				refreshDataWhenInsert(UR);
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		});
+	});
+	//이체 업데이트 폼에서 인서트
+	document.querySelector('#update_transfer_button_insert').addEventListener('click', function() {
+		let formData = $('#update_transfer_form').eq(0).serialize();
+		$.ajax({
+			url:'/main/postUpdateTransferInsert',
+			type:'post',
+			data:formData,
+			success:function(UR) {
+				refreshDataWhenInsert(UR);
+			},error:function(request,status,error){
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);}
+		});
+	});
 	//수입 업데이트
 	$('#update_income_form').on('submit', function() {
 		let formData = $('#update_income_form').eq(0).serialize();
@@ -789,9 +871,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			url:'/main/postUpdateIncome',
 			type:'post',
 			data:formData,
-			error:function() {
-				alert('업데이트 하는 과정에서 오류가 발생했습니다.');
-			},
 			success:function(UR) {
 				refreshData(UR);
 			},error:function(request,status,error){
@@ -806,9 +885,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			url:'/main/postUpdateExpense',
 			type:'post',
 			data:formData,
-			error:function() {
-				alert('업데이트 하는 과정에서 오류가 발생했습니다.');
-			},
 			success:function(UR) {
 				refreshData(UR);
 			},error:function(request,status,error){
@@ -830,7 +906,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		});
 		return false;
 	});
-	// //수입 삭제버튼
+	//수입 삭제버튼
 	$('#delete_income_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
@@ -846,7 +922,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 	});
-	// //지출 삭제버튼
+	//지출 삭제버튼
 	$('#delete_expense_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
@@ -862,6 +938,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 	});
+	//이체 삭제 버튼
 	$('#delete_transfer_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
@@ -883,6 +960,7 @@ window.addEventListener('DOMContentLoaded', function () {
   const todayString = new Date().toISOString().substring(0, 10);
   document.querySelector('#insert_income_date').value = todayString;
 	document.querySelector('#insert_expense_date').value = todayString;
+	document.querySelector('#insert_transfer_date').value = todayString;
 
 	//put_MakeDetailDiv_to_dateTd에 날짜를 클릭 시 insert창의 value를 해당 날짜로 바꿔주는 작업을 해놓았다.
 
@@ -902,6 +980,7 @@ window.addEventListener('DOMContentLoaded', function () {
 				refreshDataWhenInsert(UR);
 				document.querySelector('#insert_expense_date').value = insertDate;
 				document.querySelector('#insert_income_date').value = insertDate;
+				document.querySelector('#insert_transfer_date').value = insertDate;
 			}
 		});
 		return false;
@@ -923,6 +1002,28 @@ window.addEventListener('DOMContentLoaded', function () {
 				refreshDataWhenInsert(UR);
 				document.querySelector('#insert_expense_date').value = insertDate;
 				document.querySelector('#insert_income_date').value = insertDate;
+				document.querySelector('#insert_transfer_date').value = insertDate;
+			}
+		});
+		return false;
+	});
+	//transfer insert 버튼 클릭시 insert 이벤트
+	$('#insert_transfer_form').on('submit', function() {
+		let formData = $('#insert_transfer_form').eq(0).serialize();
+		$.ajax({
+			url:'/main/postInsertTransfer',
+			type:'post',
+			data:formData,
+			error:function() {
+				alert('이체 정보 입력 도중 에러가 발생했습니다.');
+			},
+			success:function(UR) {
+				let insertDate = document.querySelector('#insert_transfer_date').value;
+				document.querySelector('span.detailDate').innerText = insertDate;
+				refreshDataWhenInsert(UR);
+				document.querySelector('#insert_expense_date').value = insertDate;
+				document.querySelector('#insert_income_date').value = insertDate;
+				document.querySelector('#insert_transfer_date').value = insertDate;
 			}
 		});
 		return false;

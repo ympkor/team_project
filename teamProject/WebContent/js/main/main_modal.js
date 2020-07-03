@@ -88,33 +88,130 @@ function updateTransferFormSwitchToTransfer() {
   document.querySelector('#update_transfer_income_category_label').classList.add('hidden');
   document.querySelector('#update_transfer_income_category').classList.add('hidden');
 }
-function iFSwitchIFtoEF() {
-  document.querySelector('#update_income_category_switch_expense').classList.add('hidden');
-  document.querySelector('#update_income_category').classList.remove('hidden');
-}
-function iFSwitchEFtoIF() {
-	document.querySelector('#update_income_category_switch_expense').classList.remove('hidden');
-	document.querySelector('#update_income_category').classList.add('hidden');
-}
-function eFSwitchIFtoEF() {
-	document.querySelector('#update_expense_category_switch_income').classList.remove('hidden');
-	document.querySelector('#update_expense_category').classList.add('hidden');
-}
-function eFSwitchEFtoIF() {
-	document.querySelector('#update_expense_category_switch_income').classList.add('hidden');
-	document.querySelector('#update_expense_category').classList.remove('hidden');
-}
-//수입이 체크되면 수입 폼을 보여주고 지출 폼은 hidden
+//수입이 체크되면 수입 폼을 보여주고 지출,이체 폼은 hidden
 function showIncomeForm() {
   document.querySelector('#insert_income_form').classList.remove('hidden');
   document.querySelector('#insert_expense_form').classList.add('hidden');
+  document.querySelector('#insert_transfer_form').classList.add('hidden');
 }
-//지출이 체크되면 지출 폼을 보여주고 수입 폼은 hidden
+//지출이 체크되면 지출 폼을 보여주고 수입,이체 폼은 hidden
 function showExpenseForm() {
-  document.querySelector('#insert_expense_form').classList.remove('hidden');
   document.querySelector('#insert_income_form').classList.add('hidden');
+  document.querySelector('#insert_expense_form').classList.remove('hidden');
+  document.querySelector('#insert_transfer_form').classList.add('hidden');
 }
-
+//이체가 체크되면 이체 폼을 보여주고 수입,지출 폼은 hidden
+function showTransferForm() {
+  document.querySelector('#insert_income_form').classList.add('hidden');
+  document.querySelector('#insert_expense_form').classList.add('hidden');
+  document.querySelector('#insert_transfer_form').classList.remove('hidden');
+}
+//인서트 창에서 사용자가 탭을 변경시 공유할 수 있는 데이터는 서로 공유하도록 해주자.
+//날짜 공유
+function syncronizeDateAtInsertForm(thisValue) {
+  let insertDate = thisValue.value;
+  document.querySelector('#insert_income_date').value = insertDate;
+  document.querySelector('#insert_expense_date').value = insertDate;
+  document.querySelector('#insert_transfer_date').value = insertDate;
+}
+//금액 공유
+function syncronizeAmountAtInsertForm(thisValue) {
+  document.querySelector('#insert_income_amount').value = thisValue.value;
+  document.querySelector('#insert_expense_amount').value = thisValue.value;
+  document.querySelector('#insert_transfer_amount').value = thisValue.value;
+}
+//메모 공유
+function syncronizeMemoAtInsertForm(thisValue) {
+  document.querySelector('#insert_income_memo').value = thisValue.value;
+  document.querySelector('#insert_expense_memo').value = thisValue.value;
+  document.querySelector('#insert_transfer_memo').value = thisValue.value;
+}
+//수입 인서트 창의 자산 항목을 변경하면, 숨겨진 input창에 assetsId를 넣어주는 기능.
+//다른 인서트 창의 자산 항목도 자동으로 선택되게 해주자.
+//onchange function으로 넣어준다.
+function getAssetsIdAndPutDataAtIncomeForm() {
+  let memAssetId = document.querySelector('#insert_assets_income_memAssetId').value;
+  let jsonData = {"memAssetId":memAssetId};
+  $.ajax({
+    url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+      document.querySelector('#insert_assets_income_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_expense_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_expense_memAssetId').value = memAssetId;
+      document.querySelector('#insert_assets_transfer_memAssetId').value = memAssetId;
+		}
+  });
+}
+//지출 인서트 창의 자산 항목을 변경하면, 숨겨진 input창에 assetsId를 넣어주는 기능.
+//다른 인서트 창의 자산 항목도 자동으로 선택되게 해주자.
+//onchange function으로 넣어준다.
+function getAssetsIdAndPutDataAtExpenseForm() {
+  let memAssetId = document.querySelector('#insert_assets_expense_memAssetId').value;
+  let jsonData = {"memAssetId":memAssetId};
+  $.ajax({
+    url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+      document.querySelector('#insert_assets_income_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_expense_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_income_memAssetId').value = memAssetId;
+      document.querySelector('#insert_assets_transfer_memAssetId').value = memAssetId;
+		}
+  });
+}
+//이체 인서트 창의 자산 항목을 변경하면, 숨겨진 input창에 assetsId를 넣어주는 기능.
+//다른 인서트 창의 자산 항목도 자동으로 선택되게 해주자.
+//onchange function으로 넣어준다.
+function getAssetsIdAndPutDataAtTransferForm() {
+  let memAssetId = document.querySelector('#insert_assets_transfer_memAssetId').value;
+  let jsonData = {"memAssetId":memAssetId};
+  $.ajax({
+    url:'/main/postGetAOM',
+		type:'post',
+		data:jsonData,
+		success:function(aom){
+      document.querySelector('#insert_assets_income_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_expense_assetsId').value = aom.assetsId;
+      document.querySelector('#insert_assets_income_memAssetId').value = memAssetId;
+      document.querySelector('#insert_assets_expense_memAssetId').value = memAssetId;
+		}
+  });
+}
+//수입 인서트 폼에서 해당 유저의 자산 목록을 보여주는 기능
+function showAOMListAtInsertIncome(aaomList) {
+  let aomStr = ' ';
+  if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
+      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+    }}else{aomStr = '<option id="insert_assets_income_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+  document.querySelector('#insert_assets_income_memAssetId').innerHTML += aomStr;
+}
+//지출 인서트 폼에서 해당 유저의 자산 목록을 보여주는 기능
+function showAOMListAtInsertExpense(aaomList) {
+  let aomStr = ' ';
+  if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
+      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+    }}else{aomStr = '<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+  document.querySelector('#insert_assets_expense_memAssetId').innerHTML += aomStr;
+}
+//이체 인서트 폼에서 출금자산에 해당 유저의 자산 목록을 보여주는 기능
+function showAOMListAtInsertTransferAtFrom(aaomList) {
+  let aomStr = ' ';
+  if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
+      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+    }}else{aomStr = '<option id="insert_assets_transfer_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+  document.querySelector('#insert_assets_transfer_memAssetId').innerHTML += aomStr;
+}
+//이체 인서트 폼에서 입금자산에 해당 유저의 자산 목록을 보여주는 기능
+function showAOMListAtInsertTransferAtTo(aaomList) {
+  let aomStr = ' ';
+  if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
+      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+    }}else{aomStr = '<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+  document.querySelector('#insert_assets_transfer_memAssetIdTo').innerHTML += aomStr;
+}
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.querySelector('div.modal');
   const modalOverlay = document.querySelector('div.modal_overlay');

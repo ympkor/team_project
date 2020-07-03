@@ -82,6 +82,11 @@ public class MainUpdateService {
 	public void insertIncome(Income income) {
 		mainUpdateMapper.insertIncome(income);
 	}
+
+	//transfer insert
+	public void insertTransfer(Transfer transfer) {
+		mainUpdateMapper.insertTransfer(transfer);
+	}
 	
 	//수입 항목을 update하고 AOM도 update해주는 서비스
 	@Transactional
@@ -207,4 +212,13 @@ public class MainUpdateService {
 		plusAOMAmountById(transferUpdate.getAmount(), transferUpdate.getMemAssetIdFrom());
 		minusAOMAountById(transferUpdate.getAmount(), transferUpdate.getMemAssetIdTo());
 	}
+
+	//이체 항목을 insert하고 AOM을 업데이트 한다.
+	@Transactional
+	public void insertTransferAndUpdateAom(Transfer transfer) {
+		insertTransfer(transfer);
+		minusAOMAountById(transfer.getAmount(), transfer.getMemAssetIdFrom());
+		plusAOMAmountById(transfer.getAmount(), transfer.getMemAssetIdTo());
+	}
+
 }

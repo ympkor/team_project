@@ -20,6 +20,11 @@
 		VALUES(#{userKey}, #{amount}, #{expenseDate}, #{assetsId}, #{ecId}, #{memo}, #{memAssetId})
 	</insert>
 	
+	<insert id="insertTransfer" parameterType="MainTransfer">
+		INSERT INTO tp.transfer(user_key, mem_asset_id_from, mem_asset_id_to, amount, transfer_date, memo) 
+		VALUES(#{userKey}, #{memAssetIdFrom}, #{memAssetIdTo}, #{amount}, #{transferDate}, #{memo})
+	</insert>
+	
 	<update id="updateIncomeByIncomeId" parameterType="MainIncome">
 		UPDATE tp.income SET amount=#{amount}, income_date=#{incomeDate}, 
 		assets_id=#{assetsId}, ic_id=#{icId}, memo=#{memo}, mem_asset_id=#{memAssetId} 

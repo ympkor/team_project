@@ -69,15 +69,17 @@ public class MainPageController {
 		
 		//페이지 로드 시 리스트를 함수에 변수로 넣기 위해서 JSON으로 변환 첨부했다.
 		ObjectMapper mapper = new ObjectMapper();
-		String iicaListJ = mapper.writeValueAsString(iicaList);
-		String eecaListJ = mapper.writeValueAsString(eecaList);
+//		String iicaListJ = mapper.writeValueAsString(iicaList);
+//		String eecaListJ = mapper.writeValueAsString(eecaList);
+		String aaomListJ = mapper.writeValueAsString(aaomList);
 		String tbmListJ = mapper.writeValueAsString(transferByMonthList);
 //		String taomfaomtJ = mapper.writeValueAsString(taomfaomtList);
 		
 //		m.addAttribute("taomfaomtJ", taomfaomtJ);
 		m.addAttribute("tbmListJ", tbmListJ);
-		m.addAttribute("iicaListJ", iicaListJ);
-		m.addAttribute("eecaListJ", eecaListJ);
+//		m.addAttribute("iicaListJ", iicaListJ);
+//		m.addAttribute("eecaListJ", eecaListJ);
+		m.addAttribute("aaomListJ", aaomListJ);
 		m.addAttribute("cal", cal);
 		m.addAttribute("miicList", miicList);
 		m.addAttribute("meecList", meecList);
@@ -120,6 +122,12 @@ public class MainPageController {
 	public @ResponseBody List<Transfer> getTBMList(@ModelAttribute("userKey")int userKey, @RequestParam(name = "selecDate")String transferDate) {
 		List<Transfer> tbmList = mainService.selectTransferByUserKeyAndDate(userKey, transferDate);
 		return tbmList;
+	}
+	
+	//날짜가 변경되면 해당 월의 합계를 반환
+	@PostMapping("/postSumAmounts")
+	public @ResponseBody SumAmounts getSumAmounts(@ModelAttribute("userKey")int userKey, @RequestParam("currentDate")String currentDate) {
+		return mainService.selectSUMIEByUserKeyAndDate(userKey, currentDate);
 	}
 	
 	//날짜를 선택하면 그 날에 해당되는 수입상세내역 반환

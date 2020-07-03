@@ -54,7 +54,4 @@ public interface MainPageMapper {
 
 	//memAssetId로 AOM 조회해서 반환
 	public AssetsOfMember selectAOMByMemAssetId(@Param("memAssetId")int memAssetId);
-
-
-		
 }

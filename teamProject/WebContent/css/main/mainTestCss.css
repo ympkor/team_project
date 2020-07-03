@@ -1,9 +1,12 @@
 @charset "UTF-8";
 *{padding: 0; margin: 0; box-sizing: border-box;}
 body{width: 100vw; height: 100vh;}
+table{border-collapse: collapse; background-color: #ffffff; width: 90%; height: 90%;}
+tr{height: 20%;}
+th,td{width: 12%; border: 1px solid #f5f5f5;}
 .ui-datepicker table{
       display: none;
-  }
+}
 .grid_container{
   display: grid;
   grid-template-areas: 
@@ -12,36 +15,41 @@ body{width: 100vw; height: 100vh;}
   "aside main main"
   "aside section section"
   "footer footer footer";
+  width: 100vw; height: 100vh;
 }
 .grid_header{
   grid-area: top;
+  height: 10%;;
+  background-color: #fff8e1;
 }
 .grid_aside{
   grid-area: aside;
+  height: 80%;
+  background-color: #f5f5f5;
+}
+.mainPage_sideMenuContainer{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
 }
 .grid_main{
   grid-area: main;
+  height: 60%;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .grid_section{
   grid-area: section;
+  height: 20%;
+  background-color: #f5f5f5;
 }
 .grid_footer{
   grid-area: footer;
-}
-h3{text-align: center;}
-span.dateSpan{display: block;}
-.income{color: blue;}
-.expense{color: red;}
-/*상세내역 리스트들 정리하기*/
-div.detailDateDiv{
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-}
-.topmenu{
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  height: 10%;
+  background-color: #ccc5af;
 }
 /*div.topmenu{position:absolute;top:0px; width:100%; background-color: white;}
 div.basic{position:absolute;left:0px;top:10px; width:25%;}

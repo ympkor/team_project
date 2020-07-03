@@ -93,7 +93,8 @@
 					</div>
 					<!-- 입력하기 버튼 -->
 					<div class="update_button">
-						<button type="submit" id="update_income_button">저장</button>
+						<button type="button" id="update_income_button_insert">신규 등록</button>
+						<button type="submit" id="update_income_button">수정</button>
 						<button type="button" class="close_modal">닫기</button>
 						<button type="button" id="delete_income_button">삭제</button>
 					</div>
@@ -168,9 +169,10 @@
 					</div>
 					<!-- 입력하기 버튼 -->
 					<div class="update_button">
-						<button type="submit" id="update_expense_button">저장</button>
-						<button type="button" class="close_modal">닫기</button>
+						<button type="button" id="update_expense_button_insert">신규 등록</button>
+						<button type="submit" id="update_expense_button">수정</button>
 						<button type="button" id="delete_expense_button">삭제</button>
+						<button type="button" class="close_modal">닫기</button>
 					</div>
 				</div>
 			</form>
@@ -243,7 +245,8 @@
 					</div>
 					<!-- 입력하기 버튼 -->
 					<div class="update_button">
-						<button type="submit" id="update_transfer_button">저장</button>
+						<button type="button" id="update_transfer_button_insert">신규 등록</button>
+						<button type="submit" id="update_transfer_button">수정</button>
 						<button type="button" class="close_modal">닫기</button>
 						<button type="button" id="delete_transfer_button">삭제</button>
 					</div>
@@ -255,7 +258,7 @@
 	<div class="grid_container">
 		<!-- 상단 메뉴 부분 -->
 		<header class="grid_header">
-			<div class="topmenu" style="height: 10vh;">
+			<div class="topmenu">
 				<div class="basic"><a href="/main/getCal">가계부</a></div>
 				<div class="statistics"><a href="/statistics/show">통계</a></div>
 				<div class="assest"><a href="/asset/view">자산</a></div>
@@ -271,8 +274,22 @@
 				<hr>
 				<h3>측면 메뉴 DIV</h3>
 				<hr>
+				<!-- 월 별 통합 데이터 출력 부분 -->
+				<div class="monthly_data">
+					<div class="monthly_data_month"><span class="monthly_data_month">${cal.selecDate.toString().substring(5, 7)} 월</span></div>
+					<div class="monthly_data_income">
+						<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income">${sumAmounts.sumIncome} 원</span>
+					</div>
+					<div class="monthly_data_expense">
+						<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense">${sumAmounts.sumExpense} 원</span>
+					</div>
+					<div class="monthly_data_sum">
+						<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum">${sumAmounts.sumIncome-sumAmounts.sumExpense} 원</span>
+					</div>
+				</div>
+
 				<!-- 사용자가 정보를 입력하면 Insert해주는 Form을 만들자. ajax방식 -->
-				<!-- 사용자가 선택할 수 있는 수입/지출 카테고리 -->
+				<!-- 사용자가 선택할 수 있는 수입/지출/이체 카테고리 -->
 				<div class="insert_category_container">
 					<div class="insert_category">
 						<label for="insert_income">수입</label>
@@ -281,6 +298,8 @@
 						<label for="insert_expense">지출</label>
 						<input type="radio" id="insert_expense" name="insertCategory" value="expense" onchange="showExpenseForm()"
 							checked>
+						<label for="insert_transfer">이체</label>
+						<input type="radio" id="insert_transfer" name="insertCategory" value="transfer" onchange="showTransferForm()">
 					</div>
 				</div>
 				<!-- insert, expense용 form을 각각 만들어놓고, 사용자가 수입/지출 탭을 선택함에 따라 해당되는 input을 보여주자 -->
@@ -291,34 +310,22 @@
 						<div class="insert_date">
 							<label for="insert_income_date">날짜</label>
 							<input type="date" id="insert_income_date" class="insert_income_date" name="incomeDate" value=""
-								required="required" min="1950-01-01" max="2199-12-12">
+								required="required" min="1950-01-01" max="2199-12-12" onblur="syncronizeDateAtInsertForm(this)">
 						</div>
 						<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
 						<div class="insert_assets">
 							<label for="insert_assets_income">자산</label>
-							<select id="insert_assets_income" name="assetsId" required="required">
-								<option value="" disabled selected>선택하세요</option>
-								<!-- 로그인한 사용자의 자산 항목을 보여주자 -->
-								<c:forEach var="aaom" items="${aaomList}">
-									<script>
-										document.querySelector('#insert_assets_income').innerHTML += '<option value=${aaom.assetsId}>${aaom.assetsName}</option>';
-									</script>
-								</c:forEach>
+							<input id="insert_assets_income_assetsId" name="assetsId" class="hidden">
+							<select id="insert_assets_income_memAssetId" name="memAssetId" required="required" onchange="getAssetsIdAndPutDataAtIncomeForm()">
+								<option id="insert_assets_income_memAssetId_selected" value="" selected disabled>선택하세요</option>
 							</select>
-							<!-- 보유중인 자산 항목을 변경하면 그 자산항목의 id로 검색해서 AOM을 보여주자 -->
-							<select id="insert_aom_income" name="memAssetId" required="required">
-								<option id="insert_aom_income_selected" value="" selected disabled>선택하세요</option>
-							</select>
-							<!-- insert_assets_income 변경되면 그 aom에서 user_key와 assets_id로 검색해서 그 값을 뿌려주는 기능을 넣어주자 -->
 							<script>
-								document.querySelector('#insert_assets_income').addEventListener('change', function() {
-									let assetsId = document.querySelector('#insert_assets_income').value;
-									showInsertIncomeAomBF(assetsId);
-								});
+								const aaomListJ = JSON.parse('${aaomListJ}');
+								showAOMListAtInsertIncome(aaomListJ);
 							</script>
 						</div>
 						<!-- income_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
-						<div class="insert_income_category">
+						<div class="insert_category">
 							<label for="insert_income_category">분류</label>
 							<select id="insert_income_category" name="icId" required="required">
 								<option value="" disabled selected>선택하세요</option>
@@ -330,22 +337,23 @@
 							</select>
 						</div>
 						<!-- income_amount입력 창 -->
-						<div class="insert_income_amount">
+						<div class="insert_amount">
 							<label for="insert_income_amount">금액</label>
-							<input type="number" id="insert_income_amount" name="amount" required min="-999999999" max="999999999">
+							<input type="number" id="insert_income_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
 						</div>
 						<!-- income_memo 입력 창 -->
-						<div class="insert_income_memo">
+						<div class="insert_memo">
 							<label for="insert_income_memo">내용</label>
-							<input type="text" id="insert_income_memo" name="memo" maxlength="22">
+							<input type="text" id="insert_income_memo" name="memo" maxlength="22" onblur="syncronizeMemoAtInsertForm(this)">
 						</div>
 						<!-- 저장 버튼 -->
-						<div class="insert_income_button">
-							<button type="submit" id="insert_income_button">저장</button>
+						<div class="insert_button">
+							<button type="submit" id="insert_income_button">등록</button>
 							<button type="reset">입력초기화</button>
 						</div>
 					</div>
 				</form>
+				
 				<!-- 여긴 지출 Form -->
 				<form id="insert_expense_form">
 					<div id="insert_form_container">
@@ -353,34 +361,21 @@
 						<div class="insert_date">
 							<label for="insert_expense_date">날짜</label>
 							<input type="date" id="insert_expense_date" class="insert_expense_date" name="expenseDate" value=""
-								required="required" min="1950-01-01" max="2199-12-12">
+								required="required" min="1950-01-01" max="2199-12-12" onblur="syncronizeDateAtInsertForm(this)">
 						</div>
 						<!-- assets_id 선택 창. 사용자에겐 자산 명으로 보여주자 -->
 						<div class="insert_assets">
 							<label for="insert_assets_expense">자산</label>
-							<select id="insert_assets_expense" name="assetsId" required="required">
-								<option value="" disabled selected>선택하세요</option>
-								<!-- 로그인한 사용자의 자산 항목을 보여주자 -->
-								<c:forEach var="aaom" items="${aaomList}">
-									<script>
-										document.querySelector('#insert_assets_expense').innerHTML += '<option value=${aaom.assetsId}>${aaom.assetsName}</option>';
-									</script>
-								</c:forEach>
+							<input id="insert_assets_expense_assetsId" name="assetsId" class="hidden">
+							<select id="insert_assets_expense_memAssetId" name="memAssetId" required="required" onchange="getAssetsIdAndPutDataAtExpenseForm()">
+								<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>선택하세요</option>
 							</select>
-							<!-- 보유중인 자산 항목을 변경하면 그 자산항목의 id로 검색해서 AOM을 보여주자 -->
-							<select id="insert_aom_expense" name="memAssetId" required="required">
-								<option id="insert_aom_expense_selected" value="" selected>선택하세요</option>
-							</select>
-							<!-- insert_assets_income 변경되면 그 aom에서 user_key와 assets_id로 검색해서 그 값을 뿌려주는 기능을 넣어주자 -->
 							<script>
-								document.querySelector('#insert_assets_expense').addEventListener('change', function() {
-									let assetsId = document.querySelector('#insert_assets_expense').value;
-									showInsertExpenseAomBF(assetsId);
-								});
+								showAOMListAtInsertExpense(aaomListJ);
 							</script>
 						</div>
 						<!-- income_ic_id 선택 창. 사용자에겐 카테고리 명으로 보여주자 -->
-						<div class="insert_expense_category">
+						<div class="insert_category">
 							<label for="insert_expense_category">분류</label>
 							<select id="insert_expense_category" name="ecId" required="required">
 								<option value="" disabled selected>선택하세요</option>
@@ -392,18 +387,65 @@
 							</select>
 						</div>
 						<!-- income_amount입력 창 -->
-						<div class="insert_expense_amount">
+						<div class="insert_amount">
 							<label for="insert_expense_amount">금액</label>
-							<input type="number" id="insert_expense_amount" name="amount" required min="-999999999" max="999999999">
+							<input type="number" id="insert_expense_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
 						</div>
 						<!-- income_memo 입력 창 -->
-						<div class="insert_expense_memo">
+						<div class="insert_memo">
 							<label for="insert_expense_memo">내용</label>
-							<input type="text" id="insert_expense_memo" name="memo" maxlength="22">
+							<input type="text" id="insert_expense_memo" name="memo" maxlength="22" onblur="syncronizeMemoAtInsertForm(this)">
 						</div>
 						<!-- 저장 버튼 -->
-						<div class="insert_expense_button">
-							<button type="submit" id="insert_expense_button">저장</button>
+						<div class="insert_button">
+							<button type="submit" id="insert_expense_button">등록</button>
+							<button type="reset">입력초기화</button>
+						</div>
+					</div>
+				</form>
+
+				<!-- 여긴 이체 Form -->
+				<form id="insert_transfer_form" class="hidden">
+					<div id="insert_form_container">
+						<!-- 날짜 선택 창 -->
+						<div class="insert_date">
+							<label for="insert_transfer_date">날짜</label>
+							<input type="date" id="insert_transfer_date" class="insert_transfer_date" name="transferDate" value=""
+								required="required" min="1950-01-01" max="2199-12-12" onblur="syncronizeDateAtInsertForm(this)">
+						</div>
+						<!-- 출금할 자산 선택 창 -->
+						<div class="insert_assets">
+							<label for="insert_assets_transfer_memAssetId">출금</label>
+							<select id="insert_assets_transfer_memAssetId" name="memAssetIdFrom" required="required" onchange="getAssetsIdAndPutDataAtTransferForm()">
+								<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>선택하세요</option>
+							</select>
+							<script>
+								showAOMListAtInsertTransferAtFrom(aaomListJ);
+							</script>
+						</div>
+						<!-- 이체할 자산 선택 창 -->
+						<div class="insert_assets">
+							<label for="insert_assets_transfer_memAssetIdTo">입금</label>
+							<select id="insert_assets_transfer_memAssetIdTo" name="memAssetIdTo" required="required">
+								<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>선택하세요</option>
+							</select>
+							<script>
+								showAOMListAtInsertTransferAtTo(aaomListJ);
+							</script>
+						</div>
+						<!-- income_amount입력 창 -->
+						<div class="insert_amount">
+							<label for="insert_transfer_amount">금액</label>
+							<input type="number" id="insert_transfer_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
+						</div>
+						<!-- income_memo 입력 창 -->
+						<div class="insert_memo">
+							<label for="insert_transfer_memo">내용</label>
+							<input type="text" id="insert_transfer_memo" name="memo" maxlength="22" onblur="syncronizeMemoAtInsertForm(this)">
+						</div>
+						<!-- 저장 버튼 -->
+						<div class="insert_button">
+							<button type="submit" id="insert_transfer_button">등록</button>
 							<button type="reset">입력초기화</button>
 						</div>
 					</div>

@@ -107,7 +107,8 @@ public class MainPageService {
 		if(sumExpense == null) {sumExpense = 0;}
 		sumAmounts.setSumIncome(sumIncome);
 		sumAmounts.setSumExpense(sumExpense);
-		return null;
+		sumAmounts.setSelecDate(yearMonth);
+		return sumAmounts;
 	}
 
 	//memAssetId로 AOM객체 조회 후 반환

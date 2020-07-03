@@ -15,6 +15,7 @@ import dto.main.Expense;
 import dto.main.ExpenseUpdate;
 import dto.main.Income;
 import dto.main.IncomeUpdate;
+import dto.main.Transfer;
 import dto.main.TransferUpdate;
 import dto.main.UpdateAndRefresh;
 import service.main.MainPageService;
@@ -126,6 +127,22 @@ public class MainUpdateController {
 		return updateAndRefresh;
 	}
 	
+	@PostMapping("/postInsertTransfer")
+	public @ResponseBody UpdateAndRefresh insertTransfer(@ModelAttribute("userKey")int userKey, Transfer transfer) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		transfer.setUserKey(userKey);
+		mainUpdateService.insertTransferAndUpdateAom(transfer);
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(transfer.getTransferDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, transfer.getTransferDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
 	@PostMapping("/postDeleteIncome")
 	public @ResponseBody UpdateAndRefresh deleteIncome(@ModelAttribute("userKey")int userKey, IncomeUpdate incomeUpdate) {
 		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
@@ -163,6 +180,72 @@ public class MainUpdateController {
 		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
 		transferUpdate.setUserKey(userKey);
 		mainUpdateService.deleteTransferAndUpdateAOM(transferUpdate);
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(transferUpdate.getTransferDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
+	@PostMapping("/postUpdateIncomeInsert")
+	public @ResponseBody UpdateAndRefresh insertEventAtIncomeUpdateForm(@ModelAttribute("userkey")int userKey, IncomeUpdate incomeUpdate) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		incomeUpdate.setUserKey(userKey);
+		if(incomeUpdate.getCategory() == 1) {
+			mainUpdateService.insertIncomeAndUpdateAOM(new Income(0, incomeUpdate.getUserKey(), incomeUpdate.getNewAmount(), incomeUpdate.getIncomeDate(), incomeUpdate.getAssetsId(), incomeUpdate.getIcId(), incomeUpdate.getMemo(), incomeUpdate.getNewMemAssetId()));
+		}else if(incomeUpdate.getCategory() == 2) {
+			mainUpdateService.insertExpenseAndUpdateAOM(new Expense(0, incomeUpdate.getUserKey(), incomeUpdate.getNewAmount(), incomeUpdate.getIncomeDate(), incomeUpdate.getAssetsId(), incomeUpdate.getEcId(), incomeUpdate.getMemo(), incomeUpdate.getNewMemAssetId()));
+		}else {
+			mainUpdateService.insertTransferAndUpdateAom(new Transfer(0, incomeUpdate.getUserKey(), incomeUpdate.getNewMemAssetId(), incomeUpdate.getMemAssetIdTo(), incomeUpdate.getNewAmount(), incomeUpdate.getIncomeDate(), incomeUpdate.getMemo()));
+		}
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(incomeUpdate.getIncomeDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
+	@PostMapping("/postUpdateExpenseInsert")
+	public @ResponseBody UpdateAndRefresh insertEventAtExpenseUpdateForm(@ModelAttribute("userKey")int userKey, ExpenseUpdate expenseUpdate) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		expenseUpdate.setUserkey(userKey);
+		if(expenseUpdate.getCategory() == 1) {
+			mainUpdateService.insertIncomeAndUpdateAOM(new Income(0, expenseUpdate.getUserkey(), expenseUpdate.getNewAmount(), expenseUpdate.getExpenseDate(), expenseUpdate.getAssetsId(), expenseUpdate.getIcId(), expenseUpdate.getMemo(), expenseUpdate.getNewMemAssetId()));
+		}else if(expenseUpdate.getCategory() == 2) {
+			mainUpdateService.insertExpenseAndUpdateAOM(new Expense(0, expenseUpdate.getUserkey(), expenseUpdate.getNewAmount(), expenseUpdate.getExpenseDate(), expenseUpdate.getAssetsId(), expenseUpdate.getEcId(), expenseUpdate.getMemo(), expenseUpdate.getNewMemAssetId()));
+		}else {
+			mainUpdateService.insertTransferAndUpdateAom(new Transfer(0, expenseUpdate.getUserkey(), expenseUpdate.getNewMemAssetId(), expenseUpdate.getMemAssetIdTo(), expenseUpdate.getNewAmount(), expenseUpdate.getExpenseDate(), expenseUpdate.getMemo()));
+		}
+		updateAndRefresh.setCal(new Calendar(LocalDate.parse(expenseUpdate.getExpenseDate().toString())));
+		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTbmList(mainService.selectTransferByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		updateAndRefresh.setTaomfaomtList(mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setIicaList(mainService.selectIICAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setEecaList(mainService.selectEECAByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 10)));
+		updateAndRefresh.setSumAmounts(mainService.selectSUMIEByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));
+		return updateAndRefresh;
+	}
+	
+	@PostMapping("/postUpdateTransferInsert")
+	public @ResponseBody UpdateAndRefresh insertEventAtTransferUpdateForm(@ModelAttribute("userKey")int userKey, TransferUpdate transferUpdate) {
+		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
+		transferUpdate.setUserKey(userKey);
+		if(transferUpdate.getCategory() == 1) {
+			mainUpdateService.insertIncomeAndUpdateAOM(new Income(0, transferUpdate.getUserKey(), transferUpdate.getNewAmount(), transferUpdate.getTransferDate(), transferUpdate.getAssetsId(), transferUpdate.getIcId(), transferUpdate.getMemo(), transferUpdate.getNewMemAssetIdFrom()));
+		}else if(transferUpdate.getCategory() == 2) {
+			mainUpdateService.insertExpenseAndUpdateAOM(new Expense(0, transferUpdate.getUserKey(), transferUpdate.getNewAmount(), transferUpdate.getTransferDate(), transferUpdate.getAssetsId(), transferUpdate.getEcId(), transferUpdate.getMemo(), transferUpdate.getNewMemAssetIdFrom()));
+		}else {
+			mainUpdateService.insertTransferAndUpdateAom(new Transfer(0, transferUpdate.getUserKey(), transferUpdate.getNewMemAssetIdFrom(), transferUpdate.getNewMemAssetIdTo(), transferUpdate.getNewAmount(), transferUpdate.getTransferDate(), transferUpdate.getMemo()));
+		}
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(transferUpdate.getTransferDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));
 		updateAndRefresh.setMeecList(mainService.selectMEECByUserKeyAndDate(userKey, transferUpdate.getTransferDate().toString().substring(0, 7)));

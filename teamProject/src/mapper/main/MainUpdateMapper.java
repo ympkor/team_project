@@ -13,6 +13,9 @@ public interface MainUpdateMapper {
 	//Insert expense
 	public void insertExpense(Expense expense);
 	
+	//INSERT transfer
+	public void insertTransfer(Transfer transfer);
+	
 	//income_id로 income update
 	public void updateIncomeByIncomeId(Income income);
 
@@ -42,5 +45,4 @@ public interface MainUpdateMapper {
 
 	//DELETE transfer By transfer id
 	public void deleteTransferByTransferId(int transferId);
-
 }
