@@ -1,22 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.main.MainUpdateMapper">
-	<update id="updateIncomeByIncomeId" parameterType="IncomeUpdate">
-		UPDATE tp.income SET amount=#{amount}, income_date=#{incomeDate}, 
-		assets_id=#{assetsId}, ic_id=#{icId}, memo=#{memo} 
-		WHERE income_id=#{incomeId}
-	</update>
-	
-	<select id="selectSUMINCOMEByUserKeyAndAssetsId" resultType="int">
+
+	<select id="selectSUMINCOMEByUserKeyAndAssetsId" resultType="integer">
 		SELECT SUM(amount) FROM income WHERE user_key=#{userKey} AND assets_id=#{assetsId}
 	</select>
 	
-	<select id="selectSUMExpenseByUserKeyAndAssetsId" resultType="int">
+	<select id="selectSUMExpenseByUserKeyAndAssetsId" resultType="integer">
 		SELECT SUM(amount) FROM expense WHERE user_key=#{userKey} AND assets_id=#{assetsId}
 	</select>
 	
-	<update id="updateAOMByMemAssetId">
-		UPDATE tp.assets_of_member SET amount=#{amount} 
+	<insert id="insertIncome" parameterType="MainIncome">
+		INSERT INTO tp.income(user_key, amount, income_date, assets_id, ic_id, memo, mem_asset_id) 
+		VALUES(#{userKey}, #{amount}, #{incomeDate}, #{assetsId}, #{icId}, #{memo}, #{memAssetId})
+	</insert>
+	
+	<insert id="insertExpense" parameterType="MainExpense">
+		INSERT INTO tp.expense(user_key, amount, expense_date, assets_id, ec_id, memo, mem_asset_id) 
+		VALUES(#{userKey}, #{amount}, #{expenseDate}, #{assetsId}, #{ecId}, #{memo}, #{memAssetId})
+	</insert>
+	
+	<insert id="insertTransfer" parameterType="MainTransfer">
+		INSERT INTO tp.transfer(user_key, mem_asset_id_from, mem_asset_id_to, amount, transfer_date, memo) 
+		VALUES(#{userKey}, #{memAssetIdFrom}, #{memAssetIdTo}, #{amount}, #{transferDate}, #{memo})
+	</insert>
+	
+	<update id="updateIncomeByIncomeId" parameterType="MainIncome">
+		UPDATE tp.income SET amount=#{amount}, income_date=#{incomeDate}, 
+		assets_id=#{assetsId}, ic_id=#{icId}, memo=#{memo}, mem_asset_id=#{memAssetId} 
+		WHERE income_id=#{incomeId}
+	</update>
+	
+	<update id="updateExpenseByExpenseId" parameterType="MainExpense">
+		UPDATE tp.expense SET amount=#{amount}, expense_date=#{expenseDate}, 
+		assets_id=#{assetsId}, ec_id=#{ecId}, memo=#{memo}, mem_asset_id=#{memAssetId}
+		WHERE expense_id=#{expenseId}
+	</update>
+	
+	<update id="updateTransferByTransferId" parameterType="MainTransfer">
+		UPDATE tp.transfer SET mem_asset_id_from=#{memAssetIdFrom}, mem_asset_id_to=#{memAssetIdTo},  
+		amount=#{amount}, transfer_date=#{transferDate}, memo=#{memo} 
+		WHERE transfer_id=#{transferId}
+	</update>
+	
+	<update id="plusAOMAmountById">
+		UPDATE tp.assets_of_member SET amount=amount+#{amount}
+		WHERE mem_asset_id=#{memAssetId}
+	</update>
+	
+	<update id="minusAOMAmountById">
+		UPDATE tp.assets_of_member SET amount=amount-#{amount}
 		WHERE mem_asset_id=#{memAssetId}
 	</update>
 	
@@ -24,8 +57,11 @@
 		DELETE FROM tp.income WHERE income_id=#{incomeId}
 	</delete>
 	
-	<insert id="insertExpense" parameterType="Expense">
-		INSERT INTO tp.expense(user_key, amount, expense_date, assets_id, ec_id, memo) 
-		VALUES(#{userKey}, #{amount}, #{expenseDate}, #{assetsId}, #{ecId}, #{memo})
-	</insert>
+	<delete id="deleteExpenseByExpenseId">
+		DELETE FROM tp.expense WHERE expense_id=#{expenseId}
+	</delete>
+	
+	<delete id="deleteTransferByTransferId">
+		DELETE FROM tp.transfer WHERE transfer_id=#{transferId}
+	</delete>
 </mapper>
