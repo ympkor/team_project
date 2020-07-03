@@ -24,7 +24,7 @@ public class AssetOfMemberController {
 
 	@RequestMapping("/view")
 	public String getMemberAsset(@ModelAttribute("userKey") int userKey, Model m){
-		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);	//userKey값에 해당하는 자산을 배열로 받음
+		List<AssetOfMember> aomList = aomService.getAssetListById(userKey);	//userKey값에 해당하는 자산을 배열로 받음
 		int i = 0;
 
 		int sumAssets = 0;
@@ -54,49 +54,44 @@ public class AssetOfMemberController {
 	}
 
 	@RequestMapping("/add")
-	public String showAddForm(@ModelAttribute("userKey")int userKey, Model m) {
-
-		List<AssetOfMember> aomList = aomService.getAssetOfMember(userKey);
-
-		int i = 0;
-		int sumAssets = 0;
-
-		while(aomList.size() > i) {
-			sumAssets += aomList.get(i).getAmount();
-			i++;
-		}	// 각 자산 합계를 계산
-
-		//위 코드는 자산 추가 페이지에서 현재 보유 자산 보여주기 위한 것인데
-		//일단 코드만 두고 jsp에서의 출력은 보류합니다.
-
-		m.addAttribute("aomList", aomList);
-		m.addAttribute("sumAsset", sumAssets);
-
+	public String showAddForm(@ModelAttribute("userKey")int userKey) {
 		return "addAssetForm";
 	}
 
 	@RequestMapping("/addAsset")
 	public String addAsset(@ModelAttribute("userKey")int userKey, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
+		
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
-		if (assetType.equals("부채")) {	//자산타입이 "부채"인 경우 마이너스 값으로 변경한 다음 db저장
+		if (assetType.equals("자산") && amount>0) {
+			amount*=1;
+		} else if (assetType.equals("자산") && amount<0) {
 			amount*=-1;
+		} else if (assetType.equals("부채") && amount>0) {
+			amount*=-1;
+		} else if (assetType.equals("부채") && amount<0) {
+			amount*=1;
 		}
-
-		String assetTypeForToCal = toCal.getType();
-		if (assetTypeForToCal.equals("자산")) {
-			aomService.addAssetToIncome(toCal);
-		} else {
-			aomService.addAssetToExpense(toCal);
-		}
-		
 		aom.setAmount(amount);
 		aomService.addAsset(aom);
-		m.addAttribute("aom", aom);
+		
+		toCal = aomService.getLastAssetByUserKey(userKey);
+		String assetTypeToMain = toCal.getType();
+		int amountOfMain = toCal.getAmount();
+		if (assetTypeToMain.equals("부채")) {
+			amountOfMain*=-1;
+		}
+		toCal.setAmount(amountOfMain);
+		
+		if (assetTypeToMain.equals("자산")) {
+			aomService.addAssetToIncome(toCal);
+		} else if (assetTypeToMain.equals("부채")){
+			aomService.addAssetToExpense(toCal);
+		}
 		return "addAssetResult";
 	}
-
+	
 	@RequestMapping("/edit")
 	public String showeditForm(int memAssetId, Model m, AssetOfMember aom) {
 		aom = aomService.getAssetById(memAssetId);
