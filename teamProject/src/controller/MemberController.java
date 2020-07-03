@@ -6,7 +6,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,14 +42,40 @@ public class MemberController {
 	}
 	
 	//회원가입이 다 완료되면 DB에 정보가 들어감과 동시에 자산을 추가하는 창으로 이동
-	@RequestMapping("/asset/view")
-	@ResponseBody
-	public Member MemberAddproc(Model model, Member member) {
+	@PostMapping("/asset/view")
+	public String MemberAddproc(Model model, Member member) {
 		memberService.addMember(member);//회원추가
 		memberService.addCash(member.getUserKey());//추가된 회원의 회원번호를 넣어서 추가해줌
 		Member m = joinMapper.selectById(member.getUserId());//회원아이디로 회원의 전체 정보를 조회후
 		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌	
-		return member;
+		
+		List<AssetOfMember> aomList = aomService.getAssetListById(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
+		int i = 0;
+
+		int sumAssets = 0;
+		int sumDebt = 0;
+		while(aomList.size() > i) {
+			if (aomList.get(i).getAmount() > 0) {
+				sumAssets += aomList.get(i).getAmount();
+			}else if (aomList.get(i).getAmount() < 0) {
+				sumDebt += aomList.get(i).getAmount();
+			}
+			i++;
+		}
+		int sumTotal = sumAssets + sumDebt;
+		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
+
+		AssetNewsService ans = new AssetNewsService();
+		StringBuilder newsString = ans.getNews();
+		JSONObject jsonObject = new JSONObject(newsString.toString());
+		JSONArray jsonArray = jsonObject.getJSONArray("items");
+
+		model.addAttribute("aomList", aomList);
+		model.addAttribute("sumTotal", sumTotal);
+		model.addAttribute("sumAsset", sumAssets);
+		model.addAttribute("sumDebt", sumDebt);
+		model.addAttribute("newsArr", jsonArray);
+		return "showAsset";
 	}
 	
 	//아이디 중복체크
@@ -152,16 +177,9 @@ public class MemberController {
 	
 	//삭제버튼시 넘어감
 	@GetMapping("/delete")
-	public String delProc(@ModelAttribute("userKey")int userKey,Model m) {
-		//joinMapper.deleteByUserKey(userKey);
-		String result=null;
-		try {
-			result=	memberService.deleteMember(userKey);
-		} catch (Exception e) {
-			result = "데이터 삭제 실패했습니다" ;
-		}				
-		m.addAttribute("result", result);
-		return "deleteConfirm";
+	public String delProc(@ModelAttribute("userKey")int userKey) {
+		joinMapper.deleteByUserKey(userKey);
+		return "login";
 	}
 	
 	//마이페이지 넘어갈 때 본인확인용 비밀번호
