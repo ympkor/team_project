@@ -19,8 +19,12 @@ public class AssetOfMemberService {
 		return awmMapper.getAssetById(memAssetId);
 	}
 	
-	public List<AssetOfMember> getAssetOfMember(int userKey) {
-		return awmMapper.selectAomById(userKey);
+	public AssetOfMember getLastAssetByUserKey(int userKey) {
+		return awmMapper.getLastAssetByUserKey(userKey);
+	}
+
+	public List<AssetOfMember> getAssetListById(int userKey) {
+		return awmMapper.selectAssetListById(userKey);
 	}
 
 	public void addAsset(AssetOfMember aom) {
@@ -33,5 +37,13 @@ public class AssetOfMemberService {
 	
 	public void delAsset(int memAssetId) {
 		awmMapper.delAsset(memAssetId);
+	}
+	
+	public void addAssetToIncome(AssetOfMember aom) {
+		awmMapper.addAssetToIncome(aom);
+	}
+	
+	public void addAssetToExpense(AssetOfMember aom) {
+		awmMapper.addAssetToExpense(aom);
 	}
 }
