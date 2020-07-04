@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.AssetOfMember;
-import dto.Member;
 import service.AssetNewsService;
 import service.AssetOfMemberService;
 
@@ -52,8 +51,8 @@ public class AssetOfMemberController {
 		
 		//뉴스 객체 생성하고 설정값 대입
 		AssetNewsService ans = new AssetNewsService();
-		ans.setKeyword(newsKeywords);
-		ans.setDisplay(newsCounts);
+		ans.setKeywords(newsKeywords);
+		ans.setDisplays(newsCounts);
 		
 		//뉴스 생성 메서드 실행 후 json배열 형태로 자산페이지 전달
 		StringBuilder newsString = ans.getNews();
@@ -170,10 +169,10 @@ public class AssetOfMemberController {
 	@RequestMapping("/newsSettings")
 	public String newsSettingsView(@ModelAttribute("userKey")int userKey, Model m) {
 		AssetOfMember mem = aomService.getNewsSettingsInfo(userKey);
-		String newsKeyword = mem.getNewsKeywords();
-		int newsCount = mem.getNewsCounts();
-		m.addAttribute("newsKeywords", newsKeyword);
-		m.addAttribute("newsCount", newsCount);		
+		String newsKeywords = mem.getNewsKeywords();
+		int newsCounts = mem.getNewsCounts();
+		m.addAttribute("newsKeywords", newsKeywords);
+		m.addAttribute("newsCounts", newsCounts);		
 		return "newsSettingsForm";
 	}
 	
