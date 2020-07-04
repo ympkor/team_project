@@ -8,14 +8,15 @@ import java.net.URLEncoder;
  
 public class AssetNewsService {
     
-	public static StringBuilder sb;
- 
+	public StringBuilder sb;
+	String keyword = "자산, 저축, 금리, 상품, 부동산, 주식";
+    	int display = 12;
+	
     public StringBuilder getNews() {
         String clientId = "RzpFtCOVzFOj6cT9QK4s";
         String clientSecret = "QPGjM29nTw";
-        int display = 10;
         try {
-            String text = URLEncoder.encode("자산 저축 부동산 주식", "utf-8");
+            String text = URLEncoder.encode(keyword, "utf-8");
             String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + display + "&sort=sim";
  
             URL url = new URL(apiURL);
@@ -41,7 +42,23 @@ public class AssetNewsService {
         } catch (Exception e) {
             System.out.println(e);
         }
-        
         return sb;
     }
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
+	}
+
+	public int getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(int display) {
+		this.display = display;
+	}
+
 }
