@@ -5,19 +5,19 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
- 
+
 public class AssetNewsService {
     
 	public StringBuilder sb;
-	String keyword = "자산, 저축, 금리, 상품, 부동산, 주식";
-    	int display = 12;
+	String keywords = "자산, 저축, 금리, 상품, 부동산, 주식";
+    int displays = 12;
 	
     public StringBuilder getNews() {
         String clientId = "RzpFtCOVzFOj6cT9QK4s";
         String clientSecret = "QPGjM29nTw";
         try {
-            String text = URLEncoder.encode(keyword, "utf-8");
-            String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + display + "&sort=sim";
+            String text = URLEncoder.encode(keywords, "utf-8");
+            String apiURL = "https://openapi.naver.com/v1/search/news.json?query=" + text + "&display=" + displays + "&sort=sim";
  
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -45,20 +45,20 @@ public class AssetNewsService {
         return sb;
     }
 
-	public String getKeyword() {
-		return keyword;
+	public String getKeywords() {
+		return keywords;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
-	public int getDisplay() {
-		return display;
+	public int getDisplays() {
+		return displays;
 	}
 
-	public void setDisplay(int display) {
-		this.display = display;
+	public void setDisplays(int displays) {
+		this.displays = displays;
 	}
 
 }
