@@ -6,21 +6,21 @@
 <meta charset="UTF-8">
 <title>회원정보수정하기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/updateMemberJs.js"></script>
+<script type="text/javascript" src="/js/updateMemberJs.js?1"></script>
 </head>
 <body>
-	<form method="post" action="/member/mypage">
+	<form>
 		<div><input type="hidden" name="userKey" value="${member.userKey}"></div>
 		<div>회원아이디</div>
 		<div><input type="text" name="userId" value="${member.userId}" readonly="readonly"></div>
 		<div>회원비밀번호</div>
-		<div><input type="password" name="password" maxlength="16"></div>
+		<div><input type="password" name="password" maxlength="16" required></div>
 		<div id="passtext"></div>
 		<div>비밀번호 재확인</div>
-		<div><input type="password" name="password_check" maxlength="16"></div>
+		<div><input type="password" name="password_check" maxlength="16" required></div>
 		<div id="passchtext"></div>
 		<div>이름</div>
-		<div><input type="text" name="name" value="${member.name}" maxlength="20"></div>
+		<div><input type="text" name="name" value="${member.name}" maxlength="20" required></div>
 		<div id="nametext"></div>
 		<div>이메일</div>
 		<div><input type="text" name="email" value="${member.email}" readonly="readonly"></div>
