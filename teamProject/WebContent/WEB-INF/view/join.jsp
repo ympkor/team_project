@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>회원가입창</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" src="/scripts/amcharts/serial.js?v=<%=System.currentTimeMillis() %>"></script>
-<script type="text/javascript" src="/js/joinJs.js?5"></script>
+<script type="text/javascript" src="/js/joinJs.js?1"></script>
 </head>
 <body>
 	<form >
