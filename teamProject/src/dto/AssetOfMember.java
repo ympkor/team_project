@@ -14,12 +14,15 @@ public class AssetOfMember {
 	private String memo;
 	private String assetsCategory;
 	private String assetsName;
+	private String newsKeywords;
+	private int newsCounts;
 	
 	public AssetOfMember() {
 	}
 
 	public AssetOfMember(int userKey, String userId, String password, String name, String email, int memAssetId,
-			String type, int amount, int assetsId, String memo, String assetsCategory, String assetsName) {
+			String type, int amount, int assetsId, String memo, String assetsCategory, String assetsName,
+			String newsKeywords, int newsCounts) {
 		super();
 		this.userKey = userKey;
 		this.userId = userId;
@@ -33,6 +36,8 @@ public class AssetOfMember {
 		this.memo = memo;
 		this.assetsCategory = assetsCategory;
 		this.assetsName = assetsName;
+		this.newsKeywords = newsKeywords;
+		this.newsCounts = newsCounts;
 	}
 
 	public int getUserKey() {
@@ -131,13 +136,28 @@ public class AssetOfMember {
 		this.assetsName = assetsName;
 	}
 
+	public String getNewsKeywords() {
+		return newsKeywords;
+	}
+
+	public void setNewsKeywords(String newsKeywords) {
+		this.newsKeywords = newsKeywords;
+	}
+
+	public int getNewsCounts() {
+		return newsCounts;
+	}
+
+	public void setNewsCounts(int newsCounts) {
+		this.newsCounts = newsCounts;
+	}
+
 	@Override
 	public String toString() {
 		return "AssetOfMember [userKey=" + userKey + ", userId=" + userId + ", password=" + password + ", name=" + name
 				+ ", email=" + email + ", memAssetId=" + memAssetId + ", type=" + type + ", amount=" + amount
 				+ ", assetsId=" + assetsId + ", memo=" + memo + ", assetsCategory=" + assetsCategory + ", assetsName="
-				+ assetsName + "]";
+				+ assetsName + ", newsKeywords=" + newsKeywords + ", newsCounts=" + newsCounts + "]";
 	}
-
 
 }
