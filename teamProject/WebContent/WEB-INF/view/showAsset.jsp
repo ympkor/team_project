@@ -12,10 +12,8 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<style type="text/css">
-div {border:solid black 1px;}
-</style>
-
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css">
+<link href="../../css/myAsset.css" rel="stylesheet" type="text/css">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript">
 
@@ -79,19 +77,26 @@ window.onload = function() {
 	document.getElementById('news9.date').innerHTML=newsList[9].pubDate;
 	document.getElementById('news9.link').innerHTML=newsList[9].link;
 	
+	document.getElementById('news10.title').innerHTML=newsList[10].title;
+	document.getElementById('news10.desc').innerHTML=newsList[10].description;
+	document.getElementById('news10.date').innerHTML=newsList[10].pubDate;
+	document.getElementById('news10.link').innerHTML=newsList[10].link;
+	
+	document.getElementById('news11.title').innerHTML=newsList[11].title;
+	document.getElementById('news11.desc').innerHTML=newsList[11].description;
+	document.getElementById('news11.date').innerHTML=newsList[11].pubDate;
+	document.getElementById('news11.link').innerHTML=newsList[11].link;
+	
 	let assetChtData = parseInt(document.getElementById('sumAsset').innerText);
 	let debtChtData = parseInt(document.getElementById('sumDebt').innerText)*-1;
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	
 	var chart = new CanvasJS.Chart("chartContainer", {
-	backgroundColor: "lightgrey",
-	theme: "light1", // "light1", "light2", "dark1", "dark2"
-	exportEnabled: true,
+	backgroundColor: "#353535",
+	theme: "dark2", // "light1", "light2", "dark1", "dark2"
+	exportEnabled: false,
 	animationEnabled: true,
-	title: {
-		text: "자산 - 부채 비율"
-	},
 	data: [{
 		type: "pie",
 		startAngle: 270,
@@ -109,106 +114,158 @@ window.onload = function() {
 chart.render();
 }
 </script>
-<link rel="stylesheet" href="/css/asset.css">
 </head>
 
-<body style="background:lightgrey">
-<div id="topmenu" style="background:grey;">
-<div class="basic"><a href="/main/getCal">가계부</a></div>
-<div class="statistics"><a href="/statistics/show">통계</a></div>
-<div class="assest"><a href="/asset/view">자산</a></div>
-<div class="board"><a href="/board/show">게시판</a></div>
-<button class="gomypage">마이페이지</button>
-<button class="gologout">로그아웃</button>
+<body>
+
+<header>
+<div id=topmenu>
+<div class="basic"><a id=mainlink href="/main/getCal">가계부</a></div>
+<div class="statistics"><a id=staticlink href="/statistics/show">통계</a></div>
+<div class="assest"><a id=assetlink href="/asset/view">자산</a></div>
+<div class="board"><a id=boardlink href="/board/show">게시판</a></div>
+<div class="memu"><button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button></div>
 </div>
-	<div id="middleasset">
-	<div>
+</header>
+
+<section>
+  <sum>
+  <div id="myTotalAsset">
 		<h1>내 자산 현황</h1>
 		<h1>총 ${sumTotal}원</h1>
 		자산 합 : <div id = sumAsset>${sumAsset}</div><br>
 		부채 합 : <div id = sumDebt>${sumDebt}</div>
-		<br><br>
+		<br><br><br>
 	</div>
-		<div>
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+  </sum>
+  
+  <asset>
+	<div id="addAsset">
+	<input type="button" name="addAsset" value="자산 / 부채 추가"
+		onClick="location.href='add'">
+	</div>
+	<br>
+   <div id="eachAsset">
 		<c:forEach items="${aomList}" var="list">
 
-			<div>
+			<div id="eachAssetText">
 				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
 				${list.amount}원<br> ${list.memo} <br> ${list.memAssetId }
 			</div>
 
-			<div>
+			<div id="eachAssetEdit">
 				<a href="edit?memAssetId=${list.memAssetId}">수정</a>
 				<a href="delete?memAssetId=${list.memAssetId}"
 					onClick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-			<br><br></div>
+			</div><br><br>
 		</c:forEach>
-	<div>
-	<input type="button" name="addAsset" value="내 자산 추가"
-		onClick="location.href='add'"></div>
 	</div>
-	<div>
-		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-	</div>
-	<br>
-
-	<div style="background:lightgrey;">
-	<h1>자산 관련 뉴스</h1>(각 div 클릭시 링크 연결되도록 해야함)
+		
+  </asset>
+  
+  <news>
+   <div>
+	<h1>자산 관련 뉴스</h1>
+	Tags ${newsKeywords}<br><a href="newsSettings">수정</a>
 	<br><br>
 	<div style=font-size:12px;>
 
+	<div id=newsBox>
 	<div id=news0.title></div>
 	<div id=news0.desc></div>
 	<div id=news0.date></div>
-	<div id=news0.link></div><br>
+	<div id=news0.link></div>
+	</div>
 	
+	<div id=newsBox>
 	<div id=news1.title></div>
 	<div id=news1.desc></div>
 	<div id=news1.date></div>
 	<div id=news1.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news2.title></div>
 	<div id=news2.desc></div>
 	<div id=news2.date></div>
 	<div id=news2.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news3.title></div>
 	<div id=news3.desc></div>
 	<div id=news3.date></div>
 	<div id=news3.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news4.title></div>
 	<div id=news4.desc></div>
 	<div id=news4.date></div>
 	<div id=news4.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news5.title></div>
 	<div id=news5.desc></div>
 	<div id=news5.date></div>
 	<div id=news5.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news6.title></div>
 	<div id=news6.desc></div>
 	<div id=news6.date></div>
 	<div id=news6.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news7.title></div>
 	<div id=news7.desc></div>
 	<div id=news7.date></div>
 	<div id=news7.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news8.title></div>
 	<div id=news8.desc></div>
 	<div id=news8.date></div>
 	<div id=news8.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
 	<div id=news9.title></div>
 	<div id=news9.desc></div>
 	<div id=news9.date></div>
 	<div id=news9.link></div><br>
-	
+	</div>
+	<br>
+	<div id=newsBox>
+	<div id=news10.title></div>
+	<div id=news10.desc></div>
+	<div id=news10.date></div>
+	<div id=news10.link></div><br>
+	</div>
+	<br>
+	<div id=newsBox>
+	<div id=news11.title></div>
+	<div id=news11.desc></div>
+	<div id=news11.date></div>
+	<div id=news11.link></div><br>
+	</div>
+	<br>
 	</div>
 </div>
-</div>
+  </news>
+</section>
+
+<footer>
+  <p>Footer</p>
+</footer>
+
+
+
 </body>
 </html>
