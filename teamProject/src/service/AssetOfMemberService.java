@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import dto.AssetOfMember;
 import mapper.AssetOfMemberMapper;
 
-
 @Service
 public class AssetOfMemberService {
 
@@ -45,5 +44,13 @@ public class AssetOfMemberService {
 	
 	public void addAssetToExpense(AssetOfMember aom) {
 		awmMapper.addAssetToExpense(aom);
+	}
+	
+	public AssetOfMember getNewsSettingsInfo(int userKey) {
+		return awmMapper.getNewsSettingsInfo(userKey);
+	}
+	
+	public void setNews(AssetOfMember aom){
+		awmMapper.setNews(aom);
 	}
 }
