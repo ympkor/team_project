@@ -13,7 +13,6 @@
 <meta charset="UTF-8">
 <title>내 자산</title>
 <link rel="stylesheet" type="text/css" href="/css/myAsset.css">
-<link href="../../css/myAsset.css" rel="stylesheet" type="text/css">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script type="text/javascript">
 
