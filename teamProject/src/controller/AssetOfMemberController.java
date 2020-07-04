@@ -12,21 +12,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.AssetOfMember;
+import dto.Member;
 import service.AssetNewsService;
 import service.AssetOfMemberService;
 
 @Controller
 @RequestMapping("/asset")
-@SessionAttributes({"userKey", "memAssetId"})
+@SessionAttributes("userKey")
 public class AssetOfMemberController {
 
 	@Autowired AssetOfMemberService aomService;
 
+	//자산페이지 호출시
 	@RequestMapping("/view")
 	public String getMemberAsset(@ModelAttribute("userKey") int userKey, Model m){
-		List<AssetOfMember> aomList = aomService.getAssetListById(userKey);	//userKey값에 해당하는 자산을 배열로 받음
+		
+		//userKey값에 해당하는 자산을 배열로 저장
+		List<AssetOfMember> aomList = aomService.getAssetListById(userKey);
 		int i = 0;
-
+		
+		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 		int sumAssets = 0;
 		int sumDebt = 0;
 		while(aomList.size() > i) {
@@ -38,30 +43,48 @@ public class AssetOfMemberController {
 			i++;
 		}
 		int sumTotal = sumAssets + sumDebt;
-		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 
+		//자산관련 뉴스 출력 부분
+		//해당 멤버 객체생성하고 키워드와 기사 숫자 불러오기
+		AssetOfMember aom = aomService.getNewsSettingsInfo(userKey);
+		String newsKeywords = aom.getNewsKeywords();
+		int newsCounts = aom.getNewsCounts();
+		
+		//뉴스 객체 생성하고 설정값 대입
 		AssetNewsService ans = new AssetNewsService();
+		ans.setKeyword(newsKeywords);
+		ans.setDisplay(newsCounts);
+		
+		//뉴스 생성 메서드 실행 후 json배열 형태로 자산페이지 전달
 		StringBuilder newsString = ans.getNews();
 		JSONObject jsonObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
-
+		
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("sumTotal", sumTotal);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("sumDebt", sumDebt);
 		m.addAttribute("newsArr", jsonArray);
+		m.addAttribute("newsKeywords", newsKeywords);
+		m.addAttribute("newsCounts", newsCounts);
 		return "showAsset";
 	}
 
+	//자산추가 클릭시
 	@RequestMapping("/add")
 	public String showAddForm(@ModelAttribute("userKey")int userKey) {
 		return "addAssetForm";
 	}
 
+	//신규자산 입력 후 submit 클릭시
 	@RequestMapping("/addAsset")
 	public String addAsset(@ModelAttribute("userKey")int userKey, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
 		
+		System.out.println(aom);
+		System.out.println(toCal);
+		
+		//자산인 경우 +값으로, 부채인 경우 -값으로 db 저장
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
 		if (assetType.equals("자산") && amount>0) {
@@ -74,9 +97,14 @@ public class AssetOfMemberController {
 			amount*=1;
 		}
 		aom.setAmount(amount);
+		//addAsset 쿼리 실행
 		aomService.addAsset(aom);
 		
+		//각 필드 입력값이 동일한 객체 추가생성 (main으로 넘기기 위함)
 		toCal = aomService.getLastAssetByUserKey(userKey);
+		
+		//type(자산/부채) 확인해서 부채인경우 +값으로 변경
+		//income, expense 테이블에서는 +값으로 존재
 		String assetTypeToMain = toCal.getType();
 		int amountOfMain = toCal.getAmount();
 		if (assetTypeToMain.equals("부채")) {
@@ -84,6 +112,7 @@ public class AssetOfMemberController {
 		}
 		toCal.setAmount(amountOfMain);
 		
+		//자산 or 부채 여부에 따라 쿼리 분기
 		if (assetTypeToMain.equals("자산")) {
 			aomService.addAssetToIncome(toCal);
 		} else if (assetTypeToMain.equals("부채")){
@@ -92,18 +121,23 @@ public class AssetOfMemberController {
 		return "addAssetResult";
 	}
 	
+	//각각의 자산에서 '수정' 클릭시
 	@RequestMapping("/edit")
 	public String showeditForm(int memAssetId, Model m, AssetOfMember aom) {
+		//해당 자산 객체 생성하여 수정 폼으로 넘김
 		aom = aomService.getAssetById(memAssetId);
 		m.addAttribute("aom", aom);
 		return "editAssetForm";
 	}
 
+	//자산 수정 폼 입력 후 '수정완료' 클릭시
 	@RequestMapping("/editAsset")
 	public String editAsset(int memAssetId, Model m,  AssetOfMember aom) {
+		
+		//자산 or 부채 여부에 따라 +,-값 변환 (구분에 따라 무조건 +,-로 들어가도록)
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
-		if (assetType.equals("자산") && amount>0) {	//자산인 경우 플러스, 부채는 마이너스로 저장
+		if (assetType.equals("자산") && amount>0) {
 			amount*=1;
 		} else if (assetType.equals("자산") && amount<0) {
 			amount*=-1;
@@ -117,16 +151,37 @@ public class AssetOfMemberController {
 		return "editAssetResult";
 	}
 
+	//각 자산 '삭제' 클릭시
 	@RequestMapping("/delete")
 	public String delAsset(int memAssetId, Model m, AssetOfMember aom) {
+		
 		aom = aomService.getAssetById(memAssetId);
+		//삭제된 자산을 출력하도록 정보를 string으로 저장
 		int amount = aom.getAmount();
 		String bank = aom.getAssetsName();
 		String assetType = aom.getType();
 		String delResult = bank+"의 "+assetType+" "+amount+"원 항목이 삭제되었습니다.";
-		//자산 삭제 전, 삭제되는 자산정보 문자열로 저장후 메서드 돌고 나서 출력
 		m.addAttribute("delStr", delResult);
 		aomService.delAsset(memAssetId);
 		return "deleteAssetResult";
+	}
+	
+	//관련뉴스 '설정' 클릭시
+	@RequestMapping("/newsSettings")
+	public String newsSettingsView(@ModelAttribute("userKey")int userKey, Model m) {
+		AssetOfMember mem = aomService.getNewsSettingsInfo(userKey);
+		String newsKeyword = mem.getNewsKeywords();
+		int newsCount = mem.getNewsCounts();
+		m.addAttribute("newsKeywords", newsKeyword);
+		m.addAttribute("newsCount", newsCount);		
+		return "newsSettingsForm";
+	}
+	
+	@RequestMapping("/newsSettingsResult")
+	public String newsSettings(@ModelAttribute("userKey")int userKey, AssetOfMember aom) {
+		aom.setUserKey(userKey);
+		aomService.setNews(aom);
+		
+		return "newsSettingsResult";
 	}
 }
