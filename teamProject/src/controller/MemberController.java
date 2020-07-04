@@ -178,7 +178,7 @@ public class MemberController {
 	//삭제버튼시 넘어감
 	@GetMapping("/delete")
 	public String delProc(@ModelAttribute("userKey")int userKey) {
-		joinMapper.deleteByUserKey(userKey);
+		memberService.deleteMember(userKey);
 		return "login";
 	}
 	
