@@ -46,6 +46,14 @@ public class AssetOfMemberService {
 		awmMapper.addAssetToExpense(aom);
 	}
 	
+	public void editAssetToIncome(AssetOfMember aom) {
+		awmMapper.editAssetToIncome(aom);
+	}
+	
+	public void editAssetToExpense(AssetOfMember aom) {
+		awmMapper.editAssetToExpense(aom);
+	}
+	
 	public AssetOfMember getNewsSettingsInfo(int userKey) {
 		return awmMapper.getNewsSettingsInfo(userKey);
 	}
