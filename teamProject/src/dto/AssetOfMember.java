@@ -9,7 +9,9 @@ public class AssetOfMember {
 	private String email;
 	private int memAssetId;
 	private String type;
+	private String typeBefore;
 	private int amount;
+	private int amountBefore;
 	private int assetsId;
 	private String memo;
 	private String assetsCategory;
@@ -21,8 +23,8 @@ public class AssetOfMember {
 	}
 
 	public AssetOfMember(int userKey, String userId, String password, String name, String email, int memAssetId,
-			String type, int amount, int assetsId, String memo, String assetsCategory, String assetsName,
-			String newsKeywords, int newsCounts) {
+			String type, String typeBefore, int amount, int amountBefore, int assetsId, String memo,
+			String assetsCategory, String assetsName, String newsKeywords, int newsCounts) {
 		super();
 		this.userKey = userKey;
 		this.userId = userId;
@@ -31,7 +33,9 @@ public class AssetOfMember {
 		this.email = email;
 		this.memAssetId = memAssetId;
 		this.type = type;
+		this.typeBefore = typeBefore;
 		this.amount = amount;
+		this.amountBefore = amountBefore;
 		this.assetsId = assetsId;
 		this.memo = memo;
 		this.assetsCategory = assetsCategory;
@@ -96,12 +100,28 @@ public class AssetOfMember {
 		this.type = type;
 	}
 
+	public String getTypeBefore() {
+		return typeBefore;
+	}
+
+	public void setTypeBefore(String typeBefore) {
+		this.typeBefore = typeBefore;
+	}
+
 	public int getAmount() {
 		return amount;
 	}
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	public int getAmountBefore() {
+		return amountBefore;
+	}
+
+	public void setAmountBefore(int amountBefore) {
+		this.amountBefore = amountBefore;
 	}
 
 	public int getAssetsId() {
@@ -155,9 +175,10 @@ public class AssetOfMember {
 	@Override
 	public String toString() {
 		return "AssetOfMember [userKey=" + userKey + ", userId=" + userId + ", password=" + password + ", name=" + name
-				+ ", email=" + email + ", memAssetId=" + memAssetId + ", type=" + type + ", amount=" + amount
-				+ ", assetsId=" + assetsId + ", memo=" + memo + ", assetsCategory=" + assetsCategory + ", assetsName="
-				+ assetsName + ", newsKeywords=" + newsKeywords + ", newsCounts=" + newsCounts + "]";
+				+ ", email=" + email + ", memAssetId=" + memAssetId + ", type=" + type + ", typeBefore=" + typeBefore
+				+ ", amount=" + amount + ", amountBefore=" + amountBefore + ", assetsId=" + assetsId + ", memo=" + memo
+				+ ", assetsCategory=" + assetsCategory + ", assetsName=" + assetsName + ", newsKeywords=" + newsKeywords
+				+ ", newsCounts=" + newsCounts + "]";
 	}
 
 }
