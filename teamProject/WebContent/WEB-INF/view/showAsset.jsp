@@ -26,65 +26,79 @@ window.onload = function() {
 	}
 
 	let newsList = ${newsArr};
+	
 	document.getElementById('news0.title').innerHTML=newsList[0].title;
 	document.getElementById('news0.desc').innerHTML=newsList[0].description;
 	document.getElementById('news0.date').innerHTML=newsList[0].pubDate;
-	document.getElementById('news0.link').innerHTML=newsList[0].link;
+	var newslink0 = String(newsList[0].link);
+	document.getElementById('newsBox0').href=newslink0;
+
 	
 	document.getElementById('news1.title').innerHTML=newsList[1].title;
 	document.getElementById('news1.desc').innerHTML=newsList[1].description;
 	document.getElementById('news1.date').innerHTML=newsList[1].pubDate;
-	document.getElementById('news1.link').innerHTML=newsList[1].link;
+	var newslink1 = String(newsList[1].link);
+	document.getElementById('newsBox1').href=newslink1;
 	
 	document.getElementById('news2.title').innerHTML=newsList[2].title;
 	document.getElementById('news2.desc').innerHTML=newsList[2].description;
 	document.getElementById('news2.date').innerHTML=newsList[2].pubDate;
-	document.getElementById('news2.link').innerHTML=newsList[2].link;
+	var newslink2 = String(newsList[2].link);
+	document.getElementById('newsBox2').href=newslink2;
 	
 	document.getElementById('news3.title').innerHTML=newsList[3].title;
 	document.getElementById('news3.desc').innerHTML=newsList[3].description;
 	document.getElementById('news3.date').innerHTML=newsList[3].pubDate;
-	document.getElementById('news3.link').innerHTML=newsList[3].link;
+	var newslink3 = String(newsList[3].link);
+	document.getElementById('newsBox3').href=newslink3;
 	
 	document.getElementById('news4.title').innerHTML=newsList[4].title;
 	document.getElementById('news4.desc').innerHTML=newsList[4].description;
 	document.getElementById('news4.date').innerHTML=newsList[4].pubDate;
-	document.getElementById('news4.link').innerHTML=newsList[4].link;
+	var newslink4 = String(newsList[4].link);
+	document.getElementById('newsBox4').href=newslink4;
 	
 	document.getElementById('news5.title').innerHTML=newsList[5].title;
 	document.getElementById('news5.desc').innerHTML=newsList[5].description;
 	document.getElementById('news5.date').innerHTML=newsList[5].pubDate;
-	document.getElementById('news5.link').innerHTML=newsList[5].link;
+	var newslink5 = String(newsList[5].link);
+	document.getElementById('newsBox5').href=newslink5;
 	
 	document.getElementById('news6.title').innerHTML=newsList[6].title;
 	document.getElementById('news6.desc').innerHTML=newsList[6].description;
 	document.getElementById('news6.date').innerHTML=newsList[6].pubDate;
-	document.getElementById('news6.link').innerHTML=newsList[6].link;
+	var newslink6 = String(newsList[6].link);
+	document.getElementById('newsBox6').href=newslink6;
 	
 	document.getElementById('news7.title').innerHTML=newsList[7].title;
 	document.getElementById('news7.desc').innerHTML=newsList[7].description;
 	document.getElementById('news7.date').innerHTML=newsList[7].pubDate;
-	document.getElementById('news7.link').innerHTML=newsList[7].link;
+	var newslink7 = String(newsList[7].link);
+	document.getElementById('newsBox7').href=newslink7;
 	
 	document.getElementById('news8.title').innerHTML=newsList[8].title;
 	document.getElementById('news8.desc').innerHTML=newsList[8].description;
 	document.getElementById('news8.date').innerHTML=newsList[8].pubDate;
-	document.getElementById('news8.link').innerHTML=newsList[8].link;
+	var newslink8 = String(newsList[8].link);
+	document.getElementById('newsBox8').href=newslink8;
 	
 	document.getElementById('news9.title').innerHTML=newsList[9].title;
 	document.getElementById('news9.desc').innerHTML=newsList[9].description;
 	document.getElementById('news9.date').innerHTML=newsList[9].pubDate;
-	document.getElementById('news9.link').innerHTML=newsList[9].link;
+	var newslink9 = String(newsList[9].link);
+	document.getElementById('newsBox9').href=newslink9;
 	
 	document.getElementById('news10.title').innerHTML=newsList[10].title;
 	document.getElementById('news10.desc').innerHTML=newsList[10].description;
 	document.getElementById('news10.date').innerHTML=newsList[10].pubDate;
-	document.getElementById('news10.link').innerHTML=newsList[10].link;
+	var newslink10 = String(newsList[10].link);
+	document.getElementById('newsBox10').href=newslink10;
 	
 	document.getElementById('news11.title').innerHTML=newsList[11].title;
 	document.getElementById('news11.desc').innerHTML=newsList[11].description;
 	document.getElementById('news11.date').innerHTML=newsList[11].pubDate;
-	document.getElementById('news11.link').innerHTML=newsList[11].link;
+	var newslink11 = String(newsList[11].link);
+	document.getElementById('newsBox11').href=newslink11;
 	
 	let assetChtData = parseInt(document.getElementById('sumAsset').innerText);
 	let debtChtData = parseInt(document.getElementById('sumDebt').innerText)*-1;
@@ -102,7 +116,7 @@ window.onload = function() {
 		toolTipContent: "<b>{label}</b>: {z}%",
 		showInLegend: "true",
 		legendText: "{label}",
-		indexLabelFontSize: 16,
+		indexLabelFontSize: 15,
 		indexLabel: "{label} {y}원 ({z}%)",
 		dataPoints: [
 			{ y: assetChtData, z: aRatio, label: "자산"},
@@ -110,7 +124,11 @@ window.onload = function() {
 		]
 	}]
 });
-chart.render();
+	chart.render();
+	
+	function newsLink1(){
+		window.open(newsLink1);
+	}
 }
 </script>
 </head>
@@ -137,7 +155,7 @@ chart.render();
 		부채 합 : <div id = sumDebt>${sumDebt}</div>
 		<br><br><br>
 	</div>
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+      <div id="chartContainer" style="height: 400px; width: 100%;"></div>
   </sum>
   
   <asset>
@@ -153,10 +171,11 @@ chart.render();
 				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
 				${list.amount}원<br> ${list.memo} <br> ${list.memAssetId }
 			</div>
+			
 
 			<div id="eachAssetEdit">
-				<a href="edit?memAssetId=${list.memAssetId}">수정</a>
-				<a href="delete?memAssetId=${list.memAssetId}"
+				<a href="edit?memAssetId=${list.memAssetId}" style="text-decoration: none; color:black">수정 </a>
+				<a href="delete?memAssetId=${list.memAssetId}"  style="text-decoration: none; color:black"
 					onClick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
 			</div><br><br>
 		</c:forEach>
@@ -171,93 +190,97 @@ chart.render();
 	<br><br>
 	<div style=font-size:12px;>
 
-	<div id=newsBox>
-	<div id=news0.title></div>
-	<div id=news0.desc></div>
-	<div id=news0.date></div>
-	<div id=news0.link></div>
-	</div>
+	<a id="newsBox0" href="" target="_blank" style="text-decoration:none">
+	<div id="" class=newsBox style="text-decoration:none"> 
+	<div id=news0.title class=newsTitle style="text-decoration:none"></div><br>
+	<div id=news0.desc class=newsDesc></div><br>
+	<div id=news0.date  class=newsDate></div>
+	</div></a>
 	
-	<div id=newsBox>
-	<div id=news1.title></div>
-	<div id=news1.desc></div>
-	<div id=news1.date></div>
-	<div id=news1.link></div><br>
-	</div>
+	<a id=newsBox1 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news1.title class=newsTitle></div><br>
+	<div id=news1.desc class=newsDesc>></div><br>
+	<div id=news1.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news2.title></div>
-	<div id=news2.desc></div>
-	<div id=news2.date></div>
-	<div id=news2.link></div><br>
-	</div>
+	
+	<a id=newsBox2 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news2.title class=newsTitle></div><br>
+	<div id=news2.desc class=newsDesc></div><br>
+	<div id=news2.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news3.title></div>
-	<div id=news3.desc></div>
-	<div id=news3.date></div>
-	<div id=news3.link></div><br>
-	</div>
+	
+	<a id=newsBox3 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news3.title class=newsTitle></div><br>
+	<div id=news3.desc class=newsDesc></div><br>
+	<div id=news3.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news4.title></div>
-	<div id=news4.desc></div>
-	<div id=news4.date></div>
-	<div id=news4.link></div><br>
-	</div>
+	
+	<a id=newsBox4 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news4.title class=newsTitle></div><br>
+	<div id=news4.desc class=newsDesc></div><br>
+	<div id=news4.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news5.title></div>
-	<div id=news5.desc></div>
-	<div id=news5.date></div>
-	<div id=news5.link></div><br>
-	</div>
+	<a id=newsBox5 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news5.title class=newsTitle></div><br>
+	<div id=news5.desc class=newsDesc></div><br>
+	<div id=news5.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news6.title></div>
-	<div id=news6.desc></div>
-	<div id=news6.date></div>
-	<div id=news6.link></div><br>
-	</div>
+	<a id=newsBox6 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news6.title class=newsTitle></div><br>
+	<div id=news6.desc class=newsDesc></div><br>
+	<div id=news6.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news7.title></div>
-	<div id=news7.desc></div>
-	<div id=news7.date></div>
-	<div id=news7.link></div><br>
-	</div>
+	<a id=newsBox7 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news7.title class=newsTitle></div><br>
+	<div id=news7.desc class=newsDesc></div><br>
+	<div id=news7.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news8.title></div>
-	<div id=news8.desc></div>
-	<div id=news8.date></div>
-	<div id=news8.link></div><br>
-	</div>
+	<a id=newsBox8 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news8.title class=newsTitle></div><br>
+	<div id=news8.desc class=newsDesc></div><br>
+	<div id=news8.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news9.title></div>
-	<div id=news9.desc></div>
-	<div id=news9.date></div>
-	<div id=news9.link></div><br>
-	</div>
+	<a id=newsBox9 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news9.title class=newsTitle></div><br>
+	<div id=news9.desc class=newsDesc></div><br>
+	<div id=news9.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news10.title></div>
-	<div id=news10.desc></div>
-	<div id=news10.date></div>
-	<div id=news10.link></div><br>
-	</div>
+	<a id=newsBox10 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news10.title class=newsTitle></div><br>
+	<div id=news10.desc class=newsDesc></div><br>
+	<div id=news10.date class=newsDate></div>
+	</div></a>
 	<br>
-	<div id=newsBox>
-	<div id=news11.title></div>
-	<div id=news11.desc></div>
-	<div id=news11.date></div>
-	<div id=news11.link></div><br>
-	</div>
+	<a id=newsBox11 href="" target="_blank">
+	<div id="" class=newsBox>
+	<div id=news11.title class=newsTitle></div><br>
+	<div id=news11.desc class=newsDesc></div><br>
+	<div id=news11.date class=newsDate></div>
+	</div></a>
 	<br>
 	</div>
 </div>
   </news>
+  
 </section>
 
 <footer>
