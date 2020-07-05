@@ -8,7 +8,7 @@ public class Comment {
 	private int userKey;
 	private String comment;
 	LocalDateTime regDate;
-	private String userId;
+	private String commentWriter;
 	public int getCommentId() {
 		return commentId;
 	}
@@ -39,16 +39,16 @@ public class Comment {
 	public void setRegDate(LocalDateTime regDate) {
 		this.regDate = regDate;
 	}
-	public String getUserId() {
-		return userId;
+	public String getCommentWriter() {
+		return commentWriter;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setCommentWriter(String commentWriter) {
+		this.commentWriter = commentWriter;
 	}
 	@Override
 	public String toString() {
 		return "Comment [commentId=" + commentId + ", boardId=" + boardId + ", userKey=" + userKey + ", comment="
-				+ comment + ", regDate=" + regDate + ", userId=" + userId + "]";
+				+ comment + ", regDate=" + regDate + ", commentWriter=" + commentWriter + "]";
 	}
 	
 }

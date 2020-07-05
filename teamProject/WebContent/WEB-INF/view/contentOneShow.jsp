@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>게시글보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/boardOneContentJS.js"></script>
+<script type="text/javascript" src="/js/boardOneContentJS.js?1"></script>
 <link rel="stylesheet" href="/css/boardOneContent.css">
 </head>
 <body>
@@ -38,7 +38,7 @@
 </table>
 <div class="commentListshow">
 <c:forEach var="co" items="${cList}">
-	<div class="commentshow">작성자: ${co.userId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${co.regDate}
+	<div class="commentshow">작성자: ${co.commentWriter}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${co.regDate}
 		<c:if test="${co.userKey==userKey }"><span class="commentUDbuttons"><button class="commentupdate" name="${co.commentId}">수정</button><button class="commentdelete" name="${co.commentId}">삭제</button></span></c:if>
 		<div class="commentcontent">${co.comment}</div>				
 	</div>
