@@ -3,6 +3,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.google.gson.Gson"%>
 <%@ page import="com.google.gson.JsonObject"%>
@@ -126,14 +127,14 @@ window.onload = function() {
 });
 	chart.render();
 	
-	function newsLink1(){
-		window.open(newsLink1);
-	}
 }
+
 </script>
 </head>
 
 <body>
+
+
 
 <header>
 <div id=topmenu>
@@ -149,27 +150,27 @@ window.onload = function() {
 <section>
   <sum>
   <div id="myTotalAsset">
-		<h1>내 자산 현황</h1>
+		
+		<h1 style="margin-top:30px;">내 자산 현황</h1>
 		<h1>총 ${sumTotal}원</h1>
-		자산 합 : <div id = sumAsset>${sumAsset}</div><br>
-		부채 합 : <div id = sumDebt>${sumDebt}</div>
-		<br><br><br>
+		<p class=leftSum>자산 합계</p><div id = sumAsset class=leftSum>${sumAsset} 원</div><br>
+		<p class=leftSum>부채 합계</p><div id = sumDebt class=leftSum>${sumDebt} 원</div>
+		<br><br>
 	</div>
       <div id="chartContainer" style="height: 400px; width: 100%;"></div>
   </sum>
-  
+
   <asset>
-	<div id="addAsset">
-	<input type="button" name="addAsset" value="자산 / 부채 추가"
-		onClick="location.href='add'">
-	</div>
-	<br>
+	
    <div id="eachAsset">
+   		<h1 style="margin-top:30px; color:#ac3b61;">내 자산 내역</h1>
+   		<p style="font-weight:bold; margin-bottom: 3px;">자산 ${cntAssets}건 / 부채 ${cntDebts}건<br><br>
 		<c:forEach items="${aomList}" var="list">
 
 			<div id="eachAssetText">
-				${list.name} 님의 ${list.type}<br> ${list.assetsName}<br>
-				${list.amount}원<br> ${list.memo} <br> ${list.memAssetId }
+			
+				${list.type}<br> ${list.assetsName}<br>
+				${list.amount}원<br> ${list.memo}
 			</div>
 			
 
@@ -177,24 +178,27 @@ window.onload = function() {
 				<a href="edit?memAssetId=${list.memAssetId}" style="text-decoration: none; color:black">수정 </a>
 				<a href="delete?memAssetId=${list.memAssetId}"  style="text-decoration: none; color:black"
 					onClick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
-			</div><br><br>
+			</div><br>
 		</c:forEach>
 	</div>
-		
+		<div id="addAsset">
+	<div id="eachAssetText" onClick="location.href='add'" 
+	style="cursor:pointer; text-align: center; opacity:0.5;">자산 / 부채 추가</div>
+	</div>
   </asset>
   
   <news>
    <div>
-	<h1>자산 관련 뉴스</h1>
-	Tags ${newsKeywords}<br><a href="newsSettings">수정</a>
-	<br><br>
+	<h1 style="margin-top:30px; margin-left:10px;">추천 기사</h1>
+	<p style="margin-left:10px;"><b>Tags > ${newsKeywords}</b>
+	<a href="newsSettings" style="font-size: 12px; text-decoration:none">수정</a></p>
+	
 	<div style=font-size:12px;>
-
 	<a id="newsBox0" href="" target="_blank" style="text-decoration:none">
-	<div id="" class=newsBox style="text-decoration:none"> 
-	<div id=news0.title class=newsTitle style="text-decoration:none"></div><br>
-	<div id=news0.desc class=newsDesc></div><br>
-	<div id=news0.date  class=newsDate></div>
+		<div id="" class=newsBox style="text-decoration:none"> 
+		<div id=news0.title class=newsTitle style="text-decoration:none"></div><br>
+		<div id=news0.desc class=newsDesc></div><br>
+		<div id=news0.date  class=newsDate></div>
 	</div></a>
 	
 	<a id=newsBox1 href="" target="_blank">
