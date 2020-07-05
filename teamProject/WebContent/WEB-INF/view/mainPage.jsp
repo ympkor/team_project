@@ -9,7 +9,10 @@
 	<title>가계부</title>
 	<link rel="stylesheet" href="/css/main/main_modal.css">
 	<link rel="stylesheet" href="/css/main/mainTestCss.css">
+	<link rel="stylesheet" href="/css/main/calendar.css">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -41,7 +44,7 @@
 					<div class="update_date">
 						<label for="update_income_date">날짜</label>
 						<input type="date" id="update_income_date" class="update_income_date" name="incomeDate" value=""
-							required="required" min="1950-01-01" max="2199-12-12">
+							required="required" min="1950-01-01" max="2199-12-12"> 
 					</div>
 					<!-- 돈이 빠져나갈 계좌 선택 창 -->
 					<div class="update_assets">
@@ -256,38 +259,24 @@
 	</div>
 
 	<div class="grid_container">
+	
 		<!-- 상단 메뉴 부분 -->
 		<header class="grid_header">
 			<div class="topmenu">
-				<div class="basic"><a href="/main/getCal">가계부</a></div>
-				<div class="statistics"><a href="/statistics/show">통계</a></div>
-				<div class="assest"><a href="/asset/view">자산</a></div>
-				<div class="board"><a href="/board/show">게시판</a></div>
-				<button class="gomypage">마이페이지</button>
-				<button class="gologout">로그아웃</button>
+				<div class="basic"><a href="/main/getCal"><span class="icon"><i class="fas fa-calendar-alt" style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
+				<div class="statistics"><a href="/statistics/show"><span class="icon"><i class="fas fa-chart-pie"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
+				<div class="assest"><a href="/asset/view"><span class="icon"><i class="fas fa-wallet"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
+				<div class="board"><a href="/board/show"><span class="icon"><i class="fas fa-clipboard-list"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
+				<div class="personal_menu">
+					<a href="/member/mypage"><span class="icon"><i class="fas fa-user-edit"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a> 
+					<a href="/member/logout"><span class="icon"><i class="fas fa-user-alt-slash"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a>
+				</div>
 			</div>
 		</header>
 
 		<!-- 측면 메뉴 부분 -->
 		<aside class="grid_aside">
 			<div class="mainPage_sideMenuContainer">
-				<hr>
-				<h3>측면 메뉴 DIV</h3>
-				<hr>
-				<!-- 월 별 통합 데이터 출력 부분 -->
-				<div class="monthly_data">
-					<div class="monthly_data_month"><span class="monthly_data_month">${cal.selecDate.toString().substring(5, 7)} 월</span></div>
-					<div class="monthly_data_income">
-						<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income">${sumAmounts.sumIncome} 원</span>
-					</div>
-					<div class="monthly_data_expense">
-						<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense">${sumAmounts.sumExpense} 원</span>
-					</div>
-					<div class="monthly_data_sum">
-						<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum">${sumAmounts.sumIncome-sumAmounts.sumExpense} 원</span>
-					</div>
-				</div>
-
 				<!-- 사용자가 정보를 입력하면 Insert해주는 Form을 만들자. ajax방식 -->
 				<!-- 사용자가 선택할 수 있는 수입/지출/이체 카테고리 -->
 				<div class="insert_category_container">
@@ -456,45 +445,60 @@
 		<!-- 캘린더 부분(메인) -->
 		<main class="grid_main">
 			<div class="mainPage_sectionContainer">
-				<hr>
-				<h3>캘린더 DIV</h3>
-				<hr>
 				<table>
 					<thead>
+						<!-- 월 별 통합 데이터 출력 부분 -->
 						<tr>
-							<th>
-								<div><button type="button" id="prevMonth">전월</button></div>
-							</th>
-							<th colspan="5">
-								<div>
-									<input type="text" id="selecDate" name="selecDate" value="" readonly="readonly">
+							<th colspan="7">
+								<div class="monthly_data">
+									<div class="monthly_data_month"><span class="monthly_data_month">${cal.selecDate.toString().substring(5, 7)} 월</span></div>
+									<div class="monthly_data_income">
+										<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income icAmount">${sumAmounts.sumIncome} 원</span>
+									</div>
+									<div class="monthly_data_expense">
+										<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense ecAmount">${sumAmounts.sumExpense} 원</span>
+									</div>
+									<div class="monthly_data_sum">
+										<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum">${sumAmounts.sumIncome-sumAmounts.sumExpense} 원</span>
+									</div>
 								</div>
-							</th>
-							<th>
-								<div><button type="button" id="nextMonth">익월</button></div>
 							</th>
 						</tr>
 						<tr>
-							<th><div>일</div></th>
-							<th><div>월</div></th>
-							<th><div>화</div></th>
-							<th><div>수</div></th>
-							<th><div>목</div></th>
-							<th><div>금</div></th>
-							<th><div>토</div></th>
+							<th colspan="7">
+								<div class="calendar_head">
+									<button type="button" id="prevMonth" class="month_button">◀</button>
+									<input type="text" id="selecDate" name="selecDate" value="" class="hidden">
+									<button type="button" class="datepicker" onclick="$('#selecDate').datepicker('show');">
+										<span class="month_string">${cal.selecDate.getMonth()}</span><span style="font-size: 18px;">▾</span>
+										<br><span class="year_value">${cal.year}</span></button>
+									<button type="button" id="nextMonth" class="month_button">▶</button>
+								</div>
+						</tr>
+						<tr>
+							<th class="day"><div class="day sun">일</div></th>
+							<th class="day"><div class="day">월</div></th>
+							<th class="day"><div class="day">화</div></th>
+							<th class="day"><div class="day">수</div></th>
+							<th class="day"><div class="day">목</div></th>
+							<th class="day"><div class="day">금</div></th>
+							<th class="day"><div class="day sat">토</div></th>
 						</tr>
 					</thead>
 					<tbody id="tbody">
 						<tr>
+							<c:set var="count" value="0"/>
 							<c:forEach var="i" begin="2" end="${cal.firstDay}">
-								<td class="dateTd">
-									<div class="dateDiv"><span class="dateSpan"></span>
+								<td class="dateTd_disabled">
+									<div class="dateDiv"><span class="dateSpan_disabled"></span>
 										<div class="enrty"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
 									</div>
 								</td><%count++;%>
 							</c:forEach>
 							<c:forEach var="i" begin="1" end="${cal.daysOfMonth[cal.month-1]}">
-								<td class="dateTd"><div class="dateDiv"><span class="dateSpan">${i}</span><div>
+								<%if(count%7 == 0) {%><td class="dateTd"><div class="dateDiv"><span class="dateSpan sun">${i}</span><div><%}
+								else if(count%7 == 6) {%><td class="dateTd"><div class="dateDiv"><span class="dateSpan sat">${i}</span><div> <%}
+								else{%><td class="dateTd"><div class="dateDiv"><span class="dateSpan">${i}</span><div><%} %>
 										<c:choose>
 											<c:when test="${i<10}">
 												<div class="entry d0${i}"><div class="entry_income di0${i}"></div><div class="entry_expense de0${i}"></div><div class="entry_transfer dt0${i}"></div></div>
@@ -509,7 +513,12 @@
 						</tr>
 						<tr><%}%>
 							</c:forEach>
-							</tr>
+							<%while(count%7!=0){%><!-- 비쥬얼스튜디오 코드 에러 방지용 %}-->
+								<td class="dateTd_disabled">
+									<div class="dateDiv"><span class="dateSpan_disabled"></span>
+										<div class="enrty"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
+									</div>
+								</td><%count++;}%></tr>
 					</tbody>
 				</table>
 				<!-- 페이지 로드시에 캘린더 만들어주고 그에 맞는 데이터 뿌려주는 작업해주는곳 -->
@@ -536,14 +545,13 @@
 		</main>
 
 		<!-- 상세 데이터 출력 부분 -->
-		<section class="grid_section">
+		<section class="grid_section_detail">
 			<div class="mainPage_detailContainer">
-				<hr><h3>상세데이터 div</h3><hr>
 				<div id="detailList">
 					<div class="detailDateDiv">
 						<div class="detailDate"><span class="detailDate"></span></div>
-						<div class="detailSumI"><span class="detailSumI">0</span></div>
-						<div class="detailSumE"><span class="detailSumE">0</span></div>
+						<div class="detailSumI"><span class="detailSumI icAmount">0원</span></div>
+						<div class="detailSumE"><span class="detailSumE ecAmount">0원</span></div>
 					</div>
 					<div class="detailContext">
 						<div class="detail_context_income"></div>
@@ -567,7 +575,7 @@
 					<script type="text/javascript">
 						str = '<div class="di_income${i} detailItem"><div class=detailIcName><span class=detailIcName>${iica.icName}</span></div>';
 						str += '<div class=detailEntry><span class=detailIMemo>${iica.memo}</span><br><span class=detailAName>${iica.assetsName} ${iica.aomName}</span></div>';
-						str += '<div class=detailIAmount><span class=detailIAmount>${iica.amount}</span></div><div class=delete_income_button><button type=button class="delete_income_button${i}">삭제</button></div></div>';
+						str += '<div class=detailIAmount><span class=detailIAmount icAmount>${iica.amount}원</span></div><div class=delete_income_button><button type=button class="delete_income_button${i}">삭제</button></div></div>';
 						document.querySelector('.detail_context_income').innerHTML += str;
 					</script>
 					<c:set var="i" value="${i+1}"/>
@@ -582,7 +590,7 @@
 					<script type="text/javascript">
 						str = '<div class="di_expense${i} detailItem"><div class=detailEcName><span class=detailEcName>${eeca.ecName}</span></div>';
 						str += '<div class=detailEntry><span class=detailEMemo>${eeca.memo} ${eeca.aomName}</span><br><span class=detailAName>${eeca.assetsName}</span></div>';
-						str += '<div class=detailEAmount><span class=detailEAmount>${eeca.amount}</span></div><div class=delete_expense_button><button type=button class="delete_expense_button${i}">삭제</button></div></div>';
+						str += '<div class=detailEAmount><span class=detailEAmount ecAmount>${eeca.amount}원</span></div><div class=delete_expense_button><button type=button class="delete_expense_button${i}">삭제</button></div></div>';
 						document.querySelector('.detail_context_expense').innerHTML += str;
 					</script>
 					<c:set var="i" value="${i+1}"/>
@@ -594,9 +602,6 @@
 		</section>
 		
 		<!-- 최하단 안내문구? -->
-		<footer class="grid_footer">
-		
-		</footer>
 	</div>
 </body>
 </html>

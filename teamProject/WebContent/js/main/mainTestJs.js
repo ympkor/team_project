@@ -383,24 +383,33 @@ window.addEventListener('DOMContentLoaded', function () {
 
   //캘린더 객체를 전달받아 해당 월에 맞는 달력을 만들어주는 기능
   function makecalendar(cal) {
+		let monthList = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+		document.querySelector('span.month_string').innerText = monthList[cal.month];
+		document.querySelector('span.year_value').innerText = cal.year;
 		let currentMonth = cal.year;
 		if(cal.month < 10){currentMonth += '\-0'+cal.month}else{currentMonth += '\-'+cal.month};
 		document.querySelector('#selecDate').value = currentMonth;
     tbody.innerHTML = null;
     let calendarStr = '<tr>'
     for (let i = 2; i <= cal.firstDay; i++) {
-      calendarStr += '<td class=dateTd><div class=dateDiv><span class=dateSpan></span><div class=entry><div class=entry_income></div><div class=entry_expense></div><div class=entry_transfer></div></div></div></td>';
+      calendarStr += '<td class="dateTd_disabled"><div class=dateDiv><span class=dateSpan_disabled></span><div class=entry><div class=entry_income></div><div class=entry_expense></div><div class=entry_transfer></div></div></div></td>';
       cal.cntDay++;
     }
     for (let i = 1; i <= cal.daysOfMonth[cal.month - 1]; i++) {
-      calendarStr += '<td class=dateTd><div class=dateDiv><span class=dateSpan>' + i + '</span>';
+			if(cal.cntDay % 7 == 0) {calendarStr += '<td class=dateTd><div class=dateDiv><span class="dateSpan sun">' + i + '</span>';
+			}else if(cal.cntDay % 7 == 6) {calendarStr += '<td class=dateTd><div class=dateDiv><span class="dateSpan sat">' + i + '</span>';}
+      else {calendarStr += '<td class=dateTd><div class=dateDiv><span class=dateSpan>' + i + '</span>';}
       if (i < 10) { calendarStr += '<div class="entry d0'+i+'"><div class="entry_income di0' + i + '"></div><div class="entry_expense de0'+ i +'"></div><div class="entry_transfer dt0'+i+'"></div></div>';}
       else { calendarStr += '<div class="entry d'+i+'"><div class="entry_income di' + i + '"></div><div class="entry_expense de'+i+'"></div><div class="entry_transfer dt'+i+'"></div></div>'; }
       calendarStr += '</div></td>';
       cal.cntDay++;
       if (cal.cntDay % 7 == 0) { calendarStr += '</tr><tr>' }
-    }
-    calendarStr += '</tr>';
+		}
+		while(cal.cntDay % 7 != 0) {
+			calendarStr += '<td class="dateTd_disabled"><div class=dateDiv><span class=dateSpan_disabled></span><div class=entry><div class=entry_income></div><div class=entry_expense></div><div class=entry_transfer></div></div></div></td>';
+			cal.cntDay++;
+		}
+		calendarStr += '</tr>';
 		tbody.innerHTML = calendarStr;
 		$.ajax({
 			url:'/main/postSumAmounts',
@@ -446,11 +455,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				sumI += iicaList[i].amount;
 				str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
 				str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
-				str += '<div class=detailIAmount><span class=detailIAmount>' + iicaList[i].amount + '</span></div></div>';
+				str += '<div class=detailIAmount><span class=detailIAmount icAmount>' + iicaList[i].amount + '원</span></div></div>';
 			}
 			detailContextIncome.innerHTML = str;
 		}
-		document.querySelector('span.detailSumI').innerText = sumI;
+		document.querySelector('span.detailSumI').innerText = sumI+'원';
 
   }
   //상세란에 상세 지출을 뿌려주는 기능
@@ -462,11 +471,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				sumE += eecaList[i].amount;
 				str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
 				str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
-				str += '<div class=detailEAmount><span class=detailEAmount>' + eecaList[i].amount + '</span></div></div>';
+				str += '<div class=detailEAmount><span class=detailEAmount ecAmount>' + eecaList[i].amount + '원</span></div></div>';
 			}
 			detailContextExpense.innerHTML = str;
 		}
-    document.querySelector('span.detailSumE').innerText = sumE;
+    document.querySelector('span.detailSumE').innerText = sumE+'원';
   }
   //만들어진 달력에 클릭한 날짜에 해당하는 상세데이터를 출력해주는 이벤트를 걸어주는 기능
   function put_MakeDetailDiv_to_dateTd(dateTd) {
@@ -483,7 +492,7 @@ window.addEventListener('DOMContentLoaded', function () {
         else { currentDate += '\-' + dateSpan[i].innerText; }
         //td를 선택했을 때, 선택한 날짜에 해당되는 정보를 보내서 그 값을 json객체로 받아오는 기능을 추가해주자.
         //ajax로 전송할 json data로 셋팅하자.
-        let detailData = { 'currentDate': currentDate }
+        let detailData = { 'currentDate': currentDate };
         dateTd[i].onclick = function () {
 					event.stopPropagation();
           //일단 상세내역 데이터들 초기화 해줘야함.
@@ -544,7 +553,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		let meecList = UpdateAndRefreshData.meecList;
 		let miicList = UpdateAndRefreshData.miicList;
 		let tbmList = UpdateAndRefreshData.tbmList;
-		let sumAmounts = UpdateAndRefreshData.sumAmounts;
 		makecalendar(cal);
 		let dateTd = document.querySelectorAll('.dateTd');
 		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
@@ -619,7 +627,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		let eecaList = UpdateAndRefreshData.eecaList;
 		let tbmList = UpdateAndRefreshData.tbmList;
 		let taomfaomtList = UpdateAndRefreshData.taomfaomtList;
-		let sumAmounts = UpdateAndRefreshData.sumAmounts;
 		let insertDate;
 		if(cal.selecDate.monthValue < 10){if(cal.selecDate.dayOfMonth < 10){insertDate = cal.selecDate.year+'\-0'+cal.selecDate.monthValue+'\-0'+cal.selecDate.dayOfMonth;				
 			}else{insertDate = cal.selecDate.year+'\-0'+cal.selecDate.monthValue+'\-'+cal.selecDate.dayOfMonth}
@@ -659,56 +666,70 @@ window.addEventListener('DOMContentLoaded', function () {
   $("#selecDate").datepicker({
     changeYear: true,
     changeMonth: true,
-    showButtonPanel: true,
+    // showButtonPanel: true,
     dateFormat: "yy-mm",
-    showMonthAfterYear:true, 
+		showMonthAfterYear:true, 
     monthNamesShort:['1','2','3','4','5','6','7','8','9','10','11','12'],
     minDate: '-20Y',
     maxDate: '+100Y',
-    closeText: "닫기",
-    currentText: currentMonth,
+		closeText: "닫기",
+		currentText: currentMonth,
     onChangeMonthYear: function(year, month) {
-      if(month < 10) {document.querySelector('#selecDate').value = String(year)+'-0'+String(month);}
+			let beforeSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
+			if(month < 10) {document.querySelector('#selecDate').value = String(year)+'-0'+String(month);}
 			else{document.querySelector('#selecDate').value = String(year)+'-'+String(month);}
-			//날짜가 변경되었을 때, 날짜에 맞는 캘린더를 뿌려주는 기능
-			let formData = $('#selecDate').eq(0).serialize();
-			$.ajax({
-				url: '/main/postCal',
-				type: 'post',
-				data: formData,
-				success: function (cal) {
-					makecalendar(cal);
-					$.ajax({
-						url: '/main/postMIIC',
-						type: 'post',
-						data: formData,
-						success: function (miicList) {
-							showThisMonthIncome(miicList);
-						}
-					});
-					$.ajax({
-						url: '/main/postMEEC',
-						type: 'post',
-						data: formData,
-						success: function (meecList) {
-							showThisMonthExpense(meecList);
-						}
-					});
-					$.ajax({
-						url: '/main/postTBM',
-						type: 'post',
-						data: formData,
-						success: function (tbmList) {
-							showThisMonthTransfer(tbmList);
-						}
-					});
-					let dateTd = document.querySelectorAll('.dateTd');
-					put_MakeDetailDiv_to_dateTd(dateTd);
-				}
-			});
+			let afterSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
+			//월이 변경되었을 때, 날짜에 맞는 캘린더를 뿌려주는 기능
+			if(beforeSelectMonth != afterSelectMonth) {
+				let formData = $('#selecDate').eq(0).serialize();
+				$.ajax({
+					url: '/main/postCal',
+					type: 'post',
+					data: formData,
+					success: function (cal) {
+						makecalendar(cal);
+						$.ajax({
+							url: '/main/postMIIC',
+							type: 'post',
+							data: formData,
+							success: function (miicList) {
+								showThisMonthIncome(miicList);
+							}
+						});
+						$.ajax({
+							url: '/main/postMEEC',
+							type: 'post',
+							data: formData,
+							success: function (meecList) {
+								showThisMonthExpense(meecList);
+							}
+						});
+						$.ajax({
+							url: '/main/postTBM',
+							type: 'post',
+							data: formData,
+							success: function (tbmList) {
+								showThisMonthTransfer(tbmList);
+							}
+						});
+						let dateTd = document.querySelectorAll('.dateTd');
+						put_MakeDetailDiv_to_dateTd(dateTd);
+					}
+				});
+				$('#selecDate').datepicker('hide'); 
+			}
     },
-  });
-
+	});
+	
+  	//데이트픽커 날짜 변경되면 선택되어있는 날짜 바꿔놓기
+	document.querySelector('button.datepicker').addEventListener('click', function() {
+		let currentYear = document.querySelector('#selecDate').value.substring(0, 4);
+		let currentMonth = document.querySelector('#selecDate').value.substring(5, 7);
+		$('select.ui-datepicker-year').val(Number(currentYear)).prop('selected', true);
+		$('select.ui-datepicker-month').val(Number(currentMonth)-1).prop('selected', true);
+//		$('.ui-datepicker ').css({"position":"relative","margin-top":"50%"});
+	}); 
+  
 	// 페이지 처음 load시, td에 이벤트 걸어준다.
 	let dateTd = document.querySelectorAll('.dateTd');
 	put_MakeDetailDiv_to_dateTd(dateTd);
@@ -813,14 +834,7 @@ window.addEventListener('DOMContentLoaded', function () {
         put_MakeDetailDiv_to_dateTd(dateTd);
       }
     });
-	});
-	/*############## 상단바 기능 ###############*/
-	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypage";
-	}
-	document.querySelector(".gologout").onclick = function(){
-		location.href="/member/logout";
-	}
+});
 	
 /*########## grid_detail 관련 기능 ##########*/
 	//업데이트 버튼 눌렀을 때 실행할 메서드 정의

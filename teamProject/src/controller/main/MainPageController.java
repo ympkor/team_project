@@ -69,16 +69,10 @@ public class MainPageController {
 		
 		//페이지 로드 시 리스트를 함수에 변수로 넣기 위해서 JSON으로 변환 첨부했다.
 		ObjectMapper mapper = new ObjectMapper();
-//		String iicaListJ = mapper.writeValueAsString(iicaList);
-//		String eecaListJ = mapper.writeValueAsString(eecaList);
 		String aaomListJ = mapper.writeValueAsString(aaomList);
 		String tbmListJ = mapper.writeValueAsString(transferByMonthList);
-//		String taomfaomtJ = mapper.writeValueAsString(taomfaomtList);
 		
-//		m.addAttribute("taomfaomtJ", taomfaomtJ);
 		m.addAttribute("tbmListJ", tbmListJ);
-//		m.addAttribute("iicaListJ", iicaListJ);
-//		m.addAttribute("eecaListJ", eecaListJ);
 		m.addAttribute("aaomListJ", aaomListJ);
 		m.addAttribute("cal", cal);
 		m.addAttribute("miicList", miicList);
