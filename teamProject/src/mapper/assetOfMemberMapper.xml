@@ -43,15 +43,15 @@
 		assets_id=#{assetsId}, memo=#{memo} where mem_asset_id=#{memAssetId};
 	</update>
 
-	<update id="editAssetToIncome" parameterType="assetOfMember">
+	<insert id="editAssetToIncome" parameterType="assetOfMember">
 		insert into tp.income (mem_asset_id, income_id, user_key, amount, assets_id, ic_id, memo) 
   		values(#{memAssetId}, 0, #{userKey}, #{amount}, #{assetsId}, 6, #{memo});
-	</update>
+	</insert>
 
-	<update id="editAssetToExpense" parameterType="assetOfMember">
+	<insert id="editAssetToExpense" parameterType="assetOfMember">
 		insert into tp.expense (mem_asset_id, expense_id, user_key, amount, assets_id, ec_id, memo) 
   		values(#{memAssetId}, 0, #{userKey}, #{amount}, #{assetsId}, 12, #{memo});
-	</update>
+	</insert>
 
 	<delete id="delAsset" parameterType="assetOfMember">
 		delete from assets_of_member where mem_asset_id = #{memAssetId};
