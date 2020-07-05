@@ -15,7 +15,8 @@
 	<div>
 	
 		금액<input type="number" name="amount" value="${aom.amount}" required><br><br>
-		
+		<input type="hidden" name="amountBefore" value="${originalAmount}">
+		<input type="hidden" name="typeBefore" value="${originalType}">
 		
 		구분<br>
 		자산<input type="radio" id="asset" name="type" value="자산">
