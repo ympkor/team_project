@@ -24,6 +24,10 @@ public interface AssetOfMemberMapper {
 
 	public void addAssetToExpense(AssetOfMember aom);
 	
+	public void editAssetToIncome(AssetOfMember aom);
+
+	public void editAssetToExpense(AssetOfMember aom);
+	
 	public AssetOfMember getNewsSettingsInfo(int userKey);
 	
 	public void setNews(AssetOfMember aom);
