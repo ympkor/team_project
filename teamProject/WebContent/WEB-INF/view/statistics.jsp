@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +14,7 @@
 <script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
 <link rel="stylesheet" href="/css/statistics.css?ver=1">
 </head>
-<body>
+<body class="wrapper">
 <div id="topmenu">
 <div class="basic"><a href="/main/getCal">가계부</a></div>
 <div class="statistics"><a href="/statistics/show">통계</a></div>
@@ -22,44 +24,64 @@
 <button class="gologout">로그아웃</button>
 </div>
 
-<div id="content">
-<form action="/statistics/show">
-<input id="date" type="date" name="date" max="9999-12-31">
-<button id="formbutton">일자선택</button></form>
+<!-- <div id="content"> -->
 <div id="leftdayandweek">
-<div>
-<div id="daymove"><button id="lastday">&lt;</button>${date}<button id="nextday">&gt;</button></div>
+<div id="leftday">
+<form action="/statistics/show">
+날짜 선택 <input id="date" type="date" name="date" max="9999-12-31">
+<button id="formbutton"></button></form>
+<div class="dayshow">
+<div id="daymove"><button id="lastday">◀</button>${date}<button id="nextday">▶</button></div>
 <span> 수지 합계 </span>
 <table>
+	<colgroup>
+		<col width="33.3%">
+		<col width="33.3%">
+		<col width="33.3%">
+	</colgroup>
 	<c:set var = "esum" value = "0" />
 	<c:set var = "isum" value = "0" />
 	<thead>
 		<tr><th>수입</th><th>지출</th><th>합계(원)</th></tr>
 		<tr id="daytotal"><th><c:forEach var="e" items="${dailyIncome}">
 			<c:set var= "isum" value="${isum + e.amount}"/>
-		</c:forEach><c:out value="${isum}"/></th><th><c:forEach var="e" items="${dailyExpense}">
+		</c:forEach><fmt:formatNumber value="${isum}" pattern="###,###,###,###"/>
+		</th>
+		
+		<th><c:forEach var="e" items="${dailyExpense}">
 			<c:set var= "esum" value="${esum + e.amount}"/>
-		</c:forEach><c:out value="${esum}"/></th><th>${isum-esum}</th></tr>
+		</c:forEach><fmt:formatNumber value="${esum}" pattern="###,###,###,###"/></th>
+		<th><fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
+		</tr>
 	</thead>
 </table>
-일별 수입지출 내역<br>
-<table>
+<!-- 일별 수입지출 내역<br> -->
+<p>&nbsp;</p>
+<table>	
 	<thead>
 		<tr><th>항목</th><th>사용자산</th><th>수입</th><th>지출</th><th>메모</th></tr>
 	</thead>
 	<tbody id="dayList">
+		<c:if test="${dailyIncome.size()==0 && dailyExpense.size()==0}">
+			<tr><td class="daynodata" colspan="5">No data</td></tr>
+		</c:if>
 			<c:forEach var="i" items="${dailyIncome}">
-				<tr id="dayincome"><td>${i.icName}</td><td>${i.assetsName}</td><td>${i.amount}</td><td></td><td>${i.memo}</td></tr>
+				<tr id="dayincome"><td>${i.icName}</td><td>${i.assetsName}</td>
+				<td><fmt:formatNumber value="${i.amount}" pattern="###,###,###,###"/></td>
+				<td></td><td>${i.memo}</td></tr>
 			</c:forEach>
 			<c:forEach var="e" items="${dailyExpense}">
-				<tr id="dayexpense"><td>${e.ecName}</td><td>${e.assetsName}</td><td></td><td>${e.amount}</td><td>${e.memo}</td></tr>
+				<tr id="dayexpense"><td>${e.ecName}</td><td>${e.assetsName}</td><td></td>
+				<td><fmt:formatNumber value="${e.amount}" pattern="###,###,###,###"/></td>
+				<td>${e.memo}</td></tr>
 			</c:forEach>
 	</tbody>
 </table>
 </div>
+</div>
 
-<div style="width:500px">
-<div style="text-align:center"><button id="lastweek">&lt;</button>주별 수입지출 현황<button id="nextweek">&gt;</button></div>
+<div id="leftweek" style="width:500px">
+<div style="text-align:center"><button id="lastweek">◀</button>주별 수입지출 현황<button id="nextweek">▶</button></div>
 <table>
 	<thead>
 		<tr><th style='width:35px'></th><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>
@@ -79,17 +101,18 @@
 	<tbody>
 		<tr id="weekincome"><td>수입합계 </td>
 			<c:forEach var="wi" items="${weekIncome}">
-				<td>${wi.amount}</td>
+				<td><fmt:formatNumber value="${wi.amount}" pattern="###,###,###,###"/></td>
 			</c:forEach>
 		</tr>		
 		<tr id="weekexpense"><td>지출합계</td>
 			<c:forEach var="we" items="${weekExpense}">
-				<td>${we.amount}</td>
+				<td><fmt:formatNumber value="${we.amount}" pattern="###,###,###,###"/></td>
 			</c:forEach>
 		</tr>		
 		<tr id="weektotal"><td>총합계 </td>
 			<c:forEach var="i" begin="1" end="7">
-				<td>${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}</td>
+				<td><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
+				</td>
 			</c:forEach>
 		</tr>		
 	</tbody>
@@ -97,13 +120,15 @@
 </div>
 </div>
 
+
 <div id="rightmonth">
-<div style="text-align:center"><button id="lastmonth">&lt;</button>${date.toString().substring(0,7)} <button id="nextmonth">&gt;</button></div>
+<div style="text-align:center"><button id="lastmonth">◀</button>${date.toString().substring(0,7)} <button id="nextmonth">▶</button></div>
 <div id="ExpenseChart"></div>
 <div id="profitChart"></div>
 </div>
+
 <div id="bottomyear">
-<div style="text-align:center"><button id="lastyearbutton">&lt;</button>${date.toString().substring(0,4)} <button id="nextyearbutton">&gt;</button></div>
+<div style="text-align:center"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)} <button id="nextyearbutton">▶</button></div>
 <div id="yearChart">
 </div>
 </div>

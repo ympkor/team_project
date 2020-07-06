@@ -1,19 +1,65 @@
 @charset "UTF-8";
+*{
+	margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.wrapper{
+	background-color: #f5f5f5;
+	display:grid;
+	
+	/* margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline; */
+     grid-template-rows:
+  [first]10%
+  [second]550px
+  [third]300px  ;
+  grid-template-columns: 
+  [c1]10%
+  [c2]500px
+  [c3]600px
+  [c4]5% ;
+   grid-template-areas:
+  "top top top top"
+  "l_blank dayweek month r_blank"
+  "l_blank year year r_blank";
+}
 a.gotop{display:scroll;position:fixed;bottom:10px;right:10px;}
 table{border-collapse: collapse; width:500px;}
-th,td{border: 1px solid black;}
-div#leftdayandweek, div#rightmonth{float: left;}
-div#ExpenseChart, div#profitChart{width:600px; height: 350px;}
-div#bottomyear{position:relative; float:left; width: 900px; height: 400px;}
-div#yearChart{height:90%;}
-#chartData div{display: none;}
-div#daymove{width:100%; text-align: center;}
-div#topmenu{position:absolute;top:0px; width:100%; background-color: white;}
+th,td{border: 1px solid white;text-align: center;}
+
+
+div#topmenu{ grid-area: top;
+	min-width:990px;width:100%; background-color: MistyRose;}
+div#content{min-width:990px; width:100%;min-height:1000px; background-color:#f5f5f5; }
+
+div#leftdayandweek{grid-area: dayweek;  }
+div#rightmonth{grid-area: month;}
+div#bottomyear{grid-area: year;   }
+
+
+div#ExpenseChart, div#profitChart{height: 245px;}
+
+div#daymove{text-align: center;}
+
 div.basic{position:absolute;left:0px;top:10px; width:25%;}
 div.statistics{position:absolute;left:25%;top:10px; width:25%;}
 div.assest{position:absolute;left:50%;top:10px; width:25%;}
 div.board{position:absolute;right:0px;top:10px; width:25%;}
-div#content{position: absolute;top:70px;}
 #formbutton{display: none;}
 .gomypage{position: relative; top:0px; left:88%;}
 .gologout{position: relative; top:0px; left:88%;}
+button{border: none; background: none; font-size: 18px;font-weight: 600;}
+input#date{background-color: #f5f5f5;border: 1px solid lightgrey ;}
+a{text-decoration:none }
+div.dayshow{position: relative; top: 10px;}
+div#leftweek{position: relative; top: 20px;}
+th{font-weight: bold;}
+td.daynodata{text-align: center;}

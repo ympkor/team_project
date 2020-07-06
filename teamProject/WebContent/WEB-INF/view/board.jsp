@@ -30,7 +30,8 @@
 	<tbody>
 		<c:forEach var="b" items="${bList}" varStatus="vs">
 		<tbody onclick="showContent(this)" class="${b.boardId}">						
-		<tr class="boardtitlehead"><td>${vs.count}</td><td>${b.title }</td><td>${b.writer }</td><td>${b.regDate}</td><td>${b.likes }</td><td>${b.hits}</td></tr>
+		<tr class="boardtitlehead"><td>${vs.count}</td><td>${b.title }<c:if test="${b.commentCount>0}">[${b.commentCount }]</c:if></td>
+		<td>${b.writer }</td><td>${b.regDate}</td><td>${b.likes }</td><td>${b.hits}</td></tr>
 		<tr class="boardID" ><td colspan="6"><div class="contentdiv" >${b.boardId}</div></td></tr>
 		</tbody>
 		</c:forEach>

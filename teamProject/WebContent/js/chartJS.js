@@ -92,11 +92,16 @@ document.getElementById('nextyearbutton').onclick = function(){
 		  data.addColumn('number', 'price');     	                 
 	  	for (var i = 0; i < monthExpenseAmountData.length ; i++) {
 	  		data.addRows([
-	  			[ monthExpenseNameData[i]+": "+monthExpenseAmountData[i]+"원" , monthExpenseAmountData[i] ]
+	  			[ monthExpenseNameData[i]+": "+monthExpenseAmountData[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원" , monthExpenseAmountData[i] ]
  		   	]);
-		}       	  
+		}
+	  	var metotal=0;
+	  		for (var i = 0; i < monthExpenseAmountData.length ; i++) {
+	  			metotal +=monthExpenseAmountData[i];
+	  		}    
 		  var options = {
-		    title: date.slice(0,7)+'월 지출 현황 '
+		    title: date.slice(0,7)+'월 지출 총액 :'+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		    backgroundColor: '#f5f5f5'
 		  };
 		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
 		  chart.draw(data, options);
@@ -107,11 +112,16 @@ document.getElementById('nextyearbutton').onclick = function(){
 		  dataincome.addColumn('number', 'money'); 
 		  for (var i = 0; i < monthIncomeAmountData.length ; i++) {
 			  dataincome.addRows([
-	  		   [ monthIncomeNameData[i]+": "+monthIncomeAmountData[i]+"원" , monthIncomeAmountData[i] ]
+	  		   [ monthIncomeNameData[i]+": "+monthIncomeAmountData[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원" , monthIncomeAmountData[i] ]
 	  		 ]);
-			}      
+			} 
+		  var mitotal=0;
+	  		for (var i = 0; i < monthIncomeAmountData.length ; i++) {
+	  			mitotal +=monthIncomeAmountData[i];
+	  		}    
 		var options = {
-		  title: date.slice(0,7)+'월수익 현황 '
+		  title: date.slice(0,7)+'월수익 총액 '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		  backgroundColor: '#f5f5f5'
 		};
 		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));
 		chart.draw(dataincome, options);
@@ -130,7 +140,9 @@ document.getElementById('nextyearbutton').onclick = function(){
 			  var options = {			    
 			    vAxis: {title: '금액(원)'},			    
 			    seriesType: 'bars',
-			    series: {5: {type: 'line'}}        };
+			    series: {5: {type: 'line'}},        
+			    backgroundColor: '#f5f5f5'
+			  };
 
 			  var chart = new google.visualization.ComboChart(document.getElementById('yearChart'));
 			  chart.draw(data, options);
