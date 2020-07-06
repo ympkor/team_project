@@ -12,7 +12,7 @@
 	<c:when test="${result=='삭제성공' }">탈퇴에 성공하셨습니다.<%session.invalidate();%>
 		<a href="/member/login">로그인페이지로 돌아갑니다</a>
 	 </c:when>
-	<c:otherwise>탈퇴 실패입니다 ㅠㅠ
+	<c:otherwise>탈퇴 실패입니다
 		<a href="/member/mypage">마이페이지로 돌아갑니다</a>
 	</c:otherwise>
 </c:choose>
