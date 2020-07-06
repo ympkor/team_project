@@ -115,12 +115,10 @@ window.onload = function() {
 		type: "pie",
 		startAngle: 270,
 		toolTipContent: "<b>{label}</b> {y}원",
-		<!-- toolTipContent: "<b>{label}</b>: {z}%", -->
 		showInLegend: "true",
 		legendText: "{label}",
 		indexLabelFontSize: 14,
 		indexLabel: "{label} {z}%",
-		<!-- indexLabel: "{label} {y}원 ({z}%)", -->
 		dataPoints: [
 			{ y: assetChtData, z: aRatio, label: "자산"},
 			{ y: debtChtData, z: bRatio, label: "부채", exploded : true},
