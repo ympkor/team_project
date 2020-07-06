@@ -114,11 +114,13 @@ window.onload = function() {
 	data: [{
 		type: "pie",
 		startAngle: 270,
-		toolTipContent: "<b>{label}</b>: {z}%",
+		toolTipContent: "<b>{label}</b> {y}원",
+		<!-- toolTipContent: "<b>{label}</b>: {z}%", -->
 		showInLegend: "true",
 		legendText: "{label}",
-		indexLabelFontSize: 15,
-		indexLabel: "{label} {y}원 ({z}%)",
+		indexLabelFontSize: 14,
+		indexLabel: "{label} {z}%",
+		<!-- indexLabel: "{label} {y}원 ({z}%)", -->
 		dataPoints: [
 			{ y: assetChtData, z: aRatio, label: "자산"},
 			{ y: debtChtData, z: bRatio, label: "부채", exploded : true},
@@ -141,9 +143,11 @@ window.onload = function() {
 <div class="basic"><a id=mainlink href="/main/getCal">가계부</a></div>
 <div class="statistics"><a id=staticlink href="/statistics/show">통계</a></div>
 <div class="assest"><a id=assetlink href="/asset/view">자산</a></div>
-<div class="board"><a id=boardlink href="/board/show">게시판</a></div>
-<div class="memu"><button class="gomypage">마이페이지</button>
-<button class="gologout">로그아웃</button></div>
+<div class="board"><a id=boardlink href="/board/show">게시판</a>
+<button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button>
+</div>
+
 </div>
 </header>
 
@@ -151,13 +155,17 @@ window.onload = function() {
   <sum>
   <div id="myTotalAsset">
 		
-		<h1 style="margin-top:30px;">내 자산 현황</h1>
-		<h1>총 ${sumTotal}원</h1>
-		<p class=leftSum>자산 합계</p><div id = sumAsset class=leftSum>${sumAsset} 원</div><br>
-		<p class=leftSum>부채 합계</p><div id = sumDebt class=leftSum>${sumDebt} 원</div>
-		<br><br>
+		<h1 style="text-align:; margin-top:30px; margin-bottom: 45px;">내 자산</h1>
+		<h1 style="font-size:36px; text-align: right; color:;">
+		<fmt:formatNumber value="${sumTotal}" pattern="###,###,###,###"/>원</h1>
+		<div style="margin-top: 50px; line-height: 30%; color:grey">
+		<p class=leftSum>자산</p><div id = sumAsset class=leftSum>
+		<h2 style="text-align: right"><fmt:formatNumber value="${sumAsset}" pattern="###,###,###,###"/>원</h2></div><br>
+		<p class=leftSum>부채</p><div id = sumDebt class=leftSum>
+		<h2 style="text-align: right"><fmt:formatNumber value="${sumDebt}" pattern="###,###,###,###"/>원</h2></div>
+		</div><br><br>
 	</div>
-      <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+      <div id="chartContainer" style="height: 240px; width: 100%; margin-top:20px;"></div>
   </sum>
 
   <asset>
@@ -169,8 +177,10 @@ window.onload = function() {
 
 			<div id="eachAssetText">
 			
-				${list.type}<br> ${list.assetsName}<br>
-				${list.amount}원<br> ${list.memo}
+				${list.type}<br>
+				${list.assetsName}<br>
+				<fmt:formatNumber value="${list.amount}" pattern="###,###,###,###"/>원<br>
+				${list.memo}
 			</div>
 			
 
