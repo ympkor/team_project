@@ -27,7 +27,7 @@ $(function(){
 });
 
 $(function(){
-	$(".login i").on("click", function(){
+	$(".far").on("click", function(){
 		$("input[name=password]").toggleClass("active");
 		if($("input[name=password]").hasClass("active")){
 			$(this).attr("class", "far fa-eye-slash")
