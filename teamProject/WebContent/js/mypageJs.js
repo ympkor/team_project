@@ -1,6 +1,6 @@
 $(function(){
 	$("button[name=delete]").on("click", function(){
-		var flag = confirm("진짜 탈퇴할거야? 다시 선택할 기회준다");
+		var flag = confirm("탈퇴하시겠습니까?");
 		if(flag){
 			location.href='/member/delete'		
 		}
