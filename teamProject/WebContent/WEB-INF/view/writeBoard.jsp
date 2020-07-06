@@ -13,15 +13,27 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<!-- <link rel="stylesheet" href="/css/writeboard.css"> -->
+<link rel="stylesheet" href="/css/writeboard.css">
 <script type="text/javascript" src="/js/writeBoardJS.js?ver=1"></script>
 </head>
 <body>
-<form name="writeForm" action="/board/show" method="post">
+<div class="wrapper">
+<div id="topmenu">
+<div class="basic"><a href="/main/getCal">가계부</a></div>
+<div class="statistics"><a href="/statistics/show">통계</a></div>
+<div class="assest"><a href="/asset/view">자산</a></div>
+<div class="board"><a href="/board/show">게시판</a></div>
+<button class="gomypage">마이페이지</button>
+<button class="gologout">로그아웃</button>
+</div>
+<div class="content">
+<form class="writeForm" name="writeForm" action="/board/show" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
-  <label>제목:<input style="min-width:150px" class="writeboardtitle" type="text" name="title"><br></label> 
+  <input class="writeboardtitle" type="text" name="title" placeholder="제목"><br>
   <textarea id="summernote" name="content"></textarea>
-  <input type="submit" value="글등록">
+  <input class="submit" type="submit" value="글등록">
 </form>
+</div>
+</div>
 </body>
 </html>

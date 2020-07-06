@@ -19,8 +19,8 @@
     vertical-align: baseline; */
      grid-template-rows:
   [first]10%
-  [second]550px
-  [third]300px  ;
+  [second]600px
+  [third]350px  ;
   grid-template-columns: 
   [c1]10%
   [c2]500px
@@ -33,7 +33,7 @@
 }
 a.gotop{display:scroll;position:fixed;bottom:10px;right:10px;}
 table{border-collapse: collapse; width:500px;}
-th,td{border: 1px solid white;text-align: center;}
+th,td{border: 1px solid white;text-align: center; height: 30px;}
 
 
 div#topmenu{ grid-area: top;
@@ -41,11 +41,11 @@ div#topmenu{ grid-area: top;
 div#content{min-width:990px; width:100%;min-height:1000px; background-color:#f5f5f5; }
 
 div#leftdayandweek{grid-area: dayweek;  }
-div#rightmonth{grid-area: month;}
+div#rightmonth{grid-area: month;position: relative; top: 10px;}
 div#bottomyear{grid-area: year;   }
 
 
-div#ExpenseChart, div#profitChart{height: 245px;}
+div#ExpenseChart, div#profitChart{height: 280px;}
 
 div#daymove{text-align: center;}
 

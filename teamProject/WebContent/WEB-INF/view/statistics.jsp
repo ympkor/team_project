@@ -99,17 +99,17 @@
 			</c:forEach></tr>
 	</thead>
 	<tbody>
-		<tr id="weekincome"><td>수입합계 </td>
+		<tr id="weekincome"><td>수입 </td>
 			<c:forEach var="wi" items="${weekIncome}">
 				<td><fmt:formatNumber value="${wi.amount}" pattern="###,###,###,###"/></td>
 			</c:forEach>
 		</tr>		
-		<tr id="weekexpense"><td>지출합계</td>
+		<tr id="weekexpense"><td>지출</td>
 			<c:forEach var="we" items="${weekExpense}">
 				<td><fmt:formatNumber value="${we.amount}" pattern="###,###,###,###"/></td>
 			</c:forEach>
 		</tr>		
-		<tr id="weektotal"><td>총합계 </td>
+		<tr id="weektotal"><td>합계 </td>
 			<c:forEach var="i" begin="1" end="7">
 				<td><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
 				</td>

@@ -34,7 +34,7 @@ function sendFile(file, editor, welEditable) {
 	
 	$(document).ready(function() {
         $('#summernote').summernote({ // summernote를 사용하기 위한 선언
-            height: 400,
+        	height: 400,
 			callbacks: {
 	        	onImageUpload: function(files, editor, welEditable) {
 	        		for(var i = files.length -1; i>=0; i--) {

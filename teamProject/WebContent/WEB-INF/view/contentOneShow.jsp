@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/css/boardOneContent.css">
 </head>
 <body>
+<div class="wrapper">
 <div id="topmenu">
 <div class="basic"><a href="/main/getCal">가계부</a></div>
 <div class="statistics"><a href="/statistics/show">통계</a></div>
@@ -50,13 +51,15 @@
 	<TEXTAREA class="writeboardcontent" name="comment" COLS=30 ROWS=3 ></TEXTAREA>
 	<input type="submit" value="댓글등록">
 </form>
-
+<div class="boardlisttwo">
 	<c:forEach var="b1" items="${bList}" varStatus="vs1">	
 		<c:if test="${vs1.count==1 && b1.boardId==(currentboardId-1) }">이전글:<a href="/board/contentOneShow?boardId=${b1.boardId}">${b1.title}</a><br></c:if>
 		<c:if test="${vs1.count==3}">다음글:<a href="/board/contentOneShow?boardId=${b1.boardId}">${b1.title}</a><br></c:if>
 		<c:if test="${vs1.count==2 && b1.boardId==(currentboardId+1)}">다음글:<a href="/board/contentOneShow?boardId=${b1.boardId}">${b1.title}</a><br></c:if>
 	</c:forEach>
+</div>
 <button class="showboardList">목록보기</button>
+</div>
 </div>
 <script type="text/javascript">
 var boardId= ${currentBoard.boardId}
