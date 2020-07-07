@@ -118,7 +118,7 @@ if("${aom.assetsName}"=="우리은행"){document.forms["editAsset"]["an6"].check
 if("${aom.assetsName}"=="씨티은행"){document.forms["editAsset"]["an7"].checked=true;}
 if("${aom.assetsName}"=="하나은행"){document.forms["editAsset"]["an8"].checked=true;}
 if("${aom.assetsName}"=="SC제일은행"){document.forms["editAsset"]["an9"].checked=true;}
-if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].checked=true;}
+if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].checked=true;};
 	
 </script>
 
