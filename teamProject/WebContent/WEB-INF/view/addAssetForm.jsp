@@ -36,6 +36,11 @@
         메모<br>
         <input type="text" name="memo" placeholder="적금, 학자금대출 등" required><br><br>
 		
+		이 자산을 수입/지출 내역에 기록
+		<input type="checkbox" name="sync" value="1"><br>
+		(옵션 선택시 입력한 전액이 수입/지출 내역에 기록됩니다.)
+		<br><br>
+		
 		<input type="submit" value="입력하기"> 
 		<input type="button" value="취소" onClick="location.href='view'">
 	</div>
