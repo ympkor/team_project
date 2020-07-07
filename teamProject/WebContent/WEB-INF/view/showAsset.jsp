@@ -101,14 +101,14 @@ window.onload = function() {
 	var newslink11 = String(newsList[11].link);
 	document.getElementById('newsBox11').href=newslink11;
 	
-	let assetChtData = parseInt(document.getElementById('sumAsset').innerText);
-	let debtChtData = parseInt(document.getElementById('sumDebt').innerText)*-1;
+	let assetChtData = ${assetRatioValue};
+	let debtChtData = ${debtRatioValue}*(-1);
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	
 	var chart = new CanvasJS.Chart("chartContainer", {
 	backgroundColor: "#353535",
-	theme: "dark2", // "light1", "light2", "dark1", "dark2"
+	theme: "dark1", // "light1", "light2", "dark1", "dark2"
 	exportEnabled: false,
 	animationEnabled: true,
 	data: [{
