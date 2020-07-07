@@ -76,6 +76,8 @@ public class AssetOfMemberController {
 		m.addAttribute("sumTotal", sumTotal);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("sumDebt", sumDebts);
+		m.addAttribute("assetRatioValue", sumAssets);
+		m.addAttribute("debtRatioValue", sumDebts);
 		m.addAttribute("newsArr", jsonArray);
 		m.addAttribute("newsKeywords", newsKeywords);
 		m.addAttribute("newsCounts", newsCounts);
