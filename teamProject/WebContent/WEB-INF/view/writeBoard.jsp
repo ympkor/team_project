@@ -11,11 +11,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 <!-- include summernote css/js -->
-<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<link rel="stylesheet" href="/css/writeboard.css">
-<script type="text/javascript" src="/js/writeBoardJS.js?ver=1"></script>
+<link rel="stylesheet" href="/css/writeboard.css?1">
+<link rel="stylesheet" href="/css/topMenu.css?asd=2">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<script type="text/javascript" src="/js/writeBoardJS.js?ver=2"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -33,7 +34,7 @@
 <div class="content">
 <form class="writeForm" name="writeForm" action="/board/show" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
-  <input class="writeboardtitle" type="text" name="title" placeholder="제목"><br>
+  <input class="writeboardtitle" type="text" name="title" placeholder="제목" required="required"><br>
   <textarea id="summernote" name="content"></textarea>
   <input class="submit" type="submit" value="글등록">
 </form>

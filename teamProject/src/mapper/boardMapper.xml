@@ -20,6 +20,21 @@
   		SELECT * from board 
 		where board_id =#{boardId}
   	</select>
+  	<select id="getbeforeBoard" resultType="Board">
+  		SELECT * from board 
+		where board_id &lt;#{boardId} order by board_id desc limit 1
+  	</select>
+  	<select id="getnextBoard" resultType="Board">
+  		SELECT * from board 
+		where board_id &gt;#{boardId} limit 1
+  	</select>
+  	<select id="getBoardTotalCnt" resultType="int">
+  		select count(*) from board 
+  	</select>
+  	<select id="getBoardListPerPage" resultType="Board">
+  		select * from board order by board_id desc 
+  		limit #{firstRow}, #{boardCntPerPage}
+  	</select>
   	<update id="updatehits">
   		update board set hits=hits+1 where board_id=#{boardId}
   	</update>
@@ -33,6 +48,7 @@
   		SELECT * from comment 
 		where board_id =#{boardId}
   	</select>
+  	
   	<update id="writeComment" parameterType="Comment">
   		insert into comment values(0,#{boardId},#{userKey},#{comment},now(),#{commentWriter});
   	</update>

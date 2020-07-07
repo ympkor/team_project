@@ -24,7 +24,7 @@ $(".commentwriteinput").hide();
 	 //console.log(this);
 	 var commentId = $(this).attr('name');
 	 //console.log($(this).parent().parent().children().eq(0));	 
-	 var commentposition = $(this).parent().parent().children().eq(1);
+	 var commentposition = $(this).parent().parent().children().eq(0);
 	 var oricomment = commentposition.html();
 	 //console.log("ok? "+commentposition.html());
 	 commentposition.html( "<form class='commentupdateinput' action='/board/commentupdate' method='post'>"

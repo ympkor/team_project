@@ -8,8 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dto.Board;
+import dto.BoardListView;
 import dto.Comment;
 import mapper.BoardMapper;
 import mapper.MemberMapper;
@@ -26,10 +28,14 @@ public class BoardController {
 	BoardService boardService;
 	
 	@GetMapping("/show")
-	public String showBoard(Model m) {
-		List<Board> bList = boardMapper.selectAll();
-		//for (Board b : bList) { System.out.println("그냥보기"+b); }
+	public String showBoard(Model m,@RequestParam(defaultValue = "1")int pNum) {
+		BoardListView bList= boardService.showBoard(pNum);
+		/* for (Board b : bList.getBoardList()) { System.out.println(b); }*/
+		System.out.println("총게시물갯수"+bList.getBoardTotalCnt());
+		System.out.println("총페이지수"+bList.getPageTotalCnt());
 		m.addAttribute("bList", bList);
+		//String day=bList.getBoardList().get(0).getRegDate().toString();
+		//System.out.println("투스트링한거"+day);
 		return "board";
 	}
 	//글 다 쓰고 나서 등록누르면
@@ -43,7 +49,8 @@ public class BoardController {
 		board.setWriter(writer);
 		//System.out.println("작성자 넣은후"+board);
 		boardMapper.regBoard(board);
-		List<Board> bList = boardMapper.selectAll();
+		//1페이지 정보를 불러옴
+		BoardListView bList= boardService.showBoard(1);
 		m.addAttribute("bList", bList);
 		return "board";
 	}
@@ -63,13 +70,16 @@ public class BoardController {
 		Board currentBoard = boardMapper.selecOneBoard(boardId);
 		//System.out.println(currentBoard);
 		//이전글, 다음글 제목가져오기
-		List<Board> bList = boardMapper.contentOneShow(boardId);
-		//for (Board b : bList) { System.out.println("게시판하나보기"+b); }
+		Board beforeBoard = boardMapper.getbeforeBoard(boardId); 
+		Board nextBoard = boardMapper.getnextBoard(boardId);		
+		//System.out.println("이전게시물"+beforeBoard); 
+		//System.out.println("다음게시물"+nextBoard); 
 		//보드아이디에 있는 코멘트 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
 		//for (Comment co : cList) {System.out.println(co);}
 		m.addAttribute("currentBoard", currentBoard);
-		m.addAttribute("bList", bList);
+		m.addAttribute("beforeBoard", beforeBoard);
+		m.addAttribute("nextBoard", nextBoard);
 		m.addAttribute("currentboardId", boardId);
 		m.addAttribute("cList", cList);
 		return "contentOneShow";

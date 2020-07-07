@@ -43,5 +43,23 @@ function sendFile(file, editor, welEditable) {
 	        	}
 	        }
 		});
+        $('input[class="writeboardtitle"]').keydown(function() {
+        	  if (event.keyCode === 13) {
+        	    event.preventDefault();
+        	  };
+        	});
        
+        $('form').submit(function(){
+        	if($('#summernote').val().trim()==""){
+        		alert("내용을 작성해 주세요");
+        		return false;        		
+        	}
+        	
+        });
+        document.querySelector(".gomypage").onclick = function(){
+    		location.href="/member/mypage";
+    	}
+    	document.querySelector(".gologout").onclick = function(){
+    		location.href="/member/logout";
+    	}
 	});

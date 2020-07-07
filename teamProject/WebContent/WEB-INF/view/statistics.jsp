@@ -9,11 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/topMenu.css?asd=2">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=1">
+<link rel="stylesheet" href="/css/statistics.css?ver=2">
+<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 </head>
 <body class="wrapper">
 	<!-- 상단 메뉴 부분 -->
@@ -88,7 +89,9 @@
 <div style="text-align:center"><button id="lastweek">◀</button>주별 수입지출 현황<button id="nextweek">▶</button></div>
 <table>
 	<thead>
-		<tr><th style='width:35px'></th><th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th></tr>
+		<tr><th style='width:35px'></th><th class="weekwidth">일</th><th class="weekwidth">월</th>
+		<th class="weekwidth">화</th><th class="weekwidth">수</th>
+		<th class="weekwidth">목</th><th class="weekwidth">금</th><th class="weekwidth">토</th></tr>
 		<tr id="weekday"><th></th><c:forEach var="we" items="${weekExpense}">
 				<th><c:set var="weekdate" value="${we.expenseDate}"/>
 									
