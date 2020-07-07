@@ -1,0 +1,9 @@
+상단바 100px
+background-color: #ffcccc;
+
+폰트
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+css에 font-family: Montserrat, "sans-serif"; 추가
+폰트 크기는 각자 페이지 ui에 맞게
+
+
