@@ -92,8 +92,20 @@ window.onload = function() {
 		
 		<div class="editRow"></div>
 		<div class="editRow">
+		이 자산을 수입/지출 내역에 기록
+		<input id="syncCheck" type="checkbox" name="sync" value="1"><br>
+		(옵션 선택시 변동사항이 수입/지출 내역에 기록됩니다.)
+		</div>
+		<div class="editRow"></div>
+		
+		
+		
+		<div class="editRow"></div>
+		<div class="editRow">
 		<input type="submit" value="수정">
 		<input type="button" value="취소" onClick="location.href='view'">
+		<a href="delete?memAssetId=${aom.memAssetId}"  style="text-decoration: none; color:black"
+					onClick="return confirm('이 자산을 정말 삭제하시겠습니까?')">삭제</a>
 		</div>
 		<div class="editRow"></div>
 		
@@ -119,7 +131,7 @@ if("${aom.assetsName}"=="씨티은행"){document.forms["editAsset"]["an7"].check
 if("${aom.assetsName}"=="하나은행"){document.forms["editAsset"]["an8"].checked=true;}
 if("${aom.assetsName}"=="SC제일은행"){document.forms["editAsset"]["an9"].checked=true;}
 if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].checked=true;};
-	
+
 </script>
 
 	<input type="hidden" name="amountBefore" value="${originalAmount}">
