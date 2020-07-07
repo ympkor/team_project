@@ -23,29 +23,29 @@
   [first]10%
   [second]90%;
   grid-template-columns:
-  [fir]40%
-  [sec]60%;
+  10% 30% 50% 10%;
   grid-template-areas:
-  "top top"
-  "left right";
+  "top top top top"
+  "l_blank left right r_blank";
   gap:0px;
   font-family: 'Nanum Gothic', sans-serif;
 }
 
 #header{
-	height: 100%;
-    background-color: f8f8f8;
+	/* height: 100px; */
+    background-color: #ffcccc;
     /* position: absolute; */
     /* top: 0; */
-    /* line-height: 50px; */
+    line-height: 100px;
     /* left: 0; */
     /* right: 0; */
     grid-area: top;
-    color: #1cbaba;
+    color: black;
     text-align: center;
     font-weight: bold;
     font-size: 50px;
     grid-row: 1;
+    font-family: Montserrat, "sans-serif";
 }
 
 #left{
@@ -77,12 +77,12 @@
 } */
 
 #join{
-	background-color: f8f8f81CBABA;
+	background-color: f8f8f8;
     text-decoration: none;
     margin: 18px 0 0;
     display: block;
     border: 1px solid #ccc;
-    color: 1CBABA;
+    color: #ffcccc;
     padding: 16px 17px;
     font-size: 17px;
     line-height: 20px;
@@ -98,8 +98,10 @@
 }
 
 .login_form{
-	width: 70%;
+	width: 100%;
     /* border: 1px solid black; */
+    max-width: 350px;
+    min-width: 350px;
 }
 
 .login{
@@ -125,7 +127,7 @@
 }
 
 #login{
-	background-color: 1CBABA;
+	background-color: #ffcccc;
     text-decoration: none;
     margin: 18px 0 0;
     display: block;
@@ -191,12 +193,15 @@
     flex-direction: column;
 }
 
+/* WRAPPER */
+.wrap-slider {width:90%;height:80%;max-height:100%; min-height:100%; margin:0 auto;}
+
+img{width: 100%;height: 700px;}
 /* SLIDER */
-/* box-shadow:3px 3px 15px rgba(0,0,0,0.7); */
-.css-slider {background:#000;height:532px;width:800px;margin:50px auto;overflow:visible;position:relative;}
-.mask {overflow:hidden;height:532px;}
+.css-slider {background:#000;box-shadow:3px 3px 15px rgba(0,0,0,0.7);height:700px;width:100%;margin:50px auto;overflow:visible;position:relative;}
+.mask {overflow:hidden;height:700px;}
 .css-slider ul {margin:0;padding:0;position:relative;}
-.css-slider li {width:800px;height:532px;position:absolute;top:0;list-style:none;}
+.css-slider li {width:100%;height:100%;position:absolute;top:0;list-style:none;}
 .css-slider li.firstanimation {-moz-animation:cycle 20s linear infinite;-webkit-animation:cycle 20s linear infinite;}
 .css-slider li.secondanimation {-moz-animation:cycletwo 20s linear infinite;-webkit-animation:cycletwo 20s linear infinite;}
 .css-slider li.thirdanimation {-moz-animation:cyclethree 20s linear infinite;-webkit-animation:cyclethree 20s linear infinite;}
@@ -204,8 +209,7 @@
 
 /* TOOLTIP */
 .css-slider .tooltip {background:rgba(0,0,0,0.7);width:100%;height:60px;position:relative;bottom:75px;left:-800px;-moz-transition:all 0.3s ease-in-out;-webkit-transition:all 0.3s ease-in-out;}
-.css-slider .tooltip h1 {color:#fff;font-size:24px;font-weight:300;line-height:60px;padding:0 0 0 20px;}
-.css-slider li.first:hover .tooltip, .css-slider li.second:hover .tooltip, .css-slider li.third:hover .tooltip, .css-slider li.fourth:hover .tooltip, .css-slider li.fifth:hover .tooltip {left:0px;}
+.css-slider li.first:hover .tooltip, .css-slider li.second:hover .tooltip, .css-slider li.third:hover .tooltip, .css-slider li.fourth:hover .tooltip{left:0px;}
 .css-slider:hover li, .css-slider:hover .progress-bar {-moz-animation-play-state:paused;-webkit-animation-play-state:paused;}
 
 /* PROGRESS BAR */
