@@ -1,3 +1,47 @@
+//해당월에 맞는 income data들을 전달받아 만들어진 달력에 뿌려주는 기능
+function showThisMonthIncome(miicList){
+	for (let i = 0; i < miicList.length; i++) {
+			let icName = miicList[i].icName;
+			let icAmount = miicList[i].amount;
+			let entryClassName;
+			if (miicList[i].incomeDate.dayOfMonth < 10) { entryClassName = '.di0' + miicList[i].incomeDate.dayOfMonth; }
+			else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
+			let entry = document.querySelector(entryClassName);
+			if(i == 0){entry.innerHTML = null}
+			entry.innerHTML += '<div class=income><span class=icName>' + icName + '</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '원</span></div>';
+			if(entry.childElementCount > 2){
+				let ellipsis = document.createElement('span');
+				ellipsis.innerText = '...';
+				console.dir(document.querySelector(entryClassName).childNodes[1]);
+				if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
+					document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+				}
+				entry.classList.add('limit');
+			}
+			// <span class=ellipsis></span>
+	}
+}
+//해당월에 맞는 expense date들을 전달받아 만들어진 달력에 뿌려주는 기능
+function showThisMonthExpense(meecList) {
+	for (let i = 0; i < meecList.length; i++) {
+		let ecName = meecList[i].ecName;
+		let ecAmount = meecList[i].amount;
+		let entryClassName;
+		if (meecList[i].expenseDate.dayOfMonth < 10) { entryClassName = '.de0' + meecList[i].expenseDate.dayOfMonth; }
+		else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
+		let entry = document.querySelector(entryClassName);
+		if(i == 0){entry.innerHTML = null}
+		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '원</span></div>';
+		if(entry.childElementCount > 2){
+			let ellipsis = document.createElement('span');
+			ellipsis.innerText = '...';
+			if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
+				document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+			}
+			entry.classList.add('limit');
+		}
+	}
+}
 //월별 이체 데이터를 만들어진 달력에 뿌려주는 기능
 function showThisMonthTransfer(tbmList) {
 	let classStr;
@@ -5,22 +49,39 @@ function showThisMonthTransfer(tbmList) {
 		for(let i = 0; i < tbmList.length; i++){
 			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
 			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
-			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+tbmList[i].amount+'원</span></div>';
+			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'원</span></div>';
+		}
+		if(document.querySelector(classStr).childElementCount > 2){
+			let ellipsis = document.createElement('span');
+			ellipsis.innerText = '...';
+			if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
+				document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+			}
+			entry.classList.add('limit');
 		}
 	}
 }
 //월별 통합 데이터 뿌려주는 기능
 function getThisMonthSumData(sumAmounts) {
 	document.querySelector('span.monthly_data_month').innerText = sumAmounts.selecDate.substring(5, 7)+'월';
-	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = sumAmounts.sumIncome+'원';
+	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+'원';
 		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0원';}
-	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = sumAmounts.sumExpense+'원';
+	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+'원';
 		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0원';}
-	document.querySelector('span.monthly_data_amount_sum').innerText = sumAmounts.sumIncome - sumAmounts.sumExpense+'원';
+	if(sumAmounts.sumIncome - sumAmounts.sumExpense > 0) {
+		document.querySelector('span.monthly_data_amount_sum').classList.add('icAmount');
+		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
+	}else if(sumAmounts.sumIncome - sumAmounts.sumExpense < 0){
+		document.querySelector('span.monthly_data_amount_sum').classList.remove('icAmount');
+		document.querySelector('span.monthly_data_amount_sum').classList.add('ecAmount');
+	}else{
+		document.querySelector('span.monthly_data_amount_sum').classList.remove('icAmount');
+		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
+	}
+	document.querySelector('span.monthly_data_amount_sum').innerText = Number(sumAmounts.sumIncome - sumAmounts.sumExpense).toLocaleString('en')+'원';
 }
 //수입 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putIncomeDataToUpdateForm(iicaList) {
-	event.stopPropagation();
 	for(let i = 0; i < iicaList.length; i++){
 		let classStr = 'div.di_income'+i;;
 		document.querySelector(classStr).addEventListener('click', function() {
@@ -57,18 +118,18 @@ function makeIncomeCategoryOption(iica) {
 		url:'/main/postICList',
 		type:'post',
 		success:function(icList) {
-			let str = '<option value='+iica.icId+' selected id="update_income_expense_category_selected">'+iica.icName+'</option>';
+			let str = '<option value='+iica.icId+' selected id="update_income_income_category_selected">'+iica.icName+'</option>';
 			for(let i = 0; i < icList.length; i++) {
 				if(icList[i].icId != iica.icId) {
 					str += '<option value='+icList[i].icId+'>'+icList[i].icName+'</option>';
 				}
 			}
+			document.querySelector('#update_income_income_category').innerHTML = str;
 		}
 	});
 }
 //지출 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putExpenseDataToUpdateForm(eecaList) {
-	event.stopPropagation();
 	for(let i = 0; i < eecaList.length; i++){
 		let classStr = 'div.di_expense'+i;;
 		document.querySelector(classStr).addEventListener('click', function() {
@@ -99,24 +160,24 @@ function putExpenseDataToUpdateForm(eecaList) {
 		});
 	}
 }
-//지출 업데이트 폼에 이체 카테고리를 현재 값으로 선택시켜준다.
+//지출 업데이트 폼에 지출 카테고리를 현재 값으로 선택시켜준다.
 function makeExpenseCategoryOption(eeca) {
 	$.ajax({
 		url:'/main/postECList',
 		type:'post',
 		success:function(ecList) {
 			let str = '<option value='+eeca.ecId+' selected id="update_expense_expense_category_selected">'+eeca.ecName+'</option>';
-			for(let i = 0; i < ecList; i++) {
+			for(let i = 0; i < ecList.length; i++) {
 				if(ecList[i].ecId != eeca.ecId) {
 					str += '<option value='+ecList[i].ecId+'>'+ecList[i].ecName+'</option>';
 				}
 			}
+			document.querySelector('#update_expense_expense_category').innerHTML = str;
 		}
 	});
 }
 //이체 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putTransferDataToUpdateForm(taomfaomtList) {
-	event.stopPropagation();
 	for(let i = 0; i < taomfaomtList.length; i++){
 		let classStr = 'div.di_transfer'+i;;
 		document.querySelector(classStr).addEventListener('click', function() {
@@ -358,6 +419,38 @@ function showInsertExpenseAomBF(assetsId) {
     }
   })
 }
+//상세란에 상세 수입을 뿌려주는 기능
+function makeDetailIncomeDIV(iicaList) {
+	let sumI = 0;
+	let str = '';
+	if(iicaList != null) {
+		for (let i = 0; i < iicaList.length; i++) {
+			sumI += iicaList[i].amount;
+			str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
+			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
+			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + '원</span></div></div>';
+		}
+		document.querySelector('div.detail_context_income').innerHTML = str;
+	}
+	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+'원';
+	putIncomeDataToUpdateForm(iicaList);
+}
+//상세란에 상세 지출을 뿌려주는 기능
+function makeDetailExpenseDIV(eecaList) {
+	let sumE = 0;
+	let str = '';
+	if(eecaList != null){
+		for (let i = 0; i < eecaList.length; i++) {
+			sumE += eecaList[i].amount;
+			str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
+			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
+			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + '원</span></div></div>';
+		}
+		document.querySelector('div.detail_context_expense').innerHTML = str;
+	}
+	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+'원';
+	putExpenseDataToUpdateForm(eecaList);
+}
 //이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
 function makeDetailTransferDIV(taomfaomtList) {
 	document.querySelector('div.detail_context_transfer').innerHTML = null;
@@ -365,9 +458,10 @@ function makeDetailTransferDIV(taomfaomtList) {
 		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
 		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
 		str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';
-		str += '<div class=detailTAmount><span class=detailTAmount>'+taomfaomtList[i].amount+'</span></div<</div>';
+		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+'원</span></div<</div>';
 		document.querySelector('div.detail_context_transfer').innerHTML += str;
 	}
+	putTransferDataToUpdateForm(taomfaomtList);
 }
 
 /*################# 페이지가 모두 로드 된 이후 사용될 기능들 ################*/
@@ -384,7 +478,7 @@ window.addEventListener('DOMContentLoaded', function () {
   //캘린더 객체를 전달받아 해당 월에 맞는 달력을 만들어주는 기능
   function makecalendar(cal) {
 		let monthList = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
-		document.querySelector('span.month_string').innerText = monthList[cal.month];
+		document.querySelector('span.month_string').innerText = monthList[cal.month-1];
 		document.querySelector('span.year_value').innerText = cal.year;
 		let currentMonth = cal.year;
 		if(cal.month < 10){currentMonth += '\-0'+cal.month}else{currentMonth += '\-'+cal.month};
@@ -419,63 +513,6 @@ window.addEventListener('DOMContentLoaded', function () {
 				getThisMonthSumData(sumAmounts);
 			}
 		}); 
-  }
-  //해당월에 맞는 income data들을 전달받아 만들어진 달력에 뿌려주는 기능
-  function showThisMonthIncome(miicList){
-		for (let i = 0; i < miicList.length; i++) {
-			let icName = miicList[i].icName;
-      let icAmount = miicList[i].amount;
-      let entryClassName;
-      if (miicList[i].incomeDate.dayOfMonth < 10) { entryClassName = '.di0' + miicList[i].incomeDate.dayOfMonth; }
-      else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
-			let entry = document.querySelector(entryClassName);
-			if(i == 0){entry.innerHTML = null}
-			entry.innerHTML += '<div class=income><span class=icName>' + icName + '</span><span class=icAmount>' + icAmount + '원</span></div>';
-    }
-  }
-  //해당월에 맞는 expense date들을 전달받아 만들어진 달력에 뿌려주는 기능
-  function showThisMonthExpense(meecList) {
-    for (let i = 0; i < meecList.length; i++) {
-      let ecName = meecList[i].ecName;
-      let ecAmount = meecList[i].amount;
-      let entryClassName;
-      if (meecList[i].expenseDate.dayOfMonth < 10) { entryClassName = '.de0' + meecList[i].expenseDate.dayOfMonth; }
-      else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
-			let entry = document.querySelector(entryClassName);
-			if(i == 0){entry.innerHTML = null}
-      entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + ecAmount + '원</span></div>';
-    }
-	}
-  //상세란에 상세 수입을 뿌려주는 기능
-  function makeDetailIncomeDIV(iicaList) {
-		let sumI = 0;
-		let str = '';
-		if(iicaList != null) {
-			for (let i = 0; i < iicaList.length; i++) {
-				sumI += iicaList[i].amount;
-				str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
-				str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
-				str += '<div class=detailIAmount><span class=detailIAmount icAmount>' + iicaList[i].amount + '원</span></div></div>';
-			}
-			detailContextIncome.innerHTML = str;
-		}
-		document.querySelector('span.detailSumI').innerText = sumI+'원';
-
-  }
-  //상세란에 상세 지출을 뿌려주는 기능
-  function makeDetailExpenseDIV(eecaList) {
-		let sumE = 0;
-		let str = '';
-		if(eecaList != null){
-			for (let i = 0; i < eecaList.length; i++) {
-				sumE += eecaList[i].amount;
-				str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
-				str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
-				str += '<div class=detailEAmount><span class=detailEAmount ecAmount>' + eecaList[i].amount + '원</span></div></div>';
-			}
-			detailContextExpense.innerHTML = str;
-		}
-    document.querySelector('span.detailSumE').innerText = sumE+'원';
   }
   //만들어진 달력에 클릭한 날짜에 해당하는 상세데이터를 출력해주는 이벤트를 걸어주는 기능
   function put_MakeDetailDiv_to_dateTd(dateTd) {
@@ -555,17 +592,17 @@ window.addEventListener('DOMContentLoaded', function () {
 		let tbmList = UpdateAndRefreshData.tbmList;
 		makecalendar(cal);
 		let dateTd = document.querySelectorAll('.dateTd');
-		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
+		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 1; i <= dateTd.length; i ++){
 			let classStr;
 			if(i < 10){classStr = '.di0'+i;}else{classStr = '.di'+i;}
 			document.querySelector(classStr).innerHTML = null;
 		}}
-		if(meecList != null){showThisMonthExpense(meecList);}else{for(let i = 0; i < dateTd.length; i ++){
+		if(meecList != null){showThisMonthExpense(meecList);}else{for(let i = 1; i <= dateTd.length; i ++){
 			let classStr;
 			if(i < 10){classStr = '.de0'+i;}else{classStr = '.de'+i;}
 			document.querySelector(classStr).innerHTML = null;
 		}}
-		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 0; i< dateTd.length; i++){
+		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 1; i<= dateTd.length; i++){
 			let classStr;
 			if(i < 10){classStr = '.dt0'+i;}else{classStr = '.dt'+i;}
 			document.querySelector(classStr).innerHTML = null;
@@ -582,7 +619,7 @@ window.addEventListener('DOMContentLoaded', function () {
 			data: detailData,
 			success: function (data) {
 				let iicaList = data;
-				if(iicaList != null){makeDetailIncomeDIV(iicaList);putIncomeDataToUpdateForm(iicaList);}
+				if(iicaList != null){makeDetailIncomeDIV(iicaList);}
 				else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
 				//이건 날짜별 지출 데이터들
 				$.ajax({
@@ -591,7 +628,7 @@ window.addEventListener('DOMContentLoaded', function () {
 					data: detailData,
 					success: function (data) {
 						let eecaList = data;
-						if(eecaList != null){makeDetailExpenseDIV(eecaList);putExpenseDataToUpdateForm(eecaList);}
+						if(eecaList != null){makeDetailExpenseDIV(eecaList);}
 						else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
 						//이건 날짜별 이체 데이터들
 						$.ajax({
@@ -600,7 +637,7 @@ window.addEventListener('DOMContentLoaded', function () {
 							data: detailData,
 							success: function (data) {
 								let taomfaomtList = data;
-								if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);putTransferDataToUpdateForm(taomfaomtList)}
+								if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);}
 								else{document.querySelector('div.detail_context_transfer').innerHTML = null;}
 							}
 						});
@@ -639,27 +676,34 @@ window.addEventListener('DOMContentLoaded', function () {
 		document.querySelector('#insert_transfer_date').value = insertDate;
 		makecalendar(cal);
 		let dateTd = document.querySelectorAll('.dateTd');
-		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 0; i < dateTd.length; i ++){
+		if(miicList != null){showThisMonthIncome(miicList);}else{for(let i = 1; i <= dateTd.length; i ++){
 				let classStr;
 				if(i < 10){classStr = '.di0'+i;}else{classStr = '.di'+i;}
 				document.querySelector(classStr).innerHTML = null;
 		}}
-		if(meecList != null){showThisMonthExpense(meecList);}else{for(let i = 0; i < dateTd.length; i ++){
+		if(meecList != null){showThisMonthExpense(meecList);}else{for(let i = 1; i <= dateTd.length; i ++){
 				let classStr;
 				if(i < 10){classStr = '.de0'+i;}else{classStr = '.de'+i;}
 				document.querySelector(classStr).innerHTML = null;
 		}}
-		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 0; i< dateTd.length; i++){
+		if(tbmList != null){showThisMonthTransfer(tbmList);}else{for(let i = 1; i<= dateTd.length; i++){
 			let classStr;
 			if(i < 10){classStr = '.dt0'+i;}else{classStr = '.dt'+i;}
 			document.querySelector(classStr).innerHTML = null;
 		}}
-		if(iicaList != null){makeDetailIncomeDIV(iicaList); putIncomeDataToUpdateForm(iicaList);}else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
-		if(eecaList != null){makeDetailExpenseDIV(eecaList); putExpenseDataToUpdateForm(eecaList);}else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
-		if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);putTransferDataToUpdateForm(taomfaomtList)}else{document.querySelector('div.detail_context_transfer').innerHTML = null;}
+		if(iicaList != null){makeDetailIncomeDIV(iicaList);}else{document.querySelector('div.detail_context_income').innerHTML = null;document.querySelector('span.detailSumI').innerText=0;}
+		if(eecaList != null){makeDetailExpenseDIV(eecaList);}else{document.querySelector('div.detail_context_expense').innerHTML = null;document.querySelector('span.detailSumE').innerText=0}
+		if(taomfaomtList!=null){makeDetailTransferDIV(taomfaomtList);}else{document.querySelector('div.detail_context_transfer').innerHTML = null;}
 		put_MakeDetailDiv_to_dateTd(dateTd);
 	}
-
+	//########## 상단바 버튼 ##########
+	document.querySelector(".gomypage").onclick = function(){
+		location.href="/member/mypage";
+	}
+	document.querySelector(".gologout").onclick = function(){
+		location.href="/member/logout";
+	}
+	
 	//################## DateLicker ####################
 	let currentMonth = new Date().getUTCMonth()+1;
   currentMonth +='월로...';
@@ -675,12 +719,12 @@ window.addEventListener('DOMContentLoaded', function () {
 		closeText: "닫기",
 		currentText: currentMonth,
     onChangeMonthYear: function(year, month) {
-			let beforeSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
+			// let beforeSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
 			if(month < 10) {document.querySelector('#selecDate').value = String(year)+'-0'+String(month);}
 			else{document.querySelector('#selecDate').value = String(year)+'-'+String(month);}
-			let afterSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
+			// let afterSelectMonth = document.querySelector('#selecDate').value.substring(5, 7);
 			//월이 변경되었을 때, 날짜에 맞는 캘린더를 뿌려주는 기능
-			if(beforeSelectMonth != afterSelectMonth) {
+			// if(beforeSelectMonth != afterSelectMonth) {
 				let formData = $('#selecDate').eq(0).serialize();
 				$.ajax({
 					url: '/main/postCal',
@@ -716,8 +760,12 @@ window.addEventListener('DOMContentLoaded', function () {
 						put_MakeDetailDiv_to_dateTd(dateTd);
 					}
 				});
-				$('#selecDate').datepicker('hide'); 
-			}
+				let currentYear = document.querySelector('#selecDate').value.substring(0, 4);
+				let currentMonth = document.querySelector('#selecDate').value.substring(5, 7);
+				$('select.ui-datepicker-year').val(Number(currentYear)).prop('selected', true);
+				$('select.ui-datepicker-month').val(Number(currentMonth)-1).prop('selected', true);
+				// $('#selecDate').datepicker('hide'); 
+			// }
     },
 	});
 	
@@ -727,7 +775,6 @@ window.addEventListener('DOMContentLoaded', function () {
 		let currentMonth = document.querySelector('#selecDate').value.substring(5, 7);
 		$('select.ui-datepicker-year').val(Number(currentYear)).prop('selected', true);
 		$('select.ui-datepicker-month').val(Number(currentMonth)-1).prop('selected', true);
-//		$('.ui-datepicker ').css({"position":"relative","margin-top":"50%"});
 	}); 
   
 	// 페이지 처음 load시, td에 이벤트 걸어준다.
@@ -834,7 +881,7 @@ window.addEventListener('DOMContentLoaded', function () {
         put_MakeDetailDiv_to_dateTd(dateTd);
       }
     });
-});
+  });
 	
 /*########## grid_detail 관련 기능 ##########*/
 	//업데이트 버튼 눌렀을 때 실행할 메서드 정의

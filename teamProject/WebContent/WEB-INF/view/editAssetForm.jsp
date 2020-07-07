@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <title>내 자산 수정</title>
 <link rel="stylesheet" type="text/css" href="/css/myAssetEdit.css">
+<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <script type="text/javascript">
 window.onload = function() {
 	
@@ -21,25 +22,17 @@ window.onload = function() {
 </script>
 </head>
 <body>
-
-	<div class="topMenu">
-		<div class="menu">
-		<a id=mainlink href="/main/getCal">가계부</a>
+	<!-- 상단 메뉴 부분 -->
+	<header class="topmenu">
+		<div class="grid_header">
+			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
+			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
+			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
+			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
+			<div class="gologout"><button class="gologout">LOGOUT</button></div>
 		</div>
-		<div class="menu">
-		<a id=staticlink href="/statistics/show">통계</a>
-		</div>
-		<div class="menu">
-		<a id=assetlink href="/asset/view">자산</a>
-		</div>
-		<div class="menu">
-		<a id=boardlink href="/board/show">게시판</a>
-		</div>
-		<div class="menu">
-		<button class="gomypage">마이페이지</button>
-		<button class="gologout">로그아웃</button>
-		</div>
-	</div>
+	</header>
 
 	<form id="editAsset"
 				action="/asset/editAsset?memAssetId=${aom.memAssetId}" method="post">

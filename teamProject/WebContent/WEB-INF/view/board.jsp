@@ -7,18 +7,22 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/boardJS.js?ver=1"></script>
 <link rel="stylesheet" href="/css/board.css?ver=1">
+<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper">
-<div id="topmenu">
-<div class="basic"><a href="/main/getCal">가계부</a></div>
-<div class="statistics"><a href="/statistics/show">통계</a></div>
-<div class="assest"><a href="/asset/view">자산</a></div>
-<div class="board"><a href="/board/show">게시판</a></div>
-<button class="gomypage">마이페이지</button>
-<button class="gologout">로그아웃</button>
-</div>
+	<!-- 상단 메뉴 부분 -->
+	<header class="topmenu">
+		<div class="grid_header">
+			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
+			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
+			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
+			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
+			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+		</div>
+	</header>
 <div id="boardcontent">
 <div>
 <div class="boardtitle">FreeBoard</div>

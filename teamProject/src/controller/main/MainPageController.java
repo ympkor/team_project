@@ -61,7 +61,7 @@ public class MainPageController {
 		List<Transfer> transferByMonthList = mainService.selectTransferByUserKeyAndDate(userKey, curDate);
 		List<IncomeIncomeCategoryAssets> iicaList = mainService.selectIICAByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 수입 상세 데이터
 		List<ExpenseExpenseCategoryAssets> eecaList = mainService.selectEECAByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 지출 상세 데이터
-//		List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList = mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 이체 상세 데이터
+		List<TransferAssetsOfMemeberFromAssetsOfMemeberTo> taomfaomtList = mainService.selectTAOMFAOMTByUserKeyAndDate(userKey, LocalDate.now().toString());//상세내역에 뿌려줄 오늘 기준 이체 상세 데이터
 		List<IncomeCategory> icList = mainService.selectAllIC();//insert, update에서 사용자에게 보여줄 수입카테고리
 		List<ExpenseCategory> ecList = mainService.selectAllEc();//insert, update에서 사용자에게 보여줄 지출 카테고리
 		List<AssetsAssetsOfMember> aaomList = mainService.selectAAOMByUserKey(userKey);//insert,update에서 사용자에게 보여줄 사용자가 등록한 자산항목들
@@ -71,14 +71,22 @@ public class MainPageController {
 		ObjectMapper mapper = new ObjectMapper();
 		String aaomListJ = mapper.writeValueAsString(aaomList);
 		String tbmListJ = mapper.writeValueAsString(transferByMonthList);
+		String sumAmountsJ = mapper.writeValueAsString(sumAmounts);
+		String taomfaomtListJ = mapper.writeValueAsString(taomfaomtList);
+		String iicaListJ = mapper.writeValueAsString(iicaList);
+		String eecaListJ = mapper.writeValueAsString(eecaList);
+		String miicListJ = mapper.writeValueAsString(miicList);
+		String meecListJ = mapper.writeValueAsString(meecList);
 		
+		m.addAttribute("taomfaomtListJ", taomfaomtListJ);
+		m.addAttribute("sumAmountsJ", sumAmountsJ);
 		m.addAttribute("tbmListJ", tbmListJ);
 		m.addAttribute("aaomListJ", aaomListJ);
 		m.addAttribute("cal", cal);
-		m.addAttribute("miicList", miicList);
-		m.addAttribute("meecList", meecList);
-		m.addAttribute("iicaList", iicaList);
-		m.addAttribute("eecaList", eecaList);
+		m.addAttribute("miicListJ", miicListJ);
+		m.addAttribute("meecListJ", meecListJ);
+		m.addAttribute("iicaListJ", iicaListJ);
+		m.addAttribute("eecaListJ", eecaListJ);
 		m.addAttribute("icList", icList);
 		m.addAttribute("ecList", ecList);
 		m.addAttribute("aaomList", aaomList);

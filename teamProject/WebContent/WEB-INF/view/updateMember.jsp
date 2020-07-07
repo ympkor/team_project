@@ -7,8 +7,20 @@
 <title>회원정보수정하기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/updateMemberJs.js?1"></script>
+<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 </head>
 <body>
+	<!-- 상단 메뉴 부분 -->
+	<header class="topmenu">
+		<div class="grid_header">
+			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
+			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
+			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
+			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
+			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+		</div>
+	</header>
 	<form>
 		<div><input type="hidden" name="userKey" value="${member.userKey}"></div>
 		<div>회원아이디</div>

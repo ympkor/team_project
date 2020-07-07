@@ -8,11 +8,11 @@
 	<meta charset="UTF-8">
 	<title>가계부</title>
 	<link rel="stylesheet" href="/css/main/main_modal.css">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css">
-	<link rel="stylesheet" href="/css/main/calendar.css">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
+	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
+	<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -261,16 +261,14 @@
 	<div class="grid_container">
 	
 		<!-- 상단 메뉴 부분 -->
-		<header class="grid_header">
-			<div class="topmenu">
-				<div class="basic"><a href="/main/getCal"><span class="icon"><i class="fas fa-calendar-alt" style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
-				<div class="statistics"><a href="/statistics/show"><span class="icon"><i class="fas fa-chart-pie"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
-				<div class="assest"><a href="/asset/view"><span class="icon"><i class="fas fa-wallet"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
-				<div class="board"><a href="/board/show"><span class="icon"><i class="fas fa-clipboard-list"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a></div>
-				<div class="personal_menu">
-					<a href="/member/mypage"><span class="icon"><i class="fas fa-user-edit"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a> 
-					<a href="/member/logout"><span class="icon"><i class="fas fa-user-alt-slash"  style="font-size:40px; color: #f5f5f5; margin-right: 100px;"></i></span></a>
-				</div>
+		<header class="topmenu">
+			<div class="grid_header">
+				<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
+				<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
+				<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
+				<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+				<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
+				<div class="gologout"><button class="gologout">LOGOUT</button></div>
 			</div>
 		</header>
 
@@ -453,15 +451,19 @@
 								<div class="monthly_data">
 									<div class="monthly_data_month"><span class="monthly_data_month">${cal.selecDate.toString().substring(5, 7)} 월</span></div>
 									<div class="monthly_data_income">
-										<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income icAmount">${sumAmounts.sumIncome} 원</span>
+										<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income icAmount"></span>
 									</div>
 									<div class="monthly_data_expense">
-										<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense ecAmount">${sumAmounts.sumExpense} 원</span>
+										<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense ecAmount"></span>
 									</div>
 									<div class="monthly_data_sum">
-										<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum">${sumAmounts.sumIncome-sumAmounts.sumExpense} 원</span>
+										<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum"></span>
 									</div>
 								</div>
+								<script>
+								const sumAmounts = JSON.parse('${sumAmountsJ}');
+								getThisMonthSumData(sumAmounts);
+								</script>
 							</th>
 						</tr>
 						<tr>
@@ -524,21 +526,11 @@
 				<!-- 페이지 로드시에 캘린더 만들어주고 그에 맞는 데이터 뿌려주는 작업해주는곳 -->
 				<script>
 					document.querySelector('#selecDate').value = new Date().toISOString().substring(0, 7);
-				</script>
-				<c:forEach var="miic" items="${miicList}">
-					<script type="text/javascript">
-						var entry = document.querySelector('.di${miic.incomeDate.toString().substring(8, 10)}');
-						entry.innerHTML += '<div class=income><span class=icName>${miic.icName}</span> <span class=icAmount>${miic.amount}원</span></div>';
-					</script>
-				</c:forEach>
-				<c:forEach var="meec" items="${meecList}">
-					<script type="text/javascript">
-						var entry = document.querySelector('.de${meec.expenseDate.toString().substring(8, 10)}');
-						entry.innerHTML += '<div class=expense><span class=ecName>${meec.ecName}</span> <span class=ecAmount>${meec.amount}원</span></div>';
-					</script>
-				</c:forEach>
-				<script>
+					const meecList = JSON.parse('${meecListJ}');
+					const miicList = JSON.parse('${miicListJ}');
 					const tbmListJ = JSON.parse('${tbmListJ}');
+					showThisMonthIncome(miicList);
+					showThisMonthExpense(meecList);
 					showThisMonthTransfer(tbmListJ);
 				</script>
 			</div>
@@ -564,39 +556,13 @@
 					//detailList안쪽에 div>span으로 날짜 표시해주기.
 					let detailList = document.querySelector('#detailList');
 					//detailDate공간에서 보여줄 자료는, 선택한 날짜. 해당 일의 수입/지출별 총 금액
-					document.querySelector('span.detailDate').innerText = new Date().toISOString().substring(0, 10)
-					let str;
-					let button;
-				</script>
-				<c:set var="sumI" value="0"/>
-				<c:set var="i" value="0"/>
-				<c:forEach var="iica" items="${iicaList}">
-					<c:set var="sumI" value="${sumI+iica.amount}"/>
-					<script type="text/javascript">
-						str = '<div class="di_income${i} detailItem"><div class=detailIcName><span class=detailIcName>${iica.icName}</span></div>';
-						str += '<div class=detailEntry><span class=detailIMemo>${iica.memo}</span><br><span class=detailAName>${iica.assetsName} ${iica.aomName}</span></div>';
-						str += '<div class=detailIAmount><span class=detailIAmount icAmount>${iica.amount}원</span></div><div class=delete_income_button><button type=button class="delete_income_button${i}">삭제</button></div></div>';
-						document.querySelector('.detail_context_income').innerHTML += str;
-					</script>
-					<c:set var="i" value="${i+1}"/>
-				</c:forEach>
-				<script type="text/javascript">
-					document.querySelector('span.detailSumI').innerText = '${sumI}';
-				</script>
-				<c:set var="sumE" value="0"/>
-				<c:set var="i" value="0"/>
-				<c:forEach var="eeca" items="${eecaList}">
-					<c:set var="sumE" value="${sumE+eeca.amount}"/>
-					<script type="text/javascript">
-						str = '<div class="di_expense${i} detailItem"><div class=detailEcName><span class=detailEcName>${eeca.ecName}</span></div>';
-						str += '<div class=detailEntry><span class=detailEMemo>${eeca.memo} ${eeca.aomName}</span><br><span class=detailAName>${eeca.assetsName}</span></div>';
-						str += '<div class=detailEAmount><span class=detailEAmount ecAmount>${eeca.amount}원</span></div><div class=delete_expense_button><button type=button class="delete_expense_button${i}">삭제</button></div></div>';
-						document.querySelector('.detail_context_expense').innerHTML += str;
-					</script>
-					<c:set var="i" value="${i+1}"/>
-				</c:forEach>
-				<script type="text/javascript">
-					document.querySelector('span.detailSumE').innerText = '${sumE}';
+					document.querySelector('span.detailDate').innerText = new Date().toISOString().substring(0, 10);
+					const taomfaomtList = JSON.parse('${taomfaomtListJ}');
+					const eecaList = JSON.parse('${eecaListJ}');
+					const iicaList = JSON.parse('${iicaListJ}');
+					makeDetailIncomeDIV(iicaList);
+					makeDetailExpenseDIV(eecaList);
+					makeDetailTransferDIV(taomfaomtList);
 				</script>
 			</div>
 		</section>
