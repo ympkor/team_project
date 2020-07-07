@@ -13,6 +13,7 @@ public class AssetOfMember {
 	private int amount;
 	private int amountBefore;
 	private int assetsId;
+	private int sync;
 	private String memo;
 	private String assetsCategory;
 	private String assetsName;
@@ -23,7 +24,7 @@ public class AssetOfMember {
 	}
 
 	public AssetOfMember(int userKey, String userId, String password, String name, String email, int memAssetId,
-			String type, String typeBefore, int amount, int amountBefore, int assetsId, String memo,
+			String type, String typeBefore, int amount, int amountBefore, int assetsId, int sync, String memo,
 			String assetsCategory, String assetsName, String newsKeywords, int newsCounts) {
 		super();
 		this.userKey = userKey;
@@ -37,6 +38,7 @@ public class AssetOfMember {
 		this.amount = amount;
 		this.amountBefore = amountBefore;
 		this.assetsId = assetsId;
+		this.sync = sync;
 		this.memo = memo;
 		this.assetsCategory = assetsCategory;
 		this.assetsName = assetsName;
@@ -132,6 +134,14 @@ public class AssetOfMember {
 		this.assetsId = assetsId;
 	}
 
+	public int getSync() {
+		return sync;
+	}
+
+	public void setSync(int sync) {
+		this.sync = sync;
+	}
+
 	public String getMemo() {
 		return memo;
 	}
@@ -176,9 +186,8 @@ public class AssetOfMember {
 	public String toString() {
 		return "AssetOfMember [userKey=" + userKey + ", userId=" + userId + ", password=" + password + ", name=" + name
 				+ ", email=" + email + ", memAssetId=" + memAssetId + ", type=" + type + ", typeBefore=" + typeBefore
-				+ ", amount=" + amount + ", amountBefore=" + amountBefore + ", assetsId=" + assetsId + ", memo=" + memo
-				+ ", assetsCategory=" + assetsCategory + ", assetsName=" + assetsName + ", newsKeywords=" + newsKeywords
-				+ ", newsCounts=" + newsCounts + "]";
+				+ ", amount=" + amount + ", amountBefore=" + amountBefore + ", assetsId=" + assetsId + ", sync=" + sync
+				+ ", memo=" + memo + ", assetsCategory=" + assetsCategory + ", assetsName=" + assetsName
+				+ ", newsKeywords=" + newsKeywords + ", newsCounts=" + newsCounts + "]";
 	}
-
 }
