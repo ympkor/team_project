@@ -75,12 +75,13 @@ public class MemberService {
 	}
 	
 	//이메일로 아이디 검색
-	public String searchId(String email) {
-		//System.out.println("입력받은 " + email);
-		String dbId = joinMapper.idSelectByEmail(email);//DB에서 이메일 값을 가져옴
-		//System.out.println(dbMember.size());
+	public String searchId(String email, String name) {
+		System.out.println("입력받은 " + email);
+		System.out.println("입력받은 " + name);
+		String dbId = joinMapper.idSelectByEmail(email, name);//DB에서 이메일 값을 가져옴
+		System.out.println("test");
 		if(!(dbId==null)) {
-			return email+"님의 아이디입니다.<br>"+dbId;
+			return dbId;
 		} else {
 			return "없는 이메일";
 		}

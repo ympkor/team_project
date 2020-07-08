@@ -13,7 +13,7 @@
   	</select>
   	
   	<select id="idSelectByEmail" resultType="String">
-  		select user_id from member where email=#{email}
+  		select user_id from member where email=#{email} AND name=#{name}
   	</select>
   	
   	<select id="selectByEmail" resultType="Member">

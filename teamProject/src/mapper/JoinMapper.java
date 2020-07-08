@@ -2,6 +2,8 @@ package mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import dto.Member;
 
 public interface JoinMapper {
@@ -12,7 +14,7 @@ public interface JoinMapper {
 	public Member selectById(String userId);
 	
 	//이메일로 아이디 찾기
-	public String idSelectByEmail(String email);
+	public String idSelectByEmail(@Param("email")String email, @Param("name")String name);
 	
 	//이메일중복확인
 	public Member selectByEmail(String email);
