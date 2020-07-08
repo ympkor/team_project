@@ -1,7 +1,6 @@
 @charset "UTF-8";
 *{
 	background-color:#f5f5f5;
-	
 	margin: 0;
 
     padding: 0;
@@ -17,17 +16,17 @@
     font-family: Montserrat, "sans-serif"; 
 }
 
-#searchId_container{
-  display: grid;
-  height:100%;
-  width:100%;
-  grid-template-rows:
-  [first]100px
-  [second]161%;
-  grid-template-areas:
-  "top"
-  "main";
-  gap:0px;
+#join_container{
+	display: grid;
+ 	height:100%;
+  	width:100%;
+  	grid-template-rows:
+  	[first]100px
+  	[second]161%;
+  	grid-template-areas:
+  	"top"
+  	"main";
+  	gap:0px;
 }
 
 #header{
@@ -46,7 +45,7 @@
     grid-row: 1;
 }
 
-#searchId{
+#join{
 	grid-area: main;
 	display: flex;
     justify-content: center;
@@ -54,31 +53,33 @@
     flex-direction: column;
 }
 
-#id_title{
-	font-weight: 800;
-    font-size: 20px;
+#join_title{
+	font-weight: 900;
+    font-size: 30px;
     line-height: 20px;
     text-align: center;
+    margin:10px;
 }
 
-.searchId_form{
+.join_form{
 	padding-top: 26px;
 	width: 100%;
-    max-width: 350px;
-    min-width: 350px;
+    max-width: 768px;
+    min-width: 500px;
+  	/* border:1px solid black; */  
 }
 
-#email, #name{
-	display: block;
-    padding: 11px 0 7px;
-    font-size: 13px;
-    line-height: 18px;
-    text-align: left;
-    font-weight: 700;
+#id, #pass, #passck, #name, #email{
+	display:block;
+	padding:11px 0 7px;
+	font-size:13px;
+	line-height:18px;
+	text-align:left;
+	font-weight:700;
 }
 
-#email_input, #name_input{
-    width: 100%;
+#id_input, #pass_input, #passck_input, #name_input, #email_input{
+	width: 78%;
     border: 1px solid #ccc;
     padding: 14px 0 12px;
     font-size: 14px;
@@ -89,8 +90,21 @@
     border-radius: 3px;
 }
 
+#id_button, #email_button{
+	width: 20%;
+    border:1px solid #fecdcd;
+    padding: 14px 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffcccc;
+    background-color: #f8f8f8;
+    font-weight: 700;
+    /* text-indent: 12px; */
+    border-radius: 3px;
+}
+
 .button{
-	margin-top: 30px;
+	margin: 6.08% 0 0;
 }
 
 #search{
@@ -110,45 +124,5 @@
     text-align: center;
     width:100%;
     border-radius: 3px;
-}
-
-#message{
-	padding-top: 20px;
-    width: 100%;
-    max-width: 350px;
-    min-width: 350px;
-}
-
-hr{
-	display: block;
-    width: 100%;
-    height: 0;
-    margin: 3px 0 15px;
-    padding: 0;
-    border: 0;
-    border-top: 1px solid #ddd;	
-}
-a{
-	text-decoration:none;
-	background-color: #ffcccc;
-    text-decoration: none;
-    margin: 18px 0 0;
-    display: block;
-    border: 1px solid #fecdcd;
-    color: white;
-    padding: 16px 17px;
-    font-size: 17px;
-    line-height: 20px;
-    display: block;
-    padding-left: 0;
-    padding-right: 0;
-    margin: 18px 0 0;
-    text-align: center;
-    width:100%;
-    border-radius: 3px;
-}
-
-#data{
-	color:red;
-    font-weight: 600;
+    font-weight: 700;
 }
