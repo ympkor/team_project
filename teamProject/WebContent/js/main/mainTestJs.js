@@ -8,17 +8,15 @@ function showThisMonthIncome(miicList){
 			else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
 			let entry = document.querySelector(entryClassName);
 			if(i == 0){entry.innerHTML = null}
-			entry.innerHTML += '<div class=income><span class=icName>' + icName + '</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '원</span></div>';
+			entry.innerHTML += '<div class=income><span class=icName>' + icName + '</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
 			if(entry.childElementCount > 2){
 				let ellipsis = document.createElement('span');
 				ellipsis.innerText = '...';
-				console.dir(document.querySelector(entryClassName).childNodes[1]);
 				if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
 					document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
 				}
 				entry.classList.add('limit');
 			}
-			// <span class=ellipsis></span>
 	}
 }
 //해당월에 맞는 expense date들을 전달받아 만들어진 달력에 뿌려주는 기능
@@ -31,7 +29,7 @@ function showThisMonthExpense(meecList) {
 		else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
 		let entry = document.querySelector(entryClassName);
 		if(i == 0){entry.innerHTML = null}
-		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '원</span></div>';
+		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
 		if(entry.childElementCount > 2){
 			let ellipsis = document.createElement('span');
 			ellipsis.innerText = '...';
@@ -49,7 +47,7 @@ function showThisMonthTransfer(tbmList) {
 		for(let i = 0; i < tbmList.length; i++){
 			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
 			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
-			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'원</span></div>';
+			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
 		}
 		if(document.querySelector(classStr).childElementCount > 2){
 			let ellipsis = document.createElement('span');
@@ -64,10 +62,10 @@ function showThisMonthTransfer(tbmList) {
 //월별 통합 데이터 뿌려주는 기능
 function getThisMonthSumData(sumAmounts) {
 	document.querySelector('span.monthly_data_month').innerText = sumAmounts.selecDate.substring(5, 7)+'월';
-	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+'원';
-		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0원';}
-	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+'원';
-		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0원';}
+	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+' 원';
+		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0 원';}
+	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+' 원';
+		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0 원';}
 	if(sumAmounts.sumIncome - sumAmounts.sumExpense > 0) {
 		document.querySelector('span.monthly_data_amount_sum').classList.add('icAmount');
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
@@ -78,38 +76,40 @@ function getThisMonthSumData(sumAmounts) {
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('icAmount');
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
 	}
-	document.querySelector('span.monthly_data_amount_sum').innerText = Number(sumAmounts.sumIncome - sumAmounts.sumExpense).toLocaleString('en')+'원';
+	document.querySelector('span.monthly_data_amount_sum').innerText = Number(sumAmounts.sumIncome - sumAmounts.sumExpense).toLocaleString('en')+' 원';
 }
 //수입 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putIncomeDataToUpdateForm(iicaList) {
-	for(let i = 0; i < iicaList.length; i++){
-		let classStr = 'div.di_income'+i;;
-		document.querySelector(classStr).addEventListener('click', function() {
-			event.stopPropagation();
-			document.querySelector('#modal').classList.remove('hidden');
-			document.querySelector('#update_income_category_income').checked = true;
-			document.querySelector('#update_income_form').classList.remove('hidden');
-			document.querySelector('#update_expense_form').classList.add('hidden');
-			document.querySelector('#update_transfer_form').classList.add('hidden');
-			let thisDate;
-			if(iicaList[i].incomeDate.monthValue < 10) {
-				if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-				}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-			}else{if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
-			}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
-			}
-			document.querySelector('#update_income_id').value = iicaList[i].incomeId;
-			document.querySelector('#update_income_date').value = thisDate;
-			document.querySelector('#update_assets_income_memAssetIdFrom_origin').value = iicaList[i].memAssetId;
-			document.querySelector('#update_assets_income_memAssetIdFrom').value = iicaList[i].memAssetId;
-			showUpdateTransferFromAomIncome(iicaList[i]);
-			document.querySelector('#update_assets_income_assetsId').value = iicaList[i].assetsId;
-			showUpdateTransferToAomIncome(iicaList[i]);
-			makeIncomeCategoryOption(iicaList[i]);
-			document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
-			document.querySelector('#update_income_amount').value = iicaList[i].amount;
-			document.querySelector('#update_income_memo').value = iicaList[i].memo;
-		});
+	if(iicaList != null){
+		for(let i = 0; i < iicaList.length; i++){
+			let classStr = 'div.di_income'+i;;
+			document.querySelector(classStr).addEventListener('click', function() {
+				event.stopPropagation();
+				document.querySelector('#modal').classList.remove('hidden');
+				document.querySelector('#update_income_category_income').checked = true;
+				document.querySelector('#update_income_form').classList.remove('hidden');
+				document.querySelector('#update_expense_form').classList.add('hidden');
+				document.querySelector('#update_transfer_form').classList.add('hidden');
+				let thisDate;
+				if(iicaList[i].incomeDate.monthValue < 10) {
+					if(iicaList[i].incomeDate.dayOfMonth < 10) {thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
+					}else{thisDate = iicaList[i].incomeDate.year+'\-0'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
+				}else{if(iicaList[i].incomeDate.dayOfMonth < 10){thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-0'+iicaList[i].incomeDate.dayOfMonth;
+				}else {thisDate = iicaList[i].incomeDate.year+'\-'+iicaList[i].incomeDate.monthValue+'\-'+iicaList[i].incomeDate.dayOfMonth;}
+				}
+				document.querySelector('#update_income_id').value = iicaList[i].incomeId;
+				document.querySelector('#update_income_date').value = thisDate;
+				document.querySelector('#update_assets_income_memAssetIdFrom_origin').value = iicaList[i].memAssetId;
+				document.querySelector('#update_assets_income_memAssetIdFrom').value = iicaList[i].memAssetId;
+				showUpdateTransferFromAomIncome(iicaList[i]);
+				document.querySelector('#update_assets_income_assetsId').value = iicaList[i].assetsId;
+				showUpdateTransferToAomIncome(iicaList[i]);
+				makeIncomeCategoryOption(iicaList[i]);
+				document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
+				document.querySelector('#update_income_amount').value = iicaList[i].amount;
+				document.querySelector('#update_income_memo').value = iicaList[i].memo;
+			});
+		}
 	}
 }
 //수입업데이트 폼에 이체 카테고리를 현재 값으로 선택시켜준다.
@@ -130,34 +130,36 @@ function makeIncomeCategoryOption(iica) {
 }
 //지출 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putExpenseDataToUpdateForm(eecaList) {
-	for(let i = 0; i < eecaList.length; i++){
-		let classStr = 'div.di_expense'+i;;
-		document.querySelector(classStr).addEventListener('click', function() {
-			event.stopPropagation();
-			document.querySelector('#modal').classList.remove('hidden');
-			document.querySelector('#update_expense_category_expense').checked = true;
-			document.querySelector('#update_income_form').classList.add('hidden');
-			document.querySelector('#update_expense_form').classList.remove('hidden');
-			document.querySelector('#update_transfer_form').classList.add('hidden');
-			let thisDate;
-			if(eecaList[i].expenseDate.monthValue < 10) {
-				if(eecaList[i].expenseDate.dayOfMonth < 10) {thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-				}else{thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-			}else{if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
-			}else {thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
-			}
-			document.querySelector('#update_expense_id').value = eecaList[i].expenseId;
-			document.querySelector('#update_expense_date').value = thisDate;
-			document.querySelector('#update_assets_expense_memAssetIdFrom_origin').value = eecaList[i].memAssetId;
-			document.querySelector('#update_assets_expense_memAssetIdFrom').value = eecaList[i].memAssetId;
-			showUpdateTransferFromAomExpense(eecaList[i]);
-			document.querySelector('#update_assets_expense_assetsId').value = eecaList[i].assetsId;
-			showUpdateTransferToAomExpense(eecaList[i]);
-			makeExpenseCategoryOption(eecaList[i]);
-			document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
-			document.querySelector('#update_expense_amount').value = eecaList[i].amount;
-			document.querySelector('#update_expense_memo').value = eecaList[i].memo;
-		});
+	if(eecaList != null){
+		for(let i = 0; i < eecaList.length; i++){
+			let classStr = 'div.di_expense'+i;;
+			document.querySelector(classStr).addEventListener('click', function() {
+				event.stopPropagation();
+				document.querySelector('#modal').classList.remove('hidden');
+				document.querySelector('#update_expense_category_expense').checked = true;
+				document.querySelector('#update_income_form').classList.add('hidden');
+				document.querySelector('#update_expense_form').classList.remove('hidden');
+				document.querySelector('#update_transfer_form').classList.add('hidden');
+				let thisDate;
+				if(eecaList[i].expenseDate.monthValue < 10) {
+					if(eecaList[i].expenseDate.dayOfMonth < 10) {thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
+					}else{thisDate = eecaList[i].expenseDate.year+'\-0'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
+				}else{if(eecaList[i].expenseDate.dayOfMonth < 10){thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-0'+eecaList[i].expenseDate.dayOfMonth;
+				}else {thisDate = eecaList[i].expenseDate.year+'\-'+eecaList[i].expenseDate.monthValue+'\-'+eecaList[i].expenseDate.dayOfMonth;}
+				}
+				document.querySelector('#update_expense_id').value = eecaList[i].expenseId;
+				document.querySelector('#update_expense_date').value = thisDate;
+				document.querySelector('#update_assets_expense_memAssetIdFrom_origin').value = eecaList[i].memAssetId;
+				document.querySelector('#update_assets_expense_memAssetIdFrom').value = eecaList[i].memAssetId;
+				showUpdateTransferFromAomExpense(eecaList[i]);
+				document.querySelector('#update_assets_expense_assetsId').value = eecaList[i].assetsId;
+				showUpdateTransferToAomExpense(eecaList[i]);
+				makeExpenseCategoryOption(eecaList[i]);
+				document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
+				document.querySelector('#update_expense_amount').value = eecaList[i].amount;
+				document.querySelector('#update_expense_memo').value = eecaList[i].memo;
+			});
+		}
 	}
 }
 //지출 업데이트 폼에 지출 카테고리를 현재 값으로 선택시켜준다.
@@ -178,34 +180,36 @@ function makeExpenseCategoryOption(eeca) {
 }
 //이체 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putTransferDataToUpdateForm(taomfaomtList) {
-	for(let i = 0; i < taomfaomtList.length; i++){
-		let classStr = 'div.di_transfer'+i;;
-		document.querySelector(classStr).addEventListener('click', function() {
-			event.stopPropagation();
-			document.querySelector('#modal').classList.remove('hidden');
-			document.querySelector('#update_transfer_category_transfer').checked = true;
-			document.querySelector('#update_income_form').classList.add('hidden');
-			document.querySelector('#update_expense_form').classList.add('hidden');
-			document.querySelector('#update_transfer_form').classList.remove('hidden');
-			let thisDate;
-			if(taomfaomtList[i].transferDate.monthValue < 10) {
-				if(taomfaomtList[i].transferDate.dayOfMonth < 10) {thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
-				}else{thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
-			}else{if(taomfaomtList[i].transferDate.dayOfMonth < 10){thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
-			}else {thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
-			}
-			document.querySelector('#update_transfer_id').value = taomfaomtList[i].transferId;
-			document.querySelector('#update_transfer_date').value = thisDate;
-			document.querySelector('#update_assets_transfer_memAssetIdFrom_origin').value = taomfaomtList[i].memAssetIdFrom;
-			document.querySelector('#update_assets_transfer_memAssetIdFrom').value = taomfaomtList[i].memAssetIdFrom;
-			showUpdateTransferFromAomTransfer(taomfaomtList[i]);
-			document.querySelector('#update_assets_transfer_assetsId').value = taomfaomtList[i].assetsId;
-			document.querySelector('#update_assets_transfer_memAssetIdTo_origin').value = taomfaomtList[i].memAssetIdTo;
-			showUpdateTransferToAomTransfer(taomfaomtList[i]);
-			document.querySelector('#update_transfer_amount_origin').value = taomfaomtList[i].amount;
-			document.querySelector('#update_transfer_amount').value = taomfaomtList[i].amount;
-			document.querySelector('#update_transfer_memo').value = taomfaomtList[i].memo;
-		});
+	if(taomfaomtList != null){
+		for(let i = 0; i < taomfaomtList.length; i++){
+			let classStr = 'div.di_transfer'+i;;
+			document.querySelector(classStr).addEventListener('click', function() {
+				event.stopPropagation();
+				document.querySelector('#modal').classList.remove('hidden');
+				document.querySelector('#update_transfer_category_transfer').checked = true;
+				document.querySelector('#update_income_form').classList.add('hidden');
+				document.querySelector('#update_expense_form').classList.add('hidden');
+				document.querySelector('#update_transfer_form').classList.remove('hidden');
+				let thisDate;
+				if(taomfaomtList[i].transferDate.monthValue < 10) {
+					if(taomfaomtList[i].transferDate.dayOfMonth < 10) {thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
+					}else{thisDate = taomfaomtList[i].transferDate.year+'\-0'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
+				}else{if(taomfaomtList[i].transferDate.dayOfMonth < 10){thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-0'+taomfaomtList[i].transferDate.dayOfMonth;
+				}else {thisDate = taomfaomtList[i].transferDate.year+'\-'+taomfaomtList[i].transferDate.monthValue+'\-'+taomfaomtList[i].transferDate.dayOfMonth;}
+				}
+				document.querySelector('#update_transfer_id').value = taomfaomtList[i].transferId;
+				document.querySelector('#update_transfer_date').value = thisDate;
+				document.querySelector('#update_assets_transfer_memAssetIdFrom_origin').value = taomfaomtList[i].memAssetIdFrom;
+				document.querySelector('#update_assets_transfer_memAssetIdFrom').value = taomfaomtList[i].memAssetIdFrom;
+				showUpdateTransferFromAomTransfer(taomfaomtList[i]);
+				document.querySelector('#update_assets_transfer_assetsId').value = taomfaomtList[i].assetsId;
+				document.querySelector('#update_assets_transfer_memAssetIdTo_origin').value = taomfaomtList[i].memAssetIdTo;
+				showUpdateTransferToAomTransfer(taomfaomtList[i]);
+				document.querySelector('#update_transfer_amount_origin').value = taomfaomtList[i].amount;
+				document.querySelector('#update_transfer_amount').value = taomfaomtList[i].amount;
+				document.querySelector('#update_transfer_memo').value = taomfaomtList[i].memo;
+			});
+		}
 	}
 }
 //수입업데이트 선택창에서 자산 선택지가 변경되면 assets_id를 자동으로 변경해주는 기능
@@ -395,8 +399,8 @@ function showInsertIncomeAomBF(assetsId) {
         for(let i = 0; i < aomList.length; i++) {
           updateAOMStr += '<option value='+aomList[i].memAssetId+'>'+aomList[i].memo+"</option>";
         }
-        updateAOMIncome.innerHTML = updateAOMStr;
       }
+			updateAOMIncome.innerHTML = updateAOMStr;
     }
   })
 }
@@ -428,11 +432,11 @@ function makeDetailIncomeDIV(iicaList) {
 			sumI += iicaList[i].amount;
 			str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
 			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
-			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + '원</span></div></div>';
+			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_income').innerHTML = str;
 	}
-	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+'원';
+	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+' 원';
 	putIncomeDataToUpdateForm(iicaList);
 }
 //상세란에 상세 지출을 뿌려주는 기능
@@ -444,11 +448,11 @@ function makeDetailExpenseDIV(eecaList) {
 			sumE += eecaList[i].amount;
 			str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
 			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
-			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + '원</span></div></div>';
+			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_expense').innerHTML = str;
 	}
-	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+'원';
+	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+' 원';
 	putExpenseDataToUpdateForm(eecaList);
 }
 //이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
@@ -458,7 +462,7 @@ function makeDetailTransferDIV(taomfaomtList) {
 		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
 		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
 		str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';
-		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+'원</span></div<</div>';
+		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
 		document.querySelector('div.detail_context_transfer').innerHTML += str;
 	}
 	putTransferDataToUpdateForm(taomfaomtList);

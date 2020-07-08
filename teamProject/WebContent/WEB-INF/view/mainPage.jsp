@@ -7,10 +7,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>가계부</title>
-	<link rel="stylesheet" href="/css/main/main_modal.css">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
+	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
 	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
-	<link rel="stylesheet" href="/css/topMenu.css?asd=2">
+	<link rel="stylesheet" href="/css/topMenu.css?asd=1">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -30,15 +30,15 @@
 			
 			<!-- 수입 수정 Form -->
 			<form id="update_income_form" class="hidden">
-				<div class="update_category">
-					<label for="update_income_category_income">수입</label>
-					<input type="radio" id="update_income_category_income" name="category" value="1" onchange="updateIncomeFormSwitchToIncome()">
-					<label for="update_income_category_expense">지출</label>
-					<input type="radio" id="update_income_category_expense" name="category" value="2" onchange="updateIncomeFormSwitchToExpense()">
-					<label for="update_income_category_transfer">이체</label>
-					<input type="radio" id="update_income_category_transfer" name="category" value="3" onchange="updateIncomeFormSwitchToTransfer()">
-				</div>
-				<div id="update_form_container">
+				<div class="update_form_container">
+					<div class="update_category">
+						<input type="radio" id="update_income_category_income" name="category" value="1" onchange="updateIncomeFormSwitchToIncome()">
+						<label for="update_income_category_income">수입</label>
+						<input type="radio" id="update_income_category_expense" name="category" value="2" onchange="updateIncomeFormSwitchToExpense()">
+						<label for="update_income_category_expense">지출</label>
+						<input type="radio" id="update_income_category_transfer" name="category" value="3" onchange="updateIncomeFormSwitchToTransfer()">
+						<label for="update_income_category_transfer">이체</label>
+					</div>
 					<input type="number" id="update_income_id" name="incomeId" class="hidden">
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
@@ -106,15 +106,15 @@
 
 			<!-- 지출 수정 Form -->
 			<form id="update_expense_form" class="hidden">
-				<div class="update_category">
-					<label for="update_expense_category_income">수입</label>
-					<input type="radio" id="update_expense_category_income" name="category" value="1" onchange="updateExpenseFormSwitchToIncome()">
-					<label for="update_expense_category_expense">지출</label>
-					<input type="radio" id="update_expense_category_expense" name="category" value="2" onchange="updateExpenseFormSwitchToExpense()">
-					<label for="update_expense_category_transfer">이체</label>
-					<input type="radio" id="update_expense_category_transfer" name="category" value="3" onchange="updateExpenseFormSwitchToTransfer()">
-				</div>
-				<div id="update_form_container">
+				<div class="update_form_container">
+					<div class="update_category">
+						<input type="radio" id="update_expense_category_income" name="category" value="1" onchange="updateExpenseFormSwitchToIncome()">
+						<label for="update_expense_category_income">수입</label>
+						<input type="radio" id="update_expense_category_expense" name="category" value="2" onchange="updateExpenseFormSwitchToExpense()">
+						<label for="update_expense_category_expense">지출</label>
+						<input type="radio" id="update_expense_category_transfer" name="category" value="3" onchange="updateExpenseFormSwitchToTransfer()">
+						<label for="update_expense_category_transfer">이체</label>
+					</div>
 					<input type="number" id="update_expense_id" name="expenseId" class="hidden">
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
@@ -182,15 +182,15 @@
 
 			<!-- 이체 수정 Form -->
 			<form id="update_transfer_form" class="hidden">
-				<div class="update_category">
-					<label for="update_transfer_category_income">수입</label>
-					<input type="radio" id="update_transfer_category_income" name="category" value="1" onchange="updateTransferFormSwitchToIncome()">
-					<label for="update_transfer_category_expense">지출</label>
-					<input type="radio" id="update_transfer_category_expense" name="category" value="2" onchange="updateTransferFormSwitchToExpense()">
-					<label for="update_transfer_category_transfer">이체</label>
-					<input type="radio" id="update_transfer_category_transfer" name="category" value="3" onchange="updateTransferFormSwitchToTransfer()">
-				</div>
-				<div id="update_form_container">
+				<div class="update_form_container">
+					<div class="update_category">
+						<input type="radio" id="update_transfer_category_income" name="category" value="1" onchange="updateTransferFormSwitchToIncome()">
+						<label for="update_transfer_category_income">수입</label>
+						<input type="radio" id="update_transfer_category_expense" name="category" value="2" onchange="updateTransferFormSwitchToExpense()">
+						<label for="update_transfer_category_expense">지출</label>
+						<input type="radio" id="update_transfer_category_transfer" name="category" value="3" onchange="updateTransferFormSwitchToTransfer()">
+						<label for="update_transfer_category_transfer">이체</label>
+					</div>
 					<input type="number" id="update_transfer_id" name="transferId" class="hidden">
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
@@ -227,7 +227,7 @@
 						</select>
 						<label for="update_transfer_income_category" id="update_transfer_income_category_label" class="hidden">분류</label>
 						<select id="update_transfer_income_category" name="icId" required class="hidden">
-							<option value="0" selected></option>선택하세요</option>
+							<option value="0" selected>선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_transfer_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -271,28 +271,27 @@
 				<div class="gologout"><button class="gologout">LOGOUT</button></div>
 			</div>
 		</header>
-
+		
 		<!-- 측면 메뉴 부분 -->
 		<aside class="grid_aside">
 			<div class="mainPage_sideMenuContainer">
 				<!-- 사용자가 정보를 입력하면 Insert해주는 Form을 만들자. ajax방식 -->
 				<!-- 사용자가 선택할 수 있는 수입/지출/이체 카테고리 -->
 				<div class="insert_category_container">
-					<div class="insert_category">
-						<label for="insert_income">수입</label>
+					<div class="insert_type">
 						<input type="radio" id="insert_income" name="insertCategory" value="income" onchange="showIncomeForm()">
+						<label for="insert_income">수입</label>
 						<!-- 지출은 미리 선택되게 해놓기 -->
+						<input type="radio" id="insert_expense" name="insertCategory" value="expense" onchange="showExpenseForm()" checked>
 						<label for="insert_expense">지출</label>
-						<input type="radio" id="insert_expense" name="insertCategory" value="expense" onchange="showExpenseForm()"
-							checked>
-						<label for="insert_transfer">이체</label>
 						<input type="radio" id="insert_transfer" name="insertCategory" value="transfer" onchange="showTransferForm()">
+						<label for="insert_transfer">이체</label>
 					</div>
 				</div>
 				<!-- insert, expense용 form을 각각 만들어놓고, 사용자가 수입/지출 탭을 선택함에 따라 해당되는 input을 보여주자 -->
 				<!-- 여긴 수입 Form -->
 				<form id="insert_income_form" class="hidden">
-					<div id="insert_form_container">
+					<div class="insert_form_container">
 						<!-- 날짜 선택 창 -->
 						<div class="insert_date">
 							<label for="insert_income_date">날짜</label>
@@ -336,14 +335,14 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_income_button">등록</button>
-							<button type="reset">입력초기화</button>
+							<!-- <button type="reset">입력초기화</button> -->
 						</div>
 					</div>
 				</form>
 				
 				<!-- 여긴 지출 Form -->
 				<form id="insert_expense_form">
-					<div id="insert_form_container">
+					<div class="insert_form_container">
 						<!-- 날짜 선택 창 -->
 						<div class="insert_date">
 							<label for="insert_expense_date">날짜</label>
@@ -386,14 +385,14 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_expense_button">등록</button>
-							<button type="reset">입력초기화</button>
+							<!-- <button type="reset">입력초기화</button> -->
 						</div>
 					</div>
 				</form>
 
 				<!-- 여긴 이체 Form -->
 				<form id="insert_transfer_form" class="hidden">
-					<div id="insert_form_container">
+					<div class="insert_form_container">
 						<!-- 날짜 선택 창 -->
 						<div class="insert_date">
 							<label for="insert_transfer_date">날짜</label>
@@ -411,7 +410,7 @@
 							</script>
 						</div>
 						<!-- 이체할 자산 선택 창 -->
-						<div class="insert_assets">
+						<div class="insert_category">
 							<label for="insert_assets_transfer_memAssetIdTo">입금</label>
 							<select id="insert_assets_transfer_memAssetIdTo" name="memAssetIdTo" required="required">
 								<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>선택하세요</option>
@@ -433,13 +432,44 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_transfer_button">등록</button>
-							<button type="reset">입력초기화</button>
+							<!-- <button type="reset">입력초기화</button> -->
 						</div>
 					</div>
 				</form>
 			</div>
 		</aside>
 
+		<!-- 상세 데이터 출력 부분 -->
+		<section class="grid_section_detail">
+			<div class="mainPage_detailContainer">
+				<div id="detailList">
+					<div class="detailDateDiv">
+						<div class="detailDate"><span class="detailDate"></span></div>
+						<div class="detailSumI"><span class="detailSumI icAmount">0원</span></div>
+						<div class="detailSumE"><span class="detailSumE ecAmount">0원</span></div>
+					</div>
+					<div class="detailContext">
+						<div class="detail_context_income"></div>
+						<div class="detail_context_expense"></div>
+						<div class="detail_context_transfer"></div>
+					</div>
+				</div>
+				<!-- 메인페이지가 로드되면 상세페이지에 해당하는 데이터를 뿌려주는 작업을 해주는곳 -->
+				<script type="text/javascript">
+					//detailList안쪽에 div>span으로 날짜 표시해주기.
+					let detailList = document.querySelector('#detailList');
+					//detailDate공간에서 보여줄 자료는, 선택한 날짜. 해당 일의 수입/지출별 총 금액
+					document.querySelector('span.detailDate').innerText = new Date().toISOString().substring(0, 10);
+					const taomfaomtList = JSON.parse('${taomfaomtListJ}');
+					const eecaList = JSON.parse('${eecaListJ}');
+					const iicaList = JSON.parse('${iicaListJ}');
+					makeDetailIncomeDIV(iicaList);
+					makeDetailExpenseDIV(eecaList);
+					makeDetailTransferDIV(taomfaomtList);
+				</script>
+			</div>
+		</section>
+		
 		<!-- 캘린더 부분(메인) -->
 		<main class="grid_main">
 			<div class="mainPage_sectionContainer">
@@ -451,13 +481,13 @@
 								<div class="monthly_data">
 									<div class="monthly_data_month"><span class="monthly_data_month">${cal.selecDate.toString().substring(5, 7)} 월</span></div>
 									<div class="monthly_data_income">
-										<span class="monthly_data_name">수입</span><span class="monthly_data_amount_income icAmount"></span>
+										<span class="monthly_data_name">수입&nbsp;</span><span class="monthly_data_amount_income icAmount"></span>
 									</div>
 									<div class="monthly_data_expense">
-										<span class="monthly_data_name">지출</span><span class="monthly_data_amount_expense ecAmount"></span>
+										<span class="monthly_data_name">지출&nbsp;</span><span class="monthly_data_amount_expense ecAmount"></span>
 									</div>
 									<div class="monthly_data_sum">
-										<span class="monthly_data_name">합계</span><span class="monthly_data_amount_sum"></span>
+										<span class="monthly_data_name">합계&nbsp;</span><span class="monthly_data_amount_sum"></span>
 									</div>
 								</div>
 								<script>
@@ -535,37 +565,6 @@
 				</script>
 			</div>
 		</main>
-
-		<!-- 상세 데이터 출력 부분 -->
-		<section class="grid_section_detail">
-			<div class="mainPage_detailContainer">
-				<div id="detailList">
-					<div class="detailDateDiv">
-						<div class="detailDate"><span class="detailDate"></span></div>
-						<div class="detailSumI"><span class="detailSumI icAmount">0원</span></div>
-						<div class="detailSumE"><span class="detailSumE ecAmount">0원</span></div>
-					</div>
-					<div class="detailContext">
-						<div class="detail_context_income"></div>
-						<div class="detail_context_expense"></div>
-						<div class="detail_context_transfer"></div>
-					</div>
-				</div>
-				<!-- 메인페이지가 로드되면 상세페이지에 해당하는 데이터를 뿌려주는 작업을 해주는곳 -->
-				<script type="text/javascript">
-					//detailList안쪽에 div>span으로 날짜 표시해주기.
-					let detailList = document.querySelector('#detailList');
-					//detailDate공간에서 보여줄 자료는, 선택한 날짜. 해당 일의 수입/지출별 총 금액
-					document.querySelector('span.detailDate').innerText = new Date().toISOString().substring(0, 10);
-					const taomfaomtList = JSON.parse('${taomfaomtListJ}');
-					const eecaList = JSON.parse('${eecaListJ}');
-					const iicaList = JSON.parse('${iicaListJ}');
-					makeDetailIncomeDIV(iicaList);
-					makeDetailExpenseDIV(eecaList);
-					makeDetailTransferDIV(taomfaomtList);
-				</script>
-			</div>
-		</section>
 		
 		<!-- 최하단 안내문구? -->
 	</div>

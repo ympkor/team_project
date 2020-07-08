@@ -19,6 +19,9 @@
 	text-decoration: none;
 	color: #51565d;
 }
+.basic,.statistics,.assest,.board{
+	margin-right: 20px;
+}
 .basic,.statistics,.assest,.board,.gomypage,.gologout{
 	color: black;
 	grid-row: 2/3; 

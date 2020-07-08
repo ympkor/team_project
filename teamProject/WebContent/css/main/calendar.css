@@ -11,6 +11,16 @@ div.ui-datepicker,div.ui-datepicker-header{
     background: rgba(255, 255, 255, 0.6);
     border: none;
 }
+table{
+  width: 98%;
+  height: 98%;
+}
+tr{
+  width: 100%;
+}
+td{
+  width: calc(100% / 7);
+}
 thead{
   background: linear-gradient(to bottom, rgb(250, 251, 253) 0%,rgba(255,255,255,0) 100%);
 }
@@ -54,13 +64,15 @@ button.month_button{
   height: 32px;
   overflow: hidden;
 }
+.entry_income,.entry_expense,.entry_transfer{
+  overflow: hidden;
+}
 .dateDiv{
   text-align: right;
   letter-spacing: 1px;
   font-size: 12px;
   color: #98a0a6;
-  min-width: 100px; width: 180px; 
-  min-height: 80px; height: 130px; 
+  height: 120px;
   overflow: hidden;
 }
 .dateTd_disabled{
@@ -81,9 +93,42 @@ th,td{
 th,td:nth-of-type(7n + 7){
   border-right: 0;
 }
+span.icName,span.ecName,span.transferName{
+  font-size: 11px;
+}
 span.icAmount{
   color: rgb(70, 70, 250);
 }
 span.ecAmount{
   color: rgb(255, 80, 80);
 }
+/* @media(max-width: 1024px) {
+    .dateDiv{
+    text-align: right;
+    letter-spacing: 1px;
+    font-size: 11px;
+    color: #98a0a6;
+    width: calc((1024px - 300px) / 7);
+    height: 112px;
+    overflow: hidden;
+  }
+  .entry_income,.entry_expense,.entry_transfer{
+  overflow: hidden;
+  height: 29px;
+  }
+}
+@media(max-width: 768px) {
+  .dateDiv{
+    text-align: right;
+    letter-spacing: 1px;
+    font-size: 8px;
+    color: #98a0a6;
+    width: calc((768px - 220px) / 7);
+    height: 112px;
+    overflow: hidden;
+  }
+  .entry_income,.entry_expense,.entry_transfer{
+  overflow: hidden;
+  height: 26px;
+  }
+} */
