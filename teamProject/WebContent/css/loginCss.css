@@ -13,6 +13,8 @@
     font: inherit;
 
     vertical-align: baseline;
+    
+    font-family: Montserrat, "sans-serif"; 
 }
 
 #login_container{
@@ -28,7 +30,6 @@
   "top top top top"
   "l_blank left right r_blank";
   gap:0px;
-  font-family: 'Nanum Gothic', sans-serif;
 }
 
 #header{
@@ -40,12 +41,12 @@
     /* left: 0; */
     /* right: 0; */
     grid-area: top;
-    color: black;
+    color: #51565d;
     text-align: center;
     font-weight: bold;
     font-size: 50px;
     grid-row: 1;
-    font-family: Montserrat, "sans-serif";
+    text-shadow: 2px 2px 0 #f5f5f5;
 }
 
 #left{
@@ -77,11 +78,11 @@
 } */
 
 #join{
-	background-color: f8f8f8;
+	background-color: #f8f8f8;
     text-decoration: none;
     margin: 18px 0 0;
     display: block;
-    border: 1px solid #ccc;
+    border: 1px solid #fecdcd;
     color: #ffcccc;
     padding: 16px 17px;
     font-size: 17px;
@@ -91,6 +92,7 @@
     padding-right: 0;
     margin: 18px 0 0;
     text-align: center;
+    border-radius: 3px;
 }
 
 .button{
@@ -114,6 +116,7 @@
     color: #111;
     font-weight: 700;
     text-indent: 12px;
+    border-radius: 3px;
 }
 
 #hr{
@@ -131,8 +134,8 @@
     text-decoration: none;
     margin: 18px 0 0;
     display: block;
-    border: 1px solid #ccc;
-    color: F5f5f5;
+    border: 1px solid #fecdcd;
+    color: white;
     padding: 16px 17px;
     font-size: 17px;
     line-height: 20px;
@@ -142,6 +145,7 @@
     margin: 18px 0 0;
     text-align: center;
     width:100%;
+    border-radius: 3px;
 }
 #pw{
 	position: relative;
@@ -149,9 +153,9 @@
 .search{
 	position:relative;
 	float: right;
-    padding-top: 8px;
+    padding-top: 0px;
     padding-right: 5px;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
 }
 #error{
 	color: red;
@@ -163,8 +167,8 @@
     height: 10px;
     background-color: #333;
     position: absolute;
-    top: 14px;
-    left: 73px;
+    top: 5px;
+    left: 77px;
 }
 
 #search{

@@ -1,4 +1,3 @@
-<%@page import="dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <head>
@@ -17,7 +16,7 @@
 		</div>
 		<div id="left">
 			<form class="login_form">
-				<div id="login_title">로그인</div>
+				<h3 id="login_title">로그인</h3>
 				<div><input class="login" type="text"  name="userId" placeholder="ID" maxlength="20" required></div>
 				<div id="pw">
 					<input class="login" type="password" name="password" placeholder="password" maxlength="16" required>
