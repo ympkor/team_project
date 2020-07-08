@@ -76,10 +76,10 @@ public class MemberService {
 	
 	//이메일로 아이디 검색
 	public String searchId(String email, String name) {
-		System.out.println("입력받은 " + email);
-		System.out.println("입력받은 " + name);
+//		System.out.println("입력받은 " + email);
+//		System.out.println("입력받은 " + name);
 		String dbId = joinMapper.idSelectByEmail(email, name);//DB에서 이메일 값을 가져옴
-		System.out.println("test");
+//		System.out.println("test");
 		if(!(dbId==null)) {
 			return dbId;
 		} else {
@@ -88,10 +88,15 @@ public class MemberService {
 	}
 	
 	//아이디로 비밀번호 검색
-	public String searchPw(String userId) {
-		String dbPw = joinMapper.pwSelectById(userId);
+	public String searchPw(String userId, String name, String email) {
+		String dbPw = joinMapper.pwSelectById(userId, name, email);
+		//System.out.println("test");
+//		System.out.println(userId);
+//		System.out.println(name);
+//		System.out.println(email);
+//		System.out.println(dbPw);
 		if(!(dbPw==null)) {
-			return userId+"님의 비밀번호입니다.<br>"+dbPw;
+			return dbPw;
 		} else {
 			return "없는 아이디";
 		}

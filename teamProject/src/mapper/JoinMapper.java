@@ -20,7 +20,7 @@ public interface JoinMapper {
 	public Member selectByEmail(String email);
 	
 	//아이디로 비밀번호 찾기
-	public String pwSelectById(String userId);
+	public String pwSelectById(@Param("userId")String userId, @Param("name")String name, @Param("email")String email);
 	
 	//회원번호로 전체정보조회
 	public Member selectByUserKey(String userKey);

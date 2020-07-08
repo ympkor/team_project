@@ -132,8 +132,8 @@ public class MemberController {
 	//아이디 찾기시 해당되는 결과에 대응되는 값을 출력
 	@PostMapping(value="/searchId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String searchIdproc(String email, String name) {
-		System.out.println(email);
-		System.out.println(name);
+//		System.out.println(email);
+//		System.out.println(name);
 		String str = memberService.searchId(email, name);
 		//System.out.println(str);
 		return str;
@@ -147,8 +147,11 @@ public class MemberController {
 	
 	//비밀번호찾기시 해당되는 결과에 대응되는 값을 출력
 	@PostMapping(value="/searchPw", produces="text/html;charset=UTF-8")
-	public @ResponseBody String searchPwproc(String userId) {
-		String str = memberService.searchPw(userId);
+	public @ResponseBody String searchPwproc(String userId, String name, String email) {
+//		System.out.println(email);
+//		System.out.println(name);
+//		System.out.println(userId);
+		String str = memberService.searchPw(userId, name, email);
 		return str;
 	}
 	
