@@ -17,13 +17,13 @@
     font-family: Montserrat, "sans-serif"; 
 }
 
-#searchId_container{
+#searchPw_container{
   display: grid;
   height:100%;
   width:100%;
   grid-template-rows:
   [first]100px
-  [second]161%;
+  [second]139%;
   grid-template-areas:
   "top"
   "main";
@@ -46,7 +46,7 @@
     grid-row: 1;
 }
 
-#searchId{
+#searchPw{
 	grid-area: main;
 	display: flex;
     justify-content: center;
@@ -54,21 +54,21 @@
     flex-direction: column;
 }
 
-#id_title{
+#pw_title{
 	font-weight: 800;
     font-size: 20px;
     line-height: 20px;
     text-align: center;
 }
 
-.searchId_form{
+.searchPw_form{
 	padding-top: 26px;
 	width: 100%;
     max-width: 350px;
     min-width: 350px;
 }
 
-#email, #name{
+#email, #name, #id{
 	display: block;
     padding: 11px 0 7px;
     font-size: 13px;
@@ -77,7 +77,7 @@
     font-weight: 700;
 }
 
-#email_input, #name_input{
+#id_input, #email_input, #name_input{
     width: 100%;
     border: 1px solid #ccc;
     padding: 14px 0 12px;

@@ -2,8 +2,8 @@ $(function(){
 	$("form").on("submit", function(){
 		var email = $("input[name=email]").val();//입력받은 이메일을 키와 벨류로 나눔
 		var name = $("input[name=name]").val();
-		console.log(email);
-		console.log(name);
+//		console.log(email);
+//		console.log(name);
 		$.ajax({
 			url:"/member/searchId",
 			type:"post",

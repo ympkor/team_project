@@ -7,12 +7,29 @@
 <title>비밀번호찾기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/searchPwJs.js"></script>
+<link rel="stylesheet" href="/css/searchPwCss.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
-	<form>
-		<div>아이디 <input type="text" name="userId" maxlength="20"></div>
-		<div><input type="submit" value="비밀번호찾기"></div>
-	</form>
-		<div id="message"></div>
+	<div id="searchPw_container">
+		<div id="header"></div>
+		<div id="searchPw">
+			<div>
+				<h3 id="pw_title">비밀번호 찾기</h3>
+				<div>
+					<form class="searchPw_form">
+						<div id="name">이름 </div>
+						<div><input  id="name_input" type="text" name="name" maxlength="20" placeholder="가입시 등록하신 이름을 입력해주세요" required></div>
+						<div id="id">아이디 </div>
+						<div><input id="id_input" type="text" name="userId" maxlength="20" placeholder="가입시 등록하신 아이디를 입력해주세요" required></div>
+						<div id="email">이메일 </div>
+						<div><input  id="email_input" type="text" name="email" maxlength="50" placeholder="가입시 등록하신 이메일 주소를 입력해주세요" required></div>
+						<div class="button"><input id="search" type="submit" value="비밀번호찾기"></div>
+					</form>
+				</div>
+				<div id="message"></div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

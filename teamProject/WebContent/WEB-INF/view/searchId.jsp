@@ -9,7 +9,7 @@
 <title>아이디찾기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/searchIdJs.js"></script>
-<link rel="stylesheet" href="/css/searchIdCss.css?1">
+<link rel="stylesheet" href="/css/searchIdCss.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
