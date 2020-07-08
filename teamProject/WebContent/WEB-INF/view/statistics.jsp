@@ -13,10 +13,11 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=2">
+<link rel="stylesheet" href="/css/statistics.css?ver=1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 </head>
-<body class="wrapper">
+<body>
+<div class="wrapper">
 	<!-- 상단 메뉴 부분 -->
 	<header class="topmenu">
 		<div class="grid_header">
@@ -85,11 +86,11 @@
 </div>
 </div>
 
-<div id="leftweek" style="width:500px">
+<div id="leftweek">
 <div style="text-align:center"><button id="lastweek">◀</button>주별 수입지출 현황<button id="nextweek">▶</button></div>
 <table>
 	<thead>
-		<tr><th style='width:35px'></th><th class="weekwidth">일</th><th class="weekwidth">월</th>
+		<tr><th style='min-width:35px; width:35px;'></th><th class="weekwidth">일</th><th class="weekwidth">월</th>
 		<th class="weekwidth">화</th><th class="weekwidth">수</th>
 		<th class="weekwidth">목</th><th class="weekwidth">금</th><th class="weekwidth">토</th></tr>
 		<tr id="weekday"><th></th><c:forEach var="we" items="${weekExpense}">
@@ -169,7 +170,8 @@ var nextyear ="${nextyear}";
 
 </script>
 
+
+<a class="gotop" href="#leftdayandweek" title="맨 위로">맨 위로</a> 
 </div>
-<a class="gotop" href="#topmenu" title="맨 위로">맨 위로</a> 
 </body>
 </html>

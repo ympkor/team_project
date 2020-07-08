@@ -16,7 +16,7 @@ width: 100%; height: 100%;
 	display:grid;
 	height:100%;	
 	width:100%;
-	min-width: 900px;	
+	min-width: 700px;	
 	min-height: 900px;	
 	/* margin: 0;
     padding: 0;
@@ -25,7 +25,7 @@ width: 100%; height: 100%;
     font: inherit;
     vertical-align: baseline; */
      grid-template-rows:
-  [first]10%
+  [first]100px
   [second]700px;
   grid-template-columns: 
   [c1]10%

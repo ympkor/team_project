@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/boardJS.js?ver=1"></script>
-<link rel="stylesheet" href="/css/board.css?ver=2">
+<link rel="stylesheet" href="/css/board.css?ver=1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
