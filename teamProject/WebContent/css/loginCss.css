@@ -30,6 +30,7 @@
   "top top top top"
   "l_blank left right r_blank";
   gap:0px;
+  min-width:1167px;
 }
 
 #header{
