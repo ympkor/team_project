@@ -126,3 +126,9 @@
     border-radius: 3px;
     font-weight: 700;
 }
+
+#idtext, #passtext, #passchtext, #nametext, #emailtext{
+	color:red;
+	padding-top: 10px;
+    padding-left: 5px;
+}
