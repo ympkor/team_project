@@ -8,15 +8,19 @@
 <%@ page import="com.google.gson.Gson"%>
 <%@ page import="com.google.gson.JsonObject"%>
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<link rel="stylesheet" type="text/css" href="/css/myAsset.css">
-<link rel="stylesheet" href="/css/topMenu.css?asd=2">
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=1">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://kit.fontawesome.com/b8612abdbb.js" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
 
 window.onload = function() {
 	
@@ -27,7 +31,7 @@ window.onload = function() {
 		location.href="/member/logout";
 	}
 
-	let newsList = ${newsArr};
+	var newsList = ${newsArr};
 	
 	document.getElementById('news0.title').innerHTML=newsList[0].title;
 	document.getElementById('news0.desc').innerHTML=newsList[0].description;
@@ -90,32 +94,20 @@ window.onload = function() {
 	var newslink9 = String(newsList[9].link);
 	document.getElementById('newsBox9').href=newslink9;
 	
-	document.getElementById('news10.title').innerHTML=newsList[10].title;
-	document.getElementById('news10.desc').innerHTML=newsList[10].description;
-	document.getElementById('news10.date').innerHTML=newsList[10].pubDate;
-	var newslink10 = String(newsList[10].link);
-	document.getElementById('newsBox10').href=newslink10;
-	
-	document.getElementById('news11.title').innerHTML=newsList[11].title;
-	document.getElementById('news11.desc').innerHTML=newsList[11].description;
-	document.getElementById('news11.date').innerHTML=newsList[11].pubDate;
-	var newslink11 = String(newsList[11].link);
-	document.getElementById('newsBox11').href=newslink11;
-	
 	let assetChtData = ${assetRatioValue};
 	let debtChtData = ${debtRatioValue}*(-1);
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	
 	var chart = new CanvasJS.Chart("chartContainer", {
-	backgroundColor: "#353535",
+	backgroundColor: "#464646",
 	theme: "dark1", // "light1", "light2", "dark1", "dark2"
 	exportEnabled: false,
 	animationEnabled: true,
 	data: [{
 		type: "pie",
 		startAngle: 270,
-		toolTipContent: "<b>{label}</b> {y}원",
+		toolTipContent: "<b>{label}</b> {y}원 ({z}%)",
 		showInLegend: "true",
 		legendText: "{label}",
 		indexLabelFontSize: 14,
@@ -134,16 +126,17 @@ window.onload = function() {
 </head>
 
 <body>
+	
 
 
 
-	<!-- 상단 메뉴 부분 -->
+<!-- 상단 메뉴 부분 -->
 	<header class="topmenu">
 		<div class="grid_header">
 			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
-			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
-			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
-			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+			<div class="statistics"><a id=mainlink href="/statistics/show">GRAPH</a></div>
+			<div class="assest"><a id=mainlink href="/asset/view">ASSETS</a></div>
+			<div class="board"><a id=mainlink href="/board/show">BOARD</a></div>
 			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
 			<div class="gologout"><button class="gologout">LOGOUT</button></div>
 		</div>
@@ -152,7 +145,6 @@ window.onload = function() {
 <section>
   <sum>
   <div id="myTotalAsset">
-		
 		<h1 style="text-align:; margin-top:30px; margin-bottom: 45px;">내 자산</h1>
 		<h1 style="font-size:36px; text-align: right; color:;">
 		<fmt:formatNumber value="${sumTotal}" pattern="###,###,###,###"/>원</h1>
@@ -163,41 +155,62 @@ window.onload = function() {
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumDebt}" pattern="###,###,###,###"/>원</h2></div>
 		</div><br><br>
 	</div>
-      <div id="chartContainer" style="height: 240px; width: 100%; margin-top:20px;"></div>
+	
+	
+	<!-- 그래프 출력 -->
+      <div id="chartContainer" style="height: 300px; width: 100%; margin-top:20px;"></div>
+ 
   </sum>
 
   <asset>
 	
    <div id="eachAsset">
-   		<h1 style="margin-top:30px; color:#ac3b61;">내 자산 내역</h1>
-   		<p style="font-weight:bold; margin-bottom: 3px;">자산 ${cntAssets}건 / 부채 ${cntDebts}건<br><br>
-		<c:forEach items="${aomList}" var="list">
-
-			<div id="eachAssetText">
-			
-				${list.type}<br>
-				${list.assetsName}<br>
-				<fmt:formatNumber value="${list.amount}" pattern="###,###,###,###"/>원<br>
-				${list.memo}
-			</div>
-			
-
+   		<h1 style="margin-top:30px; color:#grey;">내 자산 내역</h1>
+   		<p style="font-weight:bold; margin-bottom: 3px; color:#lightgrey;">자산 ${cntAssets}건 / 부채 ${cntDebts}건<br><br>
+		
+		<c:forEach items="${assetList}" var="aList">
+			<div id="eachAssetText" style="background:#6e92bc;">
+				<div id="eachAssetType" style="text-align: right; font-weight: 300; font-size:12px;">${aList.type}</div>
+				<div>${aList.assetsName}</div>
+				<div id="eachAssetAmount" style="text-align: right; font-size:30px; font-weight: 900;">
+				<fmt:formatNumber value="${aList.amount}" pattern="###,###,###,###"/>원</div>
+				<div style="font-size: 13px; font-weight: 300;">${aList.memo}</div>
 			<div id="eachAssetEdit">
-				<a href="edit?memAssetId=${list.memAssetId}" style="text-decoration: none; color:black">수정 </a>
-			</div><br>
+				<a href="edit?memAssetId=${aList.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
+			</div>
+			</div>
+			<br>
 		</c:forEach>
+
+		<c:forEach items="${debtList}" var="dList">
+			<div id="eachAssetText" style="background:#c07675;">
+				<div id="eachAssetType" style="text-align: right; font-weight: 300; font-size:12px;">${dList.type}</div>
+				<div>${dList.assetsName}</div>
+				<div id="eachAssetAmount" style="text-align: right; font-size:30px; font-weight: 900;">
+				<fmt:formatNumber value="${dList.amount}" pattern="###,###,###,###"/>원</div>
+				<div style="font-size: 13px; font-weight: 300;">${dList.memo}</div>
+			<div id="eachAssetEdit">
+				<a href="edit?memAssetId=${dList.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
+			</div>
+			</div>
+			<br>
+		</c:forEach>
+	
 	</div>
+	
 		<div id="addAsset">
 	<div id="eachAssetText" onClick="location.href='add'" 
-	style="cursor:pointer; text-align: center; opacity:0.5;">자산 / 부채 추가</div>
+	style="cursor:pointer; text-align: center; opacity:1; font-weight: 500; font-size: 12px; color:#666666;">자산 / 부채 추가</div>
 	</div>
+	
+	
   </asset>
   
   <news>
    <div>
 	<h1 style="margin-top:30px; margin-left:10px;">추천 기사</h1>
 	<p style="margin-left:10px;"><b>Tags > ${newsKeywords}</b>
-	<a href="newsSettings" style="font-size: 12px; text-decoration:none">수정</a></p>
+	<a href="newsSettings" style="font-size:12px; color:grey; text-decoration:none">수정</a></p>
 	
 	<div style=font-size:12px;>
 	<a id="newsBox0" href="" target="_blank" style="text-decoration:none">
@@ -210,7 +223,7 @@ window.onload = function() {
 	<a id=newsBox1 href="" target="_blank">
 	<div id="" class=newsBox>
 	<div id=news1.title class=newsTitle></div><br>
-	<div id=news1.desc class=newsDesc>></div><br>
+	<div id=news1.desc class=newsDesc></div><br>
 	<div id=news1.date class=newsDate></div>
 	</div></a>
 	<br>
@@ -273,30 +286,13 @@ window.onload = function() {
 	<div id=news9.date class=newsDate></div>
 	</div></a>
 	<br>
-	<a id=newsBox10 href="" target="_blank">
-	<div id="" class=newsBox>
-	<div id=news10.title class=newsTitle></div><br>
-	<div id=news10.desc class=newsDesc></div><br>
-	<div id=news10.date class=newsDate></div>
-	</div></a>
-	<br>
-	<a id=newsBox11 href="" target="_blank">
-	<div id="" class=newsBox>
-	<div id=news11.title class=newsTitle></div><br>
-	<div id=news11.desc class=newsDesc></div><br>
-	<div id=news11.date class=newsDate></div>
-	</div></a>
+	
 	<br>
 	</div>
 </div>
   </news>
   
 </section>
-
-<footer>
-  <p>Footer</p>
-</footer>
-
 
 
 </body>
