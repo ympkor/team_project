@@ -16,7 +16,7 @@
 <body>
 	<div id="login_container">
 		<div id="header">
-			<div id="title">더조은가계부</div>
+			<a id="title" href="/member/login">더조은가계부</a>
 		</div>
 		<div id="left">
 			<form class="login_form">

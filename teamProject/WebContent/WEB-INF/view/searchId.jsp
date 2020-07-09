@@ -11,10 +11,13 @@
 <script type="text/javascript" src="/js/searchIdJs.js"></script>
 <link rel="stylesheet" href="/css/searchIdCss.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="searchId_container">
-		<div id="header"></div>
+		<div id="header">
+			<a id="title" href="/member/login">더조은가계부</a>
+		</div>
 		<div id="searchId">
 			<div>
 				<h3 id="id_title">아이디 찾기</h3>

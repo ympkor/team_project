@@ -132,8 +132,8 @@ public class MemberController {
 	//아이디 찾기시 해당되는 결과에 대응되는 값을 출력
 	@PostMapping(value="/searchId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String searchIdproc(String email, String name) {
-		System.out.println(email);
-		System.out.println(name);
+//		System.out.println(email);
+//		System.out.println(name);
 		String str = memberService.searchId(email, name);
 		//System.out.println(str);
 		return str;
