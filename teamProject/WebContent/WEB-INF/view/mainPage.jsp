@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>가계부</title>
 	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
 	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=1">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -16,7 +16,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="/js/main/main_modal.js"></script>
+	<script type="text/javascript" src="/js/main/main_modal.js?var=2"></script>
 	<script type="text/javascript" src="/js/main/mainTestJs.js"></script>
 </head>
 <body>
@@ -66,7 +66,7 @@
 						</select>
 						<label for="update_income_expense_category" id="update_income_expense_category_label" class="hidden">분류</label>
 						<select id="update_income_expense_category" name="ecId" class="hidden">
-							<option value="0" selected>선택하세요</option>
+							<option value="" selected>선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_income_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -75,7 +75,7 @@
 						</select>
 						<label for="update_income_income_category" id="update_income_income_category_label">분류</label>
 						<select id="update_income_income_category" name="icId" required>
-							<option value="0" selected class="update_income_income_category_selected">선택하세요</option>
+							<option value="" selected class="update_income_income_category_selected">선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_income_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -142,7 +142,7 @@
 						</select>
 						<label for="update_expense_expense_category" id="update_expense_expense_category_label">분류</label>
 						<select id="update_expense_expense_category" name="ecId">
-							<option value="0" selected id="update_expense_expense_category_selected">선택하세요</option>
+							<option value="" selected id="update_expense_expense_category_selected">선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_expense_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -151,7 +151,7 @@
 						</select>
 						<label for="update_expense_income_category" id="update_expense_income_category_label" class="hidden">분류</label>
 						<select id="update_expense_income_category" name="icId" required class="hidden">
-							<option value="0" selected>선택하세요</option>
+							<option value="" selected>선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_expense_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -218,7 +218,7 @@
 						</select>
 						<label for="update_transfer_expense_category" id="update_transfer_expense_category_label" class="hidden">분류</label>
 						<select id="update_transfer_expense_category" name="ecId" required="required" class="hidden">
-							<option value="0" selected>선택하세요</option>
+							<option value="" selected>선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_transfer_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -227,7 +227,7 @@
 						</select>
 						<label for="update_transfer_income_category" id="update_transfer_income_category_label" class="hidden">분류</label>
 						<select id="update_transfer_income_category" name="icId" required class="hidden">
-							<option value="0" selected>선택하세요</option>
+							<option value="" selected>선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_transfer_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';

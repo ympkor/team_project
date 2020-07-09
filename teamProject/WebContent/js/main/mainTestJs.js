@@ -8,12 +8,12 @@ function showThisMonthIncome(miicList){
 			else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
 			let entry = document.querySelector(entryClassName);
 			if(i == 0){entry.innerHTML = null}
-			entry.innerHTML += '<div class=income><span class=icName>' + icName + '</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+			entry.innerHTML += '<div class=income><span class=icName>' + icName + '&nbsp;</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
 			if(entry.childElementCount > 2){
 				let ellipsis = document.createElement('span');
 				ellipsis.innerText = '...';
-				if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
-					document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+				if(document.querySelector(entryClassName).children[1].children[1].childElementCount < 1){
+					document.querySelector(entryClassName).children[1].children[1].appendChild(ellipsis);
 				}
 				entry.classList.add('limit');
 			}
@@ -29,12 +29,12 @@ function showThisMonthExpense(meecList) {
 		else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
 		let entry = document.querySelector(entryClassName);
 		if(i == 0){entry.innerHTML = null}
-		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '&nbsp;</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
 		if(entry.childElementCount > 2){
 			let ellipsis = document.createElement('span');
 			ellipsis.innerText = '...';
-			if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
-				document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+			if(document.querySelector(entryClassName).children[1].children[1].childElementCount < 1){
+				document.querySelector(entryClassName).children[1].children[1].appendChild(ellipsis);
 			}
 			entry.classList.add('limit');
 		}
@@ -47,15 +47,15 @@ function showThisMonthTransfer(tbmList) {
 		for(let i = 0; i < tbmList.length; i++){
 			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
 			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
-			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체</span> <span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
+			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체&nbsp;</span><span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
 		}
 		if(document.querySelector(classStr).childElementCount > 2){
 			let ellipsis = document.createElement('span');
 			ellipsis.innerText = '...';
-			if(document.querySelector(entryClassName).childNodes[1].childNodes[1].childElementCount < 1){
-				document.querySelector(entryClassName).childNodes[1].childNodes[1].appendChild(ellipsis);
+			if(document.querySelector(classStr).children[1].children[1].childElementCount < 1){
+				document.querySelector(classStr).children[1].children[1].appendChild(ellipsis);
 			}
-			entry.classList.add('limit');
+			document.querySelector(classStr).classList.add('limit');
 		}
 	}
 }
@@ -112,7 +112,7 @@ function putIncomeDataToUpdateForm(iicaList) {
 		}
 	}
 }
-//수입업데이트 폼에 이체 카테고리를 현재 값으로 선택시켜준다.
+//수입업데이트 폼에 수입카테고리를 수정 전 값으로 선택시켜놓기.
 function makeIncomeCategoryOption(iica) {
 	$.ajax({
 		url:'/main/postICList',
@@ -162,7 +162,7 @@ function putExpenseDataToUpdateForm(eecaList) {
 		}
 	}
 }
-//지출 업데이트 폼에 지출 카테고리를 현재 값으로 선택시켜준다.
+//지출 업데이트 폼에 지출카테고리를 현재 값으로 선택시켜놓기.
 function makeExpenseCategoryOption(eeca) {
 	$.ajax({
 		url:'/main/postECList',
@@ -261,11 +261,12 @@ function showUpdateTransferFromAomIncome(iica) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value='+iica.memAssetId+' selected>'+iica.assetsName+' '+iica.aomName+'</option>';
+				if(iica.assetsId == 99){updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+iica.aomName+'</option>';
+				}else{updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value='+iica.memAssetId+' selected>'+iica.assetsName+' '+iica.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
-					if(aaomList[i].memAssetId != iica.memAssetId){
+					if(aaomList[i].memAssetId != iica.memAssetId && aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
 				}
@@ -284,11 +285,13 @@ function showUpdateTransferToAomIncome(iica) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
 				updateAOMStr = ' ';
 				for(let i = 0; i < aaomList.length; i++) {
+					if(aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+					}
 				}
 				document.querySelector('#update_assets_income_memAssetIdTo').innerHTML = updateAOMStr;
 			}
@@ -305,11 +308,12 @@ function showUpdateTransferFromAomExpense(eeca) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetIdTo+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';
+				if(eeca.assetsId == 99){updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+eeca.aomName+'</option>';	
+				}else{updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetIdTo+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
-					if(aaomList[i].memAssetId != eeca.memAssetId){
+					if(aaomList[i].memAssetId != eeca.memAssetId && aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
 				}
@@ -328,11 +332,13 @@ function showUpdateTransferToAomExpense(eeca) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
 				updateAOMStr = ' ';
 				for(let i = 0; i < aaomList.length; i++) {
-					updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+					if(aaomList[i].assetsId != 99){
+						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
+					}
 				}
 				document.querySelector('#update_assets_expense_memAssetIdTo').innerHTML = updateAOMStr;
 			}
@@ -349,11 +355,12 @@ function showUpdateTransferFromAomTransfer(taomfaomt) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value='+taomfaomt.memAssetIdFrom+' selected>'+taomfaomt.assetsNameFrom+' '+taomfaomt.aomNameFrom+'</option>';
+				if(taomfaomt.assetsId == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+taomfaomt.aomNameFrom+'</option>';
+				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value='+taomfaomt.memAssetIdFrom+' selected>'+taomfaomt.assetsNameFrom+' '+taomfaomt.aomNameFrom+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
-					if(aaomList[i].memAssetId != taomfaomt.memAssetIdFrom){
+					if(aaomList[i].memAssetId != taomfaomt.memAssetIdFrom && aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
 				}
@@ -372,11 +379,12 @@ function showUpdateTransferToAomTransfer(taomfaomt) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="0" selected>선택하세요</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value='+taomfaomt.memAssetIdTo+' selected>'+taomfaomt.assetsNameTo+' '+taomfaomt.aomNameTo+'</option>';
+				if(taomfaomt.assetsIdTo == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected disabled="disabled">'+taomfaomt.aomNameTo+'</option>';
+				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value='+taomfaomt.memAssetIdTo+' selected>'+taomfaomt.assetsNameTo+' '+taomfaomt.aomNameTo+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
-					if(aaomList[i].memAssetId != taomfaomt.memAssetIdTo){
+					if(aaomList[i].memAssetId != taomfaomt.memAssetIdTo && aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
 					}
 				}
@@ -393,7 +401,7 @@ function showInsertIncomeAomBF(assetsId) {
     type:'post',
     data:jsonData,
     success:function(aomList) {
-			let updateAOMStr = '<option id="insert_aom_income_selected" value="" selected disabled>선택하세요</option>';
+			let updateAOMStr = '<option id="insert_aom_income_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
       if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
       }else {
         for(let i = 0; i < aomList.length; i++) {
@@ -412,7 +420,7 @@ function showInsertExpenseAomBF(assetsId) {
     type:'post',
     data:jsonData,
     success:function(aomList) {
-			let updateAOMStr = '<option id="insert_aom_expense_selected" value="" selected disabled>선택하세요</option>';
+			let updateAOMStr = '<option id="insert_aom_expense_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
       if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
       }else {
         for(let i = 0; i < aomList.length; i++) {
@@ -431,7 +439,9 @@ function makeDetailIncomeDIV(iicaList) {
 		for (let i = 0; i < iicaList.length; i++) {
 			sumI += iicaList[i].amount;
 			str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
-			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br><span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
+			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br>';
+			if(iicaList[i].assetsId == 99){str += '<span class=detailAName>' + iicaList[i].aomName + '</span></div>';
+			}else{str += '<span class=detailAName>' + iicaList[i].assetsName + ' ' + iicaList[i].aomName + '</span></div>';}
 			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_income').innerHTML = str;
@@ -447,7 +457,9 @@ function makeDetailExpenseDIV(eecaList) {
 		for (let i = 0; i < eecaList.length; i++) {
 			sumE += eecaList[i].amount;
 			str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
-			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br><span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
+			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br>';
+			if(eecaList[i].assetsId == 99){str +='<span class=detailAName>' + eecaList[i].aomName + '</span></div>';
+			}else{str +='<span class=detailAName>' + eecaList[i].assetsName + ' ' + eecaList[i].aomName + '</span></div>';}
 			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_expense').innerHTML = str;
@@ -461,7 +473,13 @@ function makeDetailTransferDIV(taomfaomtList) {
 	for(let i = 0; i < taomfaomtList.length; i++) {
 		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
 		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
-		str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';
+		if(taomfaomtList[i].assetsId == 99){
+			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].aomNameTo+'</span></div>';		
+			}else{str += taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
+		}else{
+			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].aomNameTo+'</span></div>';
+			}else{str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
+		}
 		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
 		document.querySelector('div.detail_context_transfer').innerHTML += str;
 	}

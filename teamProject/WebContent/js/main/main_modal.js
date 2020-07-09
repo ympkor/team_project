@@ -7,6 +7,9 @@ function updateIncomeFormSwitchToIncome() {
   document.querySelector('#update_income_expense_category_label').classList.add('hidden');
   document.querySelector('#update_income_income_category_label').classList.remove('hidden');
   document.querySelector('#update_income_income_category').classList.remove('hidden');
+  document.querySelector('#update_income_income_category').required = true;
+  document.querySelector('#update_income_expense_category').required = false;
+  document.querySelector('#update_assets_income_memAssetIdTo').required = false;
 }
 //수입 업데이트 폼에서 지출 카테고리 클릭 시
 function updateIncomeFormSwitchToExpense() {
@@ -17,6 +20,9 @@ function updateIncomeFormSwitchToExpense() {
   document.querySelector('#update_income_expense_category_label').classList.remove('hidden');
   document.querySelector('#update_income_income_category_label').classList.add('hidden');
   document.querySelector('#update_income_income_category').classList.add('hidden');
+  document.querySelector('#update_income_income_category').required = false;
+  document.querySelector('#update_income_expense_category').required = true;
+  document.querySelector('#update_assets_income_memAssetIdTo').required = false;
 }
 //수입 업데이트 폼에서 이체 카테고리 클릭 시.
 function updateIncomeFormSwitchToTransfer() {
@@ -27,6 +33,9 @@ function updateIncomeFormSwitchToTransfer() {
   document.querySelector('#update_income_expense_category_label').classList.add('hidden');
   document.querySelector('#update_income_income_category_label').classList.add('hidden');
   document.querySelector('#update_income_income_category').classList.add('hidden');
+  document.querySelector('#update_income_income_category').required = false;
+  document.querySelector('#update_income_expense_category').required = false;
+  document.querySelector('#update_assets_income_memAssetIdTo').required = true;
 }
 //지출 업데이트 폼에서 수입 카테고리 클릭 시
 function updateExpenseFormSwitchToIncome() {
@@ -37,6 +46,9 @@ function updateExpenseFormSwitchToIncome() {
   document.querySelector('#update_expense_expense_category_label').classList.add('hidden');
   document.querySelector('#update_expense_income_category_label').classList.remove('hidden');
   document.querySelector('#update_expense_income_category').classList.remove('hidden');
+  document.querySelector('#update_expense_income_category').required = true;
+  document.querySelector('#update_expense_expense_category').required = false;
+  document.querySelector('#update_assets_expense_memAssetIdTo').required = false;
 }
 //지출 업데이트 폼에서 지출 카테고리 클릭 시
 function updateExpenseFormSwitchToExpense() {
@@ -47,6 +59,9 @@ function updateExpenseFormSwitchToExpense() {
   document.querySelector('#update_expense_expense_category_label').classList.remove('hidden');
   document.querySelector('#update_expense_income_category_label').classList.add('hidden');
   document.querySelector('#update_expense_income_category').classList.add('hidden');
+  document.querySelector('#update_expense_income_category').required = false;
+  document.querySelector('#update_expense_expense_category').required = true;
+  document.querySelector('#update_assets_expense_memAssetIdTo').required = false;
 }
 //지출 업데이트 폼에서 이체 카테고리 클릭 시.
 function updateExpenseFormSwitchToTransfer() {
@@ -57,6 +72,9 @@ function updateExpenseFormSwitchToTransfer() {
   document.querySelector('#update_expense_expense_category_label').classList.add('hidden');
   document.querySelector('#update_expense_income_category_label').classList.add('hidden');
   document.querySelector('#update_expense_income_category').classList.add('hidden');
+  document.querySelector('#update_expense_income_category').required = false;
+  document.querySelector('#update_expense_expense_category').required = false;
+  document.querySelector('#update_assets_expense_memAssetIdTo').required = true;
 }
 //이체 업데이트 폼에서 수입 카테고리 클릭 시
 function updateTransferFormSwitchToIncome() {
@@ -67,6 +85,9 @@ function updateTransferFormSwitchToIncome() {
   document.querySelector('#update_transfer_expense_category_label').classList.add('hidden');
   document.querySelector('#update_transfer_income_category_label').classList.remove('hidden');
   document.querySelector('#update_transfer_income_category').classList.remove('hidden');
+  document.querySelector('#update_transfer_income_category').required = true;
+  document.querySelector('#update_transfer_expense_category').required = false;
+  document.querySelector('#update_assets_transfer_memAssetIdTo').required = false;
 }
 //이체 업데이트 폼에서 지출 카테고리 클릭 시
 function updateTransferFormSwitchToExpense() {
@@ -77,6 +98,9 @@ function updateTransferFormSwitchToExpense() {
   document.querySelector('#update_transfer_expense_category_label').classList.remove('hidden');
   document.querySelector('#update_transfer_income_category_label').classList.add('hidden');
   document.querySelector('#update_transfer_income_category').classList.add('hidden');
+  document.querySelector('#update_transfer_income_category').required = false;
+  document.querySelector('#update_transfer_expense_category').required = true;
+  document.querySelector('#update_assets_transfer_memAssetIdTo').required = false;
 }
 //이체 업데이트 폼에서 이체 카테고리 클릭 시.
 function updateTransferFormSwitchToTransfer() {
@@ -87,6 +111,9 @@ function updateTransferFormSwitchToTransfer() {
   document.querySelector('#update_transfer_expense_category_label').classList.add('hidden');
   document.querySelector('#update_transfer_income_category_label').classList.add('hidden');
   document.querySelector('#update_transfer_income_category').classList.add('hidden');
+  document.querySelector('#update_transfer_income_category').required = false;
+  document.querySelector('#update_transfer_expense_category').required = false;
+  document.querySelector('#update_assets_transfer_memAssetIdTo').required = true;
 }
 //수입이 체크되면 수입 폼을 보여주고 지출,이체 폼은 hidden
 function showIncomeForm() {
@@ -184,7 +211,7 @@ function getAssetsIdAndPutDataAtTransferForm() {
 function showAOMListAtInsertIncome(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
-      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
     }}else{aomStr = '<option id="insert_assets_income_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_income_memAssetId').innerHTML += aomStr;
 }
@@ -192,7 +219,7 @@ function showAOMListAtInsertIncome(aaomList) {
 function showAOMListAtInsertExpense(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
-      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
     }}else{aomStr = '<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_expense_memAssetId').innerHTML += aomStr;
 }
@@ -200,7 +227,7 @@ function showAOMListAtInsertExpense(aaomList) {
 function showAOMListAtInsertTransferAtFrom(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
-      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
     }}else{aomStr = '<option id="insert_assets_transfer_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_transfer_memAssetId').innerHTML += aomStr;
 }
@@ -208,7 +235,7 @@ function showAOMListAtInsertTransferAtFrom(aaomList) {
 function showAOMListAtInsertTransferAtTo(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
-      aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';
+	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
     }}else{aomStr = '<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_transfer_memAssetIdTo').innerHTML += aomStr;
 }

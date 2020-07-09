@@ -16,12 +16,13 @@ public class TransferAssetsOfMemeberFromAssetsOfMemeberTo {
 	private int assetsId;
 	private String assetsNameFrom;
 	private String aomNameFrom;
+	private int assetsIdTo;
 	private String assetsNameTo;
 	private String aomNameTo;
 	public TransferAssetsOfMemeberFromAssetsOfMemeberTo() {}
 	public TransferAssetsOfMemeberFromAssetsOfMemeberTo(int userKey, int transferId, int memAssetIdFrom,
 			int memAssetIdTo, int amount, LocalDate transferDate, String memo, int assetsId, String assetsNameFrom,
-			String aomNameFrom, String assetsNameTo, String aomNameTo) {
+			String aomNameFrom, int assetsIdTo, String assetsNameTo, String aomNameTo) {
 		this.userKey = userKey;
 		this.transferId = transferId;
 		this.memAssetIdFrom = memAssetIdFrom;
@@ -32,6 +33,7 @@ public class TransferAssetsOfMemeberFromAssetsOfMemeberTo {
 		this.assetsId = assetsId;
 		this.assetsNameFrom = assetsNameFrom;
 		this.aomNameFrom = aomNameFrom;
+		this.assetsIdTo = assetsIdTo;
 		this.assetsNameTo = assetsNameTo;
 		this.aomNameTo = aomNameTo;
 	}
@@ -101,6 +103,12 @@ public class TransferAssetsOfMemeberFromAssetsOfMemeberTo {
 	public void setAomNameFrom(String aomNameFrom) {
 		this.aomNameFrom = aomNameFrom;
 	}
+	public int getAssetsIdTo() {
+		return assetsIdTo;
+	}
+	public void setAssetsIdTo(int assetsIdTo) {
+		this.assetsIdTo = assetsIdTo;
+	}
 	public String getAomNameTo() {
 		return aomNameTo;
 	}
@@ -112,7 +120,7 @@ public class TransferAssetsOfMemeberFromAssetsOfMemeberTo {
 		return "TransferAssetsOfMemeberFromAssetsOfMemeberTo [userKey=" + userKey + ", transferId=" + transferId
 				+ ", memAssetIdFrom=" + memAssetIdFrom + ", memAssetIdTo=" + memAssetIdTo + ", amount=" + amount
 				+ ", transferDate=" + transferDate + ", memo=" + memo + ", assetsId=" + assetsId + ", assetsNameFrom="
-				+ assetsNameFrom + ", aomNameFrom=" + aomNameFrom + ", assetsNameTo=" + assetsNameTo + ", aomNameTo="
-				+ aomNameTo + "]";
+				+ assetsNameFrom + ", aomNameFrom=" + aomNameFrom + ", assetsIdTo=" + assetsIdTo + ", assetsNameTo="
+				+ assetsNameTo + ", aomNameTo=" + aomNameTo + "]";
 	}
 }
