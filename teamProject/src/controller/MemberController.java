@@ -49,7 +49,7 @@ public class MemberController {
 		Member m = joinMapper.selectById(member.getUserId());//회원아이디로 회원의 전체 정보를 조회후
 		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌	
 		
-		List<AssetOfMember> aomList = aomService.getAssetListById(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
+		List<AssetOfMember> aomList = aomService.selectAssetListById(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
 		int i = 0;
 
 		int sumAssets = 0;
