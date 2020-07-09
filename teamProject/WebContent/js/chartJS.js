@@ -101,7 +101,8 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  		}    
 		  var options = {
 		    title:'지출 총액 : '+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
-		    backgroundColor: '#f5f5f5'
+		    backgroundColor: '#f5f5f5',
+		    sliceVisibilityThreshold: 0
 		  };
 		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
 		  chart.draw(data, options);
@@ -121,7 +122,8 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  		}    
 		var options = {
 		  title:'수익 총액 : '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
-		  backgroundColor: '#f5f5f5'
+		  backgroundColor: '#f5f5f5',
+		  sliceVisibilityThreshold: 0
 		};
 		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));
 		chart.draw(dataincome, options);
@@ -150,6 +152,50 @@ document.getElementById('nextyearbutton').onclick = function(){
 			}
 });
 $(window).resize(function(){
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+	function drawChart() {
+		  var data = new google.visualization.DataTable();
+		  data.addColumn('string', 'classification');
+		  data.addColumn('number', 'price');     	                 
+	  	for (var i = 0; i < monthExpenseAmountData.length ; i++) {
+	  		data.addRows([
+	  			[ monthExpenseNameData[i]+": "+monthExpenseAmountData[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원" , monthExpenseAmountData[i] ]
+ 		   	]);
+		}
+	  	var metotal=0;
+	  		for (var i = 0; i < monthExpenseAmountData.length ; i++) {
+	  			metotal +=monthExpenseAmountData[i];
+	  		}    
+		  var options = {
+		    title:'지출 총액 : '+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		    backgroundColor: '#f5f5f5',
+		    sliceVisibilityThreshold: 0
+		  };
+		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
+		  chart.draw(data, options);
+				  
+				  
+		  var dataincome = new google.visualization.DataTable();
+		  dataincome.addColumn('string', 'classification');
+		  dataincome.addColumn('number', 'money'); 
+		  for (var i = 0; i < monthIncomeAmountData.length ; i++) {
+			  dataincome.addRows([
+	  		   [ monthIncomeNameData[i]+": "+monthIncomeAmountData[i].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원" , monthIncomeAmountData[i] ]
+	  		 ]);
+			} 
+		  var mitotal=0;
+	  		for (var i = 0; i < monthIncomeAmountData.length ; i++) {
+	  			mitotal +=monthIncomeAmountData[i];
+	  		}    
+		var options = {
+		  title:'수익 총액 : '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		  backgroundColor: '#f5f5f5',
+		  sliceVisibilityThreshold: 0
+		};
+		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));
+		chart.draw(dataincome, options);
+		}
 	google.charts.setOnLoadCallback(drawVisualization);
 	function drawVisualization() {
 	   var data =new google.visualization.DataTable();

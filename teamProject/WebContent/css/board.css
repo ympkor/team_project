@@ -7,6 +7,7 @@
     font: inherit;
     vertical-align: baseline;
 }
+body{background-color: #f5f5f5;}
 .wrapper{
 	background-color: #f5f5f5;
 	display:grid;
@@ -40,12 +41,11 @@ td{height: 50px; line-height: 50px;border-bottom:1px solid #9298a0;}
 div#boardcontent{grid-area: content; width:100%;min-width:600px; 
 	position: relative; top:20px;}
 div.boardtitlehead{width:500px; margin-bottom: 10px;}
-/* .gomypage{position: relative; top:0px; left:80%;}
-.gologout{position: relative; top:0px; left:80%;} */
-.boardtitle{text-align: center; font-size: 50px; font-family: 'Lobster';}
+div.board{text-shadow: 2px 1px 0 #f5f5f5;
+	text-decoration: underline;
+	text-decoration-color: #51565d;}
 
-/* #writeboard{top: 10px; left: 20px; 
-   position: relative;border: 1px solid lightgrey;} */
+.boardtitle{text-align: center; font-size: 50px; font-family: 'Lobster';}
 .boardpagenation{position: relative; width:100%;
 	min-width:600px; text-align: center; top:10px;}
 td.regDate{min-width: 153px;}

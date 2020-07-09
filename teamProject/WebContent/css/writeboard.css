@@ -36,12 +36,9 @@ width: 100%; height: 100%;
   "l_blank content r_blank" ;
 }
 .topmenu{grid-area: top; min-width: 700px;}
-/* div.basic{position:absolute;left:0px;top:20px; width:25%;}
-div.statistics{position:absolute;left:25%;top:20px; width:25%;}
-div.assest{position:absolute;left:50%;top:20px; width:25%;}
-div.board{position:absolute;right:0px;top:20px; width:25%;}
-.gomypage{position: relative; top:0px; left:80%;}
-.gologout{position: relative; top:0px; left:80%;} */
+div.board{text-shadow: 2px 1px 0 #f5f5f5;
+	text-decoration: underline;
+	text-decoration-color: #51565d;}
 a{text-decoration: none; color:#51565d;}
 div.content{grid-area: content; min-width:600px; 
 	position: relative; top:20px; }

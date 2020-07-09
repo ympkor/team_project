@@ -12,7 +12,7 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
+<script type="text/javascript" src="/js/chartJS.js?ver=2"></script>
 <link rel="stylesheet" href="/css/statistics.css?ver=1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -56,15 +56,27 @@
 		<th><c:forEach var="e" items="${dailyExpense}">
 			<c:set var= "esum" value="${esum + e.amount}"/>
 		</c:forEach><fmt:formatNumber value="${esum}" pattern="###,###,###,###"/></th>
-		<th>
-		<fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
-		</tr>
+		<c:choose>
+			<c:when test="${isum-esum<0}">
+			<th style="color:red">
+			<fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
+			</c:when>
+			<c:when test="${isum-esum>0}">
+			<th style="color:blue">
+			<fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
+			</c:when>
+			<c:otherwise>
+			<th>
+			<fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
+			</c:otherwise>
+		</c:choose>		
 	</thead>
 </table>
+<div class="daydetailList">
 <table>	
 	<thead>
 		<tr><th>항목</th><th>사용자산</th><th>수입</th><th>지출</th><th>메모</th></tr>
-	</thead>
+	</thead>	
 	<tbody id="dayList">
 		<c:if test="${dailyIncome.size()==0 && dailyExpense.size()==0}">
 			<tr><td class="daynodata" colspan="5">No data</td></tr>
@@ -82,15 +94,17 @@
 	</tbody>
 </table>
 </div>
+
+</div>
 </div>
 
 <div id="leftweek">
 <div style="text-align:center"><button id="lastweek">◀</button>Weekly<button id="nextweek">▶</button></div>
 <table>
 	<thead>
-		<tr><th style='min-width:35px; width:35px;'></th><th class="weekwidth">일</th><th class="weekwidth">월</th>
+		<tr><th style='min-width:35px; width:35px;'></th><th class="weekwidth" style="color:red">일</th><th class="weekwidth">월</th>
 		<th class="weekwidth">화</th><th class="weekwidth">수</th>
-		<th class="weekwidth">목</th><th class="weekwidth">금</th><th class="weekwidth">토</th></tr>
+		<th class="weekwidth">목</th><th class="weekwidth">금</th><th class="weekwidth" style="color:blue">토</th></tr>
 		<tr id="weekday"><th></th><c:forEach var="we" items="${weekExpense}">
 				<th><c:set var="weekdate" value="${we.expenseDate}"/>
 									
@@ -117,8 +131,20 @@
 		</tr>		
 		<tr id="weektotal"><td>합계 </td>
 			<c:forEach var="i" begin="1" end="7">
-				<td><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
-				</td>
+				<c:choose>
+					<c:when test="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount <0}">
+						<td style="color:red"><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
+						</td>	
+					</c:when>
+					<c:when test="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount >0}">
+						<td style="color:blue"><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
+						</td>	
+					</c:when>			
+					<c:otherwise>
+						<td><fmt:formatNumber value="${weekIncome.get(i-1).amount-weekExpense.get(i-1).amount}" pattern="###,###,###,###"/>
+						</td>
+					</c:otherwise>
+				</c:choose>	
 			</c:forEach>
 		</tr>		
 	</tbody>
