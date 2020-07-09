@@ -27,12 +27,15 @@ public class AssetOfMemberController {
 	public String getMemberAsset(@ModelAttribute("userKey") int userKey, Model m){
 
 		//userKey값에 해당하는 자산을 배열로 저장
-		List<AssetOfMember> aomList = aomService.getAssetListById(userKey);
+		List<AssetOfMember> aomList = aomService.selectAssetListById(userKey);
+		List<AssetOfMember> assetList = aomService.selectOnlyAssetListById(userKey);
+		List<AssetOfMember> debtList = aomService.selectOnlyDebtListById(userKey);
 
 		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 		int i = 0;
 		int sumAssets = 0;
 		int sumDebts = 0;
+		
 		while(aomList.size() > i) {
 			if (aomList.get(i).getAmount() > 0) {
 				sumAssets += aomList.get(i).getAmount();
@@ -71,8 +74,10 @@ public class AssetOfMemberController {
 		StringBuilder newsString = ans.getNews();
 		JSONObject jsonObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
-
+		
 		m.addAttribute("aomList", aomList);
+		m.addAttribute("assetList", assetList);
+		m.addAttribute("debtList", debtList);
 		m.addAttribute("sumTotal", sumTotal);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("sumDebt", sumDebts);
@@ -236,63 +241,7 @@ public class AssetOfMemberController {
 	@RequestMapping("/delete")
 	public String delAsset(@ModelAttribute("userKey")int userKey,int memAssetId, Model m) {
 		aomService.delAsset(memAssetId);
-		List<AssetOfMember> aomList = aomService.getAssetListById(userKey);
-
-		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
-		int i = 0;
-		int sumAssets = 0;
-		int sumDebts = 0;
-		while(aomList.size() > i) {
-			if (aomList.get(i).getAmount() > 0) {
-				sumAssets += aomList.get(i).getAmount();
-			}else if (aomList.get(i).getAmount() < 0) {
-				sumDebts += aomList.get(i).getAmount();
-			}
-			i++;
-		}
-		int sumTotal = sumAssets + sumDebts;
-
-		//자산, 부채 건수 집계
-		int j=0;
-		int cntAssets = 0;
-		int cntDebts = 0;
-		while(aomList.size() > j) {
-			if (aomList.get(j).getType().equals("자산")) {
-				cntAssets++;
-			}else if (aomList.get(j).getType().equals("부채")) {
-				cntDebts++;
-			}
-			j++;
-		}
-
-		//자산관련 뉴스 출력 부분
-		//해당 멤버 객체생성하고 키워드와 기사 숫자 불러오기
-		AssetOfMember aom = aomService.getNewsSettingsInfo(userKey);
-		String newsKeywords = aom.getNewsKeywords();
-		int newsCounts = aom.getNewsCounts();
-
-		//뉴스 객체 생성하고 설정값 대입
-		AssetNewsService ans = new AssetNewsService();
-		ans.setKeywords(newsKeywords);
-		ans.setDisplays(newsCounts);
-
-		//뉴스 생성 메서드 실행 후 json배열 형태로 자산페이지 전달
-		StringBuilder newsString = ans.getNews();
-		JSONObject jsonObject = new JSONObject(newsString.toString());
-		JSONArray jsonArray = jsonObject.getJSONArray("items");
-
-		m.addAttribute("aomList", aomList);
-		m.addAttribute("sumTotal", sumTotal);
-		m.addAttribute("sumAsset", sumAssets);
-		m.addAttribute("sumDebt", sumDebts);
-		m.addAttribute("assetRatioValue", sumAssets);
-		m.addAttribute("debtRatioValue", sumDebts);
-		m.addAttribute("newsArr", jsonArray);
-		m.addAttribute("newsKeywords", newsKeywords);
-		m.addAttribute("newsCounts", newsCounts);
-		m.addAttribute("cntAssets", cntAssets);
-		m.addAttribute("cntDebts", cntDebts);
-		return "showAsset";
+		return "deleteAssetResult";
 	}
 
 	//관련뉴스 '설정' 클릭시
