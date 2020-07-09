@@ -30,9 +30,9 @@
 <table class="boardlist">
 <colgroup>
 		<col width="10%">
-		<col width="50%">
-		<col width="15%">
-		<col width="15%">
+		<col width="60%">
+		<col width="8%">
+		<col width="12%">
 		<col width="5%">
 		<col width="5%">
 	</colgroup>

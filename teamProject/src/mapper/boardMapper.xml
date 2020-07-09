@@ -87,5 +87,14 @@
   	<update id="updateBoard" parameterType="Board">
   		update board set title=#{title},content=#{content} 
   		where board_id=#{boardId} 
-  	</update> 	
+  	</update>
+  	<delete id="deleteBoardbyBoardId">
+  		delete from board where board_id=#{boardId}
+  	</delete> 	
+  	<delete id="deleteCommentbyBoardIdAll">
+  		delete from comment where board_id=#{boardId}
+  	</delete> 	
+  	<delete id="deletelikebyBoardIdAll">
+  		delete from boardlikes where board_id=#{boardId}
+  	</delete> 	
   </mapper>

@@ -36,8 +36,7 @@ public interface BoardMapper {
 	public void updateincreaseBoardCommentCount(int boardId);
 	//코멘삭제하면 그 보드아이디에 코멘수도 감소
 	public void updatedecreaseBoardCommentCount(int boardId);
-	
-	
+		
 	//유저키에 맞는 게시물과 코멘트 지우기
 	public void deleteBoardbyuserkeyAll(int userKey);
 	public void deleteCommentbyuserkeyAll(int userKey);
@@ -58,4 +57,11 @@ public interface BoardMapper {
 	
 	//게시물 수정하기
 	public void updateBoard(Board board);
+	
+	//보드아이디에 맞는 보드 삭제
+	public void deleteBoardbyBoardId(int boardId);
+	//보드아이디에 맞는 코멘트삭제
+	public void deleteCommentbyBoardIdAll(int boardId);
+	//보드아이디에 맞는 좋아요삭제
+	public void deletelikebyBoardIdAll(int boardId);
 }

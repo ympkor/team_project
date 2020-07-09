@@ -32,16 +32,10 @@
   "l_blank content r_blank" ;
 }
 .topmenu{grid-area: top; min-width: 700px;}
-/* div.basic{position:absolute;left:0px;top:20px; width:25%;}
-div.statistics{position:absolute;left:25%;top:20px; width:25%;}
-div.assest{position:absolute;left:50%;top:20px; width:25%;}
-div.board{position:absolute;right:0px;top:20px; width:25%;}
-.gomypage{position: relative; top:0px; left:80%;}
-.gologout{position: relative; top:0px; left:80%;} */
 a{text-decoration: none;color:#51565d;}
 table{min-width: 600px; width:100%;}
 th{text-align: center; height:35px;}
-#middlecontent{grid-area:content;}
+#middlecontent{grid-area:content; position: relative; top: 20px;}
 .udbutton{position: relative;
     left: 320px; width: 200px;}
 .writeboardcontent{width: 450px;}

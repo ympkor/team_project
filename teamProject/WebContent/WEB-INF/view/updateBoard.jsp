@@ -13,7 +13,7 @@
 <!-- include summernote css/js -->
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<link rel="stylesheet" href="/css/writeboard.css?1">
+<link rel="stylesheet" href="/css/writeboard.css?2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script type="text/javascript" src="/js/writeBoardJS.js?ver=2"></script>

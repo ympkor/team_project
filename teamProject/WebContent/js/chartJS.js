@@ -136,15 +136,39 @@ document.getElementById('nextyearbutton').onclick = function(){
 			    data.addColumn('number', '합계');		    	
 			    for (var i = 0; i < 12; i++) {					    	
 			    	data.addRow([ i+1+'월', yearIncomeAmountData[i] , yearExpenseAmountData[i] ,  (yearIncomeAmountData[i]-yearExpenseAmountData[i]) ]);
-				} 
-			  var options = {			    
+				}			  
+			  var options = {
+				/*maintainAspectRatio: false,*/
 			    vAxis: {title: '금액(원)'},			    
 			    seriesType: 'bars',
 			    series: {5: {type: 'line'}},        
-			    backgroundColor: '#f5f5f5'
+			    backgroundColor: '#f5f5f5',
 			  };
 
 			  var chart = new google.visualization.ComboChart(document.getElementById('yearChart'));
 			  chart.draw(data, options);
 			}
+});
+$(window).resize(function(){
+	google.charts.setOnLoadCallback(drawVisualization);
+	function drawVisualization() {
+	   var data =new google.visualization.DataTable();
+	   		data.addColumn('string', '월');
+		    data.addColumn('number', '수입');
+		    data.addColumn('number', '지출');
+		    data.addColumn('number', '합계');		    	
+		    for (var i = 0; i < 12; i++) {					    	
+		    	data.addRow([ i+1+'월', yearIncomeAmountData[i] , yearExpenseAmountData[i] ,  (yearIncomeAmountData[i]-yearExpenseAmountData[i]) ]);
+			}			  
+		  var options = {
+			/*maintainAspectRatio: false,*/
+		    vAxis: {title: '금액(원)'},			    
+		    seriesType: 'bars',
+		    series: {5: {type: 'line'}},        
+		    backgroundColor: '#f5f5f5',
+		  };
+
+		  var chart = new google.visualization.ComboChart(document.getElementById('yearChart'));
+		  chart.draw(data, options);
+		}
 });

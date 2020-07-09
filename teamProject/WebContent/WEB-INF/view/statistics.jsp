@@ -13,7 +13,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=1">
+<link rel="stylesheet" href="/css/statistics.css?ver=2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 </head>
 <body>
@@ -136,9 +136,8 @@
 </div>
 
 <div id="bottomyear">
-<div style="text-align:center"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)} <button id="nextyearbutton">▶</button></div>
-<div id="yearChart">
-</div>
+<div id="yearselect"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)} <button id="nextyearbutton">▶</button></div>
+<div id="yearChart"></div>
 </div>
 
 <script type="text/javascript">

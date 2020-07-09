@@ -32,12 +32,13 @@ public class BoardService {
 		boardMapper.deleteComment(commentId);
 	}
 	
-	//게시물 삭제시 코멘트랑 같이 삭제
-	@Transactional
-	public void delBoard(int userKey) {		
-		boardMapper.deleteCommentbyuserkeyAll(userKey);
-		boardMapper.deleteBoardbyuserkeyAll(userKey);
-	}
+	/*
+	 * //탈퇴시 게시물 삭제시 코멘트랑 같이 삭제
+	 * 
+	 * @Transactional public void delBoard(int userKey) {
+	 * boardMapper.deleteCommentbyuserkeyAll(userKey);
+	 * boardMapper.deleteBoardbyuserkeyAll(userKey); }
+	 */
 	
 	//게시물 10개씩 보여줌
 	public BoardListView showBoard(int currentPageNumber) {
@@ -105,6 +106,17 @@ public class BoardService {
 			likecheck="false";
 		}
 		return likecheck;
+	}
+	
+	//게시물 삭제시 게시물에 달린 댓글,좋아요도 함께 지움
+	@Transactional
+	public void deleteBoard(int boardId) {
+		//게시물삭제
+		boardMapper.deleteBoardbyBoardId(boardId);
+		//코멘삭제
+		boardMapper.deleteCommentbyBoardIdAll(boardId);
+		//좋아요삭제
+		boardMapper.deletelikebyBoardIdAll(boardId);
 	}
 	
 }

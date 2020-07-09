@@ -226,4 +226,19 @@ public class BoardController {
 			m.addAttribute("likecheck", likecheck);
 			return "contentOneShow";
 		}
+		
+		//게시물 삭제버튼 누르면 게시물과 댓글 함께 삭제
+		@PostMapping("/delboard")
+		@ResponseBody
+		public String deleteBoard(int boardId) {
+			String result="";
+			try {
+				boardService.deleteBoard(boardId);
+				result="delsuccess";
+			} catch (Exception e) {
+				e.printStackTrace();
+				result="delfail";				
+			}
+			return result;
+		}
 }

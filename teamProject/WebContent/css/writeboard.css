@@ -43,7 +43,8 @@ div.board{position:absolute;right:0px;top:20px; width:25%;}
 .gomypage{position: relative; top:0px; left:80%;}
 .gologout{position: relative; top:0px; left:80%;} */
 a{text-decoration: none; color:#51565d;}
-div.content{grid-area: content; min-width:600px; }
+div.content{grid-area: content; min-width:600px; 
+	position: relative; top:20px; }
 .writeForm{height:500px;}
 .writeboardtitle{width:100%;min-width:686px; border: 1px solid lightgrey;height: 30px;}
 .submit{position: relative;width:100%; font-size: 20px; background: lightgrey;height: 30px;}

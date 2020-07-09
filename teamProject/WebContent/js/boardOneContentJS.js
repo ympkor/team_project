@@ -72,7 +72,29 @@ $(".commentwriteinput").hide();
 if(likecheck){
 	$("input:checkbox[class='likecheck']")[0].checked=true;
 }
+//수정버튼 누르면 수정페이지로 이동
 $(".boardupdate").click(function(){
 	location.href="/board/update?boardId="+boardId;	
 });
+//삭제 버튼 누르면 재확인 버튼확인, 삭제결과 확인후 목록페이지로 이동
+$(".boarddelete").click(function(){
+	var flag=confirm("게시물을 삭제하시겠습니까?\n댓글도 함께 삭제됩니다");
+	if(flag){
+		$.ajax({
+			 url: "/board/delboard",
+	         type: "POST",
+	         data: { "boardId":boardId},
+	         success: function (d) {
+	        	 if(d=="delsuccess"){
+	        		 alert("성공적으로 삭제되었습니다\n목록으로 돌아갑니다");			    
+	        		 location.href="/board/show";		        		 
+	        	 }else{
+	        		 alert("삭제가 실패하였습니다\n목록으로 돌아갑니다");
+	        		 location.href="/board/show";	
+	        	 }
+	         },
+			});		  
+	}
+});
+
  });
