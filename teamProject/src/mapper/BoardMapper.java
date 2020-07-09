@@ -41,4 +41,18 @@ public interface BoardMapper {
 	//유저키에 맞는 게시물과 코멘트 지우기
 	public void deleteBoardbyuserkeyAll(int userKey);
 	public void deleteCommentbyuserkeyAll(int userKey);
+	
+	//게시물 좋아요수 하나 늘리기
+	public void increaseBoardlike(int boardId);
+	//게시물에 좋아요한 유저 저장하기
+	public void regLikebyUIdBId(@Param("boardId")int boardId, @Param("userKey")int userKey);
+	//게시물에 좋아요수 가져오기
+	public int getlikeNum(int boardId);
+	
+	//게시물에 user가 좋아요한 정보가 있으면 1을 반환
+	public int checklikeByUIdBId(@Param("boardId")int boardId, @Param("userKey")int userKey);
+	//게시물 좋아요수 하나 감소
+	public void decreaseBoardlike(int boardId);
+	//좋아요취소시 좋아요정보삭제
+	public void cancelLikeByUIdBId(@Param("boardId")int boardId, @Param("userKey")int userKey);
 }

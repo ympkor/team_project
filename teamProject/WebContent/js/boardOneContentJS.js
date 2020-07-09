@@ -1,6 +1,6 @@
 $(function(){
 	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypage";
+		location.href="/member/mypageProc";
 	}
 	document.querySelector(".gologout").onclick = function(){
 		location.href="/member/logout";
@@ -41,4 +41,35 @@ $(".commentwriteinput").hide();
 	 }
  }); 
  
+ $("input:checkbox[class='likecheck']").click(function(el){
+	  var check =$(this)[0].checked;
+	 console.log(check); 
+	 if(check==true){
+		 $.ajax({
+		 url: "/board/likeupdate",
+         type: "POST",
+         data: { "boardId":boardId ,"userKey": userKey},
+         success: function (d) {
+        	// console.log("좋아요 수",d);
+		      // console.dir($(".likesNum"));
+		       $(".likesNum").text(d);
+         },
+		});		  
+	 }else if(check==false){
+		 $.ajax({
+			 url: "/board/cancellikeupdate",
+	         type: "POST",
+	         data: { "boardId":boardId ,"userKey": userKey},
+	         success: function (d) {
+	        	// console.log("좋아요 수",d);
+			      // console.dir($(".likesNum"));
+			       $(".likesNum").text(d);
+	         },
+			});		
+	 }
+ }); 
+console.log("좋아요 했는지",likecheck);
+if(likecheck){
+	$("input:checkbox[class='likecheck']")[0].checked=true;
+}
  });

@@ -57,7 +57,7 @@ function sendFile(file, editor, welEditable) {
         	
         });
         document.querySelector(".gomypage").onclick = function(){
-    		location.href="/member/mypage";
+    		location.href="/member/mypageProc";
     	}
     	document.querySelector(".gologout").onclick = function(){
     		location.href="/member/logout";

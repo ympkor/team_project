@@ -63,5 +63,25 @@
   	</update>
   	<delete id="deleteComment">
   		delete from comment where comment_id=#{commentId}
-  	</delete>  	 	
+  	</delete> 
+  	<update id="increaseBoardlike">
+  		update board set likes=likes+1 where board_id=#{boardId}
+  	</update> 
+  	<insert id="regLikebyUIdBId">
+  		insert into boardlikes values(#{boardId},#{userKey})
+  	</insert>
+  	<select id="getlikeNum" resultType="int">
+  		select likes from board where board_id=#{boardId}
+  	</select>	 	
+  	<select id="checklikeByUIdBId" resultType="int">
+  		select count(*) from boardlikes 
+  		where board_id=#{boardId} and user_key=#{userKey}
+  	</select>
+  	<update id="decreaseBoardlike">
+  		update board set likes=likes-1 where board_id=#{boardId}
+  	</update> 	 	
+  	<delete id="cancelLikeByUIdBId">
+  		delete from boardlikes
+  		where board_id=#{boardId} and user_key=#{userKey}
+  	</delete> 	 	
   </mapper>

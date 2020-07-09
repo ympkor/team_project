@@ -32,11 +32,11 @@
 		<tr ><th>제목</th><th>작성자</th><th>작성일</th><th>추천</th><th>조회</th></tr>
 	</thead>
 	<tbody>
-		<tr class="boardtitlehead"><td>${currentBoard.title }</td><td>${currentBoard.writer }</td><td>${currentBoard.regDate}</td><td>${currentBoard.likes }</td><td>${currentBoard.hits}</td></tr>
+		<tr class="boardtitlehead"><td>${currentBoard.title }</td><td>${currentBoard.writer }</td><td>${currentBoard.regDate}</td><td class="likesNum">${currentBoard.likes }</td><td>${currentBoard.hits}</td></tr>
 		<tr>
 			<td colspan="5" class="boardcontent">
 				<div class="contentdiv" ><pre>${currentBoard.content }</pre></div>
-				<div class="udbutton"><button class="commentwriteshow">댓글</button> <label>죠아요<input type="checkbox"></label>
+				<div class="udbutton"><button class="commentwriteshow">댓글</button> <label>좋아요<input class="likecheck" type="checkbox" value="like"></label>
 			 		<c:if test="${currentBoard.userKey==userKey }"><button class="boardupdate">수정</button><button class="boarddelete">삭제</button></c:if>
 				</div>
 			</td>
@@ -75,6 +75,8 @@
 </div>
 <script type="text/javascript">
 var boardId= ${currentBoard.boardId}
+var userKey =<%=session.getAttribute("userKey")%>;
+var likecheck =${likecheck};
 </script>
 </body>
 </html>

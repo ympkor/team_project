@@ -72,4 +72,39 @@ public class BoardService {
 		
 		return blist;
 	}
+	//좋아요 누르면 게시물 좋아요수 하나 올리고 디비에 저장하기
+	@Transactional
+	public void likeupdate(int boardId, int userKey) {
+		int check =boardMapper.checklikeByUIdBId(boardId, userKey);
+		if(check!=1) {
+			//좋아요수 올리고
+			boardMapper.increaseBoardlike(boardId);
+			//유저가 좋아요한 보드 저장하기
+			boardMapper.regLikebyUIdBId(boardId, userKey);			
+		}
+	}
+	//좋아요 취소누르면 게시물 좋아요수 하나 줄이고 디비에 false로 수정
+	@Transactional
+	public void cancellikeupdate(int boardId, int userKey) {
+		int check =boardMapper.checklikeByUIdBId(boardId, userKey);
+		if(check==1) {
+			//좋아요수 감소
+			boardMapper.decreaseBoardlike(boardId);
+			//유저가 좋아요한 보드정보 삭제
+			boardMapper.cancelLikeByUIdBId(boardId, userKey);		
+		}
+	}
+	
+	//보드아이디와 유저키로 좋아요했는지 여부 true,false로 반환
+	public String likechecking(int boardId, int userKey) {
+		int checklike=boardMapper.checklikeByUIdBId(boardId, userKey);
+		String likecheck="";
+		if (checklike==1) {
+			likecheck="true";
+		}else {
+			likecheck="false";
+		}
+		return likecheck;
+	}
+	
 }
