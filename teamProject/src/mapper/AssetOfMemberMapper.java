@@ -7,6 +7,10 @@ import dto.AssetOfMember;
 public interface AssetOfMemberMapper {
 
 	public List<AssetOfMember> selectAssetListById(int userKey);
+
+	public List<AssetOfMember> selectOnlyAssetListById(int userKey);
+	
+	public List<AssetOfMember> selectOnlyDebtListById(int userKey);
 	
 	public AssetOfMember getAssetById(int memAssetId);
 
