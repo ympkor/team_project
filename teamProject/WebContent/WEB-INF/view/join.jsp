@@ -9,10 +9,13 @@
 <script type="text/javascript" src="/js/joinJs.js"></script>
 <link rel="stylesheet" href="/css/joinCss.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="join_container">
-		<div id="header"></div>
+		<div id="header">
+			<a id="title" href="/member/login">더조은가계부</a>
+		</div>
 		<div id="join">
 			<div>
 				<h3 id="join_title">회원가입</h3>

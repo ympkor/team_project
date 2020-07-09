@@ -9,10 +9,13 @@
 <script type="text/javascript" src="/js/searchPwJs.js"></script>
 <link rel="stylesheet" href="/css/searchPwCss.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="searchPw_container">
-		<div id="header"></div>
+		<div id="header">
+			<a id="title" href="/member/login">더조은가계부</a>
+		</div>
 		<div id="searchPw">
 			<div>
 				<h3 id="pw_title">비밀번호 찾기</h3>

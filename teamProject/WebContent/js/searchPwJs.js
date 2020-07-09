@@ -14,13 +14,13 @@ $(function(){
 				if(data=="없는 아이디"){
 					document.getElementById("message").innerHTML="<hr>";
 					document.getElementById("message").innerHTML+="해당하는 아이디의 정보가 없습니다.";
-					document.getElementById("message").innerHTML+="<br><a href='/member/searchId'>아이디찾기</a>";
+					document.getElementById("message").innerHTML+="<br><a class='link' href='/member/searchId'>아이디찾기</a>";
 				} else {
 					document.getElementById("message").innerHTML="<hr>";
 					document.getElementById("message").innerHTML+=$("#name_input").val()+"님의 비밀번호는 ";
 					document.getElementById("message").innerHTML+="<span id='data'>"+data+"</span>";
 					document.getElementById("message").innerHTML+="입니다";
-					document.getElementById("message").innerHTML+="<br><a href='/member/login'>로그인하러가기</a>";
+					document.getElementById("message").innerHTML+="<br><a class='link' href='/member/login'>로그인하러가기</a>";
 				}
 			}
 		});
