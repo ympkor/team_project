@@ -45,7 +45,7 @@
         기타<input type="radio" name="assetsId" value="10" checked><br><br>
         
         메모<br>
-        <input type="text" name="memo" placeholder="적금, 학자금대출 등" required><br><br>
+        <input type="text" name="memo" maxlength="50" placeholder="적금, 학자금대출 등" required><br><br>
 		
 		이 자산을 수입/지출 내역에 기록
 		<input type="checkbox" name="sync" value="1"><br>
