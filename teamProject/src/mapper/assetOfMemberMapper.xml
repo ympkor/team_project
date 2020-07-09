@@ -9,7 +9,23 @@
 		select * from member
 		join assets_of_member on member.user_key = assets_of_member.user_key
 		join assets on assets_of_member.assets_id = assets.assets_id
-		where member.user_key = #{userKey};
+		where member.user_key = #{userKey} and assets.assets_id != 99;
+	</select>
+
+	<select id="selectOnlyAssetListById" resultType="assetOfMember">
+		select * from member
+		join assets_of_member on member.user_key = assets_of_member.user_key
+		join assets on assets_of_member.assets_id = assets.assets_id
+		where member.user_key = #{userKey} and assets_of_member.type = "자산" 
+		and assets.assets_id != 99;
+	</select>
+
+	<select id="selectOnlyDebtListById" resultType="assetOfMember">
+		select * from member
+		join assets_of_member on member.user_key = assets_of_member.user_key
+		join assets on assets_of_member.assets_id = assets.assets_id
+		where member.user_key = #{userKey} and assets_of_member.type = "부채" 
+		and assets.assets_id != 99;
 	</select>
 
 	<select id="getAssetById" resultType="assetOfMember">
@@ -53,9 +69,9 @@
   		values(#{memAssetId}, 0, #{userKey}, #{amount}, #{assetsId}, 12, #{memo});
 	</insert>
 
-	<delete id="delAsset" parameterType="assetOfMember">
-		delete from assets_of_member where mem_asset_id = #{memAssetId};
-	</delete>
+	<update id="delAsset" parameterType="assetOfMember">
+		update assets_of_member set assets_id=99 where mem_asset_id=#{memAssetId};
+	</update>
 	
 	<delete id="delAssetByuserkeyAll" >
 		delete from assets_of_member where user_key=#{userKey};
