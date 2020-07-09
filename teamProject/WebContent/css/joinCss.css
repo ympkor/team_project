@@ -22,7 +22,7 @@
   	width:100%;
   	grid-template-rows:
   	[first]100px
-  	[second]161%;
+  	[second]830px;
   	grid-template-areas:
   	"top"
   	"main";
@@ -43,6 +43,7 @@
     font-weight: bold;
     font-size: 50px;
     grid-row: 1;
+    width:100%;
 }
 
 #join{
@@ -51,6 +52,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width:100%;
 }
 
 #join_title{

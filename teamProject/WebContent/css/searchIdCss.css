@@ -23,7 +23,7 @@
   width:100%;
   grid-template-rows:
   [first]100px
-  [second]161%;
+  [second]830px;
   grid-template-areas:
   "top"
   "main";
