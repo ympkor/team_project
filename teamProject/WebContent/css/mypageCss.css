@@ -15,19 +15,21 @@
     vertical-align: baseline;
     
     font-family: Montserrat, "sans-serif"; 
+    
+    box-sizing: border-box;
 }
 
-#searchId_container{
-  display: grid;
-  height:100%;
-  width:100%;
-  grid-template-rows:
-  [first]100px
-  [second]817px;
-  grid-template-areas:
-  "top"
-  "main";
-  grid-row-gap: 20px;
+#mypage_container{
+	display: grid;
+ 	height:100%;
+  	width:100%;
+  	grid-template-rows:
+  	[first]100px
+  	[second]817px;
+  	grid-template-areas:
+  	"top"
+  	"main";
+  	grid-row-gap: 20px;
 }
 
 #header{
@@ -44,32 +46,27 @@
     font-weight: bold;
     font-size: 50px;
     grid-row: 1;
+    width:100%;
     box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
 }
 
-#searchId{
+#mypage{
 	grid-area: main;
 	display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width:100%;
 }
 
-#id_title{
+#mypage_title{
 	font-weight: 800;
     font-size: 20px;
     line-height: 20px;
     text-align: center;
 }
 
-.searchId_form{
-	padding-top: 26px;
-	width: 100%;
-    max-width: 350px;
-    min-width: 350px;
-}
-
-#email, #name{
+#id, #name, #email{
 	display: block;
     padding: 11px 0 7px;
     font-size: 13px;
@@ -78,8 +75,8 @@
     font-weight: 700;
 }
 
-#email_input, #name_input{
-    width: 100%;
+#id_val, #name_val, #email_val{
+	width: 100%;
     border: 1px solid #ccc;
     padding: 14px 0 12px;
     font-size: 14px;
@@ -94,62 +91,40 @@
 	margin-top: 30px;
 }
 
-#search{
-	background-color: #ffcccc;
+#update, #delete{
+	width:49%;
+    border:1px solid #fecdcd;
+    padding: 14px 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: white;
+    background-color: #ffcccc;
+    font-weight: 700;
+    border-radius: 3px;
+}
+
+#back{
+	background-color: #f8f8f8;
     text-decoration: none;
-    margin: 18px 0 0;
     display: block;
     border: 1px solid #fecdcd;
-    color: white;
+    color: #ffcccc;
     padding: 16px 17px;
     font-size: 17px;
     line-height: 20px;
     display: block;
     padding-left: 0;
     padding-right: 0;
-    margin: 18px 0 0;
+    margin: 15px 0 0;
     text-align: center;
-    width:100%;
     border-radius: 3px;
+    width:100%;
 }
 
-#message{
-	padding-top: 20px;
-    width: 100%;
+.mypage_form{
+	/* padding: 20px 98px 0px; */
+	width: 100%;
     max-width: 350px;
     min-width: 350px;
-}
-
-hr{
-	display: block;
-    width: 100%;
-    height: 0;
-    margin: 3px 0 15px;
-    padding: 0;
-    border: 0;
-    border-top: 1px solid #ddd;	
-}
-a{
-	text-decoration:none;
-	background-color: #ffcccc;
-    text-decoration: none;
-    margin: 18px 0 0;
-    display: block;
-    border: 1px solid #fecdcd;
-    color: white;
-    padding: 16px 17px;
-    font-size: 17px;
-    line-height: 20px;
-    display: block;
-    padding-left: 0;
-    padding-right: 0;
-    margin: 18px 0 0;
-    text-align: center;
-    width:100%;
-    border-radius: 3px;
-}
-
-#data{
-	color:red;
-    font-weight: 600;
+	/* border:1px solid black; */
 }

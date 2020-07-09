@@ -1,6 +1,7 @@
 @charset "UTF-8";
 *{
 	background-color:#f5f5f5;
+	
 	margin: 0;
 
     padding: 0;
@@ -22,11 +23,11 @@
   	width:100%;
   	grid-template-rows:
   	[first]100px
-  	[second]830px;
+  	[second]817px;
   	grid-template-areas:
   	"top"
   	"main";
-  	gap:0px;
+  	grid-row-gap: 20px;
 }
 
 #header{
@@ -44,6 +45,7 @@
     font-size: 50px;
     grid-row: 1;
     width:100%;
+    box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
 }
 
 #mypageProc{

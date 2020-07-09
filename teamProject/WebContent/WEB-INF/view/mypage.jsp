@@ -7,20 +7,29 @@
 <title>마이페이지</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/mypageJs.js"></script>
+<link rel="stylesheet" href="/css/mypageCss.css">
 </head>
 <body>
-	<div><input type="hidden" name="userKey"></div>
-	<div>회원아이디</div>
-	<div>${member.userId}</div>
-	<div>이름</div>
-	<div>${member.name}</div>
-	<div>이메일</div>
-	<div>${member.email}</div>
-	<div><input type="hidden" name="password"></div>
-	<div>
-		<button type="button" onclick="location.href='/member/update'">수정하기</button>
-		<button type="button" name="delete">탈퇴하기</button>
-		<button type="button" onclick="location.href='/main/getCal'">가계부로 돌아가기</button>
+	<div id="mypage_container">
+		<div id="header"></div>
+		<div id="mypage">
+			<div class="mypage_form">
+				<h3 id="mypage_title">마이페이지</h3>
+				<div><input type="hidden" name="userKey"></div>
+				<div id="id">회원아이디</div>
+				<div id="id_val">${member.userId}</div>
+				<div id="name">이름</div>
+				<div id="name_val">${member.name}</div>	
+				<div id="email">이메일</div>
+				<div id="email_val">${member.email}</div>
+				<div><input type="hidden" name="password"></div>
+				<div class="button">
+					<button id="update" type="button" onclick="location.href='/member/update'">수정하기</button>
+					<button id="delete" type="button" name="delete">탈퇴하기</button>
+					<button id="back" type="button" onclick="location.href='/main/getCal'">가계부로 돌아가기</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
