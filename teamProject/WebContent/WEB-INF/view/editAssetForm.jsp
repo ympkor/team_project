@@ -79,7 +79,7 @@ window.onload = function() {
 		
 		<div class="editRow"></div>
 		<div class="editRow">
-		메모<input type="text" name="memo" value="${aom.memo}">
+		메모<input type="text" name="memo" maxlength="50" value="${aom.memo}">
 		</div>
 		<div class="editRow"></div>
 		
@@ -98,7 +98,7 @@ window.onload = function() {
 		<input type="submit" value="수정">
 		<input type="button" value="취소" onClick="location.href='view'">
 		<a href="delete?memAssetId=${aom.memAssetId}"  style="text-decoration: none; color:black"
-					onClick="return confirm('이 자산을 정말 삭제하시겠습니까?')">삭제</a>
+					onClick="return confirm('이 자산을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')">삭제</a>
 		</div>
 		<div class="editRow"></div>
 		
