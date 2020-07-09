@@ -34,7 +34,7 @@ $(".commentwriteinput").hide();
 		 +"<br><input type='submit' value='댓글수정'></form>");
  }); 
  $(".commentdelete").click(function(){
-	 var flag =confirm("댓글 진짜 삭제해요???!!!");
+	 var flag =confirm("댓글 삭제하시겠습니까?");
 	 var commentId = $(this).attr('name');
 	 if(flag){
 		 location.href="/board/deletecomment?boardId="+boardId+"&commentId="+commentId;
@@ -68,8 +68,11 @@ $(".commentwriteinput").hide();
 			});		
 	 }
  }); 
-console.log("좋아요 했는지",likecheck);
+//console.log("좋아요 했는지",likecheck);
 if(likecheck){
 	$("input:checkbox[class='likecheck']")[0].checked=true;
 }
+$(".boardupdate").click(function(){
+	location.href="/board/update?boardId="+boardId;	
+});
  });

@@ -55,4 +55,7 @@ public interface BoardMapper {
 	public void decreaseBoardlike(int boardId);
 	//좋아요취소시 좋아요정보삭제
 	public void cancelLikeByUIdBId(@Param("boardId")int boardId, @Param("userKey")int userKey);
+	
+	//게시물 수정하기
+	public void updateBoard(Board board);
 }

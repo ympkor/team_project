@@ -192,4 +192,38 @@ public class BoardController {
 				return likes;
 			}
 		}
+		
+		//게시물보는곳에서 수정버튼 누를때
+		@RequestMapping("/update")
+		public String updateBoard(int boardId,Model m) {
+			//System.out.println("수정할 보드아이디"+boardId);
+			//보드아이디로 보드정보를 객체에 받아옴
+			Board board=boardMapper.selecOneBoard(boardId);
+			//객체를 수정페이지에 넘겨줌
+			m.addAttribute("board", board);
+			return "updateBoard";
+		}
+		
+		//게시물 수정후 글 수정 누르면 //바뀐 게시판 내용 보여주기
+		@PostMapping("/contentOneShow")
+		public String showupdateBoard(@ModelAttribute("userKey")int userKey,Model m, Board board) {
+			//디비에 업데이트 시키기
+			boardMapper.updateBoard(board);
+			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
+			String likecheck= boardService.likechecking(board.getBoardId(), userKey);
+			//현재글 가져오기
+			Board currentBoard = boardMapper.selecOneBoard(board.getBoardId());
+			//이전글, 다음글 제목가져오기
+			Board beforeBoard = boardMapper.getbeforeBoard(board.getBoardId()); 
+			Board nextBoard = boardMapper.getnextBoard(board.getBoardId());		
+			//보드아이디에 있는 코멘트 가져오기
+			List<Comment> cList = boardMapper.selectbyBId(board.getBoardId());
+			m.addAttribute("currentBoard", currentBoard);
+			m.addAttribute("beforeBoard", beforeBoard);
+			m.addAttribute("nextBoard", nextBoard);
+			m.addAttribute("currentboardId", board.getBoardId());
+			m.addAttribute("cList", cList);
+			m.addAttribute("likecheck", likecheck);
+			return "contentOneShow";
+		}
 }
