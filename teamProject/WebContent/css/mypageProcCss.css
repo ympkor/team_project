@@ -1,0 +1,121 @@
+@charset "UTF-8";
+*{
+	background-color:#f5f5f5;
+	margin: 0;
+
+    padding: 0;
+
+    border: 0;
+
+    font-size: 100%;
+
+    font: inherit;
+
+    vertical-align: baseline;
+    
+    font-family: Montserrat, "sans-serif"; 
+}
+
+#mypageProc_container{
+	display: grid;
+ 	height:100%;
+  	width:100%;
+  	grid-template-rows:
+  	[first]100px
+  	[second]830px;
+  	grid-template-areas:
+  	"top"
+  	"main";
+  	gap:0px;
+}
+
+#header{
+	/* height: 100px; */
+    background-color: #ffcccc;
+    /* position: absolute; */
+    /* top: 0; */
+    line-height: 100px;
+    /* left: 0; */
+    /* right: 0; */
+    grid-area: top;
+    color: black;
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    grid-row: 1;
+    width:100%;
+}
+
+#mypageProc{
+	grid-area: main;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width:100%;
+}
+
+#mypageProc_title{
+	font-weight: 800;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: center;
+}
+
+.mypageProc_form{
+	padding: 20px 98px 0px;
+	width: 100%;
+    max-width: 350px;
+    min-width: 350px;
+	/* border:1px solid black; */
+}
+
+#id, #pass{
+	display: block;
+    padding: 11px 0 7px;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+    font-weight: 700;
+}
+
+#id_input, #pass_input{
+	width: 100%;
+    border: 1px solid #ccc;
+    padding: 14px 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #111;
+    font-weight: 700;
+    text-indent: 12px;
+    border-radius: 3px;
+}
+
+.button{
+	margin-top: 30px;
+}
+
+#submit, #cancel{
+	width:49%;
+    border:1px solid #fecdcd;
+    padding: 14px 0 12px;
+    font-size: 14px;
+    line-height: 20px;
+    color: #ffcccc;
+    background-color: #f8f8f8;
+    font-weight: 700;
+    /* text-indent: 12px; */
+    border-radius: 3px;
+}
+#submit{
+	margin-right:1px;
+}
+
+#text1{
+	margin-top: 20px;
+    font-weight: bold;
+}
+
+#text2{
+	margin-top: 3px;
+}

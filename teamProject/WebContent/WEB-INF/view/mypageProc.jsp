@@ -6,33 +6,35 @@
 <meta charset="UTF-8">
 <title>마이페이지비밀번호재확인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript">
-	$(function(){
-		$("form").submit(function(){
-			var pw = $("form").eq(0).serialize();
-			//console.log(pw)
-			$.ajax({
-				url:"/member/mypageProc",
-				type:"post",
-				data:pw,
-				success:function(data){
-					//console.log(pw)
-					if(data=="비밀번호틀림"){
-						alert("비밀번호가 일치하지 않습니다");
-					} else {
-						location.href="/member/mypage"
-					}
-				}
-			})
-		});
-	});
-</script>
+<link rel="stylesheet" href="/css/mypageProcCss.css">
+<script type="text/javascript" src="/js/mypageProcJs.js"></script>
 </head>
 <body>
-	<form>
-		<div><input type="text" name="userId" value="${member.userId}" readonly="readonly"></div>
-		<div><input type="password" name="password" placeholder="비밀번호"  maxlength="16"></div>
-		<div><input type="submit" value="확인"></div>
-	</form>
+	<div id="mypageProc_container">
+		<div id="header"></div>
+		<div id="mypageProc">
+			<div>
+				<h3 id="mypageProc_title">회원 비밀번호 확인</h3>
+				<div id="text1">비밀번호를 한번 더 입력해주세요.</div>
+				<div id="text2">회원님의 정보를 안전하게 보호하기 위해서 비밀번호를 한번 더 확인합니다.</div>
+				<div>
+					<form class="mypageProc_form">
+						<div id="id">아이디</div>
+						<div>
+							<input id="id_input" type="text" name="userId" value="${member.userId}" readonly="readonly">
+						</div>
+						<div id="pass">비밀번호</div>
+						<div>
+							<input id="pass_input" type="password" name="password" placeholder="비밀번호" maxlength="16" required="required">
+						</div>
+						<div class="button">
+							<input id="submit" type="submit" value="확인">
+							<input id="cancel"type="button" value="취소" onclick="history.go(-1)">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
