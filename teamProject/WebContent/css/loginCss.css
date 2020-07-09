@@ -1,7 +1,7 @@
 @charset "UTF-8";
-@import url("/css/anim4-v.css");
 *{
 	background-color:#f5f5f5;
+	
 	margin: 0;
 
     padding: 0;
@@ -22,8 +22,7 @@
   height:100%;
   width:100%;
   grid-template-rows:
-  [first]100px
-  [second]817px;
+  100px 1fr;
   grid-template-columns:
   10% 30% 50% 10%;
   grid-template-areas:
@@ -35,20 +34,26 @@
 
 #header{
 	/* height: 100px; */
-    background-color: #ffcccc;
+    /* background-color: #ffcccc; */
     /* position: absolute; */
     /* top: 0; */
     line-height: 100px;
     /* left: 0; */
     /* right: 0; */
     grid-area: top;
-    color: #51565d;
     text-align: center;
-    font-weight: bold;
-    font-size: 50px;
     grid-row: 1;
     text-shadow: 2px 2px 0 #f5f5f5;
     box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
+}
+
+#title{
+	color: #51565d;
+    font-weight: bold;
+    font-size: 50px;
+    background-color: #ffcccc;
+    font-family: 'Nanum Gothic Coding', monospace;
+	letter-spacing:3px;
 }
 
 #left{
@@ -85,7 +90,7 @@
     margin: 18px 0 0;
     display: block;
     border: 1px solid #fecdcd;
-    color: #ffcccc;
+    color: #fabfbf;
     padding: 16px 17px;
     font-size: 17px;
     line-height: 20px;
@@ -95,6 +100,7 @@
     margin: 18px 0 0;
     text-align: center;
     border-radius: 3px;
+    font-weight: 700;
 }
 
 .button{
@@ -116,7 +122,7 @@
     font-size: 14px;
     line-height: 20px;
     color: #111;
-    font-weight: 700;
+    font-weight: 600;
     text-indent: 12px;
     border-radius: 3px;
 }
@@ -148,6 +154,7 @@
     text-align: center;
     width:100%;
     border-radius: 3px;
+    font-weight: 600;
 }
 #pw{
 	position: relative;
@@ -169,7 +176,7 @@
     height: 10px;
     background-color: #333;
     position: absolute;
-    top: 5px;
+    top: 8px;
     left: 77px;
 }
 
@@ -178,6 +185,7 @@
     color: #333;
     font-size:13px;
     margin:5px;
+    position:relative;
 }
 
 #login_title{
@@ -199,25 +207,11 @@
     flex-direction: column;
 }
 
-/* WRAPPER */
-.wrap-slider {width: 100%;height: 70%;max-height:100%; min-height:100%; margin:0 auto;}
+.carousel-inner > .carousel-item > img{ width: 100%; height: 100%; }
 
-img{width: 100%;height: 700px;}
-/* SLIDER */
-/* box-shadow:3px 3px 15px rgba(0,0,0,0.7); */
-.css-slider {background:#000;height:700px;width:100%;margin:50px auto;overflow:visible;position:relative;}
-.mask {overflow:hidden;height:700px;}
-.css-slider ul {margin:0;padding:0;position:relative;}
-.css-slider li {width:100%;height:100%;position:absolute;top:0;list-style:none;}
-.css-slider li.firstanimation {-moz-animation:cycle 20s linear infinite;-webkit-animation:cycle 20s linear infinite;}
-.css-slider li.secondanimation {-moz-animation:cycletwo 20s linear infinite;-webkit-animation:cycletwo 20s linear infinite;}
-.css-slider li.thirdanimation {-moz-animation:cyclethree 20s linear infinite;-webkit-animation:cyclethree 20s linear infinite;}
-.css-slider li.fourthanimation {-moz-animation:cyclefour 20s linear infinite;-webkit-animation:cyclefour 20s linear infinite;}
-
-/* TOOLTIP */
-.css-slider .tooltip {background:rgba(0,0,0,0.7);width:100%;height:60px;position:relative;bottom:75px;left:-800px;-moz-transition:all 0.3s ease-in-out;-webkit-transition:all 0.3s ease-in-out;}
-.css-slider li.first:hover .tooltip, .css-slider li.second:hover .tooltip, .css-slider li.third:hover .tooltip, .css-slider li.fourth:hover .tooltip{left:0px;}
-.css-slider:hover li, .css-slider:hover .progress-bar {-moz-animation-play-state:paused;-webkit-animation-play-state:paused;}
-
-/* PROGRESS BAR */
-.progress-bar {position:relative;top:-5px;width:800px;height:5px;background:#000;-moz-animation:fullexpand 20s ease-out infinite;-webkit-animation:fullexpand 20s ease-out infinite;}
+#demo{
+	border:1px solid #ccc;
+	box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
+	width: 100%;
+    height: 95%;
+}

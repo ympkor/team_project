@@ -3,16 +3,20 @@
 <head>
 <title>로그인창</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/loginJs.js?1"></script>
+<script type="text/javascript" src="/js/loginJs.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <link rel="stylesheet" href="/css/loginCss.css">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
 	<div id="login_container">
 		<div id="header">
-			더조은가계부
+			<div id="title">더조은가계부</div>
 		</div>
 		<div id="left">
 			<form class="login_form">
@@ -36,31 +40,31 @@
 			</form>
 		</div>
 		<div class="right">
-		 	<div class="wrap-slider">
-    			<div class="css-slider">
-		        	<div class="mask">
-						<ul>
-							<li class="firstanimation first">
-								<img src="/img/1.jpg"/>
-								<!-- <div class="tooltip"></div> -->
-							</li>
-							<li class="secondanimation second">
-								<img src="/img/2.jpg"/>
-								<!-- <div class="tooltip"></div> -->
-							</li>
-							<li class="thirdanimation third">
-								<img src="/img/3.jpg"/>
-								<!-- <div class="tooltip"></div> -->
-							</li>
-							<li class="fourthanimation fourth">
-								<img src="/img/4.jpg"/>
-								<!-- <div class="tooltip"></div> -->
-							</li>
-						</ul>
-		            </div>
-	           		<div class="progress-bar"></div>
-        		</div>
-    		</div>
+		 	<script> $('.carousel').carousel({ interval: 1000 }) </script>
+		 	<div id="demo" class="carousel slide" data-ride="carousel"> 
+		 		<!-- 슬라이드쇼 -->
+		 		<div class="carousel-inner">
+		 			<div class="carousel-item active"> 
+		 				<img class="d-block w-100" src="/img/1.jpg" alt="First slide"> 
+	 				</div> 
+			 		<div class="carousel-item"> 
+			 			<img class="d-block w-100" src="/img/2.jpg" alt="Second slide"> 
+			 		</div> 
+			 		<div class="carousel-item"> 
+			 			<img class="d-block w-100" src="/img/3.jpg" alt="Third slide"> 
+			 		</div>
+			 		<div class="carousel-item"> 
+			 			<img class="d-block w-100" src="/img/4.jpg" alt="Fourth slide"> 
+			 		</div>  
+			 		<!-- 슬라이드 쇼 끝 왼쪽 오른쪽 화살표 버튼  -->
+			 		<a class="carousel-control-prev" href="#demo" data-slide="prev"> 
+			 			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+			 		</a> 
+			 		<a class="carousel-control-next" href="#demo" data-slide="next"> 
+			 			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			 		</a>
+	 			</div>
+	 		</div>
 		</div>
 	</div>
 </body>
