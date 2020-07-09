@@ -263,7 +263,7 @@ function showUpdateTransferFromAomIncome(iica) {
 			let updateAOMStr;
 			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(iica.assetsId == 99){updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+iica.aomName+'</option>';
+				if(iica.assetsId == 99){updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+iica.assetsName+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value='+iica.memAssetId+' selected>'+iica.assetsName+' '+iica.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != iica.memAssetId && aaomList[i].assetsId != 99){
@@ -310,7 +310,7 @@ function showUpdateTransferFromAomExpense(eeca) {
 			let updateAOMStr;
 			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(eeca.assetsId == 99){updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+eeca.aomName+'</option>';	
+				if(eeca.assetsId == 99){updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+eeca.assetsName+'</option>';	
 				}else{updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetIdTo+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != eeca.memAssetId && aaomList[i].assetsId != 99){
@@ -357,7 +357,7 @@ function showUpdateTransferFromAomTransfer(taomfaomt) {
 			let updateAOMStr;
 			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(taomfaomt.assetsId == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+taomfaomt.aomNameFrom+'</option>';
+				if(taomfaomt.assetsId == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+taomfaomt.assetsNameFrom+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value='+taomfaomt.memAssetIdFrom+' selected>'+taomfaomt.assetsNameFrom+' '+taomfaomt.aomNameFrom+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != taomfaomt.memAssetIdFrom && aaomList[i].assetsId != 99){
@@ -381,7 +381,7 @@ function showUpdateTransferToAomTransfer(taomfaomt) {
 			let updateAOMStr;
 			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(taomfaomt.assetsIdTo == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected disabled="disabled">'+taomfaomt.aomNameTo+'</option>';
+				if(taomfaomt.assetsIdTo == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected disabled="disabled">'+taomfaomt.assetsNameTo+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value='+taomfaomt.memAssetIdTo+' selected>'+taomfaomt.assetsNameTo+' '+taomfaomt.aomNameTo+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != taomfaomt.memAssetIdTo && aaomList[i].assetsId != 99){
@@ -440,7 +440,7 @@ function makeDetailIncomeDIV(iicaList) {
 			sumI += iicaList[i].amount;
 			str += '<div class="di_income' + i + ' detailItem"><div class=detailIcName><span class=detailIcName>' + iicaList[i].icName + '</span></div>';
 			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br>';
-			if(iicaList[i].assetsId == 99){str += '<span class=detailAName>' + iicaList[i].aomName + '</span></div>';
+			if(iicaList[i].assetsId == 99){str += '<span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
 			}else{str += '<span class=detailAName>' + iicaList[i].assetsName + ' ' + iicaList[i].aomName + '</span></div>';}
 			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
@@ -458,7 +458,7 @@ function makeDetailExpenseDIV(eecaList) {
 			sumE += eecaList[i].amount;
 			str += '<div class="di_expense' + i + ' detailItem"><div class=detailEcName><span class=detailEcName>' + eecaList[i].ecName + '</span></div>';
 			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br>';
-			if(eecaList[i].assetsId == 99){str +='<span class=detailAName>' + eecaList[i].aomName + '</span></div>';
+			if(eecaList[i].assetsId == 99){str +='<span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
 			}else{str +='<span class=detailAName>' + eecaList[i].assetsName + ' ' + eecaList[i].aomName + '</span></div>';}
 			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
 		}
@@ -474,10 +474,10 @@ function makeDetailTransferDIV(taomfaomtList) {
 		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
 		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
 		if(taomfaomtList[i].assetsId == 99){
-			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].aomNameTo+'</span></div>';		
-			}else{str += taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
+			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';		
+			}else{str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].assetsNameTo+'</span></div>';}
 		}else{
-			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].aomNameTo+'</span></div>';
+			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';
 			}else{str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
 		}
 		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
