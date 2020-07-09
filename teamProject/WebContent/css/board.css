@@ -31,23 +31,35 @@
   "l_blank content r_blank" ;
 }
 .topmenu{grid-area: top; min-width: 700px;}
-/* div.basic{position:absolute;left:0px;top:20px; width:25%;}
-div.statistics{position:absolute;left:25%;top:20px; width:25%;}
-div.assest{position:absolute;left:50%;top:20px; width:25%;}
-div.board{position:absolute;right:0px;top:20px; width:25%;} */
+div#boardcontent{font-family: Montserrat, "sans-serif"; } 
 a{text-decoration: none; color:#51565d;}
-th,td{text-align: center;height:35px;}
+table{border-collapse: collapse;}
+th,td{text-align: center;}
+th{line-height: 35px; font-weight: bold;border-bottom:1px solid black; }
+td{height: 50px; line-height: 50px;border-bottom:1px solid #9298a0;}
 div#boardcontent{grid-area: content; width:100%;min-width:600px; 
 	position: relative; top:20px;}
-div.boardtitlehead{width:500px;}
+div.boardtitlehead{width:500px; margin-bottom: 10px;}
 /* .gomypage{position: relative; top:0px; left:80%;}
 .gologout{position: relative; top:0px; left:80%;} */
 .boardtitle{text-align: center; font-size: 50px; font-family: 'Lobster';}
-.boardlist{position: relative; top: 20px; width:100%}
-#writeboard{top: 10px;
-    left: 20px;
-    position: relative;border: 1px solid lightgrey;}
-.boardpagenation{position: absolute; width:100%;
-	min-width:600px; text-align: center; top:500px;}
+
+/* #writeboard{top: 10px; left: 20px; 
+   position: relative;border: 1px solid lightgrey;} */
+.boardpagenation{position: relative; width:100%;
+	min-width:600px; text-align: center; top:10px;}
 td.regDate{min-width: 153px;}
-td.nocontent{height:350px; line-height: 350px;text-align: center;}    
+td.nocontent{height:350px; line-height: 350px;text-align: center;}
+.currentP{color:#fabfbf; font-weight: 500;}    
+div.boardlistdiv{height: fit-content;}
+div#writeBoarddiv{position: relative; top: 10px;}
+button#writeBoard{width: 80px;
+    height: 30px;
+    border: 1px solid #9298a0;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #51565d 0%, #9298a0 100%);
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 100%;
+    text-align: center;
+    line-height: 30px;}

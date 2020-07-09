@@ -100,7 +100,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  			metotal +=monthExpenseAmountData[i];
 	  		}    
 		  var options = {
-		    title: date.slice(0,7)+'월 지출 총액 :'+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		    title:'지출 총액 : '+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		    backgroundColor: '#f5f5f5'
 		  };
 		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
@@ -120,7 +120,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  			mitotal +=monthIncomeAmountData[i];
 	  		}    
 		var options = {
-		  title: date.slice(0,7)+'월수익 총액 '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
+		  title:'수익 총액 : '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		  backgroundColor: '#f5f5f5'
 		};
 		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));

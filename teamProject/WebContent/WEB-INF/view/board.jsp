@@ -27,6 +27,7 @@
 	</header>
 <div id="boardcontent">
 <div class="boardtitle">FreeBoard</div>
+<div class="boardlistdiv">
 <table class="boardlist">
 <colgroup>
 		<col width="10%">
@@ -58,10 +59,12 @@
 		</td>
 		<td>${b.likes }</td><td>${b.hits}</td></tr>
 		<tr class="boardID" ><td colspan="6"><div class="contentdiv" >${b.boardId}</div></td></tr>
-		</tbody>
+		</tbody> 
 		</c:forEach>
 	</tbody>
 </table>
+</div>
+<div id="writeBoarddiv"><button id="writeBoard">글쓰기</button></div>
 <div class="boardpagenation">
 <!-- 페이지가 6개 이상일때부터  -->
 <!-- 첫번째블럭 : 이전없음, 총보여줄 페이지 개수는 5개 -->
@@ -108,11 +111,16 @@
 <!-- 페이지가 5개 이내 이전,다음 없음 -->
 <c:if test="${bList.pageTotalCnt<=5}">
 	<c:forEach var="p" begin="1" end="${bList.pageTotalCnt}">
-	<a href="/board/show?pNum=${p}">[${p}]</a>
+		<c:choose>
+		<c:when test="${bList.currentPageNumber==p}">
+			<a class="currentP" href="/board/show?pNum=${p}">[${p}]</a>
+		</c:when>
+		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
+		</c:choose>	
+	<%-- <a href="/board/show?pNum=${p}">[${p}]</a> --%>
 	</c:forEach>
 </c:if> 
 </div>
-<button id="writeBoard">글쓰기</button>
 </div>
 </div>
 </body>

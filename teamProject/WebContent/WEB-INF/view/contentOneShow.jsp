@@ -9,7 +9,7 @@
 <title>게시글보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/boardOneContentJS.js?2"></script>
-<link rel="stylesheet" href="/css/boardOneContent.css?1">
+<link rel="stylesheet" href="/css/boardOneContent.css?2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>

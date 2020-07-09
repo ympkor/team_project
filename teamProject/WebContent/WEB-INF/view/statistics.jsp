@@ -13,8 +13,9 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=1"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=2">
+<link rel="stylesheet" href="/css/statistics.css?ver=1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="wrapper">
@@ -34,11 +35,10 @@
 <div id="leftdayandweek">
 <div id="leftday">
 <form action="/statistics/show">
-날짜 선택 <input id="date" type="date" name="date" max="9999-12-31">
+<input id="date" type="date" name="date" max="9999-12-31">
 <button id="formbutton"></button></form>
 <div class="dayshow">
 <div id="daymove"><button id="lastday">◀</button>${date}<button id="nextday">▶</button></div>
-<span> 수지 합계 </span>
 <table>
 	<colgroup>
 		<col width="33.3%">
@@ -52,17 +52,15 @@
 		<tr id="daytotal"><th><c:forEach var="e" items="${dailyIncome}">
 			<c:set var= "isum" value="${isum + e.amount}"/>
 		</c:forEach><fmt:formatNumber value="${isum}" pattern="###,###,###,###"/>
-		</th>
-		
+		</th>		
 		<th><c:forEach var="e" items="${dailyExpense}">
 			<c:set var= "esum" value="${esum + e.amount}"/>
 		</c:forEach><fmt:formatNumber value="${esum}" pattern="###,###,###,###"/></th>
-		<th><fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
+		<th>
+		<fmt:formatNumber value="${isum-esum}" pattern="###,###,###,###"/></th>		
 		</tr>
 	</thead>
 </table>
-<!-- 일별 수입지출 내역<br> -->
-<p>&nbsp;</p>
 <table>	
 	<thead>
 		<tr><th>항목</th><th>사용자산</th><th>수입</th><th>지출</th><th>메모</th></tr>
@@ -87,7 +85,7 @@
 </div>
 
 <div id="leftweek">
-<div style="text-align:center"><button id="lastweek">◀</button>주별 수입지출 현황<button id="nextweek">▶</button></div>
+<div style="text-align:center"><button id="lastweek">◀</button>Weekly<button id="nextweek">▶</button></div>
 <table>
 	<thead>
 		<tr><th style='min-width:35px; width:35px;'></th><th class="weekwidth">일</th><th class="weekwidth">월</th>
