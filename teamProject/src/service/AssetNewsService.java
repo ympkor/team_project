@@ -9,8 +9,8 @@ import java.net.URLEncoder;
 public class AssetNewsService {
     
 	public StringBuilder sb;
-	String keywords = "자산, 저축, 금리, 상품, 부동산, 주식";
-    int displays = 12;
+	String keywords = "자산 금리 저축 적금";
+    int displays = 10;
 	
     public StringBuilder getNews() {
         String clientId = "RzpFtCOVzFOj6cT9QK4s";
