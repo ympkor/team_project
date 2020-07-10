@@ -35,13 +35,8 @@ a{
 }
 
 #header{
-	/* height: 100px; */
     background-color: #ffcccc;
-    /* position: absolute; */
-    /* top: 0; */
     line-height: 100px;
-    /* left: 0; */
-    /* right: 0; */
     grid-area: top;
     text-align: left;
     grid-row: 1;

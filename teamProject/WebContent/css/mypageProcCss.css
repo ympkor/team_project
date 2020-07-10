@@ -34,13 +34,8 @@ a{
 }
 
 #header{
-	/* height: 100px; */
     background-color: #ffcccc;
-    /* position: absolute; */
-    /* top: 0; */
     line-height: 100px;
-    /* left: 0; */
-    /* right: 0; */
     grid-area: top;
     grid-row: 1;
     box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
@@ -80,7 +75,6 @@ a{
 	width: 100%;
     max-width: 350px;
     min-width: 350px;
-	/* border:1px solid black; */
 }
 
 #id, #pass{
@@ -117,7 +111,6 @@ a{
     color: #fabfbf;
     background-color: #f8f8f8;
     font-weight: 700;
-    /* text-indent: 12px; */
     border-radius: 3px;
 }
 #submit{

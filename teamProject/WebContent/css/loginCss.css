@@ -33,13 +33,8 @@
 }
 
 #header{
-	/* height: 100px; */
     background-color: #ffcccc;
-    /* position: absolute; */
-    /* top: 0; */
     line-height: 100px;
-    /* left: 0; */
-    /* right: 0; */
     grid-area: top;
     text-align: center;
     grid-row: 1;
@@ -58,10 +53,7 @@
 }
 
 #left{
-	/*position: absolute; */
     grid-area: left;
-    /* top: 50%; */
-    /* grid-row: 1/3; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -75,15 +67,6 @@
     right: 7px;
     top: 12px;
 }
-
-/* #right{
-	grid-area:right;
-	grid-row:2/3;
-	display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-} */
 
 #join{
 	background-color: #f8f8f8;
@@ -110,7 +93,6 @@
 
 .login_form{
 	width: 100%;
-    /* border: 1px solid black; */
     max-width: 350px;
     min-width: 350px;
 }

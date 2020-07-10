@@ -15,13 +15,15 @@
     vertical-align: baseline;
     
     font-family: Montserrat, "sans-serif"; 
+    
+    box-sizing: border-box;
 }
 
 a{
 	text-decoration:none;
 }
 
-#join_container{
+#update_container{
 	display: grid;
  	height:100%;
   	width:100%;
@@ -30,7 +32,7 @@ a{
   	grid-template-areas:
   	"top"
   	"main";
-   	grid-row-gap: 20px;
+  	grid-row-gap: 20px;
 }
 
 #header{
@@ -54,7 +56,7 @@ a{
 	text-shadow: 2px 2px 0 #f5f5f5;
 }
 
-#join{
+#update{
 	grid-area: main;
 	display: flex;
     justify-content: flex-start;
@@ -63,32 +65,28 @@ a{
     margin:5%;
 }
 
-#join_title{
+#update_title{
 	font-weight: 800;
-    font-size: 30px;
+    font-size: 20px;
     line-height: 20px;
     text-align: center;
-    margin:10px;
 }
 
-.join_form{
-	padding-top: 26px;
-	width: 100%;
-    max-width: 768px;
-    min-width: 500px;
+#userkey{
+	margin-top:20px;
 }
 
 #id, #pass, #passck, #name, #email{
-	display:block;
-	padding:11px 0 7px;
-	font-size:13px;
-	line-height:18px;
-	text-align:left;
-	font-weight:700;
+	display: block;
+    padding: 11px 0 7px;
+    font-size: 13px;
+    line-height: 18px;
+    text-align: left;
+    font-weight: 700;
 }
 
-#id_input, #pass_input, #passck_input, #name_input, #email_input{
-	width: 78%;
+#id_val, #pass_val, #passck_val, #name_val, #email_val{
+	width: 100%;
     border: 1px solid #ccc;
     padding: 14px 0 12px;
     font-size: 14px;
@@ -99,43 +97,29 @@ a{
     border-radius: 3px;
 }
 
-#id_button, #email_button{
-	width: 20%;
-    border:1px solid #fecdcd;
-    padding: 14px 0 12px;
-    font-size: 14px;
-    line-height: 20px;
-    color: #fabfbf;
-    background-color: #f8f8f8;
-    font-weight: 700;
-    border-radius: 3px;
+.update_form{
+	width: 100%;
+    max-width: 400px;
+    min-width: 400px;
 }
 
 .button{
-	margin: 6.08% 0 0;
+	margin-top:30px;
 }
 
-#search{
-	background-color: #ffcccc;
-    text-decoration: none;
-    margin: 18px 0 0;
-    display: block;
-    border: 1px solid #fecdcd;
-    color: white;
-    padding: 16px 17px;
-    font-size: 17px;
+#submit{
+	border:1px solid #fecdcd;
+    padding: 14px 0 12px;;
     line-height: 20px;
-    display: block;
-    padding-left: 0;
-    padding-right: 0;
-    margin: 18px 0 0;
-    text-align: center;
-    width:100%;
-    border-radius: 3px;
+    color: white;
+    background-color: #ffcccc;
     font-weight: 700;
+    border-radius: 3px;
+    font-size:15px;
+    width:100%;
 }
 
-#idtext, #passtext, #passchtext, #nametext, #emailtext{
+#passtext, #passchtext, #nametext{
 	color:red;
 	padding-top: 10px;
     padding-left: 5px;

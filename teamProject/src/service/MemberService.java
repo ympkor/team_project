@@ -26,8 +26,6 @@ public class MemberService {
 	//회원가입시 아이디 중복체크
 	public String equalId(Member member) {
 		Member dbId = joinMapper.selectById(member.getUserId());
-//		System.out.println("dbMember: " + dbId);
-//		System.out.println("member: " +member.getUserId());
 		if(dbId == null) {
 			dbId = new Member(0, "", "", "", "");
 		}
@@ -58,7 +56,6 @@ public class MemberService {
 	
 	//로그인시 아이디와 비번 유효성 체크
 	public String login(Member member) {
-		//System.out.println("아이디"+member.getUserId());
 		Member dbId = joinMapper.selectById(member.getUserId());
 		if(dbId == null) {
 			dbId = new Member(0, "", "", "", "");
@@ -76,10 +73,7 @@ public class MemberService {
 	
 	//이메일로 아이디 검색
 	public String searchId(String email, String name) {
-//		System.out.println("입력받은 " + email);
-//		System.out.println("입력받은 " + name);
 		String dbId = joinMapper.idSelectByEmail(email, name);//DB에서 이메일 값을 가져옴
-//		System.out.println("test");
 		if(!(dbId==null)) {
 			return dbId;
 		} else {
@@ -90,11 +84,6 @@ public class MemberService {
 	//아이디로 비밀번호 검색
 	public String searchPw(String userId, String name, String email) {
 		String dbPw = joinMapper.pwSelectById(userId, name, email);
-		//System.out.println("test");
-//		System.out.println(userId);
-//		System.out.println(name);
-//		System.out.println(email);
-//		System.out.println(dbPw);
 		if(!(dbPw==null)) {
 			return dbPw;
 		} else {
@@ -133,7 +122,6 @@ public class MemberService {
 	
 	//마이페이지 진입시 비밀번호 비교
 	public String mypagePw(Member member) {
-		System.out.println("아이디"+member.getUserId());
 		Member dbId = joinMapper.selectById(member.getUserId());
 		if(dbId == null) {
 			dbId = new Member(0, "", "", "", "");
@@ -147,7 +135,6 @@ public class MemberService {
 	
 	//회원가입시 현금 초기화
 	public void addCash(int userKey) {
-		System.out.println("serviceuserkey:"+userKey);
 		joinMapper.insertCash(userKey);
 	}
 }
