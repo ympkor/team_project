@@ -34,3 +34,6 @@
 .gomypage{font-size: 100%; text-shadow: none; grid-column: 5/6;}
 .gologout{font-size: 100%; text-shadow: none; grid-column: 6/7;}
 button.gomypage,button.gologout{background-color: #ffcccc;}
+button{
+	cursor: pointer;
+}

@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>가계부</title>
 	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
 	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=1">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -87,7 +87,7 @@
 					<div class="update_amount">
 						<label for="update_income_amount">금액</label>
 						<input type="number" id="update_income_amount_origin" name="amount" class="hidden">
-						<input type="number" id="update_income_amount" name="newAmount" required min="0" max="999999999">
+						<input type="text" id="update_income_amount" name="newAmount" required maxlength="11" onkeyup="numberFormat(this)">
 					</div>
 					<!-- income_memo 입력 창 -->
 					<div class="update_memo">
@@ -162,7 +162,7 @@
 					<div class="update_amount">
 						<label for="update_expense_amount">금액</label>
 						<input type="number" id="update_expense_amount_origin" name="amount" class="hidden">
-						<input type="number" id="update_expense_amount" name="newAmount" required min="0" max="999999999">
+						<input type="text" id="update_expense_amount" name="newAmount" required maxlength="11" onkeyup="numberFormat(this)">
 					</div>
 					<!-- income_memo 입력 창 -->
 					<div class="update_memo">
@@ -237,7 +237,7 @@
 					<div class="update_amount">
 						<label for="update_transfer_amount">금액</label>
 						<input type="number" id="update_transfer_amount_origin" name="amount" class="hidden">
-						<input type="number" id="update_transfer_amount" name="newAmount" required min="0" max="999999999">
+						<input type="text" id="update_transfer_amount" name="newAmount" required maxlength="11" onkeyup="numberFormat(this)">
 					</div>
 					<!-- income_memo 입력 창 -->
 					<div class="update_memo">
@@ -326,7 +326,7 @@
 						<!-- income_amount입력 창 -->
 						<div class="insert_amount">
 							<label for="insert_income_amount">금액</label>
-							<input type="number" id="insert_income_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
+							<input type="text" id="insert_income_amount" name="amount" required maxlength="11" onkeyup="numberFormat(this)" onblur="syncronizeAmountAtInsertForm(this)">
 						</div>
 						<!-- income_memo 입력 창 -->
 						<div class="insert_memo">
@@ -376,7 +376,7 @@
 						<!-- income_amount입력 창 -->
 						<div class="insert_amount">
 							<label for="insert_expense_amount">금액</label>
-							<input type="number" id="insert_expense_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
+							<input type="text" id="insert_expense_amount" name="amount" required maxlength="11" onkeyup="numberFormat(this)" onblur="syncronizeAmountAtInsertForm(this)">
 						</div>
 						<!-- income_memo 입력 창 -->
 						<div class="insert_memo">
@@ -423,7 +423,7 @@
 						<!-- income_amount입력 창 -->
 						<div class="insert_amount">
 							<label for="insert_transfer_amount">금액</label>
-							<input type="number" id="insert_transfer_amount" name="amount" required min="0" max="999999999" onblur="syncronizeAmountAtInsertForm(this)">
+							<input type="text" id="insert_transfer_amount" name="amount" required maxlength="11" onkeyup="numberFormat(this)" onblur="syncronizeAmountAtInsertForm(this)">
 						</div>
 						<!-- income_memo 입력 창 -->
 						<div class="insert_memo">

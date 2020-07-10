@@ -1,3 +1,16 @@
+// 콤마 찍기
+function comma(str) {
+	str = String(str);
+	return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+// 콤마 풀기
+function uncomma(str) {
+	str = String(str);
+	return str.replace(/[^\d]+/g, '');
+}
+function numberFormat(obj) {
+	obj.value = comma(uncomma(obj.value));
+}
 //해당월에 맞는 income data들을 전달받아 만들어진 달력에 뿌려주는 기능
 function showThisMonthIncome(miicList){
 	if(miicList != null){
@@ -111,7 +124,7 @@ function putIncomeDataToUpdateForm(iicaList) {
 				showUpdateTransferToAomIncome(iicaList[i]);
 				makeIncomeCategoryOption(iicaList[i]);
 				document.querySelector('#update_income_amount_origin').value = iicaList[i].amount;
-				document.querySelector('#update_income_amount').value = iicaList[i].amount;
+				document.querySelector('#update_income_amount').value = Number(iicaList[i].amount).toLocaleString('en');
 				document.querySelector('#update_income_memo').value = iicaList[i].memo;
 			});
 		}
@@ -161,7 +174,7 @@ function putExpenseDataToUpdateForm(eecaList) {
 				showUpdateTransferToAomExpense(eecaList[i]);
 				makeExpenseCategoryOption(eecaList[i]);
 				document.querySelector('#update_expense_amount_origin').value = eecaList[i].amount;
-				document.querySelector('#update_expense_amount').value = eecaList[i].amount;
+				document.querySelector('#update_expense_amount').value = Number(eecaList[i].amount).toLocaleString('en');
 				document.querySelector('#update_expense_memo').value = eecaList[i].memo;
 			});
 		}
@@ -211,7 +224,7 @@ function putTransferDataToUpdateForm(taomfaomtList) {
 				document.querySelector('#update_assets_transfer_memAssetIdTo_origin').value = taomfaomtList[i].memAssetIdTo;
 				showUpdateTransferToAomTransfer(taomfaomtList[i]);
 				document.querySelector('#update_transfer_amount_origin').value = taomfaomtList[i].amount;
-				document.querySelector('#update_transfer_amount').value = taomfaomtList[i].amount;
+				document.querySelector('#update_transfer_amount').value = Number(taomfaomtList[i].amount).toLocaleString('en');
 				document.querySelector('#update_transfer_memo').value = taomfaomtList[i].memo;
 			});
 		}
@@ -929,6 +942,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			alert('입금 계좌를 선택하세요.')
 			return false;
 		}
+		let newAmountStr = document.querySelector('#update_income_amount').value;
+		document.querySelector('#update_income_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateIncomeInsert',
@@ -955,6 +970,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			alert('입금 계좌를 선택하세요.')
 			return false;
 		}
+		let newAmountStr = document.querySelector('#update_expense_amount').value;
+		document.querySelector('#update_expense_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateExpenseInsert',
@@ -981,6 +998,8 @@ window.addEventListener('DOMContentLoaded', function () {
 			alert('입금 계좌를 선택하세요.')
 			return false;
 		}
+		let newAmountStr = document.querySelector('#update_transfer_amount').value;
+		document.querySelector('#update_transfer_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateTransferInsert',
@@ -995,6 +1014,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	//수입 업데이트
 	$('#update_income_form').on('submit', function() {
+		let newAmountStr = document.querySelector('#update_income_amount').value;
+		document.querySelector('#update_income_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateIncome',
@@ -1009,6 +1030,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	//지출 업데이트
 	$('#update_expense_form').on('submit', function() {
+		let newAmountStr = document.querySelector('#update_expense_amount').value;
+		document.querySelector('#update_expense_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateExpense',
@@ -1023,6 +1046,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	//이체 업데이트
 	$('#update_transfer_form').on('submit', function() {
+		let newAmountStr = document.querySelector('#update_transfer_amount').value;
+		document.querySelector('#update_transfer_amount').value = Number(uncomma(newAmountStr));
 		let formData = $('#update_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateTransfer',
@@ -1039,6 +1064,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#delete_income_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
+			let newAmountStr = document.querySelector('#update_income_amount').value;
+			document.querySelector('#update_income_amount').value = Number(uncomma(newAmountStr));
 			let formData = $('#update_income_form').eq(0).serialize();
 			$.ajax({
 				url:'/main/postDeleteIncome',
@@ -1055,6 +1082,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#delete_expense_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
+			let newAmountStr = document.querySelector('#update_expense_amount').value;
+			document.querySelector('#update_expense_amount').value = Number(uncomma(newAmountStr));
 			let formData = $('#update_expense_form').eq(0).serialize();
 			$.ajax({
 				url:'/main/postDeleteExpense',
@@ -1071,6 +1100,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#delete_transfer_button').on('click', function(){
 		let really = confirm('삭제하시겠습니까?');
 		if(really == true) {
+			let newAmountStr = document.querySelector('#update_transfer_amount').value;
+			document.querySelector('#update_transfer_amount').value = Number(uncomma(newAmountStr));
 			let formData = $('#update_transfer_form').eq(0).serialize();
 			$.ajax({
 				url:'/main/postDeleteTransfer',
@@ -1095,6 +1126,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	//insert income 버튼 클릭시 insert 이벤트
 	$('#insert_income_form').on('submit', function() {
+		let amountStr = document.querySelector('#insert_income_amount').value;
+		document.querySelector('#insert_income_amount').value = Number(uncomma(amountStr));
 		let formData = $('#insert_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertIncome',
@@ -1122,6 +1155,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
 	//insert expense 버튼 클릭시 insert 이벤트
 	$('#insert_expense_form').on('submit', function() {
+		let amountStr = document.querySelector('#insert_expense_amount').value;
+		document.querySelector('#insert_expense_amount').value = Number(uncomma(amountStr));
 		let formData = $('#insert_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertExpense',
@@ -1148,6 +1183,8 @@ window.addEventListener('DOMContentLoaded', function () {
 	});
 	//transfer insert 버튼 클릭시 insert 이벤트
 	$('#insert_transfer_form').on('submit', function() {
+		let amountStr = document.querySelector('#insert_transfer_amount').value;
+		document.querySelector('#insert_transfer_amount').value = Number(uncomma(amountStr));
 		let formData = $('#insert_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertTransfer',
