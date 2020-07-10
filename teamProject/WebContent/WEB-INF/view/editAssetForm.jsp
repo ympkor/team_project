@@ -8,18 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산 수정</title>
-<link rel="stylesheet" type="text/css" href="/css/myAssetEdit.css">
-<link rel="stylesheet" href="/css/topMenu.css?asd=2">
-<script type="text/javascript">
-window.onload = function() {
-	
-	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypage";
-	}
-	document.querySelector(".gologout").onclick = function(){
-		location.href="/member/logout";
-	}
-</script>
+<link rel="stylesheet" href="/css/addEditAsset.css?ver=1">
+<link rel="stylesheet" href="/css/topMenu.css?asd=3">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
 	<!-- 상단 메뉴 부분 -->
@@ -27,87 +18,78 @@ window.onload = function() {
 		<div class="grid_header">
 			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
 			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
-			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
+			<div class="assest"><a id=assetlink href="/asset/view"
+			style="text-decoration: underline; text-shadow: 2px 1px 0 #f5f5f5;">ASSETS</a></div>
 			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
-			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
-			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+			<div class="gomypage"><button class="gomypage" onClick="location.href='/member/mypageProc'">MYPAGE</button></div>
+			<div class="gologout"><button class="gologout" onClick="location.href='/member/logout'">LOGOUT</button></div>
 		</div>
 	</header>
 
+	<section>
+	
+	<left></left>
+	
+	<middle>
 	<form id="editAsset"
 				action="/asset/editAsset?memAssetId=${aom.memAssetId}" method="post">
 
-	<div class="edit">
+	<div class="center_body" style="background:;">
 	
-		<div class="editRow"></div>
-		<div class="editRow"></div>
-		<div class="editRow"></div>
+	<div></div>
+	<div></div>
+
+	<div><input type="hidden" name="userKey" value="${userKey}"></div>
+	<div style="text-align: center;"><h1 style="font-size:200%;">" 자산을 수정합니다. "</h1></div>
+
+		<div class=addPageTitle>금액</div>
+		<div class=addPageValue><input class="value" type="number" name="amount" value="${aom.amount}" required></div>
 		
-		<div class="editRow"></div>
-		<div class="editRow"><h1>자산 수정</h1></div>
-		<div class="editRow"></div>
+		<div class=addPageTitle>구분</div>
+		<div class=addPageValue>
+		<label>자산  <input type="radio" id="asset" name="type" value="자산"></label>
+        <label>부채  <input type="radio" id="debt" name="type" value="부채"></label></div>
+
+
+		<div class=addPageTitle>은행</div>
+		<div class=addPageValue>
+		<label>국민은행  <input id="an1" type="radio" name="assetsId" value="1"></label>
+        <label>기업은행  <input id="an2" type="radio" name="assetsId" value="2"></label>
+        <label>농협  <input id="an3" type="radio" name="assetsId" value="3"></label>
+        <label>신한은행  <input id="an4" type="radio" name="assetsId" value="4"></label>
+        <label>산업은행  <input id="an5" type="radio" name="assetsId" value="5"></label></div>
+        <div></div>
+        <div class=addPageValue>
+        <label>우리은행  <input id="an6" type="radio" name="assetsId" value="6"></label>
+        <label>씨티은행  <input id="an7" type="radio" name="assetsId" value="7"></label>
+        <label>하나은행  <input id="an8" type="radio" name="assetsId" value="8"></label>
+        <label>SC제일은행  <input id="an9" type="radio" name="assetsId" value="9"></label>
+        <label>기타  <input id="an10" type="radio" name="assetsId" value="10"></label>
+        </div>
 		
-		<div class="editRow"></div>
-		<div class="editRow">
-		금액<input type="number" name="amount" value="${aom.amount}" required>
-		</div>
-		<div class="editRow"></div>
+		<div class=addPageTitle>메모</div>
+		<div class=addPageValue><input class="value" type="text" name="memo" maxlength="50" value="${aom.memo}"></div>
 		
-		<div class="editRow"></div>
-		<div class="editRow">
-		구분 : 
-		자산<input type="radio" id="asset" name="type" value="자산">
-		부채<input type="radio" id="debt" name="type" value="부채">
-		</div>
-		<div class="editRow"></div>
+		<div class=addPageTitle>기록</div>
+		<div class=addPageValue><input type="checkbox" name="sync" value="1" style="margin-right:10px;"> 옵션 선택시 변경사항이 수입/지출 내역에도 기록됩니다.</div>
 		
-		<div class="editRow"></div>
-		<div class="editRow">
-		은행 : 
-		국민은행<input id="an1" type="radio" name="assetsId" value="1">
-		기업은행<input id="an2" type="radio" name="assetsId" value="2">
-		농협<input id="an3" type="radio" name="assetsId" value="3">
-		신한은행<input id="an4" type="radio" name="assetsId" value="4">
-		산업은행<input id="an5" type="radio" name="assetsId" value="5">
-		우리은행<input id="an6" type="radio" name="assetsId" value="6">
-		씨티은행<input id="an7" type="radio" name="assetsId" value="7">
-		하나은행<input id="an8" type="radio" name="assetsId" value="8">
-		SC제일은행<input id="an9" type="radio" name="assetsId" value="9">
-		기타은행<input id="an10" type="radio" name="assetsId" value="10">
-		</div>
-		<div class="editRow"></div>
-		
-		<div class="editRow"></div>
-		<div class="editRow">
-		메모<input type="text" name="memo" maxlength="50" value="${aom.memo}">
-		</div>
-		<div class="editRow"></div>
-		
-		<div class="editRow"></div>
-		<div class="editRow">
-		이 자산을 수입/지출 내역에 기록
-		<input id="syncCheck" type="checkbox" name="sync" value="1"><br>
-		(옵션 선택시 변동사항이 수입/지출 내역에 기록됩니다.)
-		</div>
-		<div class="editRow"></div>
-		
-		
-		
-		<div class="editRow"></div>
-		<div class="editRow">
-		<input type="submit" value="수정">
-		<input type="button" value="취소" onClick="location.href='view'">
-		<a href="delete?memAssetId=${aom.memAssetId}"  style="text-decoration: none; color:black"
-					onClick="return confirm('이 자산을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')">삭제</a>
-		</div>
-		<div class="editRow"></div>
-		
-		<div class="editRow"></div>
-		<div class="editRow"></div>
-		<div class="editRow"></div>
-		
+		<div></div>
+		<div class="addButton">
+		<input class="addConfirm" type="submit" value="수정하기"> 
+		<input class="addConfirm" type="button" value="취소" onClick="location.href='view'">
+		<a id=delText href="delete?memAssetId=${aom.memAssetId}"  style="text-decoration: none; color:black"
+					onClick="return confirm('이 자산을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')">
+					<span id=delBox><p>삭제</p></span></a></div>
+</div>
+<div></div>
+
+</form>
+</middle>
 	
-	</div>
+<right>
+</right>
+
+</section>
 
 <script type="text/javascript">
 
@@ -130,7 +112,6 @@ if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].chec
 	<input type="hidden" name="amountBefore" value="${originalAmount}">
 	<input type="hidden" name="typeBefore" value="${originalType}">
 	
-	</form>
 
 </body>
 </html>
