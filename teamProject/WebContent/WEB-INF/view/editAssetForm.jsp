@@ -53,18 +53,19 @@
 
 		<div class=addPageTitle>은행</div>
 		<div class=addPageValue>
-		<label>국민은행  <input id="an1" type="radio" name="assetsId" value="1"></label>
-        <label>기업은행  <input id="an2" type="radio" name="assetsId" value="2"></label>
-        <label>농협  <input id="an3" type="radio" name="assetsId" value="3"></label>
-        <label>신한은행  <input id="an4" type="radio" name="assetsId" value="4"></label>
-        <label>산업은행  <input id="an5" type="radio" name="assetsId" value="5"></label></div>
+		<label>국민은행 <input id="an1" type="radio" name="assetsId" value="1"></label>
+        <label>기업은행 <input id="an2" type="radio" name="assetsId" value="2"></label>
+        <label>농협 <input id="an3" type="radio" name="assetsId" value="3"></label>
+        <label>신한은행 <input id="an4" type="radio" name="assetsId" value="4"></label>
+        <label>산업은행 <input id="an5" type="radio" name="assetsId" value="5"></label></div>
         <div></div>
         <div class=addPageValue>
-        <label>우리은행  <input id="an6" type="radio" name="assetsId" value="6"></label>
-        <label>씨티은행  <input id="an7" type="radio" name="assetsId" value="7"></label>
-        <label>하나은행  <input id="an8" type="radio" name="assetsId" value="8"></label>
-        <label>SC제일은행  <input id="an9" type="radio" name="assetsId" value="9"></label>
-        <label>기타  <input id="an10" type="radio" name="assetsId" value="10"></label>
+        <label>우리은행 <input id="an6" type="radio" name="assetsId" value="6"></label>
+        <label>씨티은행 <input id="an7" type="radio" name="assetsId" value="7"></label>
+        <label>하나은행 <input id="an8" type="radio" name="assetsId" value="8"></label>
+        <label>SC제일은행 <input id="an9" type="radio" name="assetsId" value="9"></label>
+        <label>기타은행 <input id="an10" type="radio" name="assetsId" value="10"></label>
+        <input id="an24" type="hidden" name="assetsId" value="24">
         </div>
 		
 		<div class=addPageTitle>메모</div>
@@ -106,6 +107,7 @@ if("${aom.assetsName}"=="씨티은행"){document.forms["editAsset"]["an7"].check
 if("${aom.assetsName}"=="하나은행"){document.forms["editAsset"]["an8"].checked=true;}
 if("${aom.assetsName}"=="SC제일은행"){document.forms["editAsset"]["an9"].checked=true;}
 if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].checked=true;};
+if("${aom.assetsName}"=="현금"){document.forms["editAsset"]["an24"].checked=true;};
 
 </script>
 
