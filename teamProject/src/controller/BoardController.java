@@ -151,11 +151,15 @@ public class BoardController {
 			List<Board> bList = boardMapper.contentOneShow(boardId);
 			//보드아이디에 있는 코멘트 가져오기
 			List<Comment> cList = boardMapper.selectbyBId(boardId);
+			Board beforeBoard = boardMapper.getbeforeBoard(boardId); 
+			Board nextBoard = boardMapper.getnextBoard(boardId);
 			m.addAttribute("currentBoard", currentBoard);
 			m.addAttribute("bList", bList);
 			m.addAttribute("currentboardId", boardId);
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
+			m.addAttribute("beforeBoard", beforeBoard);
+			m.addAttribute("nextBoard", nextBoard);
 			return "contentOneShow";
 		}
 		

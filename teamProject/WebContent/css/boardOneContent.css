@@ -80,6 +80,18 @@ button.commentwriteshow{
     width: 74px;
 }
 
+input.updatecommentinput{
+	cursor: pointer; height:25px; line-height:25px;
+    border: 1px solid #9298a0; width: 70px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #51565d 0%, #9298a0 100%);
+    font-weight: 500; position:relative; top:5px;
+    color: #ffffff;
+    font-size: 95%;
+    text-align: center;
+}
+
+
 div.udbutton{position: absolute; top: 45px; right: 4px;}
 button.showboardList{position: relative; 
 	width:60px; cursor: pointer;

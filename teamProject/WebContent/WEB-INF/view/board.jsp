@@ -49,7 +49,7 @@
 		<c:forEach var="b" items="${bList.boardList}" varStatus="vs">
 		<tbody onclick="showContent(this)" class="${b.boardId}">						
 		<tr class="boardtitlehead"><td>${bList.firstshowBoardNumber-vs.index}</td>
-			<td>${b.title }<c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if></td>
+			<td class="titles">${b.title }<c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if></td>
 		<td>${b.writer }</td>
 		<td class="regDate">
 			<!-- 오늘 날짜를 nowdate 에 저장 해서 같은 날이면 시간을 불러오고 다른날이면 날짜만 불러오게-->

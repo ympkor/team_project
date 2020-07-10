@@ -31,7 +31,7 @@ $(".commentwriteinput").hide();
 		 +"<input type='hidden' name='commentId' value="+commentId+">"
 		 +"<input type='hidden' name='boardId' value="+boardId+">"
 		 +"<TEXTAREA class='writeboardcontent' name='comment' COLS=35 ROWS=3>"+oricomment+"</TEXTAREA>"
-		 +"<br><input type='submit' value='댓글수정'></form>");
+		 +"<br><input class='updatecommentinput' type='submit' value='댓글수정'></form>");
  }); 
  $(".commentdelete").click(function(){
 	 var flag =confirm("댓글 삭제하시겠습니까?");

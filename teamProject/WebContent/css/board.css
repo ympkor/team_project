@@ -40,10 +40,10 @@ th{line-height: 35px; font-weight: bold;border-bottom:1px solid black; }
 td{height: 50px; line-height: 50px;border-bottom:1px solid #9298a0;}
 div#boardcontent{grid-area: content; width:100%;min-width:600px; 
 	position: relative; top:30px;}
-div.boardtitlehead{width:500px; margin-bottom: 10px;}
 div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
 	text-decoration-color: #51565d;}
+td.titles{cursor: pointer;}
 
 .boardtitle{text-align: center; font-size: 50px; font-family: 'Lobster';}
 .boardpagenation{position: relative; width:100%;

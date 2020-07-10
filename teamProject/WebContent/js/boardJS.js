@@ -9,7 +9,7 @@ $(function() {
 	 location.href="/board/write";
  };
  $(".boardtitlehead").mouseover(function(){
-	 $(this).children().css("background","#f1e0de");
+	 $(this).children().css("background","#f1e0de");	 
  });
  $(".boardtitlehead").mouseout(function(){
 	 $(this).children().css("background","#f5f5f5");

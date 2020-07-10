@@ -13,7 +13,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=2"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=2">
+<link rel="stylesheet" href="/css/statistics.css?ver=1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
@@ -156,7 +156,7 @@
 
 
 <div id="rightmonth">
-<div style="text-align:center"><button id="lastmonth">◀</button>${date.toString().substring(0,7)} <button id="nextmonth">▶</button></div>
+<div style="text-align:center"><button id="lastmonth">◀</button>${date.toString().substring(0,7)}<button id="nextmonth">▶</button></div>
 <div class="mtotaldiv">합계 :
 	<c:set var="metotal" value="0"/>
 	<c:forEach var="me" items="${monthExpense}">
@@ -202,7 +202,7 @@
 </div>
 
 <div id="bottomyear">
-<div id="yearselect"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)} <button id="nextyearbutton">▶</button></div>
+<div id="yearselect"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)}<button id="nextyearbutton">▶</button></div>
 <div class="yeardatadiv">
 	<table class="yeartotalinfo">
 		<tr>
