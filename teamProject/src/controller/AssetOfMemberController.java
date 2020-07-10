@@ -259,7 +259,6 @@ public class AssetOfMemberController {
 	public String newsSettings(@ModelAttribute("userKey")int userKey, AssetOfMember aom) {
 		aom.setUserKey(userKey);
 		aomService.setNews(aom);
-
 		return "newsSettingsResult";
 	}
 }
