@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=1">
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://kit.fontawesome.com/b8612abdbb.js" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 window.onload = function() {
 	
 	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypage";
+		location.href="/member/mypageProc";
 	}
 	document.querySelector(".gologout").onclick = function(){
 		location.href="/member/logout";
@@ -135,17 +135,18 @@ window.onload = function() {
 		<div class="grid_header">
 			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
 			<div class="statistics"><a id=mainlink href="/statistics/show">GRAPH</a></div>
-			<div class="assest"><a id=mainlink href="/asset/view">ASSETS</a></div>
+			<div class="assest"><a id=mainlink style="text-decoration: underline; text-shadow: 2px 1px 0 #f5f5f5;" 
+				href="/asset/view">ASSETS</a></div>
 			<div class="board"><a id=mainlink href="/board/show">BOARD</a></div>
-			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
-			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+			<div class="gomypage"><button class="gomypage" style="font-size: 16px;font-weight: 500;">MYPAGE</button></div>
+			<div class="gologout"><button class="gologout" style="font-size: 16px;font-weight: 500;">LOGOUT</button></div>
 		</div>
 	</header>
 
 <section>
   <sum>
   <div id="myTotalAsset">
-		<h1 style="text-align:; margin-top:30px; margin-bottom: 45px;">내 자산</h1>
+		<h1 style="text-align:; margin-top:30px; margin-bottom: 50px;">내 자산</h1>
 		<h1 style="font-size:36px; text-align: right; color:;">
 		<fmt:formatNumber value="${sumTotal}" pattern="###,###,###,###"/>원</h1>
 		<div style="margin-top: 50px; line-height: 30%; color:grey">
@@ -158,16 +159,16 @@ window.onload = function() {
 	
 	
 	<!-- 그래프 출력 -->
-      <div id="chartContainer" style="height: 300px; width: 100%; margin-top:20px;"></div>
+      <div id="chartContainer" style="height: 320px; width: 100%; margin-top:20px;"></div>
  
   </sum>
 
   <asset>
 	
    <div id="eachAsset">
-   		<h1 style="margin-top:30px; color:#grey;">내 자산 내역</h1>
-   		<p style="font-weight:bold; margin-bottom: 3px; color:#lightgrey;">자산 ${cntAssets}건 / 부채 ${cntDebts}건<br><br>
-		
+   		<h1 style="margin-top:27px; margin-bottom:30px; color:#grey;">내 자산 내역</h1>
+   		<div style="text-align: right; font-weight: bold; margin-bottom:-11px;"><span class=cntAsset style="margin-right: 10px;">자산 ${cntAssets} 건</span>
+		<span class=cntAsset>부채 ${cntDebts} 건</span></div><br><br>
 		<c:forEach items="${assetList}" var="aList">
 			<div id="eachAssetText" style="background:#6e92bc;">
 				<div id="eachAssetType" style="text-align: right; font-weight: 300; font-size:12px;">${aList.type}</div>
@@ -208,9 +209,10 @@ window.onload = function() {
   
   <news>
    <div>
-	<h1 style="margin-top:30px; margin-left:10px;">추천 기사</h1>
-	<p style="margin-left:10px;"><b>Tags > ${newsKeywords}</b>
-	<a href="newsSettings" style="font-size:12px; color:grey; text-decoration:none">수정</a></p>
+	<h1 style="margin-top:30px; margin-left:10px; margin-bottom: 30px;">추천 기사</h1>
+	<p style="margin-left:10px;"><b><span style="background:#cccccc; padding:8px;margin-right:10px;">#Tags</span>
+	 <span style="margin-right:10px; color:black;">${newsKeywords}  </span></b>
+	<a href="newsSettings" style="font-size:12px; color:grey; text-decoration:none"><i class="fas fa-edit" style="font-size:18px; color:#aaaaaa"></i></a></p>
 	
 	<div style=font-size:12px;>
 	<a id="newsBox0" href="" target="_blank" style="text-decoration:none">
