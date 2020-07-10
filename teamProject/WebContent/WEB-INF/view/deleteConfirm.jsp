@@ -5,15 +5,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>탈퇴 결과창</title>
 </head>
 <body>
 <c:choose>
-	<c:when test="${result=='삭제성공' }">탈퇴에 성공하셨습니다.<%session.invalidate();%>
-		<a href="/member/login">로그인페이지로 돌아갑니다</a>
+	<c:when test="${result=='삭제성공' }"><%session.invalidate();%>
+		<!-- <a href="/member/login">로그인페이지로 돌아갑니다</a> -->
+		<script type="text/javascript">
+			alert("탈퇴에 성공하셨습니다. 확인버튼을 누르시면 로그인창으로 이동됩니다.");
+			window.location.replace("/member/login");
+		</script>
 	 </c:when>
-	<c:otherwise>탈퇴 실패입니다
-		<a href="/member/mypage">마이페이지로 돌아갑니다</a>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert("탈퇴 실패하셨습니다. 확인버튼을 누르시면 마이페이지창으로 이동됩니다.");
+			window.location.replace("/member/mypage");
+		</script>
 	</c:otherwise>
 </c:choose>
 

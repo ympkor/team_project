@@ -138,7 +138,7 @@ $(function(){
 			type:"post",
 			data:updateData,
 			success:function(data){
-				alert("수정완료!!");
+				alert("수정이 완료되었습니다.");
 				location.href="/member/mypage";
 			}
 		})

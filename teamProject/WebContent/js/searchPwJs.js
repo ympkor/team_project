@@ -3,9 +3,7 @@ $(function(){
 		var id = $("input[name=userId]").val();
 		var name = $("input[name=name]").val();
 		var email = $("input[name=email]").val();
-//		console.log(id);
-//		console.log(name);
-//		console.log(email);
+		
 		$.ajax({
 			url:"/member/searchPw",
 			type:"post",

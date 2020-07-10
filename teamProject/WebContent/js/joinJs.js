@@ -301,7 +301,7 @@ $(function(){
 				data:joinData,
 				success:function(data){
 					//회원가입이 완료되면 처음에 작성해야되는 자산추가페이지로 이동한다고 알려줌	
-					alert("회원가입완료!!\n자산추가페이지로 이동합니다.");
+					alert("회원가입이 완료되었습니다.\n자산추가페이지로 이동합니다.");
 					location.href="/asset/view";
 				},
 				error:function(data){

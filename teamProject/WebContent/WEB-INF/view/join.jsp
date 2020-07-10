@@ -21,7 +21,7 @@
 				<h3 id="join_title">회원가입</h3>
 				<div>
 					<form class="join_form"> 
-						<div id="id">아이디</div>
+						<div id="id">아이디(아이디는 수정이 불가능합니다.)</div>
 						<div>
 							<input id="id_input" type="text" name="userId" maxlength="20" placeholder="아이디(문자+숫자로만 5~20자이내)" required>
 							<button id="id_button" type="button" name="equalsId">중복확인</button>
@@ -42,7 +42,7 @@
 							<input id="name_input" type="text" name="name" maxlength="20" placeholder="이름" required>
 						</div>
 						<div id="nametext"></div>
-						<div id="email">이메일</div>
+						<div id="email">이메일(이메일은 수정이 불가능합니다.)</div>
 						<div>
 							<input id="email_input" type="text" name="email" maxlength="50" placeholder="이메일(@포함)" required>
 							<button id="email_button" type="button" name="equalsEmail">중복확인</button>

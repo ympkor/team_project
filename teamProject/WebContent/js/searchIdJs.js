@@ -2,14 +2,12 @@ $(function(){
 	$("form").on("submit", function(){
 		var email = $("input[name=email]").val();//입력받은 이메일을 키와 벨류로 나눔
 		var name = $("input[name=name]").val();
-//		console.log(email);
-//		console.log(name);
+		
 		$.ajax({
 			url:"/member/searchId",
 			type:"post",
 			data:{"email":email, "name":name},
 			success:function(data){
-				console.log(data)
 				if(data=="없는 이메일"){
 					document.getElementById("message").innerHTML="<hr>";
 					document.getElementById("message").innerHTML+="해당하는 이메일의 정보가 없습니다.";
