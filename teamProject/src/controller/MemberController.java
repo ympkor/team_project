@@ -50,8 +50,9 @@ public class MemberController {
 		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌	
 		
 		List<AssetOfMember> aomList = aomService.selectAssetListById(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
+		aomList.get(0).setAssetsId(24);
+		
 		int i = 0;
-
 		int sumAssets = 0;
 		int sumDebt = 0;
 		while(aomList.size() > i) {
