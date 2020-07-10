@@ -38,21 +38,95 @@ table{border-collapse:collapse; min-width: 600px; width:100%;}
 td.boardtitlehead{height: 40px; border-bottom:1px solid #9298a0;
 	font-size: 20px; color:#51565d; line-height: 40px; 
 	font-family: Montserrat, "sans-serif";}
-td.writeinfo{height: 30px; font-family: Montserrat, "sans-serif";
-	font-size: 13px; color:#51565d; line-height: 25px; 
-	}
+
 td.boardcontent{background:white; min-height: 500px;border-bottom:1px solid #dddddd ;}
-div.contentdiv{min-height: 250px;}
+div.contentdiv{min-height: 250px;margin: 9px 10px;}
 th{text-align: center; height:35px;}
 div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
 	text-decoration-color: #51565d;}
 #middlecontent{grid-area:content; position: relative; top: 20px;}
-.udbutton{position: relative;
-    left: 320px; width: 200px;}
-.writeboardcontent{width: 450px;}
-div.commentshow{border-bottom:1px dotted #dddddd; padding-bottom: 5px;}
-div.commentListshow{font-family: Montserrat, "sans-serif";color:#51565d;}
+.likeandcomment{position: relative;
+    right: 5px; top:5px;
+    text-align: right;margin-bottom: 5px;}
+
+td.writeinfo{height: 35px; font-family: Montserrat, "sans-serif";
+	font-size: 13px; color:#51565d; line-height: 30px; 
+	}
+	
+.writeboardcontent{width: 100%; padding: 5px;}
+div.commentshow{border-bottom:1px dashed #dddddd; padding-bottom: 5px;}
+div.commentwritediv{position: relative; top:5px;}
+div.commentListshow{font-family: Montserrat, "sans-serif";color:#51565d;
+	position: relative;top: 10px;}
 span.commnetregDate{font-size:13px;}
-.boardlisttwo{position: relative; top: 15px;}
-.showboardList{position: relative; top: 25px; border: 1px solid lightgrey;}
+
+div.commentcontent{margin: 7px 30px 7px 2px;}
+span.commentwriter{font-weight: 700;}
+input.regCommentsubmit{	
+	cursor: pointer;
+    border: 1px solid #d0aeae;    border-radius: 3px;
+    color: #082b5a; font-weight: 600;
+    height: 26px; line-height: 25px;
+    width: 74px;
+}
+div.regcommentdiv{position: relative;
+text-align: right;}
+button.commentwriteshow{
+	cursor: pointer;
+    border: 1px solid #d0aeae;    border-radius: 3px;
+    color: #082b5a; font-weight: 600;
+    height: 26px; line-height: 25px;
+    width: 74px;
+}
+
+div.udbutton{position: absolute; top: 45px; right: 4px;}
+button.showboardList{position: relative; 
+	width:60px; cursor: pointer;
+    height: 25px; color: #082b5a;
+    font-weight: 600;
+    line-height: 25px;
+	border: 1px solid lightgrey;
+	border-radius: 3px;
+	}
+button.boardupdate{cursor: pointer; height:25px; line-height:25px;
+    border: 1px solid #9298a0; width: 35px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #51565d 0%, #9298a0 100%);
+    font-weight: 500; position:relative; left:-5px;
+    color: #ffffff;
+    font-size: 100%;
+    text-align: center;
+    }
+button.boarddelete{cursor: pointer; height:25px; line-height:25px;
+    border: 1px solid #9298a0; width: 35px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, #51565d 0%, #9298a0 100%);
+    font-weight: 500;
+    color: #ffffff;
+    font-size: 100%;
+    text-align: center;
+    position: relative; left: -2px;
+    }
+button.commentupdate{background: white;cursor: pointer;
+    border: 1px solid #afb7c1;
+    width: 35px;
+    font-size: 13px;
+    border-radius: 10%;
+    text-align: center;
+    height: 20px;}
+button.commentdelete{background: white;cursor: pointer;
+	position: relative;left: 3px;
+    border: 1px solid #afb7c1;
+    width: 35px;
+    font-size: 13px;
+    border-radius: 10%;
+    text-align: center;
+    height: 20px;}
+
+
+.boardlisttwo{position: relative; top: 15px; 
+	margin: 10px 5px 20px 1px;}
+div.beforeboard,div.nextboard{height: 25px;}
+	
+	

@@ -100,9 +100,9 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  			metotal +=monthExpenseAmountData[i];
 	  		}    
 		  var options = {
-		    title:'지출 총액 : '+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		    backgroundColor: '#f5f5f5',
-		    sliceVisibilityThreshold: 0
+		    sliceVisibilityThreshold: 0,
+		    'chartArea': {'width': '90%', 'height': '95%'}
 		  };
 		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
 		  chart.draw(data, options);
@@ -121,9 +121,9 @@ document.getElementById('nextyearbutton').onclick = function(){
 	  			mitotal +=monthIncomeAmountData[i];
 	  		}    
 		var options = {
-		  title:'수익 총액 : '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		  backgroundColor: '#f5f5f5',
-		  sliceVisibilityThreshold: 0
+		  sliceVisibilityThreshold: 0,
+		  'chartArea': {'width': '90%', 'height': '95%'}
 		};
 		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));
 		chart.draw(dataincome, options);
@@ -140,8 +140,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 			    	data.addRow([ i+1+'월', yearIncomeAmountData[i] , yearExpenseAmountData[i] ,  (yearIncomeAmountData[i]-yearExpenseAmountData[i]) ]);
 				}			  
 			  var options = {
-				/*maintainAspectRatio: false,*/
-			    vAxis: {title: '금액(원)'},			    
+				vAxis: {title: '금액(원)'},			    
 			    seriesType: 'bars',
 			    series: {5: {type: 'line'}},        
 			    backgroundColor: '#f5f5f5',
@@ -168,9 +167,9 @@ $(window).resize(function(){
 	  			metotal +=monthExpenseAmountData[i];
 	  		}    
 		  var options = {
-		    title:'지출 총액 : '+metotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		    backgroundColor: '#f5f5f5',
-		    sliceVisibilityThreshold: 0
+		    sliceVisibilityThreshold: 0,
+			  'chartArea': {'width': '90%', 'height': '95%'}
 		  };
 		  var chart = new google.visualization.PieChart(document.getElementById('ExpenseChart'));
 		  chart.draw(data, options);
@@ -189,9 +188,9 @@ $(window).resize(function(){
 	  			mitotal +=monthIncomeAmountData[i];
 	  		}    
 		var options = {
-		  title:'수익 총액 : '+mitotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+" 원",
 		  backgroundColor: '#f5f5f5',
-		  sliceVisibilityThreshold: 0
+		  sliceVisibilityThreshold: 0,
+		  'chartArea': {'width': '90%', 'height': '95%'}
 		};
 		var chart = new google.visualization.PieChart(document.getElementById('profitChart'));
 		chart.draw(dataincome, options);

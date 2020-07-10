@@ -21,18 +21,19 @@
 		where board_id =#{boardId}
   	</select>
   	<select id="getbeforeBoard" resultType="Board">
-  		SELECT * from board 
+  		select board_id,user_key,title,reg_date,likes,hits,comment_count,writer from board 
 		where board_id &lt;#{boardId} order by board_id desc limit 1
   	</select>
   	<select id="getnextBoard" resultType="Board">
-  		SELECT * from board 
+  		select board_id,user_key,title,reg_date,likes,hits,comment_count,writer from board  
 		where board_id &gt;#{boardId} limit 1
   	</select>
   	<select id="getBoardTotalCnt" resultType="int">
   		select count(*) from board 
   	</select>
   	<select id="getBoardListPerPage" resultType="Board">
-  		select * from board order by board_id desc 
+  		select board_id,user_key,title,reg_date,likes,hits,comment_count,writer from board 
+  		order by board_id desc 
   		limit #{firstRow}, #{boardCntPerPage}
   	</select>
   	<update id="updatehits">
@@ -46,7 +47,7 @@
   	</update>
   	<select id="selectbyBId" resultType="Comment">
   		SELECT * from comment 
-		where board_id =#{boardId}
+		where board_id =#{boardId} order by comment_id desc limit 10
   	</select>
   	
   	<update id="writeComment" parameterType="Comment">

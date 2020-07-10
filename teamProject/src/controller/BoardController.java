@@ -34,12 +34,7 @@ public class BoardController {
 	@GetMapping("/show")
 	public String showBoard(Model m,@RequestParam(defaultValue = "1")int pNum) {
 		BoardListView bList= boardService.showBoard(pNum);
-		/* for (Board b : bList.getBoardList()) { System.out.println(b); }*/
-		//System.out.println("총게시물갯수"+bList.getBoardTotalCnt());
-		//System.out.println("총페이지수"+bList.getPageTotalCnt());
 		m.addAttribute("bList", bList);
-		//String day=bList.getBoardList().get(0).getRegDate().toString();
-		//System.out.println("투스트링한거"+day);
 		return "board";
 	}
 	//글 다 쓰고 나서 등록누르면
@@ -80,7 +75,7 @@ public class BoardController {
 		Board nextBoard = boardMapper.getnextBoard(boardId);		
 		//System.out.println("이전게시물"+beforeBoard); 
 		//System.out.println("다음게시물"+nextBoard); 
-		//보드아이디에 있는 코멘트 가져오기
+		//보드아이디에 있는 코멘트 가져오기 10개 최신순으로 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
 		//for (Comment co : cList) {System.out.println(co);}
 		m.addAttribute("currentBoard", currentBoard);
@@ -108,11 +103,15 @@ public class BoardController {
 		//for (Comment co : cList) { System.out.println(co); }		
 		Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
 		List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
+		Board beforeBoard = boardMapper.getbeforeBoard(comment.getBoardId()); 
+		Board nextBoard = boardMapper.getnextBoard(comment.getBoardId());
 		m.addAttribute("currentBoard", currentBoard);
 		m.addAttribute("bList", bList);
 		m.addAttribute("currentboardId", comment.getBoardId());
 		m.addAttribute("cList", cList);
 		m.addAttribute("likecheck", likecheck);
+		m.addAttribute("beforeBoard", beforeBoard);
+		m.addAttribute("nextBoard", nextBoard);
 		return "contentOneShow";
 	}
 	
@@ -127,13 +126,18 @@ public class BoardController {
 			String likecheck= boardService.likechecking(comment.getBoardId(), userKey);
 			Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
 			List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
+			Board beforeBoard = boardMapper.getbeforeBoard(comment.getBoardId()); 
+			Board nextBoard = boardMapper.getnextBoard(comment.getBoardId());
 			m.addAttribute("currentBoard", currentBoard);
 			m.addAttribute("bList", bList);
 			m.addAttribute("currentboardId", comment.getBoardId());
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
+			m.addAttribute("beforeBoard", beforeBoard);
+			m.addAttribute("nextBoard", nextBoard);
 			return "contentOneShow";
 		}
+		
 		//코멘삭제
 		@RequestMapping("/deletecomment")
 		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m, int boardId, int commentId) {

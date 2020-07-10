@@ -34,12 +34,12 @@ body{background-color: #f5f5f5;}
 .topmenu{grid-area: top; min-width: 700px;}
 div#boardcontent{font-family: Montserrat, "sans-serif"; } 
 a{text-decoration: none; color:#51565d;}
-table{border-collapse: collapse;}
+table{border-collapse: collapse;width: 100%;}
 th,td{text-align: center;}
 th{line-height: 35px; font-weight: bold;border-bottom:1px solid black; }
 td{height: 50px; line-height: 50px;border-bottom:1px solid #9298a0;}
 div#boardcontent{grid-area: content; width:100%;min-width:600px; 
-	position: relative; top:20px;}
+	position: relative; top:30px;}
 div.boardtitlehead{width:500px; margin-bottom: 10px;}
 div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
@@ -47,7 +47,7 @@ div.board{text-shadow: 2px 1px 0 #f5f5f5;
 
 .boardtitle{text-align: center; font-size: 50px; font-family: 'Lobster';}
 .boardpagenation{position: relative; width:100%;
-	min-width:600px; text-align: center; top:10px;}
+	min-width:600px; text-align: center; top:10px; margin-bottom: 20px;}
 td.regDate{min-width: 153px;}
 td.nocontent{height:350px; line-height: 350px;text-align: center;}
 .currentP{color:#fabfbf; font-weight: 500;}    
@@ -63,3 +63,5 @@ button#writeBoard{width: 80px;
     font-size: 100%;
     text-align: center;
     line-height: 30px;}
+div.boardcontentinsidediv{position: relative;top: 10px;}
+span.commentcount{font-weight: 600; color:#c55555;}

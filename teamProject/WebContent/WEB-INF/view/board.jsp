@@ -27,9 +27,11 @@
 	</header>
 <div id="boardcontent">
 <div class="boardtitle">FreeBoard</div>
+
+<div class="boardcontentinsidediv">
 <div class="boardlistdiv">
 <table class="boardlist">
-<colgroup>
+	<colgroup>
 		<col width="10%">
 		<col width="60%">
 		<col width="8%">
@@ -46,7 +48,8 @@
 		</c:if>
 		<c:forEach var="b" items="${bList.boardList}" varStatus="vs">
 		<tbody onclick="showContent(this)" class="${b.boardId}">						
-		<tr class="boardtitlehead"><td>${bList.firstshowBoardNumber-vs.index}</td><td>${b.title }<c:if test="${b.commentCount>0}">[${b.commentCount }]</c:if></td>
+		<tr class="boardtitlehead"><td>${bList.firstshowBoardNumber-vs.index}</td>
+			<td>${b.title }<c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if></td>
 		<td>${b.writer }</td>
 		<td class="regDate">
 			<!-- 오늘 날짜를 nowdate 에 저장 해서 같은 날이면 시간을 불러오고 다른날이면 날짜만 불러오게-->
@@ -58,7 +61,7 @@
 			</c:choose>			
 		</td>
 		<td>${b.likes }</td><td>${b.hits}</td></tr>
-		<tr class="boardID" ><td colspan="6"><div class="contentdiv" >${b.boardId}</div></td></tr>
+		<%-- <tr class="boardID" ><td colspan="6"><div class="contentdiv" >${b.boardId}</div></td></tr> --%>
 		</tbody> 
 		</c:forEach>
 	</tbody>
@@ -117,10 +120,11 @@
 		</c:when>
 		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
 		</c:choose>	
-	<%-- <a href="/board/show?pNum=${p}">[${p}]</a> --%>
 	</c:forEach>
 </c:if> 
 </div>
+</div>
+
 </div>
 </div>
 </body>

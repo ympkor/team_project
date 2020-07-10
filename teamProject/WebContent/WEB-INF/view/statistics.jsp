@@ -13,7 +13,7 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/chartJS.js?ver=2"></script>
-<link rel="stylesheet" href="/css/statistics.css?ver=1">
+<link rel="stylesheet" href="/css/statistics.css?ver=2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
@@ -75,7 +75,7 @@
 <div class="daydetailList">
 <table>	
 	<thead>
-		<tr><th>항목</th><th>사용자산</th><th>수입</th><th>지출</th><th>메모</th></tr>
+		<tr><th>항목</th><th>사용자산</th><th>수입</th><th>지출</th><th class="daymemohead">메모</th></tr>
 	</thead>	
 	<tbody id="dayList">
 		<c:if test="${dailyIncome.size()==0 && dailyExpense.size()==0}">
@@ -89,7 +89,7 @@
 			<c:forEach var="e" items="${dailyExpense}">
 				<tr id="dayexpense"><td>${e.ecName}</td><td>${e.assetsName}</td><td></td>
 				<td><fmt:formatNumber value="${e.amount}" pattern="###,###,###,###"/></td>
-				<td>${e.memo}</td></tr>
+				<td class="daymemo">${e.memo}</td></tr>
 			</c:forEach>
 	</tbody>
 </table>
@@ -100,7 +100,8 @@
 
 <div id="leftweek">
 <div style="text-align:center"><button id="lastweek">◀</button>Weekly<button id="nextweek">▶</button></div>
-<table>
+<div class="weekdata">
+<table class="weektable">
 	<thead>
 		<tr><th style='min-width:35px; width:35px;'></th><th class="weekwidth" style="color:red">일</th><th class="weekwidth">월</th>
 		<th class="weekwidth">화</th><th class="weekwidth">수</th>
@@ -151,16 +152,93 @@
 </table>
 </div>
 </div>
+</div>
 
 
 <div id="rightmonth">
 <div style="text-align:center"><button id="lastmonth">◀</button>${date.toString().substring(0,7)} <button id="nextmonth">▶</button></div>
+<div class="mtotaldiv">합계 :
+	<c:set var="metotal" value="0"/>
+	<c:forEach var="me" items="${monthExpense}">
+		<c:set var="metotal" value="${me.amount+metotal}"/>		
+	</c:forEach>
+	<c:set var="mitotal" value="0"/>
+	<c:forEach var="mi" items="${monthIncome}">
+		<c:set var="mitotal" value="${mi.amount+mitotal}"/>		
+	</c:forEach>   
+	<c:choose>
+		<c:when test="${mitotal-metotal>0}"><span style="color:blue"><fmt:formatNumber value="${mitotal-metotal}" pattern="###,###,###,###"/></span></c:when>
+		<c:when test="${mitotal-metotal<0}"><span style="color:red"><fmt:formatNumber value="${mitotal-metotal}" pattern="###,###,###,###"/></span></c:when>
+		<c:otherwise><fmt:formatNumber value="${mitotal-metotal}" pattern="###,###,###,###"/></c:otherwise>
+	</c:choose>
+	원
+</div>
+
+<div class="mpiegraph">
+
+<div class="metitleandgraphdiv">
+<div class="metotaldiv">월지출 : 
+	<c:set var="metotal" value="0"/>
+	<c:forEach var="me" items="${monthExpense}">
+		<c:set var="metotal" value="${me.amount+metotal}"/>		
+	</c:forEach>   
+	<fmt:formatNumber value="${metotal}" pattern="###,###,###,###"/>원
+</div>
 <div id="ExpenseChart"></div>
+</div>
+<div class="mititleandgraphdiv">
+<div class="mitotaldiv">월수입 : 
+	<c:set var="mitotal" value="0"/>
+	<c:forEach var="mi" items="${monthIncome}">
+		<c:set var="mitotal" value="${mi.amount+mitotal}"/>		
+	</c:forEach>   
+	<fmt:formatNumber value="${mitotal}" pattern="###,###,###,###"/>원
+</div>
 <div id="profitChart"></div>
+</div>
+
+</div>
+
 </div>
 
 <div id="bottomyear">
 <div id="yearselect"><button id="lastyearbutton">◀</button>${date.toString().substring(0,4)} <button id="nextyearbutton">▶</button></div>
+<div class="yeardatadiv">
+	<table class="yeartotalinfo">
+		<tr>
+			<td>수입:
+				<c:set var="yitotal" value="0"/>
+				<c:forEach var="ydata" begin="0" end="11">
+					<c:set var="yitotal" value="${yearIncomeData[ydata]+mitotal}"/>		
+				</c:forEach>   
+				<fmt:formatNumber value="${yitotal}" pattern="###,###,###,###"/>원
+			</td>
+			<td>합계 :				
+				<c:set var="ytotal" value="0"/>
+				<c:forEach var="ydata" begin="0" end="11">
+					<c:set var="ytotal" value="${ytotal+yearIncomeData[ydata]-yearExpenseData[ydata]}"/>		
+				</c:forEach> 
+				
+				<c:choose>
+					<c:when test="${ytotal>0}"><span style="color:blue"><fmt:formatNumber value="${ytotal}" pattern="###,###,###,###"/></span></c:when>
+					<c:when test="${ytotal<0}"><span style="color:red"><fmt:formatNumber value="${ytotal}" pattern="###,###,###,###"/></span></c:when>
+					<c:otherwise><fmt:formatNumber value="${ytotal}" pattern="###,###,###,###"/></c:otherwise>
+				</c:choose>
+				원
+			</td>
+			<td>지출:
+				<c:set var="yetotal" value="0"/>
+				<c:forEach var="yedata" begin="0" end="11">
+					<c:set var="yetotal" value="${yearExpenseData[yedata]+yetotal}"/>		
+				</c:forEach>   
+				<fmt:formatNumber value="${yetotal}" pattern="###,###,###,###"/>원
+			</td>
+			
+		</tr>
+	</table>
+
+
+</div>
 <div id="yearChart"></div>
 </div>
 

@@ -8,14 +8,15 @@ $(function() {
  document.querySelector("#writeBoard").onclick = function(){
 	 location.href="/board/write";
  };
- $(".boardID").hide();
+ $(".boardtitlehead").mouseover(function(){
+	 $(this).children().css("background","#f1e0de");
+ });
+ $(".boardtitlehead").mouseout(function(){
+	 $(this).children().css("background","#f5f5f5");
+ });
+ 
 });
 function showContent(el){
-	var boardId = $(el).attr('class');	
-	/*var presiblng = $(el).prev();
-	var nextsiblng = $(el).next();
-	console.dir(presiblng);
-	console.dir(presiblng.attr('class'));
-	console.dir(nextsiblng.attr('class'));*/	
+	var boardId = $(el).attr('class');		
 	location.href="/board/contentOneShow?boardId="+boardId;
 }

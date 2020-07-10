@@ -10,13 +10,13 @@ $(".commentwriteinput").hide();
  $(".showboardList").click(function(){
 	 location.href="/board/show";
  });
- $(".likes").click(function(){
-	 
- });
+
  $(".commentwriteshow").click(function(){
+	 
 	 $(".commentwriteinput").toggle();
 	 $(".writeboardcontent").focus();
-	 
+		console.log( $(this).attr('class'));
+		$(this).toggleClass("commentwriteshow");
  });
  $(".commentupdate").click(function(){
 	 //console.dir(document.querySelector(".commentcontent"));
@@ -24,8 +24,8 @@ $(".commentwriteinput").hide();
 	 //console.log(this);
 	 var commentId = $(this).attr('name');
 	 //console.log($(this).parent().parent().children().eq(0));	 
-	 var commentposition = $(this).parent().parent().children().eq(0);
-	 var oricomment = commentposition.html();
+	 var commentposition = $(this).parent().parent().children().eq(2);
+	 var oricomment = commentposition.children().eq(0).html();
 	 //console.log("ok? "+commentposition.html());
 	 commentposition.html( "<form class='commentupdateinput' action='/board/commentupdate' method='post'>"
 		 +"<input type='hidden' name='commentId' value="+commentId+">"
