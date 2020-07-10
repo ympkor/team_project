@@ -102,9 +102,6 @@ public class AssetOfMemberController {
 	public String addAsset(@ModelAttribute("userKey")int userKey, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
 
-		System.out.println(aom);
-		System.out.println(toCal);
-
 		//자산인 경우 +값으로, 부채인 경우 -값으로 db 저장
 		String assetType = aom.getType();
 		int amount = aom.getAmount();
@@ -193,11 +190,6 @@ public class AssetOfMemberController {
 
 			int originalAmount = aom.getAmountBefore();
 			String originalType = aom.getTypeBefore();
-			//		System.out.println(originalAmount);
-			//		System.out.println(originalType);
-			//		System.out.println(aom.getAmount());
-			//		System.out.println(aom.getType());
-			//		System.out.println(aom.getUserKey());
 
 			//자산-자산이고 자산이 늘어난 경우 차액을 income으로 전달
 			if (originalType.equals("자산") 
