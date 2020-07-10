@@ -8,14 +8,18 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/mypageJs.js"></script>
 <link rel="stylesheet" href="/css/mypageCss.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="mypage_container">
-		<div id="header"></div>
+		<div id="header">
+			<a id="title" href="/main/getCal">더조은가계부</a>
+		</div>
 		<div id="mypage">
 			<div class="mypage_form">
 				<h3 id="mypage_title">마이페이지</h3>
-				<div><input type="hidden" name="userKey"></div>
+				<div id="userkey"><input type="hidden" name="userKey"></div>
 				<div id="id">회원아이디</div>
 				<div id="id_val">${member.userId}</div>
 				<div id="name">이름</div>

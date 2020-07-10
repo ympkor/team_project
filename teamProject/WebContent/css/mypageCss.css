@@ -19,13 +19,16 @@
     box-sizing: border-box;
 }
 
+a{
+	text-decoration:none;
+}
+
 #mypage_container{
 	display: grid;
  	height:100%;
   	width:100%;
   	grid-template-rows:
-  	[first]100px
-  	[second]817px;
+  	100px 1fr;
   	grid-template-areas:
   	"top"
   	"main";
@@ -41,22 +44,30 @@
     /* left: 0; */
     /* right: 0; */
     grid-area: top;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    font-size: 50px;
     grid-row: 1;
-    width:100%;
     box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
+    padding-left:15px;
+}
+
+#title{
+    text-align: left;
+	color: #51565d;
+    font-weight: bold;
+    font-size: 200%;
+    background-color: #ffcccc;
+    font-family: 'Nanum Gothic Coding', monospace;
+	letter-spacing:3px;
+	text-decoration:none;
+	text-shadow: 2px 2px 0 #f5f5f5;
 }
 
 #mypage{
 	grid-area: main;
 	display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    width:100%;
+    margin:5%;
 }
 
 #mypage_title{
@@ -73,6 +84,10 @@
     line-height: 18px;
     text-align: left;
     font-weight: 700;
+}
+
+#userkey{
+	margin-top:20px;
 }
 
 #id_val, #name_val, #email_val{
@@ -94,13 +109,13 @@
 #update, #delete{
 	width:49%;
     border:1px solid #fecdcd;
-    padding: 14px 0 12px;
-    font-size: 14px;
+    padding: 14px 0 12px;;
     line-height: 20px;
     color: white;
     background-color: #ffcccc;
     font-weight: 700;
     border-radius: 3px;
+    font-size:14px;
 }
 
 #back{
@@ -108,9 +123,8 @@
     text-decoration: none;
     display: block;
     border: 1px solid #fecdcd;
-    color: #ffcccc;
-    padding: 16px 17px;
-    font-size: 17px;
+    color: #fabfbf;
+    padding:14px 0 12px;
     line-height: 20px;
     display: block;
     padding-left: 0;
@@ -119,6 +133,8 @@
     text-align: center;
     border-radius: 3px;
     width:100%;
+    font-weight: 700;
+    font-size:15px;
 }
 
 .mypage_form{

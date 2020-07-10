@@ -59,6 +59,7 @@ a{
 	text-decoration:none;
 	text-shadow: 2px 2px 0 #f5f5f5;
 }
+
 #searchId{
 	grid-area: main;
 	display: flex;

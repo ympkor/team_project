@@ -17,13 +17,16 @@
     font-family: Montserrat, "sans-serif"; 
 }
 
+a{
+	text-decoration:none;
+}
+
 #mypageProc_container{
 	display: grid;
  	height:100%;
   	width:100%;
   	grid-template-rows:
-  	[first]100px
-  	[second]817px;
+  	100px 1fr;
   	grid-template-areas:
   	"top"
   	"main";
@@ -39,22 +42,21 @@
     /* left: 0; */
     /* right: 0; */
     grid-area: top;
-    color: black;
-    text-align: center;
-    font-weight: bold;
-    font-size: 50px;
     grid-row: 1;
-    width:100%;
     box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
+    padding-left:15px;
 }
 
-#mypageProc{
-	grid-area: main;
-	display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width:100%;
+#title{
+    text-align: left;
+	color: #51565d;
+    font-weight: bold;
+    font-size: 200%;
+    background-color: #ffcccc;
+    font-family: 'Nanum Gothic Coding', monospace;
+	letter-spacing:3px;
+	text-decoration:none;
+	text-shadow: 2px 2px 0 #f5f5f5;
 }
 
 #mypageProc_title{
@@ -62,6 +64,15 @@
     font-size: 20px;
     line-height: 20px;
     text-align: center;
+}
+
+#mypageProc{
+	grid-area: main;
+	display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+	margin:5%;
 }
 
 .mypageProc_form{
@@ -103,7 +114,7 @@
     padding: 14px 0 12px;
     font-size: 14px;
     line-height: 20px;
-    color: #ffcccc;
+    color: #fabfbf;
     background-color: #f8f8f8;
     font-weight: 700;
     /* text-indent: 12px; */

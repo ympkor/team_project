@@ -8,10 +8,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="/css/mypageProcCss.css">
 <script type="text/javascript" src="/js/mypageProcJs.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 	<div id="mypageProc_container">
-		<div id="header"></div>
+		<div id="header">
+			<a id="title" href="/main/getCal">더조은가계부</a>
+		</div>
 		<div id="mypageProc">
 			<div>
 				<h3 id="mypageProc_title">회원 비밀번호 확인</h3>
