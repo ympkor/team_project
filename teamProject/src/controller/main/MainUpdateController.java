@@ -39,8 +39,10 @@ public class MainUpdateController {
 		incomeUpdate.setUserKey(userKey);
 		if(incomeUpdate.getCategory() == 1) {//그대로 수입인것이다. id로 수입 업데이트 해주면 된다.
 			mainUpdateService.updateIncomeAndUpdateAOM(incomeUpdate);
-		}else {//수입을 지출로 바꾼 것이다. 
+		}else if(incomeUpdate.getCategory() == 2){//수입을 지출로 바꾼 것이다. 
 			mainUpdateService.deleteIncomeInsertExpenseUpdateAOM(incomeUpdate);
+		}else {//수입을 이체로 바꾼것
+			mainUpdateService.deleteIncomeInsertTransferUpdateAOM(incomeUpdate);
 		}
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(incomeUpdate.getIncomeDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, incomeUpdate.getIncomeDate().toString().substring(0, 7)));
@@ -59,8 +61,10 @@ public class MainUpdateController {
 		expenseUpdate.setUserkey(userKey);
 		if(expenseUpdate.getCategory() == 2) {//그대로 지출인 것.
 			mainUpdateService.updateEpAndAmount(expenseUpdate);
-		}else {//지출을 수입으로 바꾼 것
+		}else if(expenseUpdate.getCategory() == 1){//지출을 수입으로 바꾼 것
 			mainUpdateService.deleteEpInsertInUpdateAOM(expenseUpdate);
+		}else {//지출을 이체로 바꾼 것
+			mainUpdateService.deleteExpenseInsertTransferUpdateAOM(expenseUpdate);			
 		}
 		updateAndRefresh.setCal(new Calendar(LocalDate.parse(expenseUpdate.getExpenseDate().toString())));
 		updateAndRefresh.setMiicList(mainService.selectMIICByUserKeyAndDate(userKey, expenseUpdate.getExpenseDate().toString().substring(0, 7)));

@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>가계부</title>
 	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
 	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=1">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -16,8 +16,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="/js/main/main_modal.js?var=2"></script>
-	<script type="text/javascript" src="/js/main/mainTestJs.js"></script>
+	<script type="text/javascript" src="/js/main/main_modal.js?var=1"></script>
+	<script type="text/javascript" src="/js/main/mainTestJs.js?var=1"></script>
 </head>
 <body>
 	<!-- 모달 창 div-->
@@ -62,11 +62,11 @@
 						<!-- <input type="number" id="update_assets_expense_memAssetIdTo_origin" name="memAssetIdTo" class="hidden"> -->
 						<label for="update_assets_income_memAssetIdTo" id="update_assets_income_memAssetIdTo_label" class="hidden">입금</label>
 						<select id="update_assets_income_memAssetIdTo" name="memAssetIdTo" class="hidden">
-							<option value="" selected id="update_assets_income_memAssetIdTo_selected">선택하세요</option>
+							<option value="" selected id="update_assets_income_memAssetIdTo_selected" disabled="disabled">선택하세요</option>
 						</select>
 						<label for="update_income_expense_category" id="update_income_expense_category_label" class="hidden">분류</label>
 						<select id="update_income_expense_category" name="ecId" class="hidden">
-							<option value="" selected>선택하세요</option>
+							<option value="" selected disabled="disabled">선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_income_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -75,7 +75,7 @@
 						</select>
 						<label for="update_income_income_category" id="update_income_income_category_label">분류</label>
 						<select id="update_income_income_category" name="icId" required>
-							<option value="" selected class="update_income_income_category_selected">선택하세요</option>
+							<option value="" selected class="update_income_income_category_selected" disabled="disabled">선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_income_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -98,8 +98,8 @@
 					<div class="update_button">
 						<button type="button" id="update_income_button_insert">신규 등록</button>
 						<button type="submit" id="update_income_button">수정</button>
-						<button type="button" class="close_modal">닫기</button>
 						<button type="button" id="delete_income_button">삭제</button>
+						<button type="button" class="close_modal">닫기</button>
 					</div>
 				</div>
 			</form>
@@ -119,15 +119,14 @@
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
 						<label for="update_expense_date">날짜</label>
-						<input type="date" id="update_expense_date" class="update_expense_date" name="expenseDate" value=""
-							required="required" min="1950-01-01" max="2199-12-12">
+						<input type="date" id="update_expense_date" class="update_expense_date" name="expenseDate" value="" required="required" min="1950-01-01" max="2199-12-12">
 					</div>
 					<!-- 돈이 빠져나갈 계좌 선택 창 -->
 					<div class="update_assets">
 						<input type="number" id="update_assets_expense_memAssetIdFrom_origin" name="memAssetId" class="hidden">
 						<label for="update_assets_expense_memAssetIdFrom" id="update_assets_expense_memAssetIdFrom_label">자산</label>
 						<select id="update_assets_expense_memAssetIdFrom" name="newMemAssetId" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputExpense()">
-							<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected>선택하세요</option>
+							<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected disabled="disabled">선택하세요</option>
 						</select>
 						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
 						<input type="number" id="update_assets_expense_assetsId" name="assetsId" class="hidden">
@@ -137,12 +136,12 @@
 					<div class="update_expense_category">
 						<!-- <input type="number" id="update_assets_expense_memAssetIdTo_origin" name="memAssetIdTo" class="hidden"> -->
 						<label for="update_assets_expense_memAssetIdTo" id="update_assets_expense_memAssetIdTo_label" class="hidden">입금</label>
-						<select id="update_assets_expense_memAssetIdTo" name="memAssetIdTo" required="required" class="hidden">
-							<option value="" selected id="update_assets_expense_memAssetIdTo_selected">선택하세요</option>
+						<select id="update_assets_expense_memAssetIdTo" name="memAssetIdTo" class="hidden">
+							<option value="" selected id="update_assets_expense_memAssetIdTo_selected" disabled="disabled">선택하세요</option>
 						</select>
 						<label for="update_expense_expense_category" id="update_expense_expense_category_label">분류</label>
-						<select id="update_expense_expense_category" name="ecId">
-							<option value="" selected id="update_expense_expense_category_selected">선택하세요</option>
+						<select id="update_expense_expense_category" name="ecId" required="required">
+							<option value="" selected id="update_expense_expense_category_selected" disabled="disabled">선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_expense_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -150,8 +149,8 @@
 							</c:forEach>
 						</select>
 						<label for="update_expense_income_category" id="update_expense_income_category_label" class="hidden">분류</label>
-						<select id="update_expense_income_category" name="icId" required class="hidden">
-							<option value="" selected>선택하세요</option>
+						<select id="update_expense_income_category" name="icId" class="hidden">
+							<option value="" selected disabled="disabled">선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_expense_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -195,15 +194,14 @@
 					<!-- 날짜 선택 창 -->
 					<div class="update_date">
 						<label for="update_transfer_date">날짜</label>
-						<input type="date" id="update_transfer_date" class="update_transfer_date" name="transferDate" value=""
-							required="required" min="1950-01-01" max="2199-12-12">
+						<input type="date" id="update_transfer_date" class="update_transfer_date" name="transferDate" value="" required="required" min="1950-01-01" max="2199-12-12">
 					</div>
 					<!-- 돈이 빠져나갈 계좌 선택 창 -->
 					<div class="update_assets">
 						<input type="number" id="update_assets_transfer_memAssetIdFrom_origin" name="memAssetIdFrom" class="hidden">
 						<label for="update_assets_transfer_memAssetIdFrom" id="update_assets_transfer_memAssetIdFrom_label">출금</label>
 						<select id="update_assets_transfer_memAssetIdFrom" name="newMemAssetIdFrom" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputTransfer()">
-							<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected>선택하세요</option>
+							<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected disabled="disabled">선택하세요</option>
 						</select>
 						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
 						<input type="number" id="update_assets_transfer_assetsId" name="assetsId" class="hidden">
@@ -217,8 +215,8 @@
 							<option id="update_assets_transfer_memAssetIdto_selected" value="" selected>선택하세요</option>
 						</select>
 						<label for="update_transfer_expense_category" id="update_transfer_expense_category_label" class="hidden">분류</label>
-						<select id="update_transfer_expense_category" name="ecId" required="required" class="hidden">
-							<option value="" selected>선택하세요</option>
+						<select id="update_transfer_expense_category" name="ecId" class="hidden">
+							<option value="" selected disabled="disabled">선택하세요</option>
 							<c:forEach var="ec" items="${ecList}">
 								<script>
 									document.querySelector('#update_transfer_expense_category').innerHTML += '<option value=${ec.ecId}>${ec.ecName}</option>';
@@ -226,8 +224,8 @@
 							</c:forEach>
 						</select>
 						<label for="update_transfer_income_category" id="update_transfer_income_category_label" class="hidden">분류</label>
-						<select id="update_transfer_income_category" name="icId" required class="hidden">
-							<option value="" selected>선택하세요</option>
+						<select id="update_transfer_income_category" name="icId" class="hidden">
+							<option value="" selected disabled="disabled">선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_transfer_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -250,14 +248,16 @@
 					<div class="update_button">
 						<button type="button" id="update_transfer_button_insert">신규 등록</button>
 						<button type="submit" id="update_transfer_button">수정</button>
-						<button type="button" class="close_modal">닫기</button>
 						<button type="button" id="delete_transfer_button">삭제</button>
+						<button type="button" class="close_modal">닫기</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
 
+	<button type="button" class="show_insert_modal hidden">+</button>
+	
 	<div class="grid_container">
 	
 		<!-- 상단 메뉴 부분 -->
@@ -274,6 +274,7 @@
 		
 		<!-- 측면 메뉴 부분 -->
 		<aside class="grid_aside">
+			<div class="insert_modal_overlay hidden"></div>
 			<div class="mainPage_sideMenuContainer">
 				<!-- 사용자가 정보를 입력하면 Insert해주는 Form을 만들자. ajax방식 -->
 				<!-- 사용자가 선택할 수 있는 수입/지출/이체 카테고리 -->
@@ -335,7 +336,7 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_income_button">등록</button>
-							<!-- <button type="reset">입력초기화</button> -->
+							<button type="button" class="close_insert_modal">닫기</button>
 						</div>
 					</div>
 				</form>
@@ -385,7 +386,7 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_expense_button">등록</button>
-							<!-- <button type="reset">입력초기화</button> -->
+							<button type="button" class="close_insert_modal">닫기</button>
 						</div>
 					</div>
 				</form>
@@ -432,7 +433,7 @@
 						<!-- 저장 버튼 -->
 						<div class="insert_button">
 							<button type="submit" id="insert_transfer_button">등록</button>
-							<!-- <button type="reset">입력초기화</button> -->
+							<button type="button" class="close_insert_modal">닫기</button>
 						</div>
 					</div>
 				</form>
@@ -523,7 +524,7 @@
 							<c:forEach var="i" begin="2" end="${cal.firstDay}">
 								<td class="dateTd_disabled">
 									<div class="dateDiv"><span class="dateSpan_disabled"></span>
-										<div class="enrty"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
+										<div class="entry"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
 									</div>
 								</td><%count++;%>
 							</c:forEach>
@@ -548,7 +549,7 @@
 							<%while(count%7!=0){%><!-- 비쥬얼스튜디오 코드 에러 방지용 %}-->
 								<td class="dateTd_disabled">
 									<div class="dateDiv"><span class="dateSpan_disabled"></span>
-										<div class="enrty"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
+										<div class="entry"><div class="entry_income"></div><div class="entry_expense"></div class="entry_transfer"><div></div></div>
 									</div>
 								</td><%count++;}%></tr>
 					</tbody>

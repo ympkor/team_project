@@ -240,6 +240,25 @@ function showAOMListAtInsertTransferAtTo(aaomList) {
   document.querySelector('#insert_assets_transfer_memAssetIdTo').innerHTML += aomStr;
 }
 document.addEventListener('DOMContentLoaded', function() {
+	//처음 브라우저 창이 켜졌을 떄, 화면크기 판단
+	if(window.innerWidth <= 1100){
+		 document.querySelector('.grid_aside').classList.add('hidden');
+		 document.querySelector('.insert_modal_overlay').classList.remove('hidden');
+		 document.querySelector('.show_insert_modal').classList.remove('hidden');
+		 document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		 for(let i = 0; i < document.querySelectorAll('button.close_insert_modal').length; i++){
+			  document.querySelectorAll('button.close_insert_modal')[i].classList.remove('hidden');
+		 }
+	 }else{
+		 document.querySelector('.grid_aside').classList.remove('hidden');
+		 document.querySelector('.insert_modal_overlay').classList.add('hidden');
+		 document.querySelector('.show_insert_modal').classList.add('hidden');
+		 document.querySelector('.mainPage_sideMenuContainer').classList.remove('hidden');
+		 for(let i = 0; i < document.querySelectorAll('button.close_insert_modal').length; i++){
+			  document.querySelectorAll('button.close_insert_modal')[i].classList.add('hidden');
+		 }
+	 }
+	
   const modal = document.querySelector('div.modal');
   const modalOverlay = document.querySelector('div.modal_overlay');
   const closeModalButton = document.querySelectorAll('button.close_modal');
@@ -249,12 +268,50 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#update_expense_form').classList.add('hidden');
       document.querySelector('#update_income_form').classList.add('hidden');
       document.querySelector('#update_transfer_form').classList.add('hidden');
-    })
+    });
   }
   modalOverlay.addEventListener('click', function() {
     modal.classList.add('hidden');
     document.querySelector('#update_expense_form').classList.add('hidden');
     document.querySelector('#update_income_form').classList.add('hidden');
     document.querySelector('#update_transfer_form').classList.add('hidden');
-  })
+  });
+  document.querySelector('.show_insert_modal').addEventListener('click', function() {
+    document.querySelector('.grid_aside').classList.remove('hidden');
+    document.querySelector('.insert_modal_overlay').classList.remove('hidden');
+    document.querySelector('.mainPage_sideMenuContainer').classList.remove('hidden');
+  });
+  document.querySelector('.insert_modal_overlay').addEventListener('click', function() {
+    document.querySelector('.grid_aside').classList.add('hidden');
+    document.querySelector('.insert_modal_overlay').classList.add('hidden');
+    document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+  });
+  for(let i = 0; i < document.querySelectorAll('button.close_insert_modal').length; i++){
+	  document.querySelectorAll('button.close_insert_modal')[i].addEventListener('click', function() {
+		  document.querySelector('.grid_aside').classList.add('hidden');
+		  document.querySelector('.insert_modal_overlay').classList.add('hidden');
+		  document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		 });		
+	 }
+  
+  //화면 사이즈가 줄어들면 인서트창 숨기고 버튼으로 불러오자
+  window.addEventListener('resize', function() {
+	 if(window.innerWidth <= 1100){
+		 document.querySelector('.grid_aside').classList.add('hidden');
+		 document.querySelector('.insert_modal_overlay').classList.remove('hidden');
+		 document.querySelector('.show_insert_modal').classList.remove('hidden');
+		 document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		 for(let i = 0; i < document.querySelectorAll('button.close_insert_modal').length; i++){
+			  document.querySelectorAll('button.close_insert_modal')[i].classList.remove('hidden');
+		 }
+	 }else{
+		 document.querySelector('.grid_aside').classList.remove('hidden');
+		 document.querySelector('.insert_modal_overlay').classList.add('hidden');
+		 document.querySelector('.show_insert_modal').classList.add('hidden');
+		 document.querySelector('.mainPage_sideMenuContainer').classList.remove('hidden');
+		 for(let i = 0; i < document.querySelectorAll('button.close_insert_modal').length; i++){
+			  document.querySelectorAll('button.close_insert_modal')[i].classList.add('hidden');
+		 }
+	 }
+  });
 });

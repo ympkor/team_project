@@ -112,6 +112,17 @@ public class MainUpdateService {
 		minusAOMAountById(incomeUpdate.getNewAmount(), incomeUpdate.getNewMemAssetId());
 	}
 
+	//수입을 지우고 이체를 insert하고 AOM을 업데이트
+	@Transactional
+	public void deleteIncomeInsertTransferUpdateAOM(IncomeUpdate incomeUpdate) {
+//		income을 삭제
+		deleteIncomeByIncomeId(incomeUpdate.getIncomeId());
+//		자산 수정
+		minusAOMAountById(incomeUpdate.getAmount(), incomeUpdate.getMemAssetId());
+//		이체를 인서트
+		insertTransferAndUpdateAom(new Transfer(0, incomeUpdate.getUserKey(), incomeUpdate.getNewMemAssetId(), incomeUpdate.getMemAssetIdTo(), incomeUpdate.getNewAmount(), incomeUpdate.getIncomeDate(), incomeUpdate.getMemo()));
+	}
+
 	//지출항목을 업데이트 해주고, income과 expense의 sum(amount)를 select하고 aom의 amout를 업데이트 한다.
 	@Transactional
 	public void updateEpAndAmount(ExpenseUpdate expenseUpdate) {
@@ -132,6 +143,14 @@ public class MainUpdateService {
 		insertIncome(new Income(0, expenseUpdate.getUserkey(), expenseUpdate.getNewAmount(), expenseUpdate.getExpenseDate(), expenseUpdate.getAssetsId(), expenseUpdate.getIcId(), expenseUpdate.getMemo(), expenseUpdate.getNewMemAssetId()));
 //		aom도 업데이트
 		plusAOMAmountById(expenseUpdate.getNewAmount(), expenseUpdate.getNewMemAssetId());
+	}
+
+	//지출 삭제, 이체 인서트, AOM업데이트
+	@Transactional
+	public void deleteExpenseInsertTransferUpdateAOM(ExpenseUpdate expenseUpdate) {
+		deleteExpenseByExpenseId(expenseUpdate.getExpenseId());
+		plusAOMAmountById(expenseUpdate.getAmount(), expenseUpdate.getMemAssetId());
+		insertTransferAndUpdateAom(new Transfer(0, expenseUpdate.getUserkey(), expenseUpdate.getNewMemAssetId(), expenseUpdate.getMemAssetIdTo(), expenseUpdate.getNewAmount(), expenseUpdate.getExpenseDate(), expenseUpdate.getMemo()));
 	}
 	
 	//이체항목을 업데이트하고 AOM을 업데이트

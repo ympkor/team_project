@@ -1,14 +1,38 @@
 //해당월에 맞는 income data들을 전달받아 만들어진 달력에 뿌려주는 기능
 function showThisMonthIncome(miicList){
-	for (let i = 0; i < miicList.length; i++) {
-			let icName = miicList[i].icName;
-			let icAmount = miicList[i].amount;
+	if(miicList != null){
+		for (let i = 0; i < miicList.length; i++) {
+				let icName = miicList[i].icName;
+				let icAmount = miicList[i].amount;
+				let entryClassName;
+				if (miicList[i].incomeDate.dayOfMonth < 10) { entryClassName = '.di0' + miicList[i].incomeDate.dayOfMonth; }
+				else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
+				let entry = document.querySelector(entryClassName);
+				if(i == 0){entry.innerHTML = null}
+				entry.innerHTML += '<div class=income><span class=icName>' + icName + '&nbsp;</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+				if(entry.childElementCount > 2){
+					let ellipsis = document.createElement('span');
+					ellipsis.innerText = '...';
+					if(document.querySelector(entryClassName).children[1].children[1].childElementCount < 1){
+						document.querySelector(entryClassName).children[1].children[1].appendChild(ellipsis);
+					}
+					entry.classList.add('limit');
+				}
+		}
+	}
+}
+//해당월에 맞는 expense date들을 전달받아 만들어진 달력에 뿌려주는 기능
+function showThisMonthExpense(meecList) {
+	if(meecList != null){
+		for (let i = 0; i < meecList.length; i++) {
+			let ecName = meecList[i].ecName;
+			let ecAmount = meecList[i].amount;
 			let entryClassName;
-			if (miicList[i].incomeDate.dayOfMonth < 10) { entryClassName = '.di0' + miicList[i].incomeDate.dayOfMonth; }
-			else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
+			if (meecList[i].expenseDate.dayOfMonth < 10) { entryClassName = '.de0' + meecList[i].expenseDate.dayOfMonth; }
+			else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
 			let entry = document.querySelector(entryClassName);
 			if(i == 0){entry.innerHTML = null}
-			entry.innerHTML += '<div class=income><span class=icName>' + icName + '&nbsp;</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+			entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '&nbsp;</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
 			if(entry.childElementCount > 2){
 				let ellipsis = document.createElement('span');
 				ellipsis.innerText = '...';
@@ -17,45 +41,26 @@ function showThisMonthIncome(miicList){
 				}
 				entry.classList.add('limit');
 			}
-	}
-}
-//해당월에 맞는 expense date들을 전달받아 만들어진 달력에 뿌려주는 기능
-function showThisMonthExpense(meecList) {
-	for (let i = 0; i < meecList.length; i++) {
-		let ecName = meecList[i].ecName;
-		let ecAmount = meecList[i].amount;
-		let entryClassName;
-		if (meecList[i].expenseDate.dayOfMonth < 10) { entryClassName = '.de0' + meecList[i].expenseDate.dayOfMonth; }
-		else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
-		let entry = document.querySelector(entryClassName);
-		if(i == 0){entry.innerHTML = null}
-		entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '&nbsp;</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
-		if(entry.childElementCount > 2){
-			let ellipsis = document.createElement('span');
-			ellipsis.innerText = '...';
-			if(document.querySelector(entryClassName).children[1].children[1].childElementCount < 1){
-				document.querySelector(entryClassName).children[1].children[1].appendChild(ellipsis);
-			}
-			entry.classList.add('limit');
 		}
 	}
 }
 //월별 이체 데이터를 만들어진 달력에 뿌려주는 기능
 function showThisMonthTransfer(tbmList) {
-	let classStr;
 	if(tbmList != null){
+		let classStr = '';
 		for(let i = 0; i < tbmList.length; i++){
 			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
 			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
-			document.querySelector(classStr).innerHTML += '<div class=transfer><span class=transferName>이체&nbsp;</span><span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
-		}
-		if(document.querySelector(classStr).childElementCount > 2){
-			let ellipsis = document.createElement('span');
-			ellipsis.innerText = '...';
-			if(document.querySelector(classStr).children[1].children[1].childElementCount < 1){
-				document.querySelector(classStr).children[1].children[1].appendChild(ellipsis);
+			let entry = document.querySelector(classStr);
+			entry.innerHTML += '<div class=transfer><span class=transferName>이체&nbsp;</span><span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
+			if(entry.childElementCount > 2){
+				let ellipsis = document.createElement('span');
+				ellipsis.innerText = '...';
+				if(entry.children[1].children[1].childElementCount < 1){
+					entry.children[1].children[1].appendChild(ellipsis);
+				}
+				document.querySelector(classStr).classList.add('limit');
 			}
-			document.querySelector(classStr).classList.add('limit');
 		}
 	}
 }
@@ -261,9 +266,9 @@ function showUpdateTransferFromAomIncome(iica) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(iica.assetsId == 99){updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+iica.assetsName+'</option>';
+				if(iica.assetsId == 99){updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" selected  disabled="disabled">'+iica.assetsName+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_income_memAssetIdFrom_selected" value='+iica.memAssetId+' selected>'+iica.assetsName+' '+iica.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != iica.memAssetId && aaomList[i].assetsId != 99){
@@ -285,7 +290,7 @@ function showUpdateTransferToAomIncome(iica) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
 				updateAOMStr = ' ';
 				for(let i = 0; i < aaomList.length; i++) {
@@ -308,10 +313,10 @@ function showUpdateTransferFromAomExpense(eeca) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(eeca.assetsId == 99){updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+eeca.assetsName+'</option>';	
-				}else{updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetIdTo+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';}
+				if(eeca.assetsId == 99){updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" selected  disabled="disabled">'+eeca.assetsName+'</option>';	
+				}else{updateAOMStr = '<option id="update_assets_expense_memAssetIdFrom_selected" value='+eeca.memAssetId+' selected>'+eeca.assetsName+' '+eeca.aomName+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != eeca.memAssetId && aaomList[i].assetsId != 99){
 						updateAOMStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+"</option>";
@@ -332,7 +337,7 @@ function showUpdateTransferToAomExpense(eeca) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_expense_memAssetIdto_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
 				updateAOMStr = ' ';
 				for(let i = 0; i < aaomList.length; i++) {
@@ -355,9 +360,9 @@ function showUpdateTransferFromAomTransfer(taomfaomt) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(taomfaomt.assetsId == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected  disabled="disabled">'+taomfaomt.assetsNameFrom+'</option>';
+				if(taomfaomt.assetsId == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" selected  disabled="disabled">'+taomfaomt.assetsNameFrom+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdFrom_selected" value='+taomfaomt.memAssetIdFrom+' selected>'+taomfaomt.assetsNameFrom+' '+taomfaomt.aomNameFrom+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != taomfaomt.memAssetIdFrom && aaomList[i].assetsId != 99){
@@ -379,9 +384,9 @@ function showUpdateTransferToAomTransfer(taomfaomt) {
 		data:jsonData,
 		success:function(aaomList) {
 			let updateAOMStr;
-			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			if(aaomList == null) {updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
 			}else {
-				if(taomfaomt.assetsIdTo == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value="" selected disabled="disabled">'+taomfaomt.assetsNameTo+'</option>';
+				if(taomfaomt.assetsIdTo == 99){updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" selected disabled="disabled">'+taomfaomt.assetsNameTo+'</option>';
 				}else{updateAOMStr = '<option id="update_assets_transfer_memAssetIdto_selected" value='+taomfaomt.memAssetIdTo+' selected>'+taomfaomt.assetsNameTo+' '+taomfaomt.aomNameTo+'</option>';}
 				for(let i = 0; i < aaomList.length; i++) {
 					if(aaomList[i].memAssetId != taomfaomt.memAssetIdTo && aaomList[i].assetsId != 99){
@@ -401,7 +406,7 @@ function showInsertIncomeAomBF(assetsId) {
     type:'post',
     data:jsonData,
     success:function(aomList) {
-			let updateAOMStr = '<option id="insert_aom_income_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			let updateAOMStr = '<option id="insert_aom_income_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
       if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
       }else {
         for(let i = 0; i < aomList.length; i++) {
@@ -420,7 +425,7 @@ function showInsertExpenseAomBF(assetsId) {
     type:'post',
     data:jsonData,
     success:function(aomList) {
-			let updateAOMStr = '<option id="insert_aom_expense_selected" value="" selected  disabled="disabled">등록된 자산이 없습니다</option>';
+			let updateAOMStr = '<option id="insert_aom_expense_selected" selected  disabled="disabled">등록된 자산이 없습니다</option>';
       if(aomList == null) {updateAOMIncome.innerHTML = updateAOMStr;
       }else {
         for(let i = 0; i < aomList.length; i++) {
@@ -469,21 +474,23 @@ function makeDetailExpenseDIV(eecaList) {
 }
 //이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
 function makeDetailTransferDIV(taomfaomtList) {
-	document.querySelector('div.detail_context_transfer').innerHTML = null;
-	for(let i = 0; i < taomfaomtList.length; i++) {
-		let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
-		str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
-		if(taomfaomtList[i].assetsId == 99){
-			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';		
-			}else{str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].assetsNameTo+'</span></div>';}
-		}else{
-			if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';
-			}else{str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
+	if(taomfaomtList != null){
+		document.querySelector('div.detail_context_transfer').innerHTML = null;
+		for(let i = 0; i < taomfaomtList.length; i++) {
+			let str = '<div class="di_transfer'+i+' detailItem"><div class=detail_category><span class=detail_category>이체</span></div>';
+			str += '<div class=detailEntry><span class=detailTMemo>'+taomfaomtList[i].memo+'</span><br><span class=detailAName>';
+			if(taomfaomtList[i].assetsId == 99){
+				if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';		
+				}else{str += taomfaomtList[i].assetsNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].assetsNameTo+'</span></div>';}
+			}else{
+				if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';
+				}else{str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
+			}
+			str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
+			document.querySelector('div.detail_context_transfer').innerHTML += str;
 		}
-		str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
-		document.querySelector('div.detail_context_transfer').innerHTML += str;
+		putTransferDataToUpdateForm(taomfaomtList);
 	}
-	putTransferDataToUpdateForm(taomfaomtList);
 }
 
 /*################# 페이지가 모두 로드 된 이후 사용될 기능들 ################*/
@@ -557,10 +564,10 @@ window.addEventListener('DOMContentLoaded', function () {
           //일단 상세내역 데이터들 초기화 해줘야함.
           detailContextIncome.innerHTML = null;
           detailContextExpense.innerHTML = null;
-					detailDateSpan.innerHTML = currentDate;
-					document.querySelector('#insert_income_date').value = currentDate;
-					document.querySelector('#insert_expense_date').value = currentDate;
-					document.querySelector('#insert_transfer_date').value = currentDate;
+			detailDateSpan.innerHTML = currentDate;
+			document.querySelector('#insert_income_date').value = currentDate;
+			document.querySelector('#insert_expense_date').value = currentDate;
+			document.querySelector('#insert_transfer_date').value = currentDate;
 					//이건 날짜별 수입 데이터들
           $.ajax({
             url: '/main/postIICA',
@@ -632,7 +639,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		let updateDate = document.querySelector('span.detailDate').innerText;
 		document.querySelector('#insert_income_date').value = updateDate;
 		document.querySelector('#insert_expense_date').value = updateDate;
-		document.querySelector('#insert_transfer_form').value = updateDate;
+		document.querySelector('#insert_transfer_date').value = updateDate;
 		let detailData = {"currentDate":updateDate};
 		//이건 날짜별 수입 데이터들
 		$.ajax({
@@ -720,7 +727,7 @@ window.addEventListener('DOMContentLoaded', function () {
 	}
 	//########## 상단바 버튼 ##########
 	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypage";
+		location.href="/member/mypageProc";
 	}
 	document.querySelector(".gologout").onclick = function(){
 		location.href="/member/logout";
@@ -1066,6 +1073,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				document.querySelector('#insert_transfer_date').value = insertDate;
 			}
 		});
+		if(window.innerWidth <= 1100){
+				document.querySelector('.grid_aside').classList.add('hidden');
+				document.querySelector('.insert_modal_overlay').classList.add('hidden');
+				document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		}
 		return false;
 	});
 
@@ -1088,6 +1100,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				document.querySelector('#insert_transfer_date').value = insertDate;
 			}
 		});
+		if(window.innerWidth <= 1100){
+			document.querySelector('.grid_aside').classList.add('hidden');
+			document.querySelector('.insert_modal_overlay').classList.add('hidden');
+			document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		}
 		return false;
 	});
 	//transfer insert 버튼 클릭시 insert 이벤트
@@ -1109,6 +1126,11 @@ window.addEventListener('DOMContentLoaded', function () {
 				document.querySelector('#insert_transfer_date').value = insertDate;
 			}
 		});
+		if(window.innerWidth <= 1100){
+			document.querySelector('.grid_aside').classList.add('hidden');
+			document.querySelector('.insert_modal_overlay').classList.add('hidden');
+			document.querySelector('.mainPage_sideMenuContainer').classList.add('hidden');
+		}
 		return false;
 	});
 });

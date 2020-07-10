@@ -67,6 +67,9 @@ button.month_button{
 .entry_income,.entry_expense,.entry_transfer{
   overflow: hidden;
 }
+.dateTd{
+  cursor: pointer;
+}
 .dateDiv{
   text-align: right;
   letter-spacing: 1px;
