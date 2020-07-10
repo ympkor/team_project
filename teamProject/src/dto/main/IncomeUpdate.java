@@ -36,19 +36,6 @@ public class IncomeUpdate {
 		this.ecId = ecId;
 		this.memo = memo;
 	}
-	public int getMemAssetIdTo() {
-		return memAssetIdTo;
-	}
-	public void setMemAssetIdTo(int memAssetIdTo) {
-		this.memAssetIdTo = memAssetIdTo;
-	}
-
-	public int getNewAmount() {
-		return newAmount;
-	}
-	public void setNewAmount(int newAmount) {
-		this.newAmount = newAmount;
-	}
 	public int getCategory() {
 		return category;
 	}
@@ -73,6 +60,12 @@ public class IncomeUpdate {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
+	public int getNewAmount() {
+		return newAmount;
+	}
+	public void setNewAmount(int newAmount) {
+		this.newAmount = newAmount;
+	}
 	public LocalDate getIncomeDate() {
 		return incomeDate;
 	}
@@ -90,6 +83,12 @@ public class IncomeUpdate {
 	}
 	public void setNewMemAssetId(int newMemAssetId) {
 		this.newMemAssetId = newMemAssetId;
+	}
+	public int getMemAssetIdTo() {
+		return memAssetIdTo;
+	}
+	public void setMemAssetIdTo(int memAssetIdTo) {
+		this.memAssetIdTo = memAssetIdTo;
 	}
 	public int getAssetsId() {
 		return assetsId;

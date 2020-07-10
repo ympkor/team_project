@@ -16,8 +16,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="/js/main/main_modal.js?var=1"></script>
-	<script type="text/javascript" src="/js/main/mainTestJs.js?var=1"></script>
+	<script type="text/javascript" src="/js/main/main_modal.js?var=2"></script>
+	<script type="text/javascript" src="/js/main/mainTestJs.js?var=2"></script>
 </head>
 <body>
 	<!-- 모달 창 div-->
@@ -51,7 +51,7 @@
 						<input type="number" id="update_assets_income_memAssetIdFrom_origin" name="memAssetId" class="hidden">
 						<label for="update_assets_income_memAssetIdFrom" id="update_assets_income_memAssetIdFrom_label">자산</label>
 						<select id="update_assets_income_memAssetIdFrom" name="newMemAssetId" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputIncome()">
-							<option id="update_assets_income_memAssetIdFrom_selected" value="" selected>선택하세요</option>
+							<option value="" id="update_assets_income_memAssetIdFrom_selected" selected>선택하세요</option>
 						</select>
 						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
 						<input type="number" id="update_assets_income_assetsId" name="assetsId" class="hidden">
@@ -75,7 +75,7 @@
 						</select>
 						<label for="update_income_income_category" id="update_income_income_category_label">분류</label>
 						<select id="update_income_income_category" name="icId" required>
-							<option value="" selected class="update_income_income_category_selected" disabled="disabled">선택하세요</option>
+							<option value="" selected class="update_income_income_category_selected"disabled="disabled">선택하세요</option>
 							<c:forEach var="ic" items="${icList}">
 								<script>
 									document.querySelector('#update_income_income_category').innerHTML += '<option value=${ic.icId}>${ic.icName}</option>';
@@ -97,7 +97,7 @@
 					<!-- 입력하기 버튼 -->
 					<div class="update_button">
 						<button type="button" id="update_income_button_insert">신규 등록</button>
-						<button type="submit" id="update_income_button">수정</button>
+						<button type="submit" id="update_income_button" value="update">수정</button>
 						<button type="button" id="delete_income_button">삭제</button>
 						<button type="button" class="close_modal">닫기</button>
 					</div>
@@ -126,7 +126,7 @@
 						<input type="number" id="update_assets_expense_memAssetIdFrom_origin" name="memAssetId" class="hidden">
 						<label for="update_assets_expense_memAssetIdFrom" id="update_assets_expense_memAssetIdFrom_label">자산</label>
 						<select id="update_assets_expense_memAssetIdFrom" name="newMemAssetId" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputExpense()">
-							<option id="update_assets_expense_memAssetIdFrom_selected" value="" selected disabled="disabled">선택하세요</option>
+							<option value="" id="update_assets_expense_memAssetIdFrom_selected" selected disabled="disabled">선택하세요</option>
 						</select>
 						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
 						<input type="number" id="update_assets_expense_assetsId" name="assetsId" class="hidden">
@@ -201,7 +201,7 @@
 						<input type="number" id="update_assets_transfer_memAssetIdFrom_origin" name="memAssetIdFrom" class="hidden">
 						<label for="update_assets_transfer_memAssetIdFrom" id="update_assets_transfer_memAssetIdFrom_label">출금</label>
 						<select id="update_assets_transfer_memAssetIdFrom" name="newMemAssetIdFrom" required="required" onchange="getAssetsIdAndPutAssetsIdToHiddenInputTransfer()">
-							<option id="update_assets_transfer_memAssetIdFrom_selected" value="" selected disabled="disabled">선택하세요</option>
+							<option value="" id="update_assets_transfer_memAssetIdFrom_selected" selected disabled="disabled">선택하세요</option>
 						</select>
 						<!-- 이체가 수입이나 지출로 바뀌었을때 값이 들어간다. -->
 						<input type="number" id="update_assets_transfer_assetsId" name="assetsId" class="hidden">
@@ -212,7 +212,7 @@
 						<input type="number" id="update_assets_transfer_memAssetIdTo_origin" name="memAssetIdTo" class="hidden">
 						<label for="update_assets_transfer_memAssetIdTo" id="update_assets_transfer_memAssetIdTo_label">입금</label>
 						<select id="update_assets_transfer_memAssetIdTo" name="newMemAssetIdTo" required="required">
-							<option id="update_assets_transfer_memAssetIdto_selected" value="" selected>선택하세요</option>
+							<option value="" id="update_assets_transfer_memAssetIdto_selected" selected disabled>선택하세요</option>
 						</select>
 						<label for="update_transfer_expense_category" id="update_transfer_expense_category_label" class="hidden">분류</label>
 						<select id="update_transfer_expense_category" name="ecId" class="hidden">
@@ -304,7 +304,7 @@
 							<label for="insert_assets_income">자산</label>
 							<input id="insert_assets_income_assetsId" name="assetsId" class="hidden">
 							<select id="insert_assets_income_memAssetId" name="memAssetId" required="required" onchange="getAssetsIdAndPutDataAtIncomeForm()">
-								<option id="insert_assets_income_memAssetId_selected" value="" selected disabled>선택하세요</option>
+								<option value="" id="insert_assets_income_memAssetId_selected" selected disabled>선택하세요</option>
 							</select>
 							<script>
 								const aaomListJ = JSON.parse('${aaomListJ}');
@@ -355,7 +355,7 @@
 							<label for="insert_assets_expense">자산</label>
 							<input id="insert_assets_expense_assetsId" name="assetsId" class="hidden">
 							<select id="insert_assets_expense_memAssetId" name="memAssetId" required="required" onchange="getAssetsIdAndPutDataAtExpenseForm()">
-								<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>선택하세요</option>
+								<option value="" id="insert_assets_expense_memAssetId_selected" selected disabled>선택하세요</option>
 							</select>
 							<script>
 								showAOMListAtInsertExpense(aaomListJ);
@@ -404,7 +404,7 @@
 						<div class="insert_assets">
 							<label for="insert_assets_transfer_memAssetId">출금</label>
 							<select id="insert_assets_transfer_memAssetId" name="memAssetIdFrom" required="required" onchange="getAssetsIdAndPutDataAtTransferForm()">
-								<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>선택하세요</option>
+								<option value="" id="insert_assets_expense_memAssetId_selected" selected disabled>선택하세요</option>
 							</select>
 							<script>
 								showAOMListAtInsertTransferAtFrom(aaomListJ);
@@ -414,7 +414,7 @@
 						<div class="insert_category">
 							<label for="insert_assets_transfer_memAssetIdTo">입금</label>
 							<select id="insert_assets_transfer_memAssetIdTo" name="memAssetIdTo" required="required">
-								<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>선택하세요</option>
+								<option value="" id="insert_assets_transfer_memAssetIdTo_selected" selected disabled>선택하세요</option>
 							</select>
 							<script>
 								showAOMListAtInsertTransferAtTo(aaomListJ);

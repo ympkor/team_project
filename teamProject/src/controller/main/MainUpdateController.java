@@ -196,7 +196,7 @@ public class MainUpdateController {
 	}
 	
 	@PostMapping("/postUpdateIncomeInsert")
-	public @ResponseBody UpdateAndRefresh insertEventAtIncomeUpdateForm(@ModelAttribute("userkey")int userKey, IncomeUpdate incomeUpdate) {
+	public @ResponseBody UpdateAndRefresh insertEventAtIncomeUpdateForm(@ModelAttribute("userKey")int userKey, IncomeUpdate incomeUpdate) {
 		UpdateAndRefresh updateAndRefresh = new UpdateAndRefresh();
 		incomeUpdate.setUserKey(userKey);
 		if(incomeUpdate.getCategory() == 1) {

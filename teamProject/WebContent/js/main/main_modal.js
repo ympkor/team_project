@@ -212,7 +212,7 @@ function showAOMListAtInsertIncome(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
 	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
-    }}else{aomStr = '<option id="insert_assets_income_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+    }}else{aomStr = '<option value id="insert_assets_income_memAssetId_selected" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_income_memAssetId').innerHTML += aomStr;
 }
 //지출 인서트 폼에서 해당 유저의 자산 목록을 보여주는 기능
@@ -220,7 +220,7 @@ function showAOMListAtInsertExpense(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
 	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
-    }}else{aomStr = '<option id="insert_assets_expense_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+    }}else{aomStr = '<option value id="insert_assets_expense_memAssetId_selected" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_expense_memAssetId').innerHTML += aomStr;
 }
 //이체 인서트 폼에서 출금자산에 해당 유저의 자산 목록을 보여주는 기능
@@ -228,7 +228,7 @@ function showAOMListAtInsertTransferAtFrom(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
 	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
-    }}else{aomStr = '<option id="insert_assets_transfer_memAssetId_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+    }}else{aomStr = '<option value id="insert_assets_transfer_memAssetId_selected" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_transfer_memAssetId').innerHTML += aomStr;
 }
 //이체 인서트 폼에서 입금자산에 해당 유저의 자산 목록을 보여주는 기능
@@ -236,7 +236,7 @@ function showAOMListAtInsertTransferAtTo(aaomList) {
   let aomStr = ' ';
   if(aaomList != null) {for(let i = 0; i < aaomList.length; i++) {
 	  if(aaomList[i].assetsId!=99){aomStr += '<option value='+aaomList[i].memAssetId+'>'+aaomList[i].assetsName+' '+aaomList[i].memo+'</option>';}
-    }}else{aomStr = '<option id="insert_assets_transfer_memAssetIdTo_selected" value="" selected disabled>등록된 자산이 없습니다.</option>';}
+    }}else{aomStr = '<option value id="insert_assets_transfer_memAssetIdTo_selected" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_transfer_memAssetIdTo').innerHTML += aomStr;
 }
 document.addEventListener('DOMContentLoaded', function() {
