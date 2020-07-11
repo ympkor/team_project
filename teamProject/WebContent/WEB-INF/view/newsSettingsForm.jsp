@@ -37,7 +37,7 @@
 
 	<div style="font-size:150%; color:#999999; text-align: center;">" 입력하신 키워드를 기반으로 추천 기사를 제공합니다. "</div>
 	<div class="value">
-	<input style="text-align: center;"type="text" class="value" name="newsKeywords" value="${newsKeywords}" required placeholder="자산 금리 저축 적금"></div>
+	<input style="text-align: center;"type="text" class="value" name="newsKeywords" value="${newsKeywords}" placeholder="자산 금리 저축 적금"></div>
 	<div></div>
 	<div><input class="addConfirm" type="submit" value="수정">
 	<input class="addConfirm" type="button" value="취소" onClick="location.href='view'"></div>
