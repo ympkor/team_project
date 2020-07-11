@@ -51,19 +51,19 @@
 		
 		<div class=addPageTitle style="padding-top:10px;">은행</div>
 		<div class=addPageValue>
-		<input id="an1" type="radio" name="assetsId" value="1"><label>국민은행 </label>
-        <input id="an2" type="radio" name="assetsId" value="2"><label>기업은행 </label>
-        <input id="an3" type="radio" name="assetsId" value="3"><label>농협 </label>
-        <input id="an4" type="radio" name="assetsId" value="4"><label>신한은행 </label>
-        <input id="an5" type="radio" name="assetsId" value="5"><label>산업은행 </label>
-        <input id="an6" type="radio" name="assetsId" value="6"></label><label>우리은행 </div>
+		<input type="radio" name="assetsId" value="1" id="kb"><label for="kb">국민은행</label>
+        <input type="radio" name="assetsId" value="2" id="ibk"><label for="ibk">기업은행</label>
+        <input type="radio" name="assetsId" value="3" id="nh"><label for="nh">농협</label>
+        <input type="radio" name="assetsId" value="4" id="shinhan"><label for="shinhan">신한은행</label>
+        <input type="radio" name="assetsId" value="5" id="keb"><label for="keb">산업은행</label>
+        <input type="radio" name="assetsId" value="6" id="woori"><label for="woori">우리은행</label></div>
         <div></div>
         <div class=addPageValue>
-        <input id="an7" type="radio" name="assetsId" value="7"><label>씨티은행 </label>
-        <input id="an8" type="radio" name="assetsId" value="8"><label>하나은행 </label>
-        <input id="an9" type="radio" name="assetsId" value="9"><label>SC제일은행 </label>
-        <input id="an10" type="radio" name="assetsId" value="10"><label>기타은행 </label>
-        <input id="an24" type="radio" name="assetsId" value="24"><label>현금 </label>
+        <input type="radio" name="assetsId" value="7" id="city"><label for="city">씨티은행</label>
+        <input type="radio" name="assetsId" value="8" id="hana"><label for="hana">하나은행</label>
+        <input type="radio" name="assetsId" value="9" id="sc"><label for="sc">SC제일은행</label>
+        <input type="radio" name="assetsId" value="10"  id="etc" checked><label for="etc">기타은행</label>
+        <input type="radio" name="assetsId" value="24" id="cash"><label for="cash">현금 </label>
         </div>
 		
 		<div class=addPageTitle>메모</div>
