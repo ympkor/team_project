@@ -34,6 +34,10 @@ public class AssetOfMemberService {
 		return awmMapper.selectOnlyDebtListById(userKey);
 	}
 
+	public List<AssetOfMember> selectOnlyZeroListById(int userKey) {
+		return awmMapper.selectOnlyZeroListById(userKey);
+	}
+
 	public void addAsset(AssetOfMember aom) {
 		awmMapper.addAsset(aom);
 	}
