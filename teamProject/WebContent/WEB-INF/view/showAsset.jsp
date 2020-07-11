@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=2">
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=3">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://kit.fontawesome.com/b8612abdbb.js" crossorigin="anonymous"></script>
@@ -114,7 +114,7 @@ window.onload = function() {
 		indexLabel: "{label} {z}%",
 		dataPoints: [
 			{ y: assetChtData, z: aRatio, label: "자산"},
-			{ y: debtChtData, z: bRatio, label: "부채", exploded : true},
+			{ y: debtChtData, z: bRatio, label: "마이너스 계좌", exploded : true},
 		]
 	}]
 });
@@ -152,7 +152,7 @@ window.onload = function() {
 		<div style="margin-top: 50px; line-height: 30%; color:grey">
 		<p class=leftSum>자산</p><div id = sumAsset class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumAsset}" pattern="###,###,###,###"/>원</h2></div><br>
-		<p class=leftSum>부채</p><div id = sumDebt class=leftSum>
+		<p class=leftSum>마이너스 계좌</p><div id = sumDebt class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumDebt}" pattern="###,###,###,###"/>원</h2></div>
 		</div><br><br>
 	</div>
@@ -167,41 +167,56 @@ window.onload = function() {
 	
    <div id="eachAsset">
    		<h1 style="margin-top:27px; margin-bottom:30px; color:#grey;">내 자산 내역</h1>
-   		<div style="text-align: right; font-weight: bold; margin-bottom:-11px;"><span class=cntAsset style="margin-right: 10px;">자산 ${cntAssets} 건</span>
-		<span class=cntAsset>부채 ${cntDebts} 건</span></div><br><br>
-		<c:forEach items="${assetList}" var="aList">
+   		<div style="text-align: right; font-weight: bold; margin-bottom:-11px;"><span class=cntAsset style="margin-right: 0px;">총 ${cntAssets} 건</span>
+		</div><br><br>
+		
+		<c:forEach items="${assetList}" var="aom">
 			<div id="eachAssetText" style="background:#6e92bc;">
-				<div id="eachAssetType" style="text-align: right; font-weight: 300; font-size:12px;">${aList.type}</div>
-				<div>${aList.assetsName}</div>
-				<div id="eachAssetAmount" style="text-align: right; font-size:30px; font-weight: 900;">
-				<fmt:formatNumber value="${aList.amount}" pattern="###,###,###,###"/>원</div>
-				<div style="font-size: 13px; font-weight: 300;">${aList.memo}</div>
+				<div></div>
+				<div>${aom.assetsName}</div>
+				<div id="eachAssetAmount" class="eAmount" style="text-align: right; font-size:30px; font-weight: 900;">
+				<fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원</div>
+				<div style="font-size: 13px; font-weight: 300;">${aom.memo}</div>
 			<div id="eachAssetEdit">
-				<a href="edit?memAssetId=${aList.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
+				<a href="edit?memAssetId=${aom.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
+			</div>
+			</div>
+			<br>
+		</c:forEach>
+		
+		<c:forEach items="${debtList}" var="aom">
+			<div id="eachAssetText" style="background:#c07675;">
+				<div></div>
+				<div>${aom.assetsName}</div>
+				<div id="eachAssetAmount" class="eAmount" style="text-align: right; font-size:30px; font-weight: 900;">
+				<fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원</div>
+				<div style="font-size: 13px; font-weight: 300;">${aom.memo}</div>
+			<div id="eachAssetEdit">
+				<a href="edit?memAssetId=${aom.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
 			</div>
 			</div>
 			<br>
 		</c:forEach>
 
-		<c:forEach items="${debtList}" var="dList">
-			<div id="eachAssetText" style="background:#c07675;">
-				<div id="eachAssetType" style="text-align: right; font-weight: 300; font-size:12px;">${dList.type}</div>
-				<div>${dList.assetsName}</div>
-				<div id="eachAssetAmount" style="text-align: right; font-size:30px; font-weight: 900;">
-				<fmt:formatNumber value="${dList.amount}" pattern="###,###,###,###"/>원</div>
-				<div style="font-size: 13px; font-weight: 300;">${dList.memo}</div>
+		<c:forEach items="${zeroList}" var="aom">
+			<div id="eachAssetText" style="background:#999999;">
+				<div></div>
+				<div>${aom.assetsName}</div>
+				<div id="eachAssetAmount" class="eAmount" style="text-align: right; font-size:30px; font-weight: 900;">
+				<fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원</div>
+				<div style="font-size: 13px; font-weight: 300;">${aom.memo}</div>
 			<div id="eachAssetEdit">
-				<a href="edit?memAssetId=${dList.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
+				<a href="edit?memAssetId=${aom.memAssetId}" style="text-decoration: none; color:#cccccc"><i class="fas fa-edit"></i></a>
 			</div>
 			</div>
 			<br>
 		</c:forEach>
-	
+		
 	</div>
-	
+
 		<div id="addAsset">
 	<div id="eachAssetText" onClick="location.href='add'" 
-	style="cursor:pointer; text-align: center; opacity:1; font-weight: 500; font-size: 12px; color:#666666;">자산 / 부채 추가</div>
+	style="cursor:pointer; text-align: center; opacity:1; font-weight: 500; font-size: 12px; color:#666666;">내 자산 추가</div>
 	</div>
 	
 	
