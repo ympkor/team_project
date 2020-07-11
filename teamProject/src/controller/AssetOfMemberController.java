@@ -30,7 +30,8 @@ public class AssetOfMemberController {
 		List<AssetOfMember> aomList = aomService.selectAssetListById(userKey);
 		List<AssetOfMember> assetList = aomService.selectOnlyAssetListById(userKey);
 		List<AssetOfMember> debtList = aomService.selectOnlyDebtListById(userKey);
-
+		List<AssetOfMember> zeroList = aomService.selectOnlyZeroListById(userKey);
+		
 		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 		int i = 0;
 		int sumAssets = 0;
@@ -78,6 +79,7 @@ public class AssetOfMemberController {
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("assetList", assetList);
 		m.addAttribute("debtList", debtList);
+		m.addAttribute("zeroList", zeroList);
 		m.addAttribute("sumTotal", sumTotal);
 		m.addAttribute("sumAsset", sumAssets);
 		m.addAttribute("sumDebt", sumDebts);
@@ -101,21 +103,7 @@ public class AssetOfMemberController {
 	@RequestMapping("/addAsset")
 	public String addAsset(@ModelAttribute("userKey")int userKey, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
-
-		//자산인 경우 +값으로, 부채인 경우 -값으로 db 저장
-		String assetType = aom.getType();
-		int amount = aom.getAmount();
-		if (assetType.equals("자산") && amount>0) {
-			amount*=1;
-		} else if (assetType.equals("자산") && amount<0) {
-			amount*=-1;
-		} else if (assetType.equals("부채") && amount>0) {
-			amount*=-1;
-		} else if (assetType.equals("부채") && amount<0) {
-			amount*=1;
-		}
-		aom.setAmount(amount);
-		//addAsset 쿼리 실행
+		
 		aomService.addAsset(aom);
 
 		//자산입력시 수입지출내역 기록에 체크했을 경우
@@ -125,17 +113,12 @@ public class AssetOfMemberController {
 
 			//type(자산/부채) 확인해서 부채인경우 +값으로 변경
 			//income, expense 테이블에서는 +값으로 존재
-			String assetTypeToMain = toCal.getType();
 			int amountOfMain = toCal.getAmount();
-			if (assetTypeToMain.equals("부채")) {
-				amountOfMain*=-1;
-			}
-			toCal.setAmount(amountOfMain);
 
-			//자산 or 부채 여부에 따라 쿼리 분기
-			if (assetTypeToMain.equals("자산")) {
+			if (amountOfMain>0) {
 				aomService.addAssetToIncome(toCal);
-			} else if (assetTypeToMain.equals("부채")){
+			} else if (amountOfMain<0){
+				toCal.setAmount(amountOfMain*-1);
 				aomService.addAssetToExpense(toCal);
 			}
 			return "addAssetResult";
@@ -152,10 +135,8 @@ public class AssetOfMemberController {
 		aomBefore = aomService.getAssetById(memAssetId);
 		aomBefore.setUserKey(userKey);
 		int originalAmount = aomBefore.getAmount();
-		String originalType = aomBefore.getType();
+		aomBefore.setAmountBefore(originalAmount);
 		m.addAttribute("aom", aomBefore);
-		m.addAttribute("originalAmount", originalAmount);
-		m.addAttribute("originalType", originalType);
 		return "editAssetForm";
 	}
 
@@ -165,68 +146,30 @@ public class AssetOfMemberController {
 			int memAssetId, Model m,  AssetOfMember aom) {
 		aom.setUserKey(userKey);
 
-		//자산 or 부채 여부에 따라 +,-값 변환 (구분에 따라 무조건 +,-로 들어가도록)
-		String newType = aom.getType();
-		int newAmount = aom.getAmount();
-		if (newType.equals("자산") && newAmount>0) {
-			newAmount*=1;
-		} else if (newType.equals("자산") && newAmount<0) {
-			newAmount*=-1;
-		} else if (newType.equals("부채") && newAmount>0) {
-			newAmount*=-1;
-		} else if (newType.equals("부채") && newAmount<0) {
-			newAmount*=1;
-		}
-		//자산 테이블에 전송하고 완료
-		aom.setAmount(newAmount);
-		aom.getUserKey();
+		//새 값을 자산 테이블에 전송하고 완료
 		aomService.editAsset(aom);
 
 
 		//기존값과 신규값을 비교하여 수입/지출 테이블 쿼리 실행
-		//변동사항 수입/지출 기록 옵션 선택한 경우(sync==1)만 실행
+		//변동사항 수입/지출 기록 옵션 선택한 경우(sync==1)에만 실행
 		if (aom.getSync()==1) {
 
-
 			int originalAmount = aom.getAmountBefore();
-			String originalType = aom.getTypeBefore();
-
-			//자산-자산이고 자산이 늘어난 경우 차액을 income으로 전달
-			if (originalType.equals("자산") 
-					&& newType.equals("자산")
-					&& newAmount>originalAmount) {
+			int newAmount = aom.getAmount();
+			//해당 자산의 금액이 늘어난 경우 차액을 income으로 전달
+			if (newAmount>originalAmount) {
 				int incAsset = newAmount-originalAmount;
 				aom.setAmount(incAsset);
 				aomService.editAssetToIncome(aom);
 
-				//자산-자산이고 자산이 줄어든 경우 차액을 expense로 전달
-			} else if (originalType.equals("자산") 
-					&& newType.equals("자산")
-					&& newAmount<originalAmount) {
+				//해당 자산의 금액이 늘어난 경우 차액을 expense로 전달
+			} else if (newAmount<originalAmount) {
 				int decAsset = originalAmount-newAmount;
 				aom.setAmount(decAsset);
 				aomService.editAssetToExpense(aom);;
-
-				//부채-부채고 부채가 늘어난 경우 차액을 expense로 전달
-			} else if (originalType.equals("부채") 
-					&& newType.equals("부채")
-					&& newAmount<originalAmount) {
-				int incDebt = (newAmount-originalAmount)*-1;
-				aom.setAmount(incDebt);
-				aomService.editAssetToExpense(aom);;
-
-				//부채-부채고 부채가 줄어든 경우 차액을 income으로 전달
-			} else if (originalType.equals("부채") 
-					&& newType.equals("부채")
-					&& newAmount>originalAmount) {
-				int decDebt = (originalAmount-newAmount)*-1;
-				aom.setAmount(decDebt);
-				aomService.editAssetToIncome(aom);;
 			}
-			return "editAssetResult";
-		} else {
-			return "editAssetResult";
 		}
+		return "editAssetResult";
 	}
 
 	//각 자산 '삭제' 클릭시
@@ -250,7 +193,13 @@ public class AssetOfMemberController {
 	@RequestMapping("/newsSettingsResult")
 	public String newsSettings(@ModelAttribute("userKey")int userKey, AssetOfMember aom) {
 		aom.setUserKey(userKey);
-		aomService.setNews(aom);
+		
+		if(aom.getNewsKeywords()=="") {
+			aom.setNewsKeywords("자산 금리 저축 적금");
+			aomService.setNews(aom);
+		} else {
+			aomService.setNews(aom);
+		}
 		return "newsSettingsResult";
 	}
 }
