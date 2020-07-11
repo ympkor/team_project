@@ -11,6 +11,8 @@ public interface AssetOfMemberMapper {
 	public List<AssetOfMember> selectOnlyAssetListById(int userKey);
 	
 	public List<AssetOfMember> selectOnlyDebtListById(int userKey);
+
+	public List<AssetOfMember> selectOnlyZeroListById(int userKey);
 	
 	public AssetOfMember getAssetById(int memAssetId);
 
