@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산 추가</title>
-<link rel="stylesheet" href="/css/topMenu.css?ver=2">
-<link rel="stylesheet" href="/css/addEditAsset.css?ver=4">
+<link rel="stylesheet" href="/css/topMenu.css">
+<link rel="stylesheet" href="/css/addEditAsset.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
@@ -42,39 +42,42 @@
 		
 		<div class=addPageTitle>금액</div>
 		<div class=addPageValue>
-		<fmt:formatNumber type="number" value="" var="newNum" pattern="###,###,###,###"/>
-		<input class="value" type="number" name="amount" value="${newNum}" placeholder="금액을 숫자로 입력하세요." required/>
+		<input class="value" type="number" name="amount" max="2147483647" min="-2147483647" required placeholder="금액을 숫자로 입력하세요.">
 		</div>
 		
-		<div class=addPageTitle>구분</div>
-		<div class=addPageValue>
-		<label>자산  <input type="radio" name="type" value="자산" checked></label>
-        <label>부채  <input type="radio" name="type" value="부채"></label></div>
+		<input type="hidden" name="typeBefore" value="${aom.typeBefore}">
+        <input type="hidden" name="type" value="${aom.type}">
 		
-		<div class=addPageTitle>은행</div>
+		<div class=addPageTitle style="padding-top:10px;">은행</div>
 		<div class=addPageValue>
-		<label>국민은행  <input type="radio" name="assetsId" value="1"></label>
-        <label>기업은행  <input type="radio" name="assetsId" value="2"></label>
-        <label>농협  <input type="radio" name="assetsId" value="3"></label>
-        <label>신한은행  <input type="radio" name="assetsId" value="4"></label>
-        <label>산업은행  <input type="radio" name="assetsId" value="5"></label></div>
+		<input type="radio" name="assetsId" value="1" id="kb"><label for="kb">국민은행</label>
+        <input type="radio" name="assetsId" value="2" id="ibk"><label for="ibk">기업은행</label>
+        <input type="radio" name="assetsId" value="3" id="nh"><label for="nh">농협</label>
+        <input type="radio" name="assetsId" value="4" id="shinhan"><label for="shinhan">신한은행</label>
+        <input type="radio" name="assetsId" value="5" id="keb"><label for="keb">산업은행</label>
+        <input type="radio" name="assetsId" value="6" id="woori"><label for="woori">우리은행</label></div>
         <div></div>
-        <div class=addPageValue><label>우리은행  <input type="radio" name="assetsId" value="6"></label>
-        <label>씨티은행  <input type="radio" name="assetsId" value="7"></label>
-        <label>하나은행  <input type="radio" name="assetsId" value="8"></label>
-        <label>SC제일은행  <input type="radio" name="assetsId" value="9"></label>
-        <label>기타  <input type="radio" name="assetsId" value="10" checked></label>
+        <div class=addPageValue>
+        <input type="radio" name="assetsId" value="7" id="city"><label for="city">씨티은행</label>
+        <input type="radio" name="assetsId" value="8" id="hana"><label for="hana">하나은행</label>
+        <input type="radio" name="assetsId" value="9" id="sc"><label for="sc">SC제일은행</label>
+        <input type="radio" name="assetsId" value="10"  id="etc" checked><label for="etc">기타은행</label>
+        <input type="radio" name="assetsId" value="24" id="cash"><label for="cash">현금 </label>
         </div>
 		
 		<div class=addPageTitle>메모</div>
 		<div class=addPageValue><input class="value" type="text" name="memo" maxlength="50" placeholder="계좌의 종류 또는 간단한 메모를 입력하세요. (최대 50자)"></div>
 		
 		<div class=addPageTitle>기록</div>
-		<div class=addPageValue><input type="checkbox" name="sync" value="1" style="margin-right:10px;"> 옵션 선택시 입력한 전액이 수입/지출 내역에 기록됩니다.</div>
+		<div class=addPageValue><input type="checkbox" name="sync" value="1" style="margin-right:10px;"> 옵션 선택시, 입력한 전액이 수입/지출 내역에 기록됩니다.</div>
 		
 		<div></div>
 		<div class="addButton"><input class="addConfirm" type="submit" value="입력하기" style="cursor:pointer;"> 
 		<input class="addConfirm" type="button" value="취소" onClick="location.href='view'" style="cursor:pointer;"></div>
+
+		<div></div>
+		<div></div>
+
 </div>
 <div></div>
 
