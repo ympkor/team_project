@@ -8,8 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산 수정</title>
-<link rel="stylesheet" href="/css/addEditAsset.css?ver=1">
-<link rel="stylesheet" href="/css/topMenu.css?asd=3">
+<link rel="stylesheet" href="/css/addEditAsset.css">
+<link rel="stylesheet" href="/css/topMenu.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
@@ -40,32 +40,30 @@
 	<div></div>
 
 	<div><input type="hidden" name="userKey" value="${userKey}"></div>
-	<div style="text-align: center;"><h1 style="font-size:200%;">" 자산을 수정합니다. "</h1></div>
+	<div style="text-align: center;"><h1 style="font-size:200%; margin-bottom: 50px;">
+	" ${aom.assetsName} 자산 ${aom.amount}원을 수정합니다. "</h1></div>
 
 		<div class=addPageTitle>금액</div>
-		<div class=addPageValue><input class="value" type="number" name="amount" value="${aom.amount}" required></div>
+		<div class=addPageValue>
+		<input class="value" type="number" name="amount" max="2147483647" min="-2147483647" value="${aom.amount}" required>
+		<input type="hidden" name="amountBefore" max="2147483647" min="-2147483647" value="${aom.amountBefore}">
+		</div>
 		
-		<div class=addPageTitle>구분</div>
+		<div class=addPageTitle style="padding-top:10px;">은행</div>
 		<div class=addPageValue>
-		<label>자산  <input type="radio" id="asset" name="type" value="자산"></label>
-        <label>부채  <input type="radio" id="debt" name="type" value="부채"></label></div>
-
-
-		<div class=addPageTitle>은행</div>
-		<div class=addPageValue>
-		<label>국민은행 <input id="an1" type="radio" name="assetsId" value="1"></label>
-        <label>기업은행 <input id="an2" type="radio" name="assetsId" value="2"></label>
-        <label>농협 <input id="an3" type="radio" name="assetsId" value="3"></label>
-        <label>신한은행 <input id="an4" type="radio" name="assetsId" value="4"></label>
-        <label>산업은행 <input id="an5" type="radio" name="assetsId" value="5"></label></div>
+		<input id="an1" type="radio" name="assetsId" value="1"><label>국민은행 </label>
+        <input id="an2" type="radio" name="assetsId" value="2"><label>기업은행 </label>
+        <input id="an3" type="radio" name="assetsId" value="3"><label>농협 </label>
+        <input id="an4" type="radio" name="assetsId" value="4"><label>신한은행 </label>
+        <input id="an5" type="radio" name="assetsId" value="5"><label>산업은행 </label>
+        <input id="an6" type="radio" name="assetsId" value="6"></label><label>우리은행 </div>
         <div></div>
         <div class=addPageValue>
-        <label>우리은행 <input id="an6" type="radio" name="assetsId" value="6"></label>
-        <label>씨티은행 <input id="an7" type="radio" name="assetsId" value="7"></label>
-        <label>하나은행 <input id="an8" type="radio" name="assetsId" value="8"></label>
-        <label>SC제일은행 <input id="an9" type="radio" name="assetsId" value="9"></label>
-        <label>기타은행 <input id="an10" type="radio" name="assetsId" value="10"></label>
-        <input id="an24" type="hidden" name="assetsId" value="24">
+        <input id="an7" type="radio" name="assetsId" value="7"><label>씨티은행 </label>
+        <input id="an8" type="radio" name="assetsId" value="8"><label>하나은행 </label>
+        <input id="an9" type="radio" name="assetsId" value="9"><label>SC제일은행 </label>
+        <input id="an10" type="radio" name="assetsId" value="10"><label>기타은행 </label>
+        <input id="an24" type="radio" name="assetsId" value="24"><label>현금 </label>
         </div>
 		
 		<div class=addPageTitle>메모</div>
@@ -81,6 +79,9 @@
 		<a id=delText href="delete?memAssetId=${aom.memAssetId}"  style="text-decoration: none; color:black"
 					onClick="return confirm('이 자산을 정말 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')">
 					<span id=delBox><p>삭제</p></span></a></div>
+					
+		<div></div>
+		<div></div>
 </div>
 <div></div>
 
@@ -93,9 +94,6 @@
 </section>
 
 <script type="text/javascript">
-
-if("${aom.type}"=="자산"){document.forms["editAsset"]["asset"].checked=true;}
-else{document.forms["editAsset"]["debt"].checked=true;}
 
 if("${aom.assetsName}"=="국민은행"){document.forms["editAsset"]["an1"].checked=true;}
 if("${aom.assetsName}"=="기업은행"){document.forms["editAsset"]["an2"].checked=true;}
