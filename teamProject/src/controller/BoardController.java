@@ -31,12 +31,16 @@ public class BoardController {
 	@Autowired
 	BoardService boardService;
 	
+	//게시물10개씩 제목보여주기
 	@GetMapping("/show")
-	public String showBoard(Model m,@RequestParam(defaultValue = "1")int pNum) {
-		BoardListView bList= boardService.showBoard(pNum);
+	public String showBoard(Model m,@RequestParam(defaultValue = "1")int pNum,
+			@RequestParam(defaultValue = "1")int sortNum) {
+		
+		BoardListView bList=boardService.showBoard(pNum,sortNum);
 		m.addAttribute("bList", bList);
 		return "board";
 	}
+	
 	//글 다 쓰고 나서 등록누르면
 	@PostMapping(value ="/show" )
 	public String showBoard(Model m,Board board) {
@@ -48,8 +52,8 @@ public class BoardController {
 		board.setWriter(writer);
 		//System.out.println("작성자 넣은후"+board);
 		boardMapper.regBoard(board);
-		//1페이지 정보를 불러옴
-		BoardListView bList= boardService.showBoard(1);
+		//1페이지 정보를 불러옴,등록순으로
+		BoardListView bList= boardService.showBoard(1,1);
 		m.addAttribute("bList", bList);
 		return "board";
 	}
@@ -61,20 +65,20 @@ public class BoardController {
 	
 	//게시판 내용 한개 보여주기
 	@GetMapping("/contentOneShow")
-	public String showOneCntetnBoard(@ModelAttribute("userKey")int userKey,Model m, int boardId,int pNum) {
+	public String showOneCntetnBoard(@ModelAttribute("userKey")int userKey,Model m,
+			int boardId,int pNum,@RequestParam(defaultValue = "1")int sortNum) {
 		//게시물클릭하면 조회수 1올라가기
 		boardMapper.updatehits(boardId);
 		//System.out.println(boardId);
 		//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 		String likecheck= boardService.likechecking(boardId, userKey);
 		//현재글 가져오기
-		Board currentBoard = boardMapper.selecOneBoard(boardId);
-		//System.out.println(currentBoard);
+		List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(boardId, sortNum);
+		Board currentBoard = cnbList.get(0);		
 		//이전글, 다음글 제목가져오기
-		Board beforeBoard = boardMapper.getbeforeBoard(boardId); 
-		Board nextBoard = boardMapper.getnextBoard(boardId);		
-		//System.out.println("이전게시물"+beforeBoard); 
-		//System.out.println("다음게시물"+nextBoard); 
+		Board beforeBoard = cnbList.get(1);
+		Board nextBoard = cnbList.get(2);
+		
 		//보드아이디에 있는 코멘트 가져오기 10개 최신순으로 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
 		//for (Comment co : cList) {System.out.println(co);}
@@ -82,15 +86,18 @@ public class BoardController {
 		m.addAttribute("beforeBoard", beforeBoard);
 		m.addAttribute("nextBoard", nextBoard);
 		m.addAttribute("currentboardId", boardId);
-		m.addAttribute("pNum", pNum);
 		m.addAttribute("cList", cList);
 		m.addAttribute("likecheck", likecheck);
+		m.addAttribute("pNum", pNum);
+		m.addAttribute("sortNum", sortNum);
 		return "contentOneShow";
 	}
 	
 	//코멘쓰기
 	@PostMapping("/commentwrite")
-	public String writeComment(@ModelAttribute("userKey")int userKey,String pNum,Comment comment, Model m) {
+	public String writeComment(@ModelAttribute("userKey")int userKey,String pNum
+			,Comment comment, Model m,@RequestParam(defaultValue = "1")String sNum) {
+		int sortNum = Integer.parseInt(sNum);
 		String commentWriter = memberMapper.getUserIdByuserKey(comment.getUserKey());
 		comment.setCommentWriter(commentWriter);
 		//System.out.println(comment);
@@ -101,66 +108,76 @@ public class BoardController {
 		//코멘트 보드 가져와서 수정된것 다시 보여줄 데이터 만들어주기
 		List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
 		//for (Comment co : cList) { System.out.println(co); }		
-		Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
-		List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
-		Board beforeBoard = boardMapper.getbeforeBoard(comment.getBoardId()); 
-		Board nextBoard = boardMapper.getnextBoard(comment.getBoardId());
-		m.addAttribute("currentBoard", currentBoard);
-		m.addAttribute("bList", bList);
+		//현재글 가져오기
+		List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(comment.getBoardId(), sortNum);
+		Board currentBoard = cnbList.get(0);		
+		//이전글, 다음글 제목가져오기
+		Board beforeBoard = cnbList.get(1);
+		Board nextBoard = cnbList.get(2);
+		m.addAttribute("currentBoard", currentBoard);		
 		m.addAttribute("currentboardId", comment.getBoardId());
 		m.addAttribute("cList", cList);
 		m.addAttribute("likecheck", likecheck);
 		m.addAttribute("beforeBoard", beforeBoard);
 		m.addAttribute("nextBoard", nextBoard);
 		m.addAttribute("pNum", pNum);
+		m.addAttribute("sortNum", sortNum);
 		return "contentOneShow";
 	}
 	
 	//코멘수정
 		@PostMapping("/commentupdate")
-		public String  updateComment(@ModelAttribute("userKey")int userKey,String pNum,Comment comment, Model m) {
+		public String  updateComment(@ModelAttribute("userKey")int userKey,String pNum
+				,Comment comment, Model m,@RequestParam(defaultValue = "1")String sNum) {
+			int sortNum = Integer.parseInt(sNum);
 			boardMapper.updateComment(comment);
 			List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
 			//for (Comment co : cList) { System.out.println(co); }		
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 			String likecheck= boardService.likechecking(comment.getBoardId(), userKey);
-			Board currentBoard = boardMapper.selecOneBoard(comment.getBoardId());
-			List<Board> bList = boardMapper.contentOneShow(comment.getBoardId());
-			Board beforeBoard = boardMapper.getbeforeBoard(comment.getBoardId()); 
-			Board nextBoard = boardMapper.getnextBoard(comment.getBoardId());
+			//현재글 가져오기
+			List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(comment.getBoardId(), sortNum);
+			Board currentBoard = cnbList.get(0);		
+			//이전글, 다음글 제목가져오기
+			Board beforeBoard = cnbList.get(1);
+			Board nextBoard = cnbList.get(2);
 			m.addAttribute("currentBoard", currentBoard);
-			m.addAttribute("bList", bList);
 			m.addAttribute("currentboardId", comment.getBoardId());
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
 			m.addAttribute("beforeBoard", beforeBoard);
 			m.addAttribute("nextBoard", nextBoard);
 			m.addAttribute("pNum", pNum);
+			m.addAttribute("sortNum", sortNum);
 			return "contentOneShow";
 		}
 		
 		//코멘삭제
 		@RequestMapping("/deletecomment")
-		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m,int pNum, int boardId, int commentId) {
+		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m
+				,int pNum, int boardId, int commentId
+				,@RequestParam(defaultValue = "1")int sortNum) {
 			//선택된 코멘트 삭제, 코멘수 감소
 			boardService.delComment(boardId, commentId);
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 			String likecheck= boardService.likechecking(boardId, userKey);
-			Board currentBoard = boardMapper.selecOneBoard(boardId);
-			//이전글, 다음글 제목가져오기
-			List<Board> bList = boardMapper.contentOneShow(boardId);
 			//보드아이디에 있는 코멘트 가져오기
 			List<Comment> cList = boardMapper.selectbyBId(boardId);
-			Board beforeBoard = boardMapper.getbeforeBoard(boardId); 
-			Board nextBoard = boardMapper.getnextBoard(boardId);
+			
+			//현재글 가져오기
+			List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(boardId, sortNum);
+			Board currentBoard = cnbList.get(0);		
+			//이전글, 다음글 제목가져오기
+			Board beforeBoard = cnbList.get(1);
+			Board nextBoard = cnbList.get(2);
 			m.addAttribute("currentBoard", currentBoard);
-			m.addAttribute("bList", bList);
 			m.addAttribute("currentboardId", boardId);
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
 			m.addAttribute("beforeBoard", beforeBoard);
 			m.addAttribute("nextBoard", nextBoard);
 			m.addAttribute("pNum", pNum);
+			m.addAttribute("sortNum", sortNum);
 			return "contentOneShow";
 		}
 		
@@ -204,28 +221,32 @@ public class BoardController {
 		
 		//게시물보는곳에서 수정버튼 누를때
 		@RequestMapping("/update")
-		public String updateBoard(int boardId,Model m,int pNum) {
+		public String updateBoard(int boardId,Model m,int pNum, int sortNum) {
 			//System.out.println("수정할 보드아이디"+boardId);
 			//보드아이디로 보드정보를 객체에 받아옴
 			Board board=boardMapper.selecOneBoard(boardId);
 			//객체를 수정페이지에 넘겨줌
 			m.addAttribute("board", board);
 			m.addAttribute("pNum", pNum);			
+			m.addAttribute("sortNum", sortNum);			
 			return "updateBoard";
 		}
 		
 		//게시물 수정후 글 수정 누르면 //바뀐 게시판 내용 보여주기
 		@PostMapping("/contentOneShow")
-		public String showupdateBoard(@ModelAttribute("userKey")int userKey,Model m,String pNum, Board board) {
+		public String showupdateBoard(@ModelAttribute("userKey")int userKey,Model m
+				,String pNum, Board board,@RequestParam(defaultValue = "1")int sortNum) {
 			//디비에 업데이트 시키기
 			boardMapper.updateBoard(board);
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 			String likecheck= boardService.likechecking(board.getBoardId(), userKey);
 			//현재글 가져오기
-			Board currentBoard = boardMapper.selecOneBoard(board.getBoardId());
+			List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(board.getBoardId(), sortNum);
+			Board currentBoard = cnbList.get(0);		
 			//이전글, 다음글 제목가져오기
-			Board beforeBoard = boardMapper.getbeforeBoard(board.getBoardId()); 
-			Board nextBoard = boardMapper.getnextBoard(board.getBoardId());		
+			Board beforeBoard = cnbList.get(1);
+			Board nextBoard = cnbList.get(2);	
+			
 			//보드아이디에 있는 코멘트 가져오기
 			List<Comment> cList = boardMapper.selectbyBId(board.getBoardId());
 			m.addAttribute("currentBoard", currentBoard);
@@ -235,6 +256,7 @@ public class BoardController {
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
 			m.addAttribute("pNum", pNum);
+			m.addAttribute("sortNum", sortNum);
 			return "contentOneShow";
 		}
 		

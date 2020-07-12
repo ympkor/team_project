@@ -45,7 +45,7 @@
 			</div>
 		</td></tr>		
 		<tr><td class="boardcontent">
-				<div class="contentdiv" ><pre class="contentpre">${currentBoard.content }</pre></div>
+				<div class="contentdiv"><pre class="contentpre">${currentBoard.content }</pre></div>
 		</td></tr>
 		<tr class="likeandUandD"><td>
 			<div class="likeandcomment" ><button class="commentwriteshow">댓글쓰기</button> <label>좋아요<input class="likecheck" type="checkbox" value="like"></label>
@@ -56,6 +56,7 @@
 <div class="commentwritediv">
 <form class="commentwriteinput" action="/board/commentwrite" method="post">
 	<input type="hidden" name="pNum" value="${pNum}">
+	<input type="hidden" name="sNum" value="${sortNum}">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	<input type="hidden" name="boardId" value="${currentboardId}">
 	<TEXTAREA maxlength="200" class="writeboardcontent" name="comment" COLS=30 ROWS=3 required="required"></TEXTAREA>
@@ -83,8 +84,8 @@
 </c:forEach> 
 </div>
 <div class="boardlisttwo">
-	<c:if test="${ beforeBoard!=null}"><div class="beforeboard">이전글: <a href="/board/contentOneShow?boardId=${beforeBoard.boardId}">${beforeBoard.title}</a><br></div></c:if>
-	<c:if test="${ nextBoard!=null}"><div class="nextboard">다음글: <a href="/board/contentOneShow?boardId=${nextBoard.boardId}">${nextBoard.title}</a><br></div></c:if>
+	<c:if test="${ beforeBoard!=null}"><div class="beforeboard">이전글: <a href="/board/contentOneShow?boardId=${beforeBoard.boardId}&pNum=${pNum}&sortNum=${sortNum}">${beforeBoard.title}</a><br></div></c:if>
+	<c:if test="${ nextBoard!=null}"><div class="nextboard">다음글: <a href="/board/contentOneShow?boardId=${nextBoard.boardId}&pNum=${pNum}&sortNum=${sortNum}">${nextBoard.title}</a><br></div></c:if>
 </div>
 </div>
 </div>
@@ -93,7 +94,9 @@ var boardId= ${currentBoard.boardId};
 var userKey =<%=session.getAttribute("userKey")%>;
 var likecheck =${likecheck};
 var pNum=${pNum};
-console.log("페이지넘버",pNum);
+var sNum=${sortNum}
+console.log("현재페이지넘버",pNum);
+console.log("소트넘버:",sNum);
 </script>
 </body>
 </html>

@@ -26,13 +26,13 @@ body{background-color: #f5f5f5; scroll:yes; overflow-y:scroll; }
   "l_blank content r_blank" ;
 }
 .topmenu{grid-area: top; min-width: 700px;}
-div#boardcontent{font-family: Montserrat, "sans-serif"; } 
 a{text-decoration: none; color:#51565d;}
 table{border-collapse: collapse;width: 100%;table-layout: fixed;}
 th,td{text-align: center;}
 th{line-height: 35px; font-weight: bold;border-bottom:1px solid black; }
 td{height: 50px; line-height: 50px;border-bottom:1px solid #9298a0;}
-div#boardcontent{grid-area: content; width:100%;min-width:600px; 
+div#boardcontent{font-family: Montserrat, "sans-serif";
+	grid-area: content; width:100%;min-width:600px;  height:fit-content;
 	position: relative; top:30px;}
 div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
@@ -63,5 +63,5 @@ button#writeBoard{width: 80px;
     font-size: 100%;
     text-align: center;
     line-height: 30px;}
-div.boardcontentinsidediv{position: relative;top: 10px;}
+div.boardcontentinsidediv{position: relative;top: 10px; height: fit-content;}
 span.commentcount{font-weight: 600; color:#c55555;}

@@ -27,7 +27,14 @@
 	</header>
 <div id="boardcontent">
 <div class="boardtitle">FreeBoard</div>
-
+<div class="sortbydiv">
+	<select class="sortselect" name="sort">
+      <option value="1">등록순</option>
+      <option value="2">조회순</option>
+      <option value="3">추천순</option>
+      <option value="4">댓글순</option>
+    </select>
+</div>
 <div class="boardcontentinsidediv">
 <div class="boardlistdiv">
 <table class="boardlist">
@@ -79,37 +86,46 @@
 	<c:forEach var="p" begin="1" end="5" varStatus="vs">
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
 		</c:choose>
-		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}">다음&gt;</a></c:if>
+		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">다음&gt;</a>
+			<a href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">마지막&gt;&gt;</a>
+		</c:if>
 	</c:forEach>	
 </c:if>
 <!-- 가운데블럭 : 이전, 다음 있음 총보여줄 페이지 개수는 5개-->
 <c:if test="${bList.currentPageNumber>5 && 
 	(bList.pageTotalCnt-bList.firstpagePerPage)>=5}">	
 	<c:forEach var="p" begin="${bList.firstpagePerPage}" end="${bList.firstpagePerPage+4}" varStatus="vs">
-		<c:if test="${vs.first==true}"><a href="/board/show?pNum=${vs.begin-1}">&lt;이전</a></c:if>
+		<c:if test="${vs.first==true}"><a href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;처음</a>
+				<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;이전</a>
+		</c:if>
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
 		</c:choose>
-		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}">다음&gt;</a></c:if>
+		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">다음&gt;</a>
+			<a href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">마지막&gt;&gt;</a>
+		</c:if>
 	</c:forEach>	
 </c:if>
 <!-- 마지막블럭 : 보여줄 페이지가 5개 이내, 이전있음, 다음 없음-->
 <c:if test="${bList.currentPageNumber> 5 &&
   (bList.pageTotalCnt-bList.firstpagePerPage)<5}">     
 	<c:forEach var="p" begin="${bList.firstpagePerPage}" end="${bList.firstpagePerPage+bList.pagePerPage}" varStatus="vs">
-		<c:if test="${ vs.first==true}"><a href="/board/show?pNum=${vs.begin-1}">&lt;이전</a></c:if>
+		<c:if test="${ vs.first==true}">
+			<a href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;처음</a>
+			<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;이전</a>
+		</c:if>
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
 		</c:choose>
 	</c:forEach>	
 </c:if>
@@ -119,18 +135,19 @@
 	<c:forEach var="p" begin="1" end="${bList.pageTotalCnt}">
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
 		</c:choose>	
 	</c:forEach>
 </c:if> 
-</div>
-</div>
+</div><!-- 페이지네이션마지막  -->
+</div><!-- boardcontentinsidediv마지막 -->
 
-</div>
+</div><!-- boardContent마지막 -->
 </div>
 <script type="text/javascript">
-var pNum = ${bList.currentPageNumber};
+var pNum = ${bList.currentPageNumber}
+var sNum =${bList.sortNum}
 </script>
 </body>

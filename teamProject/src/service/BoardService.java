@@ -1,5 +1,6 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +32,9 @@ public class BoardService {
 		boardMapper.updatedecreaseBoardCommentCount(boardId);
 		boardMapper.deleteComment(commentId);
 	}
-	
-	/*
-	 * //탈퇴시 게시물 삭제시 코멘트랑 같이 삭제
-	 * 
-	 * @Transactional public void delBoard(int userKey) {
-	 * boardMapper.deleteCommentbyuserkeyAll(userKey);
-	 * boardMapper.deleteBoardbyuserkeyAll(userKey); }
-	 */
-	
+		
 	//게시물 10개씩 보여줌
-	public BoardListView showBoard(int currentPageNumber) {
+	public BoardListView showBoard(int currentPageNumber, int sortNum) {
 		int boardTotalCnt = boardMapper.getBoardTotalCnt();
 		int boardCntPerPage=10;
 		int firstRow=0;
@@ -66,13 +59,58 @@ public class BoardService {
 		}else {
 			pagePerPage = pageTotalCnt - firstpagePerPage;			
 		}
-		List<Board> boardList=boardMapper.getBoardListPerPage(firstRow, boardCntPerPage);
-		BoardListView blist = new BoardListView(boardTotalCnt, 
-				currentPageNumber, boardList, boardCntPerPage, 
-				firstRow, pagePerPage,firstpagePerPage);
+		//보드리스트10개씩 가져오기
+		List<Board> boardList=null;
+		switch (sortNum) {
+		case 1://등록순
+			boardList=boardMapper.getBoardListPerPageSortbyregDate(firstRow, boardCntPerPage);
+			break;
+		case 2://조회순
+			boardList=boardMapper.getBoardListPerPageSortbyhits(firstRow, boardCntPerPage);
+			break;
+		case 3://추천순
+			boardList=boardMapper.getBoardListPerPageSortbylikes(firstRow, boardCntPerPage);
+			break;
+		case 4://댓글많은순
+			boardList=boardMapper.getBoardListPerPageSortbycommentcount(firstRow, boardCntPerPage);
+			break;
+		}
 		
+		BoardListView blist = new BoardListView(boardTotalCnt, currentPageNumber, 
+				boardList, boardCntPerPage, firstRow, pagePerPage, firstpagePerPage,
+				sortNum);
 		return blist;
 	}
+	
+	//게시물 한개 내용 보여줄것, 전후 게시물
+	public List<Board> getcurrentAndBeforeAndNextBoard(int boardId,int sortNum){
+		List<Board> cbnList=new ArrayList<Board>();		
+		switch (sortNum) {
+		case 1://등록순
+			cbnList.add(boardMapper.selecOneBoard(boardId));//보여줄거
+			cbnList.add(boardMapper.getbeforeBoardSortByregDate(boardId));//이전게시물
+			cbnList.add(boardMapper.getnextBoardSortByregDate(boardId));//다음게시물
+			break;
+		case 2://조회순
+			cbnList.add(boardMapper.selecOneBoard(boardId));//보여줄거
+			cbnList.add(boardMapper.getbeforeBoardSortByview(boardId));//이전
+			cbnList.add(boardMapper.getnextBoardSortByview(boardId));//다음
+			break;
+		case 3://추천순
+			cbnList.add(boardMapper.selecOneBoard(boardId));//보여줄거
+			cbnList.add(boardMapper.getbeforeBoardSortBylikes(boardId));//이전
+			cbnList.add(boardMapper.getnextBoardSortBylikes(boardId));//다음
+			break;
+		case 4://댓글많은순
+			cbnList.add(boardMapper.selecOneBoard(boardId));//보여줄거
+			cbnList.add(boardMapper.getbeforeBoardSortBycommentN(boardId));//이전
+			cbnList.add(boardMapper.getnextBoardSortBycommentN(boardId));//다음
+			break;
+		}
+		
+		return cbnList;
+	}
+			
 	//좋아요 누르면 게시물 좋아요수 하나 올리고 디비에 저장하기
 	@Transactional
 	public void likeupdate(int boardId, int userKey) {

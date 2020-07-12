@@ -35,6 +35,7 @@
 <form class="writeForm" name="writeForm" action="/board/contentOneShow" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	<input type="hidden" name="pNum" value="${pNum}">
+	<input type="hidden" name="sortNum" value="${sortNum}">
 	<input type="hidden" name="boardId" value="${board.boardId}">
   <input class="writeboardtitle" type="text" name="title" 
   	value="${board.title}" required="required" maxlength="45"><br>
@@ -43,5 +44,9 @@
 </form>
 </div>
 </div>
+<script type="text/javascript">
+console.log("소트넘버내놔이자식아",${sortNum});
+</script>
+
 </body>
 </html>

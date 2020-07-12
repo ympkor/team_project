@@ -12,6 +12,9 @@ public class Board {
 	private int hits;//읽은수
 	private int commentCount;//댓글수
 	private String writer;
+	private int no;//몇번째인지
+	
+	
 	public int getBoardId() {
 		return boardId;
 	}
@@ -66,12 +69,19 @@ public class Board {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
+	public int getNo() {
+		return no;
+	}
+	public void setNo(int no) {
+		this.no = no;
+	}
 	@Override
 	public String toString() {
 		return "Board [boardId=" + boardId + ", userKey=" + userKey + ", title=" + title + ", content=" + content
 				+ ", regDate=" + regDate + ", likes=" + likes + ", hits=" + hits + ", commentCount=" + commentCount
-				+ ", writer=" + writer + "]";
+				+ ", writer=" + writer + ", no=" + no + "]";
 	}
+	
 	
 	
 	

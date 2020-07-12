@@ -22,15 +22,38 @@ public interface BoardMapper {
 	public void updateComment(Comment comment);
 	public void deleteComment(int commentId);
 	
-	//현게시물 이전 게시물
-	public Board getbeforeBoard(int boardId);
-	//현게시물 다음 게시물
-	public Board getnextBoard(int boardId);
+	//현게시물 이전 게시물 등록순
+	public Board getbeforeBoardSortByregDate(int boardId);
+	//현게시물 다음 게시물등록순
+	public Board getnextBoardSortByregDate(int boardId);
+	
+	//현게시물 이전 게시물조회순
+	public Board getbeforeBoardSortByview(int boardId);
+	//현게시물 다음 게시물조회순
+	public Board getnextBoardSortByview(int boardId);
+	
+	//현게시물 이전 게시물좋아요순
+	public Board getbeforeBoardSortBylikes(int boardId);
+	//현게시물 다음 게시물좋아요순
+	public Board getnextBoardSortBylikes(int boardId);
+	
+	//현게시물 이전 게시물댓글순
+	public Board getbeforeBoardSortBycommentN(int boardId);
+	//현게시물 다음 게시물댓글순
+	public Board getnextBoardSortBycommentN(int boardId);
+	
 	
 	//총 게시물개수 반환
 	public int getBoardTotalCnt();
 	//10개씩 게시물 가져오기
-	public List<Board> getBoardListPerPage(@Param("firstRow")int firstRow, @Param("boardCntPerPage")int boardCntPerPage);
+	//등록순
+	public List<Board> getBoardListPerPageSortbyregDate(@Param("firstRow")int firstRow, @Param("boardCntPerPage")int boardCntPerPage);
+	//조회순
+	public List<Board> getBoardListPerPageSortbyhits(@Param("firstRow")int firstRow, @Param("boardCntPerPage")int boardCntPerPage);
+	//추천순
+	public List<Board> getBoardListPerPageSortbylikes(@Param("firstRow")int firstRow, @Param("boardCntPerPage")int boardCntPerPage);
+	//댓글많은순
+	public List<Board> getBoardListPerPageSortbycommentcount(@Param("firstRow")int firstRow, @Param("boardCntPerPage")int boardCntPerPage);
 	
 	//코멘쓰면 그 보드아이디에 코멘수도 하나증가
 	public void updateincreaseBoardCommentCount(int boardId);

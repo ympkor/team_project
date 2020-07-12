@@ -14,21 +14,21 @@ public class BoardListView {
 	private int pagePerPage; //한 화면에서 보여줄 페이지 개수
 	private int firstpagePerPage; //페이지에서 보여줄 첫번째 페이지 숫자
 	private int firstshowBoardNumber; //게시물처음시작번호
-	
+	private int sortNum;//게시물 정렬
 	
 	public BoardListView() { }
 	
 	public BoardListView(int boardTotalCnt, int currentPageNumber, 
 			List<Board> boardList,int boardCntPerPage, int firstRow,
-			int pagePerPage, int firstpagePerPage) {
+			int pagePerPage, int firstpagePerPage,int sortNum) {
 		this.boardTotalCnt = boardTotalCnt;
 		this.currentPageNumber = currentPageNumber;
-		this.boardList = boardList;
-		
+		this.boardList = boardList;		
 		this.boardCntPerPage = boardCntPerPage;
 		this.firstRow = firstRow;
 		this.pagePerPage = pagePerPage;
 		this.firstpagePerPage = firstpagePerPage;
+		this.sortNum=sortNum;
 		
 			//전체 페이지 개수 구하기
 			if(boardTotalCnt>0) {
@@ -114,6 +114,14 @@ public class BoardListView {
 
 	public void setFirstshowBoardNumber(int firstshowBoardNumber) {
 		this.firstshowBoardNumber = firstshowBoardNumber;
+	}
+
+	public int getSortNum() {
+		return sortNum;
+	}
+
+	public void setSortNum(int sortNum) {
+		this.sortNum = sortNum;
 	}
 
 	
