@@ -305,7 +305,7 @@ $(function(){
 					location.href="/asset/view";
 				},
 				error:function(data){
-					alert("회원가입에 오류가 났습니다.");
+					alert("회원가입에 오류가 났습니다.\n중복확인버튼을 한번더 확인해주세요");
 					return false;
 				}
 			});
