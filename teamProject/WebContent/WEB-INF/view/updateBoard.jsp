@@ -34,8 +34,10 @@
 <div class="content">
 <form class="writeForm" name="writeForm" action="/board/contentOneShow" method="post">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
+	<input type="hidden" name="pNum" value="${pNum}">
 	<input type="hidden" name="boardId" value="${board.boardId}">
-  <input class="writeboardtitle" type="text" name="title" value="${board.title}" required="required"><br>
+  <input class="writeboardtitle" type="text" name="title" 
+  	value="${board.title}" required="required" maxlength="45"><br>
   <textarea id="summernote" name="content">${board.content}</textarea>
   <input class="submit" type="submit" value="글수정">
 </form>

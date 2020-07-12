@@ -47,7 +47,7 @@
   	</update>
   	<select id="selectbyBId" resultType="Comment">
   		SELECT * from comment 
-		where board_id =#{boardId} order by comment_id desc limit 10
+		where board_id =#{boardId} order by comment_id desc
   	</select>
   	
   	<update id="writeComment" parameterType="Comment">

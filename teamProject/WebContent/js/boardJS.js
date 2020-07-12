@@ -18,5 +18,5 @@ $(function() {
 });
 function showContent(el){
 	var boardId = $(el).attr('class');		
-	location.href="/board/contentOneShow?boardId="+boardId;
+	location.href="/board/contentOneShow?boardId="+boardId+"&pNum="+pNum;
 }

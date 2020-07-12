@@ -61,7 +61,7 @@ public class BoardController {
 	
 	//게시판 내용 한개 보여주기
 	@GetMapping("/contentOneShow")
-	public String showOneCntetnBoard(@ModelAttribute("userKey")int userKey,Model m, int boardId) {
+	public String showOneCntetnBoard(@ModelAttribute("userKey")int userKey,Model m, int boardId,int pNum) {
 		//게시물클릭하면 조회수 1올라가기
 		boardMapper.updatehits(boardId);
 		//System.out.println(boardId);
@@ -82,6 +82,7 @@ public class BoardController {
 		m.addAttribute("beforeBoard", beforeBoard);
 		m.addAttribute("nextBoard", nextBoard);
 		m.addAttribute("currentboardId", boardId);
+		m.addAttribute("pNum", pNum);
 		m.addAttribute("cList", cList);
 		m.addAttribute("likecheck", likecheck);
 		return "contentOneShow";
@@ -89,8 +90,7 @@ public class BoardController {
 	
 	//코멘쓰기
 	@PostMapping("/commentwrite")
-	public String writeComment(@ModelAttribute("userKey")int userKey,Comment comment, Model m) {
-		//System.out.println(comment);
+	public String writeComment(@ModelAttribute("userKey")int userKey,String pNum,Comment comment, Model m) {
 		String commentWriter = memberMapper.getUserIdByuserKey(comment.getUserKey());
 		comment.setCommentWriter(commentWriter);
 		//System.out.println(comment);
@@ -112,13 +112,13 @@ public class BoardController {
 		m.addAttribute("likecheck", likecheck);
 		m.addAttribute("beforeBoard", beforeBoard);
 		m.addAttribute("nextBoard", nextBoard);
+		m.addAttribute("pNum", pNum);
 		return "contentOneShow";
 	}
 	
 	//코멘수정
 		@PostMapping("/commentupdate")
-		public String  updateComment(@ModelAttribute("userKey")int userKey,Comment comment, Model m) {
-			//System.out.println(comment);
+		public String  updateComment(@ModelAttribute("userKey")int userKey,String pNum,Comment comment, Model m) {
 			boardMapper.updateComment(comment);
 			List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
 			//for (Comment co : cList) { System.out.println(co); }		
@@ -135,15 +135,15 @@ public class BoardController {
 			m.addAttribute("likecheck", likecheck);
 			m.addAttribute("beforeBoard", beforeBoard);
 			m.addAttribute("nextBoard", nextBoard);
+			m.addAttribute("pNum", pNum);
 			return "contentOneShow";
 		}
 		
 		//코멘삭제
 		@RequestMapping("/deletecomment")
-		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m, int boardId, int commentId) {
+		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m,int pNum, int boardId, int commentId) {
 			//선택된 코멘트 삭제, 코멘수 감소
 			boardService.delComment(boardId, commentId);
-			
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 			String likecheck= boardService.likechecking(boardId, userKey);
 			Board currentBoard = boardMapper.selecOneBoard(boardId);
@@ -160,6 +160,7 @@ public class BoardController {
 			m.addAttribute("likecheck", likecheck);
 			m.addAttribute("beforeBoard", beforeBoard);
 			m.addAttribute("nextBoard", nextBoard);
+			m.addAttribute("pNum", pNum);
 			return "contentOneShow";
 		}
 		
@@ -203,18 +204,19 @@ public class BoardController {
 		
 		//게시물보는곳에서 수정버튼 누를때
 		@RequestMapping("/update")
-		public String updateBoard(int boardId,Model m) {
+		public String updateBoard(int boardId,Model m,int pNum) {
 			//System.out.println("수정할 보드아이디"+boardId);
 			//보드아이디로 보드정보를 객체에 받아옴
 			Board board=boardMapper.selecOneBoard(boardId);
 			//객체를 수정페이지에 넘겨줌
 			m.addAttribute("board", board);
+			m.addAttribute("pNum", pNum);			
 			return "updateBoard";
 		}
 		
 		//게시물 수정후 글 수정 누르면 //바뀐 게시판 내용 보여주기
 		@PostMapping("/contentOneShow")
-		public String showupdateBoard(@ModelAttribute("userKey")int userKey,Model m, Board board) {
+		public String showupdateBoard(@ModelAttribute("userKey")int userKey,Model m,String pNum, Board board) {
 			//디비에 업데이트 시키기
 			boardMapper.updateBoard(board);
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
@@ -232,6 +234,7 @@ public class BoardController {
 			m.addAttribute("currentboardId", board.getBoardId());
 			m.addAttribute("cList", cList);
 			m.addAttribute("likecheck", likecheck);
+			m.addAttribute("pNum", pNum);
 			return "contentOneShow";
 		}
 		

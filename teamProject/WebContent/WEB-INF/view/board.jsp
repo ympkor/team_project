@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/boardJS.js?ver=1"></script>
+<script type="text/javascript" src="/js/boardJS.js?ver=2"></script>
 <link rel="stylesheet" href="/css/board.css?ver=2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
@@ -32,12 +32,12 @@
 <div class="boardlistdiv">
 <table class="boardlist">
 	<colgroup>
-		<col width="10%">
-		<col width="60%">
-		<col width="8%">
-		<col width="12%">
-		<col width="5%">
-		<col width="5%">
+		<col width="4%">
+		<col width="58%">
+		<col width="15%">
+		<col width="15%">
+		<col width="4%">
+		<col width="4%">
 	</colgroup>
 	<thead>
 		<tr ><th>번호</th><th>제목</th><th>작성자</th><th>작성일</th><th>추천</th><th>조회</th></tr>
@@ -49,7 +49,10 @@
 		<c:forEach var="b" items="${bList.boardList}" varStatus="vs">
 		<tbody onclick="showContent(this)" class="${b.boardId}">						
 		<tr class="boardtitlehead"><td>${bList.firstshowBoardNumber-vs.index}</td>
-			<td class="titles">${b.title }<c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if></td>
+			<td class="titles"><span class="innertitle">${b.title}</span>
+				<span class="commentNumtotal"><c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if>
+				</span>
+			</td>
 		<td>${b.writer }</td>
 		<td class="regDate">
 			<!-- 오늘 날짜를 nowdate 에 저장 해서 같은 날이면 시간을 불러오고 다른날이면 날짜만 불러오게-->
@@ -127,4 +130,7 @@
 
 </div>
 </div>
+<script type="text/javascript">
+var pNum = ${bList.currentPageNumber};
+</script>
 </body>

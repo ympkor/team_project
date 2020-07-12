@@ -45,7 +45,7 @@
 			</div>
 		</td></tr>		
 		<tr><td class="boardcontent">
-				<div class="contentdiv" ><pre>${currentBoard.content }</pre></div>
+				<div class="contentdiv" ><pre class="contentpre">${currentBoard.content }</pre></div>
 		</td></tr>
 		<tr class="likeandUandD"><td>
 			<div class="likeandcomment" ><button class="commentwriteshow">댓글쓰기</button> <label>좋아요<input class="likecheck" type="checkbox" value="like"></label>
@@ -55,9 +55,10 @@
 </table>
 <div class="commentwritediv">
 <form class="commentwriteinput" action="/board/commentwrite" method="post">
+	<input type="hidden" name="pNum" value="${pNum}">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	<input type="hidden" name="boardId" value="${currentboardId}">
-	<TEXTAREA class="writeboardcontent" name="comment" COLS=30 ROWS=3 required="required"></TEXTAREA>
+	<TEXTAREA maxlength="200" class="writeboardcontent" name="comment" COLS=30 ROWS=3 required="required"></TEXTAREA>
 	<div class="regcommentdiv"><input class="regCommentsubmit" type="submit" value="댓글등록">
 	</div>
 </form>
@@ -88,9 +89,11 @@
 </div>
 </div>
 <script type="text/javascript">
-var boardId= ${currentBoard.boardId}
+var boardId= ${currentBoard.boardId};
 var userKey =<%=session.getAttribute("userKey")%>;
 var likecheck =${likecheck};
+var pNum=${pNum};
+console.log("페이지넘버",pNum);
 </script>
 </body>
 </html>

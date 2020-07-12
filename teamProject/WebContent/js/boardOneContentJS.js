@@ -1,3 +1,13 @@
+var commentmoreclick=0
+function commentclick() {
+	commentmoreclick++;
+	$(".commentshow").slice(10*commentmoreclick,10*(commentmoreclick+1)).show();	
+	//console.log($(".commentshow").length/(10*(commentmoreclick+1)));
+	if(($(".commentshow").length/(10*(commentmoreclick+1)))<= 1){		
+		$(".commentmorebutton").hide();
+	};
+}
+
 $(function(){
 	document.querySelector(".gomypage").onclick = function(){
 		location.href="/member/mypageProc";
@@ -5,29 +15,39 @@ $(function(){
 	document.querySelector(".gologout").onclick = function(){
 		location.href="/member/logout";
 	}
-	//console.dir($(".commentwriteinput"));
+	
 $(".commentwriteinput").hide();
+$(".commentshow").hide();
+$(".commentshow").slice(0,10).show();
+
+if($(".commentshow").length/10> 1){	
+	$(".commentListshow").append("<button class='commentmorebutton' onclick='commentclick()'>더보기</button>");
+}
+
+
+$(".writeboardcontent").keyup(function(){		
+	if($(this).val().length>=200){
+		alert("댓글은 200자를 초과해서 쓸수 없습니다.");
+	}
+});
+
  $(".showboardList").click(function(){
-	 location.href="/board/show";
+	 location.href="/board/show?pNum="+pNum;
  });
 
- $(".commentwriteshow").click(function(){
-	 
+ $(".commentwriteshow").click(function(){	 
 	 $(".commentwriteinput").toggle();
 	 $(".writeboardcontent").focus();
-		console.log( $(this).attr('class'));
+		//console.log( $(this).attr('class'));
 		$(this).toggleClass("commentwriteshow");
  });
  $(".commentupdate").click(function(){
-	 //console.dir(document.querySelector(".commentcontent"));
 	 $(".commentUDbuttons").hide();
-	 //console.log(this);
 	 var commentId = $(this).attr('name');
-	 //console.log($(this).parent().parent().children().eq(0));	 
 	 var commentposition = $(this).parent().parent().children().eq(2);
 	 var oricomment = commentposition.children().eq(0).html();
-	 //console.log("ok? "+commentposition.html());
 	 commentposition.html( "<form class='commentupdateinput' action='/board/commentupdate' method='post'>"
+		 +"<input type='hidden' name='pNum' value="+pNum+">"
 		 +"<input type='hidden' name='commentId' value="+commentId+">"
 		 +"<input type='hidden' name='boardId' value="+boardId+">"
 		 +"<TEXTAREA class='writeboardcontent' name='comment' COLS=35 ROWS=3>"+oricomment+"</TEXTAREA>"
@@ -37,7 +57,7 @@ $(".commentwriteinput").hide();
 	 var flag =confirm("댓글 삭제하시겠습니까?");
 	 var commentId = $(this).attr('name');
 	 if(flag){
-		 location.href="/board/deletecomment?boardId="+boardId+"&commentId="+commentId;
+		 location.href="/board/deletecomment?boardId="+boardId+"&commentId="+commentId+"&pNum="+pNum;
 	 }
  }); 
  
@@ -74,7 +94,7 @@ if(likecheck){
 }
 //수정버튼 누르면 수정페이지로 이동
 $(".boardupdate").click(function(){
-	location.href="/board/update?boardId="+boardId;	
+	location.href="/board/update?boardId="+boardId+"&pNum="+pNum;	
 });
 //삭제 버튼 누르면 재확인 버튼확인, 삭제결과 확인후 목록페이지로 이동
 $(".boarddelete").click(function(){

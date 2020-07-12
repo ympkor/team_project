@@ -32,7 +32,7 @@ function sendFile(file, editor, welEditable) {
 } 	
 
 	
-	$(document).ready(function() {
+$(document).ready(function() {
         $('#summernote').summernote({ // summernote를 사용하기 위한 선언
         	height: 400,
 			callbacks: {
@@ -62,4 +62,14 @@ function sendFile(file, editor, welEditable) {
     	document.querySelector(".gologout").onclick = function(){
     		location.href="/member/logout";
     	}
-	});
+
+$(".writeboardtitle").keydown(function(){
+	//console.dir($(this).val().length);
+	if($(this).val().length>=40){
+		alert("제목은 40자 를 초과해서 쓸수 없습니다");
+	}
+});
+
+
+
+});
