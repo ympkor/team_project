@@ -57,6 +57,9 @@
 .update_amount{grid-row: 5/6;}
 .update_memo{grid-row: 6/7;}
 .update_button{grid-row: 7/8; text-align: center; align-self: center; justify-items: center;}
+.update_button>button{
+	width: calc(100% / 4 - 2rem);
+}
 /* 창 줄어들 시에 생기는 인서트창 모달 관련 css */
 .insert_modal_overlay{
 	background-color: rgba(0, 0, 0, 0.6); /* 모달 창이 열렸을때 외부를 감싸줄 div 컬러를 투명하게 설정해놓자 */

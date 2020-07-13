@@ -22,7 +22,7 @@ function showThisMonthIncome(miicList){
 				else { entryClassName = '.di' + miicList[i].incomeDate.dayOfMonth; }
 				let entry = document.querySelector(entryClassName);
 				if(i == 0){entry.innerHTML = null}
-				entry.innerHTML += '<div class=income><span class=icName>' + icName + '&nbsp;</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+				entry.innerHTML += '<div class=income><span class=icName>' + icName + '&nbsp;</span><span class=icAmount>' + Number(icAmount).toLocaleString('en') + '원</span></div>';
 				if(entry.childElementCount > 2){
 					let ellipsis = document.createElement('span');
 					ellipsis.innerText = '...';
@@ -45,7 +45,7 @@ function showThisMonthExpense(meecList) {
 			else { entryClassName = '.de' + meecList[i].expenseDate.dayOfMonth; }
 			let entry = document.querySelector(entryClassName);
 			if(i == 0){entry.innerHTML = null}
-			entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '&nbsp;</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '&nbsp;원</span></div>';
+			entry.innerHTML += '<div class=expense><span class=ecName>' + ecName + '&nbsp;</span><span class=ecAmount>' + Number(ecAmount).toLocaleString('en') + '원</span></div>';
 			if(entry.childElementCount > 2){
 				let ellipsis = document.createElement('span');
 				ellipsis.innerText = '...';
@@ -65,7 +65,7 @@ function showThisMonthTransfer(tbmList) {
 			if(tbmList[i].transferDate.dayOfMonth < 10){classStr = '.dt0'+tbmList[i].transferDate.dayOfMonth;}
 			else{classStr = '.dt'+tbmList[i].transferDate.dayOfMonth;}
 			let entry = document.querySelector(classStr);
-			entry.innerHTML += '<div class=transfer><span class=transferName>이체&nbsp;</span><span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'&nbsp;원</span></div>';
+			entry.innerHTML += '<div class=transfer><span class=transferName>이체&nbsp;</span><span class=trAmount>'+Number(tbmList[i].amount).toLocaleString('en')+'원</span></div>';
 			if(entry.childElementCount > 2){
 				let ellipsis = document.createElement('span');
 				ellipsis.innerText = '...';
@@ -80,9 +80,9 @@ function showThisMonthTransfer(tbmList) {
 //월별 통합 데이터 뿌려주는 기능
 function getThisMonthSumData(sumAmounts) {
 	document.querySelector('span.monthly_data_month').innerText = sumAmounts.selecDate.substring(5, 7)+'월';
-	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+' 원';
+	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+'원';
 		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0 원';}
-	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+' 원';
+	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+'원';
 		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0 원';}
 	if(sumAmounts.sumIncome - sumAmounts.sumExpense > 0) {
 		document.querySelector('span.monthly_data_amount_sum').classList.add('icAmount');
@@ -94,7 +94,7 @@ function getThisMonthSumData(sumAmounts) {
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('icAmount');
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
 	}
-	document.querySelector('span.monthly_data_amount_sum').innerText = Number(sumAmounts.sumIncome - sumAmounts.sumExpense).toLocaleString('en')+' 원';
+	document.querySelector('span.monthly_data_amount_sum').innerText = Number(sumAmounts.sumIncome - sumAmounts.sumExpense).toLocaleString('en')+'원';
 }
 //수입 상세 내역 온클릭 시, 업데이트 폼을 불러오고 그 안에 기존 데이터를 입력해준다.
 function putIncomeDataToUpdateForm(iicaList) {
@@ -460,11 +460,11 @@ function makeDetailIncomeDIV(iicaList) {
 			str += '<div class=detailEntry><span class=detailIMemo>' + iicaList[i].memo + '</span><br>';
 			if(iicaList[i].assetsId == 99){str += '<span class=detailAName>' + iicaList[i].assetsName + '</span></div>';
 			}else{str += '<span class=detailAName>' + iicaList[i].assetsName + ' ' + iicaList[i].aomName + '</span></div>';}
-			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
+			str += '<div class=detailIAmount><span class="detailIAmount icAmount">' + Number(iicaList[i].amount).toLocaleString('en') + '원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_income').innerHTML = str;
 	}
-	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+' 원';
+	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+'원';
 	putIncomeDataToUpdateForm(iicaList);
 }
 //상세란에 상세 지출을 뿌려주는 기능
@@ -478,11 +478,11 @@ function makeDetailExpenseDIV(eecaList) {
 			str += '<div class=detailEntry><span class=detailEMemo>' + eecaList[i].memo + '</span><br>';
 			if(eecaList[i].assetsId == 99){str +='<span class=detailAName>' + eecaList[i].assetsName + '</span></div>';
 			}else{str +='<span class=detailAName>' + eecaList[i].assetsName + ' ' + eecaList[i].aomName + '</span></div>';}
-			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + ' 원</span></div></div>';
+			str += '<div class=detailEAmount><span class="detailEAmount ecAmount">' + Number(eecaList[i].amount).toLocaleString('en') + '원</span></div></div>';
 		}
 		document.querySelector('div.detail_context_expense').innerHTML = str;
 	}
-	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+' 원';
+	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+'원';
 	putExpenseDataToUpdateForm(eecaList);
 }
 //이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
@@ -499,7 +499,7 @@ function makeDetailTransferDIV(taomfaomtList) {
 				if(taomfaomtList[i].assetsIdTo == 99){str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+'</span></div>';
 				}else{str += taomfaomtList[i].assetsNameFrom+' '+taomfaomtList[i].aomNameFrom+'→'+taomfaomtList[i].assetsNameTo+' '+taomfaomtList[i].aomNameTo+'</span></div>';}
 			}
-			str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+' 원</span></div<</div>';
+			str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+'원</span></div<</div>';
 			document.querySelector('div.detail_context_transfer').innerHTML += str;
 		}
 		putTransferDataToUpdateForm(taomfaomtList);

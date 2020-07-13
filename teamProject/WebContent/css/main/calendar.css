@@ -97,7 +97,7 @@ th,td:nth-of-type(7n + 7){
   border-right: 0;
 }
 span.icName,span.ecName,span.transferName{
-  font-size: 11px;
+  font-size: 0.6875rem;
 }
 span.icAmount{
   color: rgb(70, 70, 250);
@@ -105,33 +105,3 @@ span.icAmount{
 span.ecAmount{
   color: rgb(255, 80, 80);
 }
-/* @media(max-width: 1024px) {
-    .dateDiv{
-    text-align: right;
-    letter-spacing: 1px;
-    font-size: 11px;
-    color: #98a0a6;
-    width: calc((1024px - 300px) / 7);
-    height: 112px;
-    overflow: hidden;
-  }
-  .entry_income,.entry_expense,.entry_transfer{
-  overflow: hidden;
-  height: 29px;
-  }
-}
-@media(max-width: 768px) {
-  .dateDiv{
-    text-align: right;
-    letter-spacing: 1px;
-    font-size: 8px;
-    color: #98a0a6;
-    width: calc((768px - 220px) / 7);
-    height: 112px;
-    overflow: hidden;
-  }
-  .entry_income,.entry_expense,.entry_transfer{
-  overflow: hidden;
-  height: 26px;
-  }
-} */
