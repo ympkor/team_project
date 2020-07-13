@@ -23,11 +23,15 @@ if($(".commentshow").length/10> 1){
 	$(".commentListshow").append("<button class='commentmorebutton' onclick='commentclick()'>더보기</button>");
 }
 
-$(".writeboardcontent").keyup(function(){		
-	if($(this).val().length>=200){
-		alert("댓글은 200자를 초과해서 쓸수 없습니다.");
+$(".writeboardcontent").keyup(function(){	
+	var content = $(this).val();
+    $('#counter').html(content.length + '/150');
+	if($(this).val().length>=150){
+		alert("댓글은 150자를 초과해서 쓸수 없습니다.");
 	}
 });
+
+
 
  $(".showboardList").click(function(){
 	 location.href="/board/show?pNum="+pNum+"&sortNum="+sNum;
@@ -36,7 +40,6 @@ $(".writeboardcontent").keyup(function(){
  $(".commentwriteshow").click(function(){	 
 	 $(".commentwriteinput").toggle();
 	 $(".writeboardcontent").focus();
-		//console.log( $(this).attr('class'));
 		$(this).toggleClass("commentwriteshow");
  });
  
@@ -50,8 +53,19 @@ $(".writeboardcontent").keyup(function(){
 		 +"<input type='hidden' name='sNum' value="+sNum+">"
 		 +"<input type='hidden' name='commentId' value="+commentId+">"
 		 +"<input type='hidden' name='boardId' value="+boardId+">"
-		 +"<TEXTAREA class='writeboardcontent' name='comment' COLS=35 ROWS=3>"+oricomment+"</TEXTAREA>"
+		 +"<TEXTAREA maxlength='150' class='commentupdatetextarea' name='comment' COLS=35 ROWS=3>"+oricomment+"</TEXTAREA>"
+		 +"<span id='counterupdate'>0/150</span>"
 		 +"<br><input class='updatecommentinput' type='submit' value='댓글수정'></form>");
+	 var ori =$(".commentupdatetextarea").val();
+	 $('#counterupdate').html(ori.length + '/150');	
+	 
+	 $(".commentupdatetextarea").keyup(function(){
+		 var content = $(this).val();
+		    $('#counterupdate').html(content.length + '/150');	
+		 if($(this).val().length>=150){
+				alert("댓글은 150자를 초과해서 쓸수 없습니다.");
+			}
+		});
  }); 
  $(".commentdelete").click(function(){
 	 var flag =confirm("댓글 삭제하시겠습니까?");
@@ -64,15 +78,12 @@ $(".writeboardcontent").keyup(function(){
  
  $("input:checkbox[class='likecheck']").click(function(el){
 	  var check =$(this)[0].checked;
-	 console.log(check); 
 	 if(check==true){
 		 $.ajax({
 		 url: "/board/likeupdate",
          type: "POST",
          data: { "boardId":boardId ,"userKey": userKey},
          success: function (d) {
-        	// console.log("좋아요 수",d);
-		      // console.dir($(".likesNum"));
 		       $(".likesNum").text(d);
          },
 		});		  
@@ -82,14 +93,11 @@ $(".writeboardcontent").keyup(function(){
 	         type: "POST",
 	         data: { "boardId":boardId ,"userKey": userKey},
 	         success: function (d) {
-	        	// console.log("좋아요 수",d);
-			      // console.dir($(".likesNum"));
 			       $(".likesNum").text(d);
 	         },
 			});		
 	 }
  }); 
-//console.log("좋아요 했는지",likecheck);
 if(likecheck){
 	$("input:checkbox[class='likecheck']")[0].checked=true;
 }
@@ -117,5 +125,7 @@ $(".boarddelete").click(function(){
 			});		  
 	}
 });
+
+
 
  });

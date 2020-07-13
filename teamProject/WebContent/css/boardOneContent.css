@@ -14,13 +14,6 @@ body{background-color: #f5f5f5; scroll:yes;overflow-y:scroll; }
 	height:100%;	
 	width:100%;
 	min-width: 700px;	
-	/* min-height: 900px; */	
-	/* margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline; */
      grid-template-rows:
   [first]100px
   [second]90%;
@@ -49,6 +42,8 @@ button.commentmorebutton{width: 100%; height: 30px; line-height: 30px;
     color: #885b5b; font-weight: 600;}
 
 
+
+
 th{text-align: center; height:35px;}
 div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
@@ -62,7 +57,7 @@ td.writeinfo{height: 35px; font-family: Montserrat, "sans-serif";
 	font-size: 13px; color:#51565d; line-height: 30px; 
 	}
 	
-.writeboardcontent{width: 100%; padding: 5px;}
+.writeboardcontent,.commentupdatetextarea{width: 100%; padding: 5px;}
 div.commentshow{border-bottom:1px dashed #dddddd; padding-bottom: 5px;
 	width: 100%}
 div.commentwritediv{position: relative; top:5px;}
@@ -149,5 +144,12 @@ button.commentdelete{background: white;cursor: pointer;
 .boardlisttwo{position: relative; top: 15px; 
 	margin: 10px 5px 20px 1px;}
 div.beforeboard,div.nextboard{height: 25px;}
+
+#counter,#counterupdate {
+  background:rgba(255,0,0,0.5);
+  border-radius: 0.5em;
+  padding: 0 .5em 0 .5em;
+  font-size: 0.75em;
+}
 	
 	

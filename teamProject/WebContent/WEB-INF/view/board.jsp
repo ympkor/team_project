@@ -56,9 +56,14 @@
 		<c:forEach var="b" items="${bList.boardList}" varStatus="vs">
 		<tbody onclick="showContent(this)" class="${b.boardId}">						
 		<tr class="boardtitlehead"><td>${bList.firstshowBoardNumber-vs.index}</td>
-			<td class="titles"><span class="innertitle">${b.title}</span>
-				<span class="commentNumtotal"><c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]</c:if>
-				</span>
+			<td class="titles">
+				<div class="titlesinnerdiv">
+					<span class="innertitle">${b.title}</span>
+					<span class="commentNumtotal">
+						<c:if test="${b.commentCount>0}">[<span class="commentcount">${b.commentCount }</span>]
+						</c:if>
+					</span>
+				</div>
 			</td>
 		<td>${b.writer }</td>
 		<td class="regDate">
@@ -71,7 +76,6 @@
 			</c:choose>			
 		</td>
 		<td>${b.likes }</td><td>${b.hits}</td></tr>
-		<%-- <tr class="boardID" ><td colspan="6"><div class="contentdiv" >${b.boardId}</div></td></tr> --%>
 		</tbody> 
 		</c:forEach>
 	</tbody>
@@ -86,12 +90,12 @@
 	<c:forEach var="p" begin="1" end="5" varStatus="vs">
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a></c:otherwise>
 		</c:choose>
-		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">다음&gt;</a>
-			<a href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">마지막&gt;&gt;</a>
+		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">&gt;</a>
+			<a class="doublearrow" href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">&gt;&gt;</a>
 		</c:if>
 	</c:forEach>	
 </c:if>
@@ -99,17 +103,17 @@
 <c:if test="${bList.currentPageNumber>5 && 
 	(bList.pageTotalCnt-bList.firstpagePerPage)>=5}">	
 	<c:forEach var="p" begin="${bList.firstpagePerPage}" end="${bList.firstpagePerPage+4}" varStatus="vs">
-		<c:if test="${vs.first==true}"><a href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;처음</a>
-				<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;이전</a>
+		<c:if test="${vs.first==true}"><a class="doublearrow" href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;&nbsp;</a>
+				<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;</a>
 		</c:if>
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a></c:otherwise>
 		</c:choose>
-		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">다음&gt;</a>
-			<a href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">마지막&gt;&gt;</a>
+		<c:if test="${vs.last==true}"><a href="/board/show?pNum=${p+1}&sortNum=${bList.sortNum}">&gt;</a>
+			<a class="doublearrow" href="/board/show?pNum=${bList.pageTotalCnt}&sortNum=${bList.sortNum}">&gt;&gt;</a>
 		</c:if>
 	</c:forEach>	
 </c:if>
@@ -118,14 +122,14 @@
   (bList.pageTotalCnt-bList.firstpagePerPage)<5}">     
 	<c:forEach var="p" begin="${bList.firstpagePerPage}" end="${bList.firstpagePerPage+bList.pagePerPage}" varStatus="vs">
 		<c:if test="${ vs.first==true}">
-			<a href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;처음</a>
-			<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;이전</a>
+			<a class="doublearrow" href="/board/show?pNum=1&sortNum=${bList.sortNum}">&lt;&lt;&nbsp;</a>
+			<a href="/board/show?pNum=${vs.begin-1}&sortNum=${bList.sortNum}">&lt;</a>
 		</c:if>
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a></c:otherwise>
 		</c:choose>
 	</c:forEach>	
 </c:if>
@@ -135,9 +139,9 @@
 	<c:forEach var="p" begin="1" end="${bList.pageTotalCnt}">
 		<c:choose>
 		<c:when test="${bList.currentPageNumber==p}">
-			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a>
+			<a class="currentP" href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a>
 		</c:when>
-		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">[${p}]</a></c:otherwise>
+		<c:otherwise><a href="/board/show?pNum=${p}&sortNum=${bList.sortNum}">${p}</a></c:otherwise>
 		</c:choose>	
 	</c:forEach>
 </c:if> 

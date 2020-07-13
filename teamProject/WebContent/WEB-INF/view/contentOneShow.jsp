@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <title>게시글보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="/js/boardOneContentJS.js?2"></script>
-<link rel="stylesheet" href="/css/boardOneContent.css?1">
+<script type="text/javascript" src="/js/boardOneContentJS.js?1"></script>
+<link rel="stylesheet" href="/css/boardOneContent.css?2">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
@@ -59,7 +59,8 @@
 	<input type="hidden" name="sNum" value="${sortNum}">
 	<input type="hidden" name="userKey" value="<%=session.getAttribute("userKey")%>">
 	<input type="hidden" name="boardId" value="${currentboardId}">
-	<TEXTAREA maxlength="200" class="writeboardcontent" name="comment" COLS=30 ROWS=3 required="required"></TEXTAREA>
+	<TEXTAREA maxlength="150" class="writeboardcontent" name="comment" COLS=30 ROWS=3 required="required"></TEXTAREA>
+	 <span id="counter">0/150</span>
 	<div class="regcommentdiv"><input class="regCommentsubmit" type="submit" value="댓글등록">
 	</div>
 </form>

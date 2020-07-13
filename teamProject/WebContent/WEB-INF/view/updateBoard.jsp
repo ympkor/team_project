@@ -44,9 +44,5 @@
 </form>
 </div>
 </div>
-<script type="text/javascript">
-console.log("소트넘버내놔이자식아",${sortNum});
-</script>
-
 </body>
 </html>
