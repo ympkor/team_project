@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dto.AssetOfMember;
+import dto.SearchDto;
 import mapper.AssetOfMemberMapper;
 
 @Service
@@ -72,5 +73,9 @@ public class AssetOfMemberService {
 	
 	public void setNews(AssetOfMember aom){
 		awmMapper.setNews(aom);
+	}
+	
+	public List<SearchDto> selectListByMemo(int userKey, String memo) {
+		return awmMapper.selectListByMemo(userKey, memo);
 	}
 }
