@@ -100,6 +100,11 @@ public class MemberController {
 	}
 	
 	//로그아웃버튼 눌렀을 때, 로그아웃폼으로 이동
+	@GetMapping("/logoutProc")
+	public String getLogoutProc() {
+		return "logoutProc";
+	}
+	
 	@GetMapping("/logout")
 	public String getLogout() {
 		return "logout";
