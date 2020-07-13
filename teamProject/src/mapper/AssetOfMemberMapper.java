@@ -2,7 +2,10 @@ package mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import dto.AssetOfMember;
+import dto.SearchDto;
 
 public interface AssetOfMemberMapper {
 
@@ -37,4 +40,6 @@ public interface AssetOfMemberMapper {
 	public AssetOfMember getNewsSettingsInfo(int userKey);
 	
 	public void setNews(AssetOfMember aom);
+	
+	public List<SearchDto> selectListByMemo(@Param("userKey")int userKey, @Param("memo")String memo);
 }
