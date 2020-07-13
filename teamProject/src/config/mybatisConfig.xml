@@ -33,6 +33,7 @@
 		<typeAlias type="dto.main.Income" alias="MainIncome"/>
 		<typeAlias type="dto.main.Transfer" alias="MainTransfer"/>
 		<typeAlias type="dto.main.TransferAssetsOfMemeberFromAssetsOfMemeberTo" alias="TAOMFAOMT"/>
+		<typeAlias type="dto.SearchDto" alias="search"/>
 	</typeAliases>
 
 </configuration>
