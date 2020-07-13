@@ -102,7 +102,7 @@ window.onload = function() {
  
  	<!-- 검색창 부분 -->
  	<form action="showMemo" method="post">
- 		<div style="text-align: center; margin-top:50px;">
+ 		<div style="text-align: center; margin-top:50px; margin-bottom:150px;">
  		<input style="text-align:center; width:80%;" type="text" name="memo" placeholder="수입/지출내역 메모를 검색합니다.">
  		<input type="submit" value="검색">
  		</div>
