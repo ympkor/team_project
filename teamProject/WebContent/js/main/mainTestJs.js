@@ -554,7 +554,23 @@ window.addEventListener('DOMContentLoaded', function () {
 			success:function(sumAmounts) {
 				getThisMonthSumData(sumAmounts);
 			}
-		}); 
+		});
+		if(document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].childElementCount == 0){
+			document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].remove();
+		}
+		if(document.querySelector('tbody').getElementsByTagName('tr').length == 4){
+			document.querySelector('.grid_section_detail').classList.add('table_4td');
+			document.querySelector('.grid_section_detail').classList.remove('table_5td');
+			document.querySelector('.grid_section_detail').classList.remove('table_6td');
+		}else if(document.querySelector('tbody').getElementsByTagName('tr').length == 5){
+			document.querySelector('.grid_section_detail').classList.remove('table_4td');
+			document.querySelector('.grid_section_detail').classList.add('table_5td');
+			document.querySelector('.grid_section_detail').classList.remove('table_6td');
+		}else if(document.querySelector('tbody').getElementsByTagName('tr').length == 6){
+			document.querySelector('.grid_section_detail').classList.remove('table_4td');
+			document.querySelector('.grid_section_detail').classList.remove('table_5td');
+			document.querySelector('.grid_section_detail').classList.add('table_6td');
+		} 
   }
   //만들어진 달력에 클릭한 날짜에 해당하는 상세데이터를 출력해주는 이벤트를 걸어주는 기능
   function put_MakeDetailDiv_to_dateTd(dateTd) {
@@ -743,7 +759,7 @@ window.addEventListener('DOMContentLoaded', function () {
 		location.href="/member/mypageProc";
 	}
 	document.querySelector(".gologout").onclick = function(){
-		location.href="/member/logout";
+		location.href="/member/logoutProc";
 	}
 	
 	//################## DateLicker ####################

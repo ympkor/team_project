@@ -7,17 +7,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>가계부</title>
-	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
-	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
+	<link rel="stylesheet" href="/css/main/main_modal.css?var=2">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
+	<link rel="stylesheet" href="/css/main/calendar.css?var=2">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script type="text/javascript" src="/js/main/main_modal.js?var=2"></script>
-	<script type="text/javascript" src="/js/main/mainTestJs.js?var=2"></script>
+	<script type="text/javascript" src="/js/main/main_modal.js?var=1"></script>
+	<script type="text/javascript" src="/js/main/mainTestJs.js?var=1"></script>
 </head>
 <body>
 	<!-- 모달 창 div-->
@@ -556,6 +556,20 @@
 				</table>
 				<!-- 페이지 로드시에 캘린더 만들어주고 그에 맞는 데이터 뿌려주는 작업해주는곳 -->
 				<script>
+					if(document.querySelector('tbody').getElementsByTagName('tr').length == 4){
+						document.querySelector('.grid_section_detail').classList.add('table_4td');
+						document.querySelector('.grid_section_detail').classList.remove('table_5td');
+						document.querySelector('.grid_section_detail').classList.remove('table_6td');
+					}else if(document.querySelector('tbody').getElementsByTagName('tr').length == 5){
+						document.querySelector('.grid_section_detail').classList.remove('table_4td');
+						document.querySelector('.grid_section_detail').classList.add('table_5td');
+						document.querySelector('.grid_section_detail').classList.remove('table_6td');
+					}else if(document.querySelector('tbody').getElementsByTagName('tr').length == 6){
+						document.querySelector('.grid_section_detail').classList.remove('table_4td');
+						document.querySelector('.grid_section_detail').classList.remove('table_5td');
+						document.querySelector('.grid_section_detail').classList.add('table_6td');
+					}
+					
 					document.querySelector('#selecDate').value = new Date().toISOString().substring(0, 7);
 					const meecList = JSON.parse('${meecListJ}');
 					const miicList = JSON.parse('${miicListJ}');

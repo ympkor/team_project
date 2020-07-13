@@ -108,3 +108,12 @@ span.icAmount{
 span.ecAmount{
   color: rgb(255, 80, 80);
 }
+.table_4td{
+  max-height: calc(134px + (120px * 4) - 316px);
+}
+.table_5td{
+  max-height: calc(134px + (120px * 5) - 316px);  
+}
+.table_6td{
+  max-height: calc(134px + (120px * 6) - 316px); 
+}

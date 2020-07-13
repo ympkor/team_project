@@ -3,7 +3,7 @@
 /* 페이지 레이아웃 그리드 부분 */
 .grid_container{
   display: grid;
-  grid-row-gap: 5px;
+  grid-gap: 5px;
   grid-template-columns: 25% 75%;
   grid-template-rows: 100px 310px 1fr 100px;
   width:100%; height:100%;
@@ -44,8 +44,8 @@ div.basic{
   grid-column: 1/2;
   grid-row: 3/4;
   width: 100%;
-  height: 430px;
   min-width: 220px;
+  height: 100%;
   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.1);
 }
 .grid_main{
