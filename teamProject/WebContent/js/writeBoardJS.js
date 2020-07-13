@@ -60,7 +60,7 @@ $(document).ready(function() {
     		location.href="/member/mypageProc";
     	}
     	document.querySelector(".gologout").onclick = function(){
-    		location.href="/member/logout";
+    		location.href="/member/logoutProc";
     	}
 
 $(".writeboardtitle").keydown(function(){
