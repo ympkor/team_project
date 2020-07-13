@@ -19,7 +19,7 @@ $(function() {
 		location.href="/member/mypageProc";
 	}
 	document.querySelector(".gologout").onclick = function(){
-		location.href="/member/logout";
+		location.href="/member/logoutProc";
 	}
 	
 document.getElementById('lastday').onclick = function(){	
