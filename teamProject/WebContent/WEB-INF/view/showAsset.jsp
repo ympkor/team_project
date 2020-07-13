@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=1">
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://kit.fontawesome.com/b8612abdbb.js" crossorigin="anonymous"></script>
@@ -165,7 +165,7 @@ window.onload = function() {
  
  	<!-- 검색창 부분 -->
  	<form action="showMemo" method="post">
- 		<div style="text-align: center; margin-top:50px;">
+ 		<div style="text-align: center; margin-top:50px; margin-bottom:150px;">
  		<input style="text-align:center; width:80%;" type="text" name="memo" placeholder="수입/지출내역 메모를 검색합니다.">
  		<input type="submit" value="검색">
  		</div>
