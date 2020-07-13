@@ -12,8 +12,8 @@ div.ui-datepicker,div.ui-datepicker-header{
     border: none;
 }
 table{
-  width: 98%;
-  height: 98%;
+  width: 100%;
+  height: 100%;
 }
 tr{
   width: 100%;
@@ -61,7 +61,7 @@ button.month_button{
   font-weight: 500;
 }
 .limit{
-  height: 32px;
+  height: 30px;
   overflow: hidden;
 }
 .entry_income,.entry_expense,.entry_transfer{
@@ -97,7 +97,10 @@ th,td:nth-of-type(7n + 7){
   border-right: 0;
 }
 span.icName,span.ecName,span.transferName{
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
+}
+div.income>.icAmount,div.expense>.ecAmount,.trAmount{
+  font-size: 0.625rem;
 }
 span.icAmount{
   color: rgb(70, 70, 250);

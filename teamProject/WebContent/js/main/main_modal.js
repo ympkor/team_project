@@ -241,7 +241,7 @@ function showAOMListAtInsertTransferAtTo(aaomList) {
 }
 document.addEventListener('DOMContentLoaded', function() {
 	//처음 브라우저 창이 켜졌을 떄, 화면크기 판단
-	if(window.innerWidth <= 1100){
+	if(window.innerWidth <= 1200){
 		 document.querySelector('.grid_aside').classList.add('hidden');
 		 document.querySelector('.insert_modal_overlay').classList.remove('hidden');
 		 document.querySelector('.show_insert_modal').classList.remove('hidden');
@@ -296,7 +296,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   //화면 사이즈가 줄어들면 인서트창 숨기고 버튼으로 불러오자
   window.addEventListener('resize', function() {
-	 if(window.innerWidth <= 1100){
+	 if(window.innerWidth <= 1200){
 		 document.querySelector('.grid_aside').classList.add('hidden');
 		 document.querySelector('.insert_modal_overlay').classList.remove('hidden');
 		 document.querySelector('.show_insert_modal').classList.remove('hidden');

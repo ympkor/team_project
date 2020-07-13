@@ -7,9 +7,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>가계부</title>
-	<link rel="stylesheet" href="/css/main/main_modal.css?var=2">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
-	<link rel="stylesheet" href="/css/main/calendar.css?var=2">
+	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
+	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
@@ -26,7 +26,7 @@
 		<div class="modal_overlay"></div>
 		<!-- 모달이 열렸을때 사용자에게 보여줄 content가 담길 div이다 -->
 		<div class="modal_content">
-			<!-- insert, expense용 form을 각각 만들어놓고, 사용자가 수입/지출 탭을 선택함에 따라 해당되는 input을 보여주자 -->
+			<!-- insert, expense, transfer update form을 각각 만들어놓고, 사용자가 수입/지출/이체 탭을 선택함에 따라 해당되는 창 보여주자 -->
 			
 			<!-- 수입 수정 Form -->
 			<form id="update_income_form" class="hidden">

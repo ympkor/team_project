@@ -81,9 +81,9 @@ function showThisMonthTransfer(tbmList) {
 function getThisMonthSumData(sumAmounts) {
 	document.querySelector('span.monthly_data_month').innerText = sumAmounts.selecDate.substring(5, 7)+'월';
 	if(sumAmounts.sumIncome != null){document.querySelector('span.monthly_data_amount_income').innerText = Number(sumAmounts.sumIncome).toLocaleString('en')+'원';
-		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0 원';}
+		}else{document.querySelector('span.monthly_data_amount_income').innerText = '0원';}
 	if(sumAmounts.sumExpense != null){document.querySelector('span.monthly_data_amount_expense').innerText = Number(sumAmounts.sumExpense).toLocaleString('en')+'원';
-		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0 원';}
+		}else{document.querySelector('span.monthly_data_amount_expense').innerText = '0원';}
 	if(sumAmounts.sumIncome - sumAmounts.sumExpense > 0) {
 		document.querySelector('span.monthly_data_amount_sum').classList.add('icAmount');
 		document.querySelector('span.monthly_data_amount_sum').classList.remove('ecAmount');
@@ -944,6 +944,10 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 		let newAmountStr = document.querySelector('#update_income_amount').value;
 		document.querySelector('#update_income_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_income_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateIncomeInsert',
@@ -972,6 +976,10 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 		let newAmountStr = document.querySelector('#update_expense_amount').value;
 		document.querySelector('#update_expense_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_expense_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateExpenseInsert',
@@ -1000,6 +1008,10 @@ window.addEventListener('DOMContentLoaded', function () {
 		}
 		let newAmountStr = document.querySelector('#update_transfer_amount').value;
 		document.querySelector('#update_transfer_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_transfer_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateTransferInsert',
@@ -1016,6 +1028,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#update_income_form').on('submit', function() {
 		let newAmountStr = document.querySelector('#update_income_amount').value;
 		document.querySelector('#update_income_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_income_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateIncome',
@@ -1032,6 +1048,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#update_expense_form').on('submit', function() {
 		let newAmountStr = document.querySelector('#update_expense_amount').value;
 		document.querySelector('#update_expense_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_expense_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateExpense',
@@ -1048,6 +1068,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#update_transfer_form').on('submit', function() {
 		let newAmountStr = document.querySelector('#update_transfer_amount').value;
 		document.querySelector('#update_transfer_amount').value = Number(uncomma(newAmountStr));
+		if(document.querySelector('#update_transfer_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#update_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postUpdateTransfer',
@@ -1128,6 +1152,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#insert_income_form').on('submit', function() {
 		let amountStr = document.querySelector('#insert_income_amount').value;
 		document.querySelector('#insert_income_amount').value = Number(uncomma(amountStr));
+		if(document.querySelector('#insert_income_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#insert_income_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertIncome',
@@ -1157,6 +1185,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#insert_expense_form').on('submit', function() {
 		let amountStr = document.querySelector('#insert_expense_amount').value;
 		document.querySelector('#insert_expense_amount').value = Number(uncomma(amountStr));
+		if(document.querySelector('#insert_expense_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#insert_expense_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertExpense',
@@ -1185,6 +1217,10 @@ window.addEventListener('DOMContentLoaded', function () {
 	$('#insert_transfer_form').on('submit', function() {
 		let amountStr = document.querySelector('#insert_transfer_amount').value;
 		document.querySelector('#insert_transfer_amount').value = Number(uncomma(amountStr));
+		if(document.querySelector('#insert_transfer_amount').value > 999999999) {
+			alert('금액은 999,999,999 을 초과할 수 없습니다.')
+			return false;
+		}
 		let formData = $('#insert_transfer_form').eq(0).serialize();
 		$.ajax({
 			url:'/main/postInsertTransfer',
