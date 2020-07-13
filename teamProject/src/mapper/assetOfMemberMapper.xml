@@ -99,4 +99,17 @@
 		update member set news_keywords = #{newsKeywords} where user_key = #{userKey};
 	</update>
 
+	<select id="selectListByMemo" parameterType="map" resultType="search">
+		select amount, expense_date as date, assets_name as assets, ec_name as category, memo from tp.expense 
+		join assets on tp.expense.assets_id = tp.assets.assets_id 
+		join expense_category on tp.expense.ec_id = tp.expense_category.ec_id 
+		where memo like #{memo} and user_key = #{userKey} 
+		union 
+		select amount, income_date, assets_name, ic_name, memo from tp.income 
+		join assets on tp.income.assets_id = tp.assets.assets_id 
+		join income_category on tp.income.ic_id = tp.income_category.ic_id 
+		where memo like #{memo} and user_key = #{userKey}
+		order by date;
+	</select>
+
 </mapper>
