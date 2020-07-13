@@ -44,5 +44,13 @@
 </form>
 </div>
 </div>
+<script type="text/javascript">
+var contentval='${board.content}';
+var imgtag='data:image/jpeg;base64';
+if(contentval.indexOf(imgtag)!= -1) {
+var results = contentval.match(/data:image/ig);
+alert("그림이 ",results.length,"개 있음");
+}
+</script>
 </body>
 </html>

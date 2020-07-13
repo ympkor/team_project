@@ -4,29 +4,44 @@ function sendFile(file, editor, welEditable) {
     	    reader.readAsDataURL(file);
     	    var dataURI ="";
     	    //로드 한 후
-    	    reader.onload = function  () {
+    	    reader.onload = function(e) {
     	        var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
     	        tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
     	        tempImage.onload = function() {
-    	        	
     	       
     	            //리사이즈를 위해 캔버스 객체 생성
     	            var canvas = document.createElement('canvas');
     	            var canvasContext = canvas.getContext("2d");
     	            
-    	              	           
-    	            var oriwidth=canvas.width;
-    	            var oriHeight=canvas.height;
+    	            var ori= e.target.result;
+    	            var oriimage = new Image();
+    	            oriimage.className ="imgitem";
+    	            oriimage.src = ori;
     	            
-    	            console.log("원래 가로크기",oriwidth);
-    	            console.log("원래 세로크기",oriHeight);
-    	            
-    	            //캔버스 크기 설정
-    	            canvas.width = 100; //가로 100px
-    	            canvas.height = 100; //세로 100px
+    	            //console.log("원래 가로크기",oriimage.width);
+    	            //console.log("원래 세로크기",oriimage.height);
+    	            var max_size=500;
+    	                	            
+    	            var width = oriimage.width;
+    	            var height = oriimage.height;
+    	            if (width > height) {
+    	                // 가로가 길 경우
+    	                if (width > max_size) {
+    	                  height *= max_size / width;
+    	                  width = max_size;
+    	                }
+    	              } else {
+    	                // 세로가 길 경우
+    	                if (height > max_size) {
+    	                  width *= max_size / height;
+    	                  height = max_size;
+    	                }
+    	              }
+    	              canvas.width = width;
+    	              canvas.height = height;
     	            
     	            //이미지를 캔버스에 그리기
-    	            canvasContext.drawImage(this, 0, 0, 100, 100);
+    	            canvasContext.drawImage(this, 0, 0, width, height);
     	            //캔버스에 그린 이미지를 다시 data-uri 형태로 변환
     	            dataURI = canvas.toDataURL("image/jpeg");
     	            
@@ -42,25 +57,75 @@ function sendFile(file, editor, welEditable) {
 	
 $(document).ready(function() {
         $('#summernote').summernote({ // summernote를 사용하기 위한 선언
+        	toolbar: [
+        		  ['style', ['style']],
+        		  ['font', ['bold', 'underline', 'clear']],
+        		  ['color', ['color']],
+        		  ['para', ['ul', 'ol', 'paragraph']],
+        		  ['insert', ['picture']],
+        		],
         	height: 400,
 			callbacks: {
 	        	onImageUpload: function(files, editor, welEditable) {
-	        		console.dir(files[0].size);
-	        		console.dir(files[0]);
-	        		if(files[0].size>=250000){
-	        			for(var i = files.length -1; i>=0; i--) {
-	        				sendFile(files[i], this, welEditable);
+	        		
+	        		var contentval="'"+$('.note-editable').html()+"'";
+	        		var imgtag='data:image/jpeg;base64';
+	        		if(contentval.indexOf(imgtag)!= -1) {
+	        			var results = contentval.match(/data:image/ig);
+	        			if(results.length<=19){
+	        				if(results.length+files.length>=21){
+	        					alert("이미지는 20개까지 올릴수 있습니다.");	
+	        				}else{
+	        					for(var i = files.length -1; i>=0; i--) {
+	        						if(files[i].size>=250000){
+	        							sendFile(files[i], this, welEditable);
+	        							
+	        						}else{
+	        							var fileReader = new FileReader();
+	        							fileReader.readAsDataURL(files[i]);
+	        							fileReader.onload = function(e) {	        			    
+	        								var ori= e.target.result;
+	        								var ori = $('#summernote').val();
+	        								ori+='<img src="'+e.target.result+'">';   	    	   
+	        								$('#summernote').summernote('code',ori);
+	        							}
+	        						}
+	        					}
+	        					
+	        				}
+	        				
+	        				
+	        			}else{
+	        				alert("이미지는 20개까지 올릴수 있습니다.");	        				
 	        			}
 	        		}else{
-	        			var fileReader = new FileReader();
-	        			fileReader.readAsDataURL(files[0]);
-	        			  fileReader.onload = function(e) {	        			    
-	        				  var ori= e.target.result;
-	        			    var ori = $('#summernote').val();
-		        			ori+='<img src="'+e.target.result+'">';   	    	   
-		    	    	   $('#summernote').summernote('code',ori);
-	        			  }
-	        		}   		
+	        			if(files.length>=21){
+	        				alert("이미지는 20개까지 올릴수 있습니다.");
+	        			}else{
+	        				for(var i = files.length -1; i>=0; i--) {
+	        					if(files[i].size>=250000){
+	        						sendFile(files[i], this, welEditable);
+	        						
+	        					}else{
+	        						var fileReader = new FileReader();
+	        						fileReader.readAsDataURL(files[i]);
+	        						fileReader.onload = function(e) {	        			    
+	        							var ori= e.target.result;
+	        							var ori = $('#summernote').val();
+	        							ori+='<img src="'+e.target.result+'">';   	    	   
+	        							$('#summernote').summernote('code',ori);
+	        						}
+	        					} 
+	        				}		        				
+	        			}
+	        			
+	        			
+	        			
+	        		}        		
+	        		
+	        		
+	        		
+	        		
 	        	}
 	        }
 		});
@@ -90,7 +155,14 @@ $(".writeboardtitle").keydown(function(){
 		alert("제목은 40자 를 초과해서 쓸수 없습니다");
 	}
 });
-
-
+$('.note-editable').keyup(function(){	
+	var contentval=$(this).html();
+	console.log("글자 길이",contentval.length);		
+	/*var imgtag='data:image/jpeg;base64';
+	if(contentval.indexOf(imgtag)!= -1) {
+	var results = contentval.match(/data:image/ig);
+	alert("그림이 ",results.length);
+	}*/
+});
 
 });
