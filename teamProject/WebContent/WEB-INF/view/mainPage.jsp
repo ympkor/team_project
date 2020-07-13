@@ -556,6 +556,9 @@
 				</table>
 				<!-- 페이지 로드시에 캘린더 만들어주고 그에 맞는 데이터 뿌려주는 작업해주는곳 -->
 				<script>
+					if(document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].childElementCount == 0){
+						document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].remove();
+					}
 					if(document.querySelector('tbody').getElementsByTagName('tr').length == 4){
 						document.querySelector('.grid_section_detail').classList.add('table_4td');
 						document.querySelector('.grid_section_detail').classList.remove('table_5td');
