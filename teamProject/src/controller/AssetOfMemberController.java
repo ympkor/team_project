@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import dto.AssetOfMember;
+import dto.SearchDto;
 import service.AssetNewsService;
 import service.AssetOfMemberService;
 
@@ -31,12 +33,12 @@ public class AssetOfMemberController {
 		List<AssetOfMember> assetList = aomService.selectOnlyAssetListById(userKey);
 		List<AssetOfMember> debtList = aomService.selectOnlyDebtListById(userKey);
 		List<AssetOfMember> zeroList = aomService.selectOnlyZeroListById(userKey);
-		
+
 		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
 		int i = 0;
 		int sumAssets = 0;
 		int sumDebts = 0;
-		
+
 		while(aomList.size() > i) {
 			if (aomList.get(i).getAmount() > 0) {
 				sumAssets += aomList.get(i).getAmount();
@@ -75,7 +77,7 @@ public class AssetOfMemberController {
 		StringBuilder newsString = ans.getNews();
 		JSONObject jsonObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
-		
+
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("assetList", assetList);
 		m.addAttribute("debtList", debtList);
@@ -103,7 +105,7 @@ public class AssetOfMemberController {
 	@RequestMapping("/addAsset")
 	public String addAsset(@ModelAttribute("userKey")int userKey, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
-		
+
 		aomService.addAsset(aom);
 
 		//자산입력시 수입지출내역 기록에 체크했을 경우
@@ -193,7 +195,7 @@ public class AssetOfMemberController {
 	@RequestMapping("/newsSettingsResult")
 	public String newsSettings(@ModelAttribute("userKey")int userKey, AssetOfMember aom) {
 		aom.setUserKey(userKey);
-		
+
 		if(aom.getNewsKeywords()=="") {
 			aom.setNewsKeywords("자산 금리 저축 적금");
 			aomService.setNews(aom);
@@ -201,5 +203,62 @@ public class AssetOfMemberController {
 			aomService.setNews(aom);
 		}
 		return "newsSettingsResult";
+	}
+
+	@RequestMapping("/showMemo")
+	public String showSearch(@ModelAttribute("userKey")int userKey, SearchDto search, Model m){
+		
+		//userKey값에 해당하는 자산을 배열로 저장
+		List<AssetOfMember> aomList = aomService.selectAssetListById(userKey);
+		List<AssetOfMember> assetList = aomService.selectOnlyAssetListById(userKey);
+		List<AssetOfMember> debtList = aomService.selectOnlyDebtListById(userKey);
+		List<AssetOfMember> zeroList = aomService.selectOnlyZeroListById(userKey);
+		
+		//그래프 구현을 위해 자산합계, 부채합계, 총합계를 따로 계산하여 보내줌
+		int i = 0;
+		int sumAssets = 0;
+		int sumDebts = 0;
+
+		while(aomList.size() > i) {
+			if (aomList.get(i).getAmount() > 0) {
+				sumAssets += aomList.get(i).getAmount();
+			}else if (aomList.get(i).getAmount() < 0) {
+				sumDebts += aomList.get(i).getAmount();
+			}
+			i++;
+		}
+		int sumTotal = sumAssets + sumDebts;
+
+		//자산, 부채 건수 집계
+		int j=0;
+		int cntAssets = 0;
+		int cntDebts = 0;
+		while(aomList.size() > j) {
+			if (aomList.get(j).getType().equals("자산")) {
+				cntAssets++;
+			}else if (aomList.get(j).getType().equals("부채")) {
+				cntDebts++;
+			}
+			j++;
+		}
+
+		search.setUserKey(userKey);
+		String memo = search.getMemo();
+		List<SearchDto> list = aomService.selectListByMemo(userKey, memo);
+
+		m.addAttribute("aomList", aomList);
+		m.addAttribute("assetList", assetList);
+		m.addAttribute("debtList", debtList);
+		m.addAttribute("zeroList", zeroList);
+		m.addAttribute("sumTotal", sumTotal);
+		m.addAttribute("sumAsset", sumAssets);
+		m.addAttribute("sumDebt", sumDebts);
+		m.addAttribute("assetRatioValue", sumAssets);
+		m.addAttribute("debtRatioValue", sumDebts);
+		m.addAttribute("cntAssets", cntAssets);
+		m.addAttribute("cntDebts", cntDebts);
+		m.addAttribute("result", list);
+
+		return "showMemo";
 	}
 }
