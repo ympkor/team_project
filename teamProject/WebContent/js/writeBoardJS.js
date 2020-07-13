@@ -9,9 +9,17 @@ function sendFile(file, editor, welEditable) {
     	        tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
     	        tempImage.onload = function() {
     	        	
+    	       
     	            //리사이즈를 위해 캔버스 객체 생성
     	            var canvas = document.createElement('canvas');
     	            var canvasContext = canvas.getContext("2d");
+    	            
+    	              	           
+    	            var oriwidth=canvas.width;
+    	            var oriHeight=canvas.height;
+    	            
+    	            console.log("원래 가로크기",oriwidth);
+    	            console.log("원래 세로크기",oriHeight);
     	            
     	            //캔버스 크기 설정
     	            canvas.width = 100; //가로 100px
@@ -37,9 +45,22 @@ $(document).ready(function() {
         	height: 400,
 			callbacks: {
 	        	onImageUpload: function(files, editor, welEditable) {
-	        		for(var i = files.length -1; i>=0; i--) {
-	        			sendFile(files[i], this, welEditable);
-	        		}
+	        		console.dir(files[0].size);
+	        		console.dir(files[0]);
+	        		if(files[0].size>=250000){
+	        			for(var i = files.length -1; i>=0; i--) {
+	        				sendFile(files[i], this, welEditable);
+	        			}
+	        		}else{
+	        			var fileReader = new FileReader();
+	        			fileReader.readAsDataURL(files[0]);
+	        			  fileReader.onload = function(e) {	        			    
+	        				  var ori= e.target.result;
+	        			    var ori = $('#summernote').val();
+		        			ori+='<img src="'+e.target.result+'">';   	    	   
+		    	    	   $('#summernote').summernote('code',ori);
+	        			  }
+	        		}   		
 	        	}
 	        }
 		});
