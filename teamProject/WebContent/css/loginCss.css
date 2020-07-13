@@ -199,17 +199,29 @@
     height: 95%;
 }
 
-/* @media screen and (max-width:100px){
+  @media screen and (max-width:700px){
 	#login_container{
-		flex-direction:column;
+	  display: grid;
+	  height:100%;
+	  width:100%;
+	  grid-template-rows:
+	  100px 1fr 1fr;
+	  grid-template-columns:
+	  5% 90% 5%;
+	  grid-template-areas:
+	  "top top top"
+	  "l_blank left r_blank"
+	  "l_blank right r_blank";
+	  grid-row-gap: 35px;
+	  min-width:350px;
 	}
 	#header{
-    background-color: #ffcccc;
-    line-height: 100px;
-    grid-area: top;
-    text-align: center;
-    grid-row: 1;
-    box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
+	    background-color: #ffcccc;
+	    line-height: 100px;
+	    grid-area: top;
+	    text-align: center;
+	    grid-row: 1;
+	    box-shadow: 0 0 20px 0 rgba(0,0,0, 0.2);
 	}
 	#title{
 		color: #51565d;
@@ -352,6 +364,7 @@
 	.right {
 		width:100%;
 		height:100%;
+		min-height:450px;
 		margin:0 auto;
 		grid-area:right;
 		display: flex;
@@ -359,7 +372,7 @@
 	    align-items: center;
 	    flex-direction: column;
 	}
-
+	
 	.carousel-inner > .carousel-item > img{ width: 100%; height: 100%; }
 
 	#demo{
@@ -369,4 +382,4 @@
 	    height: 95%;
 	}
 
-} */
+}
