@@ -32,9 +32,15 @@ public class StatisticsController {
 	
 	@Autowired
 	StatisticsService stService;
-		
+	
+	
 	@GetMapping("/show")	
-	public String showStatistics(@ModelAttribute("userKey")int userKey,Model m,@RequestParam(required = false, value="date" )@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date) {
+	public String showStatistics(HttpSession session,Model m,@RequestParam(required = false, value="date" )@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date) {
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		if (date==null) {date= LocalDate.now(); }
 		List<DailyExpense> de= mMapper.selectDailyExpense(userKey, date);
 		List<DailyIncome> di = mMapper.selectDailyIncome(userKey, date);

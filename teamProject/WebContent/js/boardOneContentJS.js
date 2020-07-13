@@ -37,10 +37,12 @@ $(".writeboardcontent").keyup(function(){
 	 location.href="/board/show?pNum="+pNum+"&sortNum="+sNum;
  });
 
- $(".commentwriteshow").click(function(){	 
-	 $(".commentwriteinput").toggle();
-	 $(".writeboardcontent").focus();
-		$(this).toggleClass("commentwriteshow");
+ $(".commentwriteshow").click(function(){	
+	 
+		 $(".commentwriteinput").toggle();
+		 $(".writeboardcontent").focus();
+			$(this).toggleClass("commentwriteshow"); 
+
  });
  
  $(".commentupdate").click(function(){

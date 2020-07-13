@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,14 +61,22 @@ public class BoardController {
 	}
 	//글쓰기 버튼 누르면 연결되게
 	@RequestMapping("/write")
-	public String writeBoard() {		
+	public String writeBoard(HttpSession session) {
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}		
 		return "writeBoard";
 	}
 	
 	//게시판 내용 한개 보여주기
 	@GetMapping("/contentOneShow")
-	public String showOneCntetnBoard(@ModelAttribute("userKey")int userKey,Model m,
+	public String showOneCntetnBoard(HttpSession session,Model m,
 			int boardId,int pNum,@RequestParam(defaultValue = "1")int sortNum) {
+		int userKey=0;
+		if(session.getAttribute("userKey")!=null) {
+			userKey =(int)session.getAttribute("userKey");
+		}
+		
 		//게시물클릭하면 조회수 1올라가기
 		boardMapper.updatehits(boardId);
 		//System.out.println(boardId);

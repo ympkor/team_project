@@ -48,8 +48,10 @@
 				<div class="contentdiv"><pre class="contentpre">${currentBoard.content }</pre></div>
 		</td></tr>
 		<tr class="likeandUandD"><td>
+			<c:if test="${userKey!=null}">	
 			<div class="likeandcomment" ><button class="commentwriteshow">댓글쓰기</button> <label>좋아요<input class="likecheck" type="checkbox" value="like"></label>
 			</div>
+			</c:if>	
 		</td></tr>
 	</tbody>
 </table>
@@ -96,8 +98,6 @@ var userKey =<%=session.getAttribute("userKey")%>;
 var likecheck =${likecheck};
 var pNum=${pNum};
 var sNum=${sortNum}
-console.log("현재페이지넘버",pNum);
-console.log("소트넘버:",sNum);
 </script>
 </body>
 </html>

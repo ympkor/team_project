@@ -1,3 +1,4 @@
+
 $(function() {
 	//인풋창에 오늘 날짜 표시해주기
 	var date=document.getElementById('daymove').innerText.slice(1,11);
