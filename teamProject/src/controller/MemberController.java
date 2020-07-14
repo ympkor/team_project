@@ -49,6 +49,7 @@ public class MemberController {
 		Member m = joinMapper.selectById(member.getUserId());//회원아이디로 회원의 전체 정보를 조회후
 		model.addAttribute("userKey", m.getUserKey());//전체정보중에 회원번호만 뽑아서 session추가해줌	
 		
+		//회원가입시 바로 자산페이지로 들어가서 자산 내역을 보여주기 위해서 AssetOfMemberController에서 긁어옴
 		List<AssetOfMember> aomList = aomService.selectAssetListById(m.getUserKey());	//userKey값에 해당하는 자산을 배열로 받음
 		aomList.get(0).setAssetsId(24);
 		
@@ -116,15 +117,11 @@ public class MemberController {
 		//세션값을 저장하기 위해서 사용
 		Member m = joinMapper.selectById(member.getUserId());
 		if(m!=null) {
-			//System.out.println(m.getUserKey());
 			Model uk = model.addAttribute("userKey", m.getUserKey());
-			//System.out.println("세션:"+uk);
 			String str=memberService.login(member);
-			//System.out.println(str);
 			return str;
 		} else {
 			String str=memberService.login(member);
-			//System.out.println(str);
 			return str;
 		}
 	}
@@ -138,10 +135,7 @@ public class MemberController {
 	//아이디 찾기시 해당되는 결과에 대응되는 값을 출력
 	@PostMapping(value="/searchId", produces="text/html;charset=UTF-8")
 	public @ResponseBody String searchIdproc(String email, String name) {
-		System.out.println(email);
-		System.out.println(name);
 		String str = memberService.searchId(email, name);
-		//System.out.println(str);
 		return str;
 	}
 	
@@ -154,9 +148,6 @@ public class MemberController {
 	//비밀번호찾기시 해당되는 결과에 대응되는 값을 출력
 	@PostMapping(value="/searchPw", produces="text/html;charset=UTF-8")
 	public @ResponseBody String searchPwproc(String userId, String name, String email) {
-//		System.out.println(email);
-//		System.out.println(name);
-//		System.out.println(userId);
 		String str = memberService.searchPw(userId, name, email);
 		return str;
 	}
@@ -189,7 +180,6 @@ public class MemberController {
 	//삭제버튼시 넘어감
 	@GetMapping("/delete")
 	public String delProc(@ModelAttribute("userKey")int userKey,Model m) {
-		//joinMapper.deleteByUserKey(userKey);
 		String result=null;
 		try {
 			result=	memberService.deleteMember(userKey);
@@ -210,9 +200,7 @@ public class MemberController {
 	
 	@PostMapping(value="/mypageProc", produces="text/html;charset=UTF-8")
 	public @ResponseBody String mypageProc(Member member) {
-		//System.out.println(member);
 		String str = memberService.mypagePw(member);
-		//System.out.println(str);
 		return str;
 	}
 }

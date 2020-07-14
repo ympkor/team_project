@@ -104,10 +104,6 @@ public class MemberService {
 	//탈퇴하기 
 	@Transactional
 	public String deleteMember(int userKey) {
-		/* 
-		 * //코멘트 보드 지우기 boardMapper.deleteBoardbyuserkeyAll(userKey);
-		 * boardMapper.deleteCommentbyuserkeyAll(userKey);
-		 */
 		//수입,지출 지우기
 		memberMapper.deleteExpenseByuserkeyAll(userKey);
 		memberMapper.deleteIncomeByuserkeyAll(userKey);
