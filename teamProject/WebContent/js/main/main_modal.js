@@ -239,6 +239,8 @@ function showAOMListAtInsertTransferAtTo(aaomList) {
     }}else{aomStr = '<option value id="insert_assets_transfer_memAssetIdTo_selected" selected disabled>등록된 자산이 없습니다.</option>';}
   document.querySelector('#insert_assets_transfer_memAssetIdTo').innerHTML += aomStr;
 }
+
+// ########## 로드 된 후 이벤트 ##########
 document.addEventListener('DOMContentLoaded', function() {
 	//처음 브라우저 창이 켜졌을 떄, 화면크기 판단
 	if(window.innerWidth <= 1200){
