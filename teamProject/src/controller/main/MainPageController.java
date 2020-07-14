@@ -37,7 +37,6 @@ import service.main.MainPageService;
 public class MainPageController {
 	@Autowired
 	private MainPageService mainService;
-//	int userKey = 1;//나중에 세션으로 받을 아이디에 해당되는 key값
 	
 //	로그인 없이 사용하기 위한 임시 세션값 설정
 	@GetMapping("/getSession")
@@ -48,7 +47,11 @@ public class MainPageController {
 	
 	//로그인후 보여줄 첫 화면
 	@GetMapping("/getCal")
-	public String getMain(@ModelAttribute("userKey")int userKey, Model m, @RequestParam(defaultValue = "1")String selecDate) throws JsonProcessingException {
+	public String getMain(Model m, @RequestParam(name = "selecDate", defaultValue = "1")String selecDate) throws JsonProcessingException {
+		if(m.getAttribute("userKey") == null) {
+			return "callForLogin";
+		}
+		int userKey = (int)m.getAttribute("userKey");
 		if(selecDate.equals("1")) {
 			selecDate = LocalDate.now().toString();
 		}
@@ -66,7 +69,6 @@ public class MainPageController {
 		List<ExpenseCategory> ecList = mainService.selectAllEc();//insert, update에서 사용자에게 보여줄 지출 카테고리
 		List<AssetsAssetsOfMember> aaomList = mainService.selectAAOMByUserKey(userKey);//insert,update에서 사용자에게 보여줄 사용자가 등록한 자산항목들
 		SumAmounts sumAmounts = mainService.selectSUMIEByUserKeyAndDate(userKey, curDate);//해당 월의 수입과 지출의 총 내역
-		
 		//페이지 로드 시 리스트를 함수에 변수로 넣기 위해서 JSON으로 변환 첨부했다.
 		ObjectMapper mapper = new ObjectMapper();
 		String aaomListJ = mapper.writeValueAsString(aaomList);
