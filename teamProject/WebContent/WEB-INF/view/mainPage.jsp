@@ -28,7 +28,7 @@
 		<div class="modal_content">
 			<!-- insert, expense, transfer update form을 각각 만들어놓고, 사용자가 수입/지출/이체 탭을 선택함에 따라 해당되는 창 보여주자 -->
 			
-			<!-- 수입 수정 Form -->
+			<!-- 수입 수정 Formaa -->
 			<form id="update_income_form" class="hidden">
 				<div class="update_form_container">
 					<div class="update_category">
