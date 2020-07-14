@@ -18,8 +18,6 @@ function sendFile(file, editor, welEditable) {
     	            oriimage.className ="imgitem";
     	            oriimage.src = ori;
     	            
-    	            //console.log("원래 가로크기",oriimage.width);
-    	            //console.log("원래 세로크기",oriimage.height);
     	            var max_size=500;
     	                	            
     	            var width = oriimage.width;
@@ -52,14 +50,14 @@ function sendFile(file, editor, welEditable) {
     	    	    
     	        };
     	    }; 
-} 	
-
+}//이미지리사이징
 	
 $(document).ready(function() {
         $('#summernote').summernote({ // summernote를 사용하기 위한 선언
         	toolbar: [
         		  ['style', ['style']],
         		  ['font', ['bold', 'underline', 'clear']],
+        		  ['fontsize',['fontsize']],
         		  ['color', ['color']],
         		  ['para', ['ul', 'ol', 'paragraph']],
         		  ['insert', ['picture']],
@@ -67,7 +65,6 @@ $(document).ready(function() {
         	height: 400,
 			callbacks: {
 	        	onImageUpload: function(files, editor, welEditable) {
-	        		
 	        		var contentval="'"+$('.note-editable').html()+"'";
 	        		var imgtag='data:image/jpeg;base64';
 	        		if(contentval.indexOf(imgtag)!= -1) {
@@ -89,30 +86,26 @@ $(document).ready(function() {
 	        			}else{
 	        				for(var i = files.length -1; i>=0; i--) {
 	        						sendFile(files[i], this, welEditable);
-	        					
 	        				}
 	        			}
 	        		}        		
-	        		
-	        		
-	        		
-	        		
 	        	}
 	        }
 		});
+        
         $('input[class="writeboardtitle"]').keydown(function() {
         	  if (event.keyCode === 13) {
         	    event.preventDefault();
         	  };
-        	});
+        });
        
         $('form').submit(function(){
         	if($('#summernote').val().trim()==""){
         		alert("내용을 작성해 주세요");
         		return false;        		
         	}
-        	
         });
+        
         document.querySelector(".gomypage").onclick = function(){
     		location.href="/member/mypageProc";
     	}
@@ -120,15 +113,9 @@ $(document).ready(function() {
     		location.href="/member/logoutProc";
     	}
 
-$(".writeboardtitle").keydown(function(){
-	//console.dir($(this).val().length);
-	if($(this).val().length>=40){
-		alert("제목은 40자 를 초과해서 쓸수 없습니다");
-	}
-});
-$('.note-editable').keyup(function(){	
-	var contentval=$(this).html();
-	console.log("글자 길이",contentval.length);		
-});
-
+    	$(".writeboardtitle").keydown(function(){
+    		if($(this).val().length>=40){
+    			alert("제목은 40자 를 초과해서 쓸수 없습니다");
+    		}
+    	});
 });
