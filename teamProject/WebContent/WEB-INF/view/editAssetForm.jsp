@@ -41,7 +41,7 @@
 
 	<div><input type="hidden" name="userKey" value="${userKey}"></div>
 	<div style="text-align: center;"><h1 style="font-size:200%; margin-bottom: 50px;">
-	" ${aom.assetsName} 자산 ${aom.amount}원을 수정합니다. "</h1></div>
+	" ${aom.assetsName} 자산 <fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원을 수정합니다. "</h1></div>
 
 		<div class=addPageTitle>금액</div>
 		<div class=addPageValue>
@@ -62,7 +62,7 @@
         <input type="radio" name="assetsId" value="7" id="city"><label for="city">씨티은행</label>
         <input type="radio" name="assetsId" value="8" id="hana"><label for="hana">하나은행</label>
         <input type="radio" name="assetsId" value="9" id="sc"><label for="sc">SC제일은행</label>
-        <input type="radio" name="assetsId" value="10"  id="etc" checked><label for="etc">기타은행</label>
+        <input type="radio" name="assetsId" value="10"  id="etc"><label for="etc">기타은행</label>
         <input type="radio" name="assetsId" value="24" id="cash"><label for="cash">현금 </label>
         </div>
 		
@@ -94,18 +94,17 @@
 </section>
 
 <script type="text/javascript">
-
-if("${aom.assetsName}"=="국민은행"){document.forms["editAsset"]["an1"].checked=true;}
-if("${aom.assetsName}"=="기업은행"){document.forms["editAsset"]["an2"].checked=true;}
-if("${aom.assetsName}"=="농협"){document.forms["editAsset"]["an3"].checked=true;}
-if("${aom.assetsName}"=="신한은행"){document.forms["editAsset"]["an4"].checked=true;}
-if("${aom.assetsName}"=="산업은행"){document.forms["editAsset"]["an5"].checked=true;}
-if("${aom.assetsName}"=="우리은행"){document.forms["editAsset"]["an6"].checked=true;}
-if("${aom.assetsName}"=="씨티은행"){document.forms["editAsset"]["an7"].checked=true;}
-if("${aom.assetsName}"=="하나은행"){document.forms["editAsset"]["an8"].checked=true;}
-if("${aom.assetsName}"=="SC제일은행"){document.forms["editAsset"]["an9"].checked=true;}
-if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["an10"].checked=true;};
-if("${aom.assetsName}"=="현금"){document.forms["editAsset"]["an24"].checked=true;};
+if("${aom.assetsName}"=="국민은행"){document.forms["editAsset"]["kb"].checked=true;}
+if("${aom.assetsName}"=="기업은행"){document.forms["editAsset"]["ibk"].checked=true;}
+if("${aom.assetsName}"=="농협"){document.forms["editAsset"]["nh"].checked=true;}
+if("${aom.assetsName}"=="신한은행"){document.forms["editAsset"]["shinhan"].checked=true;}
+if("${aom.assetsName}"=="산업은행"){document.forms["editAsset"]["keb"].checked=true;}
+if("${aom.assetsName}"=="우리은행"){document.forms["editAsset"]["woori"].checked=true;}
+if("${aom.assetsName}"=="씨티은행"){document.forms["editAsset"]["city"].checked=true;}
+if("${aom.assetsName}"=="하나은행"){document.forms["editAsset"]["hana"].checked=true;}
+if("${aom.assetsName}"=="SC제일은행"){document.forms["editAsset"]["sc"].checked=true;}
+if("${aom.assetsName}"=="기타은행"){document.forms["editAsset"]["etc"].checked=true;}
+if("${aom.assetsName}"=="현금"){document.forms["editAsset"]["cash"].checked=true;};
 
 </script>
 
