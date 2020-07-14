@@ -2,7 +2,8 @@ package controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,13 @@ public class AssetOfMemberController {
 
 	//자산페이지 호출시
 	@RequestMapping("/view")
-	public String getMemberAsset(@ModelAttribute("userKey") int userKey, Model m){
+	public String getMemberAsset(HttpSession session, Model m){
 
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		//userKey값에 해당하는 자산을 배열로 저장
 		List<AssetOfMember> aomList = aomService.selectAssetListById(userKey);
 		List<AssetOfMember> assetList = aomService.selectOnlyAssetListById(userKey);
@@ -97,15 +103,24 @@ public class AssetOfMemberController {
 
 	//자산추가 클릭시
 	@RequestMapping("/add")
-	public String showAddForm(@ModelAttribute("userKey")int userKey) {
+	public String showAddForm(HttpSession session) {
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
 		return "addAssetForm";
 	}
 
 	//신규자산 입력 후 submit 클릭시
 	@RequestMapping("/addAsset")
-	public String addAsset(@ModelAttribute("userKey")int userKey, 
+	public String addAsset(HttpSession session, 
 			Model m, AssetOfMember aom, AssetOfMember toCal) {
-
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		aomService.addAsset(aom);
 
 		//자산입력시 수입지출내역 기록에 체크했을 경우
@@ -131,8 +146,14 @@ public class AssetOfMemberController {
 
 	//각각의 자산에서 '수정' 클릭시
 	@RequestMapping("/edit")
-	public String showeditForm(@ModelAttribute("userKey")int userKey, 
+	public String showeditForm(HttpSession session, 
 			int memAssetId, Model m, AssetOfMember aomBefore) {
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		//해당 자산 객체 생성하여 수정 폼으로 넘김
 		aomBefore = aomService.getAssetById(memAssetId);
 		aomBefore.setUserKey(userKey);
@@ -144,8 +165,14 @@ public class AssetOfMemberController {
 
 	//자산 수정 폼 입력 후 '수정완료' 클릭시
 	@RequestMapping("/editAsset")
-	public String editAsset(@ModelAttribute("userKey")int userKey, 
+	public String editAsset(HttpSession session, 
 			int memAssetId, Model m,  AssetOfMember aom) {
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		aom.setUserKey(userKey);
 
 		//새 값을 자산 테이블에 전송하고 완료
@@ -176,14 +203,26 @@ public class AssetOfMemberController {
 
 	//각 자산 '삭제' 클릭시
 	@RequestMapping("/delete")
-	public String delAsset(@ModelAttribute("userKey")int userKey,int memAssetId, Model m) {
+	public String delAsset(HttpSession session,int memAssetId, Model m) {
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		aomService.delAsset(memAssetId);
 		return "deleteAssetResult";
 	}
 
 	//관련뉴스 '설정' 클릭시
 	@RequestMapping("/newsSettings")
-	public String newsSettingsView(@ModelAttribute("userKey")int userKey, Model m) {
+	public String newsSettingsView(HttpSession session, Model m) {
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		AssetOfMember mem = aomService.getNewsSettingsInfo(userKey);
 		String newsKeywords = mem.getNewsKeywords();
 		int newsCounts = mem.getNewsCounts();
@@ -193,7 +232,13 @@ public class AssetOfMemberController {
 	}
 
 	@RequestMapping("/newsSettingsResult")
-	public String newsSettings(@ModelAttribute("userKey")int userKey, AssetOfMember aom) {
+	public String newsSettings(HttpSession session, AssetOfMember aom) {
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
+		
 		aom.setUserKey(userKey);
 
 		if(aom.getNewsKeywords()=="") {
@@ -206,7 +251,12 @@ public class AssetOfMemberController {
 	}
 
 	@RequestMapping("/showMemo")
-	public String showSearch(@ModelAttribute("userKey")int userKey, SearchDto search, Model m){
+	public String showSearch(HttpSession session, SearchDto search, Model m){
+		
+		if(session.getAttribute("userKey")==null) {
+			return "callForLogin";
+		}
+		int userKey =(int)session.getAttribute("userKey");
 		
 		//userKey값에 해당하는 자산을 배열로 저장
 		List<AssetOfMember> aomList = aomService.selectAssetListById(userKey);
