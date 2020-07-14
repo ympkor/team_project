@@ -46,9 +46,11 @@ div.newsBox{background: #e5e5e5; margin:10px; margin-bottom:5px;
 	width:45%; height:170px; float:left;
 	overflow:hidden;
 	padding:15px;}
-div.newsTitle{font-size: 15px; font-weight: 700; color:#123c69}
-div.newsDesc{font-size: 13px; color:black; text-decoration: none}
-div.newsDate{color:black; text-decoration: none}
+.newsTitle{height:32px; font-size: 15px; font-weight: 700; color:#123c69}
+div.newsDesc{height:65px; font-size: 13px; color:black; text-decoration: none; overflow:hidden;}
+div.newsDate{height:20px; color:black; text-decoration: none}
+
+
 body{margin:0px}
 div#myTotalAsset{line-height: 70%}
 div#eachAsset{padding-top:0px; margin-top:-5px;}
@@ -105,6 +107,7 @@ section {
   margin-top:0px;
   z-index:0;
   position: relative;
+  height:1080px;
 }
 
 /* Style the navigation menu */
@@ -130,6 +133,8 @@ asset {
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 30px;
+	overflow:scroll;
+	overflow-x:hidden;
 }
 
 
