@@ -9,7 +9,7 @@
 <title>게시글보기</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/boardOneContentJS.js?1"></script>
-<link rel="stylesheet" href="/css/boardOneContent.css?2">
+<link rel="stylesheet" href="/css/boardOneContent.css?1">
 <link rel="stylesheet" href="/css/topMenu.css?asd=2">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
@@ -90,8 +90,9 @@
 	<c:if test="${ beforeBoard!=null}"><div class="beforeboard">이전글: <a href="/board/contentOneShow?boardId=${beforeBoard.boardId}&pNum=${pNum}&sortNum=${sortNum}">${beforeBoard.title}</a><br></div></c:if>
 	<c:if test="${ nextBoard!=null}"><div class="nextboard">다음글: <a href="/board/contentOneShow?boardId=${nextBoard.boardId}&pNum=${pNum}&sortNum=${sortNum}">${nextBoard.title}</a><br></div></c:if>
 </div>
-</div>
-</div>
+</div><!--middlecontent끝  -->
+<div class="gotopdiv" ><a class="gotop" href="#middlecontent" title="위로"></a></div>
+</div><!-- wrapper끝  -->
 <script type="text/javascript">
 var boardId= ${currentBoard.boardId};
 var userKey =<%=session.getAttribute("userKey")%>;

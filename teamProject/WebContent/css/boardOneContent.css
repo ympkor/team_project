@@ -49,6 +49,23 @@ div.board{text-shadow: 2px 1px 0 #f5f5f5;
 	text-decoration: underline;
 	text-decoration-color: #51565d;}
 #middlecontent{grid-area:content; position: relative; top: 20px;}
+div.gotopdiv{grid-area:r_blank; position: relative;}
+a.gotop{position: fixed;
+    z-index: 100;
+    right: 24px;
+    bottom: 20px; }
+.gotop::before{
+	display: inline-block;
+    width: 51px;
+    height: 51px;
+    content: '';
+    vertical-align: top;
+    background-position: -209px -218px;
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2020/sp_main.44265f.png);
+    background-repeat: no-repeat;
+    background-size: 471px 442px;
+	
+}
 .likeandcomment{position: relative;
     right: 5px; top:5px;
     text-align: right;margin-bottom: 5px;}

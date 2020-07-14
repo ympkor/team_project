@@ -77,24 +77,9 @@ $(document).ready(function() {
 	        					alert("이미지는 20개까지 올릴수 있습니다.");	
 	        				}else{
 	        					for(var i = files.length -1; i>=0; i--) {
-	        						if(files[i].size>=250000){
 	        							sendFile(files[i], this, welEditable);
-	        							
-	        						}else{
-	        							var fileReader = new FileReader();
-	        							fileReader.readAsDataURL(files[i]);
-	        							fileReader.onload = function(e) {	        			    
-	        								var ori= e.target.result;
-	        								var ori = $('#summernote').val();
-	        								ori+='<img src="'+e.target.result+'">';   	    	   
-	        								$('#summernote').summernote('code',ori);
-	        							}
-	        						}
 	        					}
-	        					
 	        				}
-	        				
-	        				
 	        			}else{
 	        				alert("이미지는 20개까지 올릴수 있습니다.");	        				
 	        			}
@@ -103,24 +88,10 @@ $(document).ready(function() {
 	        				alert("이미지는 20개까지 올릴수 있습니다.");
 	        			}else{
 	        				for(var i = files.length -1; i>=0; i--) {
-	        					if(files[i].size>=250000){
 	        						sendFile(files[i], this, welEditable);
-	        						
-	        					}else{
-	        						var fileReader = new FileReader();
-	        						fileReader.readAsDataURL(files[i]);
-	        						fileReader.onload = function(e) {	        			    
-	        							var ori= e.target.result;
-	        							var ori = $('#summernote').val();
-	        							ori+='<img src="'+e.target.result+'">';   	    	   
-	        							$('#summernote').summernote('code',ori);
-	        						}
-	        					} 
-	        				}		        				
+	        					
+	        				}
 	        			}
-	        			
-	        			
-	        			
 	        		}        		
 	        		
 	        		
@@ -158,11 +129,6 @@ $(".writeboardtitle").keydown(function(){
 $('.note-editable').keyup(function(){	
 	var contentval=$(this).html();
 	console.log("글자 길이",contentval.length);		
-	/*var imgtag='data:image/jpeg;base64';
-	if(contentval.indexOf(imgtag)!= -1) {
-	var results = contentval.match(/data:image/ig);
-	alert("그림이 ",results.length);
-	}*/
 });
 
 });

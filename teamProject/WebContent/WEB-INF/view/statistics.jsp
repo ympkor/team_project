@@ -272,7 +272,7 @@ var nextyear ="${nextyear}";
 </script>
 
 
-<a class="gotop" href="#leftdayandweek" title="맨 위로">맨 위로</a> 
+<a class="gotop" href="#leftdayandweek" title="맨 위로"></a> 
 </div>
 </body>
 </html>

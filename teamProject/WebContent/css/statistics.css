@@ -41,7 +41,24 @@ min-width: 700px;
   "l_blank dayweek month r_blank"
   "l_blank year year r_blank";
 }
-a.gotop{display:scroll;position:fixed; bottom:10px; right: 10px;}
+
+a.gotop{position: fixed;
+    z-index: 100;
+    right: 24px;
+    bottom: 20px; }
+.gotop::before{
+	display: inline-block;
+    width: 51px;
+    height: 51px;
+    content: '';
+    vertical-align: top;
+    background-position: -209px -218px;
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2020/sp_main.44265f.png);
+    background-repeat: no-repeat;
+    background-size: 471px 442px;
+	
+}
+
 table{border-collapse: collapse; width:100%; table-layout: fixed;}
 th,td{border-bottom:1px solid #9298a0; text-align: center; 
 	height: 30px; line-height: 30px;}
