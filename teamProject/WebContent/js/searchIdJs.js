@@ -18,6 +18,7 @@ $(function(){
 					document.getElementById("message").innerHTML+="<span id='data'>"+data+"</span>";
 					document.getElementById("message").innerHTML+="입니다";
 					document.getElementById("message").innerHTML+="<br><a class='link' href='/member/searchPw'>비밀번호찾기</a>";
+					document.getElementById("message").innerHTML+="<a class='link2' href='/member/login'>로그인하러가기</a>";
 				}
 			}
 		});

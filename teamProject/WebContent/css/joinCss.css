@@ -21,6 +21,10 @@ a{
 	text-decoration:none;
 }
 
+body{
+	overflow-y:scroll;
+}
+
 #join_container{
 	display: grid;
  	height:100%;
