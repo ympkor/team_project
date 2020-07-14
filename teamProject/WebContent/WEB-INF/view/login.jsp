@@ -40,7 +40,7 @@
 			</form>
 		</div>
 		<div class="right">
-		 	<script> $('.carousel').carousel({ interval: 1000 }) </script>
+		 	<script> $('.carousel').carousel({ interval: 5000 }) </script>
 		 	<div id="demo" class="carousel slide" data-ride="carousel"> 
 		 		<!-- 슬라이드쇼 -->
 		 		<div class="carousel-inner">
@@ -48,13 +48,13 @@
 		 				<img class="d-block w-100" src="/img/1.jpg" alt="First slide"> 
 	 				</div> 
 			 		<div class="carousel-item"> 
-			 			<img class="d-block w-100" src="/img/2.jpg" alt="Second slide"> 
+			 			<img class="d-block w-100" src="/img/graph.png" alt="Second slide"> 
 			 		</div> 
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/3.jpg" alt="Third slide"> 
 			 		</div>
 			 		<div class="carousel-item"> 
-			 			<img class="d-block w-100" src="/img/4.jpg" alt="Fourth slide"> 
+			 			<img class="d-block w-100" src="/img/board.png" alt="Fourth slide"> 
 			 		</div>  
 			 		<!-- 슬라이드 쇼 끝 왼쪽 오른쪽 화살표 버튼  -->
 			 		<a class="carousel-control-prev" href="#demo" data-slide="prev"> 
