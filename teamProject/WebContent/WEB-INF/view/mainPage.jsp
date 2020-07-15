@@ -7,9 +7,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>가계부</title>
-	<link rel="stylesheet" href="/css/main/main_modal.css?var=2">
-	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=2">
-	<link rel="stylesheet" href="/css/main/calendar.css?var=2">
+	<link rel="stylesheet" href="/css/main/main_modal.css?var=1">
+	<link rel="stylesheet" href="/css/main/mainTestCss.css?var=1">
+	<link rel="stylesheet" href="/css/main/calendar.css?var=1">
 	<link rel="stylesheet" href="/css/topMenu.css?asd=2">
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
