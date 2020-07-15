@@ -105,9 +105,15 @@ $(document).ready(function() {
         });
        
         $('form').submit(function(){
-        	if($('#summernote').val().trim()==""){
-        		alert("내용을 작성해 주세요");
+        	if($('.writeboardtitle').val().trim()==""){
+        		alert("제목을 작성해 주세요");
         		return false;        		
+        	}
+        	if($('.note-editable').text().trim()==""){
+        		if($('.note-editable').html().indexOf('data:image/jpeg;base64')==-1){
+        			alert("내용을 작성해 주세요");
+        			return false;       		
+        		}
         	}
         });
         
