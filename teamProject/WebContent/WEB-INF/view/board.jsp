@@ -73,7 +73,12 @@ var userKey =<%=session.getAttribute("userKey")%>;
 					</span>
 				</div>
 			</td>
-		<td>${b.writer }</td>
+		<td>
+			<c:choose>
+				<c:when test="${b.writer.length()>10}">${b.writer.substring(0,10)}..</c:when>
+				<c:otherwise>${b.writer}</c:otherwise>
+			</c:choose>
+		</td>
 		<td class="regDate">
 			<!-- 오늘 날짜를 nowdate 에 저장 해서 같은 날이면 시간을 불러오고 다른날이면 날짜만 불러오게-->
 			<c:set var="now" value="<%=new java.util.Date()%>" />
