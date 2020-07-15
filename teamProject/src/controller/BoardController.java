@@ -67,8 +67,11 @@ public class BoardController {
 	
 	//게시판 내용 한개 보여주기
 	@GetMapping("/contentOneShow")
-	public String showOneCntetnBoard(HttpSession session,Model m,
-			int boardId,int pNum,@RequestParam(defaultValue = "1")int sortNum) {
+	public String showOneCntetnBoard(HttpSession session,Model m
+			,@RequestParam(defaultValue = "0")int boardId,@RequestParam(defaultValue = "1")int pNum,@RequestParam(defaultValue = "1")int sortNum) {
+		if(boardId==0) {
+			return "callForBoard";
+		}		
 		int userKey=0;
 		if(session.getAttribute("userKey")!=null) {
 			userKey =(int)session.getAttribute("userKey");
@@ -97,18 +100,23 @@ public class BoardController {
 		m.addAttribute("sortNum", sortNum);
 		return "contentOneShow";
 	}
+	@GetMapping("/commentwrite")
+	public String writeCommentgologin() {
+			return "callForLogin";
+	}	
 	
 	//코멘쓰기
 	@PostMapping("/commentwrite")
-	public String writeComment(@ModelAttribute("userKey")int userKey,String pNum
+	public String writeComment(String pNum
 			,Comment comment, Model m,@RequestParam(defaultValue = "1")String sNum) {
+			
 		int sortNum = Integer.parseInt(sNum);
 		String commentWriter = memberMapper.getUserIdByuserKey(comment.getUserKey());
 		comment.setCommentWriter(commentWriter);
 		boardService.regComment(comment);		
 		
 		//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
-		String likecheck= boardService.likechecking(comment.getBoardId(), userKey);
+		String likecheck= boardService.likechecking(comment.getBoardId(), comment.getUserKey());
 		//코멘트 보드 가져와서 수정된것 다시 보여줄 데이터 만들어주기
 		List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
 		//현재글 가져오기
@@ -127,6 +135,10 @@ public class BoardController {
 		m.addAttribute("sortNum", sortNum);
 		return "contentOneShow";
 	}
+	@GetMapping("/commentupdate")
+	public String updateCommentgologin() {
+			return "callForLogin";
+	}	
 	
 	//코멘수정
 		@PostMapping("/commentupdate")
@@ -156,9 +168,17 @@ public class BoardController {
 		
 		//코멘삭제
 		@RequestMapping("/deletecomment")
-		public String  deleteComment(@ModelAttribute("userKey")int userKey,Model m
-				,int pNum, int boardId, int commentId
+		public String  deleteComment(HttpSession session,Model m
+				,@RequestParam(defaultValue = "0")int pNum, @RequestParam(defaultValue = "0")int boardId
+				,@RequestParam(defaultValue = "0")int commentId
 				,@RequestParam(defaultValue = "1")int sortNum) {
+			if(session.getAttribute("userKey")==null) {
+				return "callForLogin";
+			}	
+			int userKey=0;
+			if(session.getAttribute("userKey")!=null) {
+				userKey =(int)session.getAttribute("userKey");
+			}
 			//선택된 코멘트 삭제, 코멘수 감소
 			boardService.delComment(boardId, commentId);
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
@@ -219,7 +239,11 @@ public class BoardController {
 		
 		//게시물보는곳에서 수정버튼 누를때
 		@RequestMapping("/update")
-		public String updateBoard(int boardId,Model m,int pNum, int sortNum) {
+		public String updateBoard(HttpSession session,@RequestParam(defaultValue = "0")int boardId,Model m
+				,@RequestParam(defaultValue = "0")int pNum, @RequestParam(defaultValue = "0")int sortNum) {
+			if(session.getAttribute("userKey")==null) {
+				return "callForLogin";
+			}	
 			//보드아이디로 보드정보를 객체에 받아옴
 			Board board=boardMapper.selecOneBoard(boardId);
 			//객체를 수정페이지에 넘겨줌
