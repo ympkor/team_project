@@ -32,12 +32,17 @@ if($(".commentshow").length/10> 1){
 
 $(".writeboardcontent").keyup(function(){	
 	var content = $(this).val();
-    $('#counter').html(content.length + '/150');
+    $('#counter').html(content.length + '/150');    
 	if($(this).val().length>=150){
 		alert("댓글은 150자를 초과해서 쓸수 없습니다.");
 	}
 });
-
+$(".commentwriteinput").submit(function(){
+	if($(".writeboardcontent").val().trim()==""){
+		alert("댓글 내용을 입력해 주세요");
+		return false;
+	}
+});
 
 
  $(".showboardList").click(function(){
@@ -75,6 +80,12 @@ $(".writeboardcontent").keyup(function(){
 				alert("댓글은 150자를 초과해서 쓸수 없습니다.");
 			}
 		});
+	 $(".commentupdateinput").submit(function(){		 
+		 if($(".commentupdatetextarea").val().trim()==""){
+			 alert("댓글 내용을 입력해 주세요");
+			 return false;
+		 }
+	 });
  }); 
  $(".commentdelete").click(function(){
 	 var flag =confirm("댓글 삭제하시겠습니까?");
