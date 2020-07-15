@@ -1,3 +1,9 @@
+function chageColorWhenHover(element) {
+	element.querySelector('span.dateSpan').classList.add('orange');
+}
+function changColorWhenBlur(element) {
+	element.querySelector('span.dateSpan').classList.remove('orange');
+}
 // 콤마 찍기
 function comma(str) {
 	str = String(str);
@@ -465,6 +471,14 @@ function makeDetailIncomeDIV(iicaList) {
 		document.querySelector('div.detail_context_income').innerHTML = str;
 	}
 	document.querySelector('span.detailSumI').innerText = Number(sumI).toLocaleString('en')+'원';
+	for(let i = 0; i < document.querySelectorAll('div.detailItem').length; i++) {
+		document.querySelectorAll('div.detailItem')[i].addEventListener('mouseover', function() {
+			document.querySelectorAll('div.detailItem')[i].classList.add('detail_mouseover');
+		});
+		document.querySelectorAll('div.detailItem')[i].addEventListener('mouseout', function() {
+			document.querySelectorAll('div.detailItem')[i].classList.remove('detail_mouseover');
+		});
+	}
 	putIncomeDataToUpdateForm(iicaList);
 }
 //상세란에 상세 지출을 뿌려주는 기능
@@ -483,6 +497,14 @@ function makeDetailExpenseDIV(eecaList) {
 		document.querySelector('div.detail_context_expense').innerHTML = str;
 	}
 	document.querySelector('span.detailSumE').innerText = Number(sumE).toLocaleString('en')+'원';
+	for(let i = 0; i < document.querySelectorAll('div.detailItem').length; i++) {
+		document.querySelectorAll('div.detailItem')[i].addEventListener('mouseover', function() {
+			document.querySelectorAll('div.detailItem')[i].classList.add('detail_mouseover');
+		});
+		document.querySelectorAll('div.detailItem')[i].addEventListener('mouseout', function() {
+			document.querySelectorAll('div.detailItem')[i].classList.remove('detail_mouseover');
+		});
+	}
 	putExpenseDataToUpdateForm(eecaList);
 }
 //이체 상세내역을 뿌려주는 기능. 내부에 온클릭시 이체 업데이트 내역을 뿌려주는 기능 포함
@@ -501,6 +523,14 @@ function makeDetailTransferDIV(taomfaomtList) {
 			}
 			str += '<div class=detailTAmount><span class=detailTAmount>'+Number(taomfaomtList[i].amount).toLocaleString('en')+'원</span></div<</div>';
 			document.querySelector('div.detail_context_transfer').innerHTML += str;
+		}
+		for(let i = 0; i < document.querySelectorAll('div.detailItem').length; i++) {
+			document.querySelectorAll('div.detailItem')[i].addEventListener('mouseover', function() {
+				document.querySelectorAll('div.detailItem')[i].classList.add('detail_mouseover');
+			});
+			document.querySelectorAll('div.detailItem')[i].addEventListener('mouseout', function() {
+				document.querySelectorAll('div.detailItem')[i].classList.remove('detail_mouseover');
+			});
 		}
 		putTransferDataToUpdateForm(taomfaomtList);
 	}
@@ -555,6 +585,14 @@ window.addEventListener('DOMContentLoaded', function () {
 				getThisMonthSumData(sumAmounts);
 			}
 		});
+		for(let i = 0; i < document.querySelectorAll('.dateTd').length; i++) {
+			document.querySelectorAll('.dateTd')[i].addEventListener('mouseover', function() {
+				chageColorWhenHover(document.querySelectorAll('.dateTd')[i]);
+			});
+			document.querySelectorAll('.dateTd')[i].addEventListener('mouseout', function() {
+				changColorWhenBlur(document.querySelectorAll('.dateTd')[i])
+			});
+        }
 		if(document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].childElementCount == 0){
 			document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].remove();
 		}
@@ -593,6 +631,12 @@ window.addEventListener('DOMContentLoaded', function () {
           //일단 상세내역 데이터들 초기화 해줘야함.
           detailContextIncome.innerHTML = null;
           detailContextExpense.innerHTML = null;
+          dateTd[i].querySelector('span.dateSpan').classList.add('yello_green');
+          for(let j = 0; j < dateTd.length; j++){
+          	if(dateTd[i] != dateTd[j]){
+          		dateTd[j].querySelector('span.dateSpan').classList.remove('yello_green');
+          	}
+          }
 			detailDateSpan.innerHTML = currentDate;
 			document.querySelector('#insert_income_date').value = currentDate;
 			document.querySelector('#insert_expense_date').value = currentDate;
@@ -628,11 +672,11 @@ window.addEventListener('DOMContentLoaded', function () {
 									});
 								}
 							});
-            }
-          });
-        }
-      }
-    }
+          	}
+			  	});
+				}
+		  }
+		}
 	}
 	//업데이트 성공하면 화면에 뿌려주는 데이타를 갱신해주는 기능
 	function refreshData(UpdateAndRefreshData){
@@ -826,7 +870,6 @@ window.addEventListener('DOMContentLoaded', function () {
 			// }
     },
 	});
-	
   	//데이트픽커 날짜 변경되면 선택되어있는 날짜 바꿔놓기
 	document.querySelector('button.datepicker').addEventListener('click', function() {
 		let currentYear = document.querySelector('#selecDate').value.substring(0, 4);

@@ -556,6 +556,17 @@
 				</table>
 				<!-- 페이지 로드시에 캘린더 만들어주고 그에 맞는 데이터 뿌려주는 작업해주는곳 -->
 				<script>
+					for(let i = 0; i < document.querySelectorAll('.dateTd').length; i++) {
+						document.querySelectorAll('.dateTd')[i].addEventListener('mouseover', function() {
+							chageColorWhenHover(document.querySelectorAll('.dateTd')[i]);
+						});
+						document.querySelectorAll('.dateTd')[i].addEventListener('mouseout', function() {
+							changColorWhenBlur(document.querySelectorAll('.dateTd')[i])
+						});
+						if(document.querySelectorAll('.dateTd')[i].querySelector('.dateSpan').innerText == Number(new Date().toISOString().substring(8, 10))) {
+							document.querySelectorAll('.dateTd')[i].querySelector('.dateSpan').classList.add('yello_green');
+						}
+					}
 					if(document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].childElementCount == 0){
 						document.querySelector('tbody').getElementsByTagName('tr')[document.querySelector('tbody').getElementsByTagName('tr').length-1].remove();
 					}

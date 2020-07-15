@@ -280,3 +280,6 @@ div.detailItem{
   align-items: center;
   border-bottom: 1px dashed #9298a0;
 }
+.detail_mouseover{
+	font-weight:600;
+}
