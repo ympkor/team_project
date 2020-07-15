@@ -40,21 +40,42 @@
 			</form>
 		</div>
 		<div class="right">
+			<!-- 부트스트랩에서 긁어옴 -->
 		 	<script> $('.carousel').carousel({ interval: 5000 }) </script>
 		 	<div id="demo" class="carousel slide" data-ride="carousel"> 
 		 		<!-- 슬라이드쇼 -->
 		 		<div class="carousel-inner">
 		 			<div class="carousel-item active"> 
 		 				<img class="d-block w-100" src="/img/main.jpg" alt="First slide"> 
+		 				<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  								가계부페이지
+  							</h5>
+  						</div>
 	 				</div> 
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/graph.png" alt="Second slide"> 
+			 			<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  								통계페이지
+  							</h5>
+  						</div>
 			 		</div> 
 			 		<div class="carousel-item"> 
-			 			<img class="d-block w-100" src="/img/3.jpg" alt="Third slide"> 
+			 			<img class="d-block w-100" src="/img/3.jpg" alt="Third slide">
+			 			<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  								자산페이지
+  							</h5>
+  						</div> 
 			 		</div>
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/board.png" alt="Fourth slide"> 
+  						<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  								게시판페이지
+  							</h5>
+  						</div>
 			 		</div>  
 			 		<!-- 슬라이드 쇼 끝 왼쪽 오른쪽 화살표 버튼  -->
 			 		<a class="carousel-control-prev" href="#demo" data-slide="prev"> 
