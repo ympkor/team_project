@@ -10,7 +10,6 @@
 <body>
 <c:choose>
 	<c:when test="${result=='삭제성공' }"><%session.invalidate();%>
-		<!-- <a href="/member/login">로그인페이지로 돌아갑니다</a> -->
 		<script type="text/javascript">
 			alert("탈퇴에 성공하셨습니다. 확인버튼을 누르시면 로그인창으로 이동됩니다.");
 			window.location.replace("/member/login");

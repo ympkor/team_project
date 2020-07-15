@@ -10,20 +10,8 @@
 <link rel="stylesheet" href="/css/updateMemberCss.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@700&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="/css/topMenu.css?asd=2"> -->
 </head>
 <body>
-	<!-- 상단 메뉴 부분 -->
-	<!-- <header class="topmenu">
-		<div class="grid_header">
-			<div class="basic"><a id=mainlink href="/main/getCal">MAIN</a></div>
-			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
-			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
-			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
-			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
-			<div class="gologout"><button class="gologout">LOGOUT</button></div>
-		</div>
-	</header> -->
 	<div id="update_container">
 		<div id="header">
 			<a id="title" href="/main/getCal">더조은가계부</a>
