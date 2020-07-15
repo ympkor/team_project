@@ -38,7 +38,7 @@
 	<div></div>
 	
 	<div><input type="hidden" name="userKey" value="${userKey}"></div>
-	<div style="text-align: center;"><h1 style="font-size:200%;">" 새로운 자산을 추가합니다. "</h1></div>
+	<div style="text-align: center;"><h1 style="font-size:200%; letter-spacing: 2px;">" 새로운 자산을 추가합니다. "</h1></div>
 		
 		<div class=addPageTitle>금액</div>
 		<div class=addPageValue>
