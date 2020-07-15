@@ -35,7 +35,9 @@ public class StatisticsController {
 	
 	
 	@GetMapping("/show")	
-	public String showStatistics(HttpSession session,Model m,@RequestParam(required = false, value="date" )@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date) {
+	public String showStatistics(HttpSession session,Model m,
+			@RequestParam(required = false, value="date" )@DateTimeFormat(pattern = "yyyy-MM-dd")LocalDate date) {
+		//세션에 유저키 없으면 로그인 페이지로 이동
 		if(session.getAttribute("userKey")==null) {
 			return "callForLogin";
 		}

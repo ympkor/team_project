@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="/js/boardJS.js?ver=2"></script>
 <link rel="stylesheet" href="/css/board.css?ver=2">
@@ -13,6 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
+<script type="text/javascript">
+var userKey =<%=session.getAttribute("userKey")%>;
+</script>
 <div class="wrapper">
 	<!-- 상단 메뉴 부분 -->
 	<header class="topmenu">
@@ -21,8 +24,13 @@
 			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
 			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
 			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+		<c:if test="${userKey!=null}">
 			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
 			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+		</c:if>
+		<c:if test="${userKey==null}">
+			<div class="gologin"><button class="gologin">LOGIN</button></div>
+		</c:if>	
 		</div>
 	</header>
 <div id="boardcontent">

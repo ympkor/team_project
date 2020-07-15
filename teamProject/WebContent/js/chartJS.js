@@ -28,7 +28,6 @@ document.getElementById('lastday').onclick = function(){
 	var lastday= d.getFullYear()+"-"+
 		(d.getMonth()>10 ? d.getMonth()+1 : '0'+(d.getMonth()+1))
 		+"-"+(d.getDate()>9 ? d.getDate() : '0'+ d.getDate());
-	//console.log(lastday);
 	document.getElementById("date").value=lastday;		    
     document.getElementById("formbutton").click();
 };
@@ -38,7 +37,6 @@ document.getElementById('nextday').onclick = function(){
 	var nextday= d.getFullYear()+"-"+
 		(d.getMonth()>10 ? d.getMonth()+1 : '0'+(d.getMonth()+1))
 		+"-"+(d.getDate()>9 ? d.getDate() : '0'+ d.getDate());
-	//console.log(nextday);
 	document.getElementById("date").value=nextday;	 
 	document.getElementById("formbutton").click();
 };
@@ -49,7 +47,6 @@ document.getElementById('lastweek').onclick = function(){
 	var lastweek= d.getFullYear()+"-"+
 	(d.getMonth()>10 ? d.getMonth()+1 : '0'+(d.getMonth()+1))
 	+"-"+(d.getDate()>9 ? d.getDate() : '0'+ d.getDate());
-	//console.log(lastweek);
 	document.getElementById("date").value=lastweek;		    
 	document.getElementById("formbutton").click();
 };
@@ -151,6 +148,7 @@ document.getElementById('nextyearbutton').onclick = function(){
 			  chart.draw(data, options);
 			}
 });
+//창크기가 변하면 차트 다시 그리기 
 $(window).resize(function(){
 	google.charts.load('current', {'packages':['corechart']});
 	google.charts.setOnLoadCallback(drawChart);

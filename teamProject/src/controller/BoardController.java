@@ -46,13 +46,10 @@ public class BoardController {
 	//글 다 쓰고 나서 등록누르면
 	@PostMapping(value ="/show" )
 	public String showBoard(Model m,Board board) {
-		//System.out.println("작성자 넣기전"+board);
 		//유저키로 유저아이디를 받아옴
 		String writer=memberMapper.getUserIdByuserKey(board.getUserKey());
 		//받아온 유저아이디를 작성자에 넣어줌 
-		//System.out.println("받아온 작성자"+writer);
 		board.setWriter(writer);
-		//System.out.println("작성자 넣은후"+board);
 		boardMapper.regBoard(board);
 		//1페이지 정보를 불러옴,등록순으로
 		BoardListView bList= boardService.showBoard(1,1);
@@ -79,7 +76,6 @@ public class BoardController {
 		
 		//게시물클릭하면 조회수 1올라가기
 		boardMapper.updatehits(boardId);
-		//System.out.println(boardId);
 		//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 		String likecheck= boardService.likechecking(boardId, userKey);
 		//현재글 가져오기
@@ -91,7 +87,6 @@ public class BoardController {
 		
 		//보드아이디에 있는 코멘트 가져오기 10개 최신순으로 가져오기
 		List<Comment> cList = boardMapper.selectbyBId(boardId);
-		//for (Comment co : cList) {System.out.println(co);}
 		m.addAttribute("currentBoard", currentBoard);
 		m.addAttribute("beforeBoard", beforeBoard);
 		m.addAttribute("nextBoard", nextBoard);
@@ -110,14 +105,12 @@ public class BoardController {
 		int sortNum = Integer.parseInt(sNum);
 		String commentWriter = memberMapper.getUserIdByuserKey(comment.getUserKey());
 		comment.setCommentWriter(commentWriter);
-		//System.out.println(comment);
 		boardService.regComment(comment);		
 		
 		//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 		String likecheck= boardService.likechecking(comment.getBoardId(), userKey);
 		//코멘트 보드 가져와서 수정된것 다시 보여줄 데이터 만들어주기
 		List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
-		//for (Comment co : cList) { System.out.println(co); }		
 		//현재글 가져오기
 		List<Board> cnbList= boardService.getcurrentAndBeforeAndNextBoard(comment.getBoardId(), sortNum);
 		Board currentBoard = cnbList.get(0);		
@@ -142,7 +135,6 @@ public class BoardController {
 			int sortNum = Integer.parseInt(sNum);
 			boardMapper.updateComment(comment);
 			List<Comment> cList = boardMapper.selectbyBId(comment.getBoardId());
-			//for (Comment co : cList) { System.out.println(co); }		
 			//보드아이디와 유저키로 좋아요있는지 확인(true,false로 반환)
 			String likecheck= boardService.likechecking(comment.getBoardId(), userKey);
 			//현재글 가져오기
@@ -195,8 +187,6 @@ public class BoardController {
 		@PostMapping("/likeupdate")
 		@ResponseBody
 		public int likeupdate(String boardId, String userKey) {
-			//System.out.println("보드아이디"+boardId);
-			//System.out.println("유저키"+userKey);
 			int bId=(boardId!="") ? Integer.parseInt(boardId) : 0;
 			int uKey=(userKey!="") ? Integer.parseInt(userKey) : 0;
 			int likes=0;
@@ -214,8 +204,6 @@ public class BoardController {
 		@PostMapping("/cancellikeupdate")
 		@ResponseBody
 		public int cancellikeupdate(String boardId, String userKey) {
-			//System.out.println("보드아이디"+boardId);
-			//System.out.println("유저키"+userKey);
 			int bId=(boardId!="") ? Integer.parseInt(boardId) : 0;
 			int uKey=(userKey!="") ? Integer.parseInt(userKey) : 0;
 			int likes=0;
@@ -232,7 +220,6 @@ public class BoardController {
 		//게시물보는곳에서 수정버튼 누를때
 		@RequestMapping("/update")
 		public String updateBoard(int boardId,Model m,int pNum, int sortNum) {
-			//System.out.println("수정할 보드아이디"+boardId);
 			//보드아이디로 보드정보를 객체에 받아옴
 			Board board=boardMapper.selecOneBoard(boardId);
 			//객체를 수정페이지에 넘겨줌

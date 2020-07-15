@@ -8,11 +8,18 @@ function commentclick() {
 }
 
 $(function(){
-	document.querySelector(".gomypage").onclick = function(){
-		location.href="/member/mypageProc";
+	if(userKey!=null){
+		document.querySelector(".gomypage").onclick = function(){
+			location.href="/member/mypageProc";
+		}
+		document.querySelector(".gologout").onclick = function(){
+			location.href="/member/logoutProc";
+		}		
 	}
-	document.querySelector(".gologout").onclick = function(){
-		location.href="/member/logoutProc";
+	if(userKey==null){
+		document.querySelector(".gologin").onclick = function(){
+			location.href="/member/login";
+		}		
 	}
 	
 $(".commentwriteinput").hide();

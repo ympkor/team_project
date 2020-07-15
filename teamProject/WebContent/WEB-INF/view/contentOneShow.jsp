@@ -14,6 +14,13 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 </head>
 <body>
+<script type="text/javascript">
+var boardId= ${currentBoard.boardId};
+var userKey =<%=session.getAttribute("userKey")%>;
+var likecheck =${likecheck};
+var pNum=${pNum};
+var sNum=${sortNum}
+</script>
 <div class="wrapper">
 	<!-- 상단 메뉴 부분 -->
 	<header class="topmenu">
@@ -22,8 +29,13 @@
 			<div class="statistics"><a id=staticlink href="/statistics/show">GRAPH</a></div>
 			<div class="assest"><a id=assetlink href="/asset/view">ASSETS</a></div>
 			<div class="board"><a id=boardlink href="/board/show">BOARD</a></div>
+		<c:if test="${userKey!=null}">
 			<div class="gomypage"><button class="gomypage">MYPAGE</button></div>
 			<div class="gologout"><button class="gologout">LOGOUT</button></div>
+		</c:if>	
+		<c:if test="${userKey==null}">
+			<div class="gologin"><button class="gologin">LOGIN</button></div>
+		</c:if>	
 		</div>
 	</header>
 <div id="middlecontent">
@@ -93,12 +105,5 @@
 </div><!--middlecontent끝  -->
 <div class="gotopdiv" ><a class="gotop" href="#middlecontent" title="위로"></a></div>
 </div><!-- wrapper끝  -->
-<script type="text/javascript">
-var boardId= ${currentBoard.boardId};
-var userKey =<%=session.getAttribute("userKey")%>;
-var likecheck =${likecheck};
-var pNum=${pNum};
-var sNum=${sortNum}
-</script>
 </body>
 </html>
