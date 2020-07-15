@@ -40,8 +40,8 @@
 	<div></div>
 
 	<div><input type="hidden" name="userKey" value="${userKey}"></div>
-	<div style="text-align: center;"><h1 style="font-size:200%; margin-bottom: 50px;">
-	" ${aom.assetsName} 자산 <fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원을 수정합니다. "</h1></div>
+	<div style="text-align: center;"><h1 style="font-size:200%; margin-bottom: 50px; letter-spacing: 2px;">
+	${aom.assetsName}<br><fmt:formatNumber value="${aom.amount}" pattern="###,###,###,###"/>원을 수정합니다.</h1></div>
 
 		<div class=addPageTitle>금액</div>
 		<div class=addPageValue>
