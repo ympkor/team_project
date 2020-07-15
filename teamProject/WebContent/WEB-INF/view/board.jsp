@@ -89,7 +89,9 @@ var userKey =<%=session.getAttribute("userKey")%>;
 	</tbody>
 </table>
 </div>
+<c:if test="${userKey!=null}">
 <div id="writeBoarddiv"><button id="writeBoard">글쓰기</button></div>
+</c:if>
 <div class="boardpagenation">
 <!-- 페이지가 6개 이상일때부터  -->
 <!-- 첫번째블럭 : 이전없음, 총보여줄 페이지 개수는 5개 -->

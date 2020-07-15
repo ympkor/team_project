@@ -12,9 +12,11 @@ $(function() {
 			location.href="/member/login";
 		}		
 	}
- document.querySelector("#writeBoard").onclick = function(){
-	 location.href="/board/write";
- };
+	if(userKey!=null){	
+		document.querySelector("#writeBoard").onclick = function(){
+			location.href="/board/write";
+		};
+	}
  $(".boardtitlehead").mouseover(function(){
 	 $(this).children().css("background","#f1e0de");	 
  });
