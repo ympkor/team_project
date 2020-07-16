@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import dto.Member;
 import mapper.AssetOfMemberMapper;
-import mapper.BoardMapper;
 import mapper.JoinMapper;
 import mapper.MemberMapper;
 
@@ -17,8 +16,6 @@ public class MemberService {
 	
 	@Autowired
 	JoinMapper joinMapper;
-	@Autowired
-	BoardMapper boardMapper;
 	@Autowired
 	MemberMapper memberMapper;
 	@Autowired
