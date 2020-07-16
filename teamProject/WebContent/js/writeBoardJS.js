@@ -58,12 +58,15 @@ function sendFile(file, editor, welEditable) {
 	
 $(document).ready(function() {
         $('#summernote').summernote({ // summernote를 사용하기 위한 선언
+        	styleTags: [
+        	    'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+        		],
         	toolbar: [
         		  ['style', ['style']],
         		  ['font', ['bold', 'underline', 'clear']],
         		  ['fontsize',['fontsize']],
         		  ['color', ['color']],
-        		  ['para', ['ul', 'ol', 'paragraph']],
+        		  ['para', ['paragraph']],
         		  ['insert', ['picture']],
         		],
         	height: 400,
