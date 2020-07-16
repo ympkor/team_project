@@ -47,7 +47,7 @@
 		 			<div class="carousel-item active"> 
 		 				<img class="d-block w-100" src="/img/main.jpg" alt="First slide"> 
 		 				<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
-  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0 );">
   								가계부페이지
   							</h5>
   						</div>
@@ -55,7 +55,7 @@
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/graph.png" alt="Second slide"> 
 			 			<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
-  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0 );">
   								통계페이지
   							</h5>
   						</div>
@@ -63,7 +63,7 @@
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/asset.jpg" alt="Third slide">
 			 			<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
-  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0 );">
   								자산페이지
   							</h5>
   						</div> 
@@ -71,7 +71,7 @@
 			 		<div class="carousel-item"> 
 			 			<img class="d-block w-100" src="/img/board.png" alt="Fourth slide"> 
   						<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
-  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
+  							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0 );">
   								게시판페이지
   							</h5>
   						</div>
