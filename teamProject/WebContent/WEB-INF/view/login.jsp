@@ -61,7 +61,7 @@
   						</div>
 			 		</div> 
 			 		<div class="carousel-item"> 
-			 			<img class="d-block w-100" src="/img/3.jpg" alt="Third slide">
+			 			<img class="d-block w-100" src="/img/asset.jpg" alt="Third slide">
 			 			<div style="background-color: rgba( 255, 255, 255, 0.5 );" class="carousel-caption d-none d-md-block">
   							<h5 style ="font-family: 'Nanum Gothic Coding', monospace; color:#51565d; margin:-14px 0; background-color: rgba( 255, 255, 255, 0.5 );">
   								자산페이지
