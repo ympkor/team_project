@@ -8,6 +8,9 @@ import dto.Board;
 import dto.Comment;
 
 public interface BoardMapper {
+	
+	//로그인한 한명 멤버 정보를 가져오기
+	public String getUserIdByuserKey(int userKey);
 
 	public void regBoard(Board board);
 	public Board selecOneBoard(int boardId);

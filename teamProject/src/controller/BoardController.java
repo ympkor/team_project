@@ -19,7 +19,6 @@ import dto.Board;
 import dto.BoardListView;
 import dto.Comment;
 import mapper.BoardMapper;
-import mapper.MemberMapper;
 import service.BoardService;
 
 @Controller
@@ -27,9 +26,7 @@ import service.BoardService;
 @SessionAttributes("userKey")
 public class BoardController {
 	@Autowired
-	BoardMapper boardMapper;
-	@Autowired
-	MemberMapper memberMapper;
+	BoardMapper boardMapper;	
 	@Autowired
 	BoardService boardService;
 	
@@ -47,7 +44,7 @@ public class BoardController {
 	@PostMapping(value ="/show" )
 	public String showBoard(Model m,Board board) {
 		//유저키로 유저아이디를 받아옴
-		String writer=memberMapper.getUserIdByuserKey(board.getUserKey());
+		String writer=boardMapper.getUserIdByuserKey(board.getUserKey());
 		//받아온 유저아이디를 작성자에 넣어줌 
 		board.setWriter(writer);
 		boardMapper.regBoard(board);
@@ -111,7 +108,7 @@ public class BoardController {
 			,Comment comment, Model m,@RequestParam(defaultValue = "1")String sNum) {
 			
 		int sortNum = Integer.parseInt(sNum);
-		String commentWriter = memberMapper.getUserIdByuserKey(comment.getUserKey());
+		String commentWriter = boardMapper.getUserIdByuserKey(comment.getUserKey());
 		comment.setCommentWriter(commentWriter);
 		boardService.regComment(comment);		
 		

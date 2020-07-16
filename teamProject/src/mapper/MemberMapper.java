@@ -43,6 +43,4 @@ public interface MemberMapper {
 	//탈퇴시 이체기록 전부삭제
 	public void deleteTransferByuserkeyAll(int userKey);
 	
-	//로그인한 한명 멤버 정보를 가져오기
-	public String getUserIdByuserKey(int userKey);
 }
