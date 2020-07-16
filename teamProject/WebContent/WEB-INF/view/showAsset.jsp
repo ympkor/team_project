@@ -31,6 +31,13 @@ window.onload = function() {
 		location.href="/member/logoutProc";
 	}
 
+	let assetChtData = ${assetRatioValue};
+	let debtChtData = ${debtRatioValue}*(-1);
+	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
+	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
+	document.getElementById('assetRatioInfo').innerHTML=aRatio;
+	document.getElementById('debtRatioInfo').innerHTML=bRatio;
+	
 	var newsList = ${newsArr};
 	
 	document.getElementById('news0.title').innerHTML=newsList[0].title;
@@ -94,10 +101,6 @@ window.onload = function() {
 	var newslink9 = String(newsList[9].link);
 	document.getElementById('newsBox9').href=newslink9;
 	
-	/*let assetChtData = ${assetRatioValue};
-	let debtChtData = ${debtRatioValue}*-1;
-	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
-	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);*/
 	let assetList = JSON.parse('${assetsListJ}');
 	let dataPointsText = '[';
 	for(let i = 0; i < assetList.length; i++) {
@@ -115,7 +118,7 @@ window.onload = function() {
 	dataPointsText += ']';
 	var chart = new CanvasJS.Chart("chartContainer", {
 	backgroundColor: "#464646",
-	theme: "dark1", // "light1", "light2", "dark1", "dark2"
+	theme: "dark1",
 	exportEnabled: false,
 	animationEnabled: true,
 	data: [{
@@ -160,9 +163,9 @@ window.onload = function() {
 		<h1 style="font-size:36px; text-align: right; color:;">
 		<fmt:formatNumber value="${sumTotal}" pattern="###,###,###,###"/>원</h1>
 		<div style="margin-top: 50px; line-height: 30%; color:grey">
-		<p class=leftSum>자산</p><div id = sumAsset class=leftSum>
+		<span class=leftSum>자산</span> (<span id="assetRatioInfo"></span>%)<div id = sumAsset class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumAsset}" pattern="###,###,###,###"/>원</h2></div><br>
-		<p class=leftSum>마이너스 계좌</p><div id = sumDebt class=leftSum>
+		<span class=leftSum>마이너스 계좌</span> (<span id="debtRatioInfo"></span>%)<div id = sumDebt class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumDebt}" pattern="###,###,###,###"/>원</h2></div>
 		</div><br><br>
 	</div>
