@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import dto.AssetOfMember;
 import dto.SearchDto;
 import service.AssetNewsService;
@@ -27,7 +30,7 @@ public class AssetOfMemberController {
 
 	//자산페이지 호출시
 	@RequestMapping("/view")
-	public String getMemberAsset(HttpSession session, Model m){
+	public String getMemberAsset(HttpSession session, Model m) throws JsonProcessingException{
 
 		if(session.getAttribute("userKey")==null) {
 			return "callForLogin";
@@ -83,7 +86,11 @@ public class AssetOfMemberController {
 		StringBuilder newsString = ans.getNews();
 		JSONObject jsonObject = new JSONObject(newsString.toString());
 		JSONArray jsonArray = jsonObject.getJSONArray("items");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String assetsListJ = mapper.writeValueAsString(assetList);
 
+		m.addAttribute("assetsListJ", assetsListJ);
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("assetList", assetList);
 		m.addAttribute("debtList", debtList);
@@ -251,7 +258,7 @@ public class AssetOfMemberController {
 	}
 
 	@RequestMapping("/showMemo")
-	public String showSearch(HttpSession session, SearchDto search, Model m){
+	public String showSearch(HttpSession session, SearchDto search, Model m) throws JsonProcessingException{
 		
 		if(session.getAttribute("userKey")==null) {
 			return "callForLogin";
@@ -295,6 +302,11 @@ public class AssetOfMemberController {
 		search.setUserKey(userKey);
 		String memo = search.getMemo();
 		List<SearchDto> list = aomService.selectListByMemo(userKey, memo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String assetsListJ = mapper.writeValueAsString(assetList);
+
+		m.addAttribute("assetsListJ", assetsListJ);
 
 		m.addAttribute("aomList", aomList);
 		m.addAttribute("assetList", assetList);

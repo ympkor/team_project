@@ -94,11 +94,25 @@ window.onload = function() {
 	var newslink9 = String(newsList[9].link);
 	document.getElementById('newsBox9').href=newslink9;
 	
-	let assetChtData = ${assetRatioValue};
-	let debtChtData = ${debtRatioValue}*(-1);
+	/*let assetChtData = ${assetRatioValue};
+	let debtChtData = ${debtRatioValue}*-1;
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
-	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
-	
+	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);*/
+	let assetList = JSON.parse('${assetsListJ}');
+	let dataPointsText = '[';
+	for(let i = 0; i < assetList.length; i++) {
+		let sumAmount = 0;
+		let ratio = 0;
+		for(let j = 0; j < assetList.length; j++) {
+			if(assetList[j] != null && i != j) {
+				sumAmount += assetList[j].amount;
+			}
+		}
+		ratio = (((${sumTotal}-sumAmount)/${sumTotal})*100).toFixed(1);
+		if(i+1 != assetList.length){dataPointsText += '{"y":"'+(${sumTotal}-sumAmount)+'", "z":"'+ratio+'", "label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"},';}
+		else{dataPointsText += '{"y":"'+(${sumTotal}-sumAmount) +'","z":"'+ratio+'","label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"}';}
+	}
+	dataPointsText += ']';
 	var chart = new CanvasJS.Chart("chartContainer", {
 	backgroundColor: "#464646",
 	theme: "dark1", // "light1", "light2", "dark1", "dark2"
@@ -110,16 +124,12 @@ window.onload = function() {
 		toolTipContent: "<b>{label}</b> {y}원 ({z}%)",
 		showInLegend: "true",
 		legendText: "{label}",
-		indexLabelFontSize: 14,
+		indexLabelFontSize: 10,
 		indexLabel: "{label} {z}%",
-		dataPoints: [
-			{ y: assetChtData, z: aRatio, label: "자산"},
-			{ y: debtChtData, z: bRatio, label: "마이너스 계좌", exploded : true},
-		]
+		dataPoints: JSON.parse(dataPointsText)
 	}]
 });
 	chart.render();
-	
 }
 
 </script>
