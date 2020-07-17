@@ -35,8 +35,10 @@ window.onload = function() {
 	let debtChtData = ${debtRatioValue}*(-1);
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
-	document.getElementById('assetRatioInfo').innerHTML=aRatio;
-	document.getElementById('debtRatioInfo').innerHTML=bRatio;
+	if (aRatio > 0 && bRatio > 0){
+	document.getElementById('assetRatioInfo').innerHTML="("+aRatio+"%)";
+	document.getElementById('debtRatioInfo').innerHTML="("+bRatio+"%)";
+	}
 	
 	var newsList = ${newsArr};
 	
@@ -118,7 +120,7 @@ window.onload = function() {
 	dataPointsText += ']';
 	var chart = new CanvasJS.Chart("chartContainer", {
 	backgroundColor: "#464646",
-	theme: "dark1",
+	theme: "dark2",
 	exportEnabled: false,
 	animationEnabled: true,
 	data: [{
@@ -163,9 +165,9 @@ window.onload = function() {
 		<h1 style="font-size:36px; text-align: right; color:;">
 		<fmt:formatNumber value="${sumTotal}" pattern="###,###,###,###"/>원</h1>
 		<div style="margin-top: 50px; line-height: 30%; color:grey">
-		<span class=leftSum>자산</span> (<span id="assetRatioInfo"></span>%)<div id = sumAsset class=leftSum>
+		<span class=leftSum>자산</span> <span id="assetRatioInfo"></span><div id = sumAsset class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumAsset}" pattern="###,###,###,###"/>원</h2></div><br>
-		<span class=leftSum>마이너스 계좌</span> (<span id="debtRatioInfo"></span>%)<div id = sumDebt class=leftSum>
+		<span class=leftSum>마이너스 계좌</span> <span id="debtRatioInfo"></span><div id = sumDebt class=leftSum>
 		<h2 style="text-align: right"><fmt:formatNumber value="${sumDebt}" pattern="###,###,###,###"/>원</h2></div>
 		</div><br><br>
 	</div>
