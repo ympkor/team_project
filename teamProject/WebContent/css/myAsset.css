@@ -108,6 +108,7 @@ section {
   z-index:0;
   position: relative;
   height:1050px;
+  width:100%;
 }
 
 /* Style the navigation menu */
@@ -121,6 +122,7 @@ sum {
   padding-left: 30px;
   padding-right: 30px;
   padding-bottom: 30px;
+  min-width: 280px;
   
 }
 
@@ -133,8 +135,10 @@ asset {
 	padding-left: 30px;
 	padding-right: 30px;
 	padding-bottom: 30px;
-	overflow:scroll;
+	overflow:auto;
 	overflow-x:hidden;
+	min-width: 320px;
+	min-height: 1050px;
 }
 
 
@@ -148,6 +152,7 @@ news {
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-bottom: 30px;
+	min-width:540px;
 }
 
 /* Style the footer */
