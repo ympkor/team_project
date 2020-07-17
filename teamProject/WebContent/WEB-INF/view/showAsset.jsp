@@ -15,7 +15,7 @@
 <head>
 <meta charset="UTF-8">
 <title>내 자산</title>
-<link rel="stylesheet" type="text/css" href="/css/myAsset.css?ver=1">
+<link rel="stylesheet" type="text/css" href="/css/myAsset.css">
 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600" rel="stylesheet">
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://kit.fontawesome.com/b8612abdbb.js" crossorigin="anonymous"></script>
@@ -109,13 +109,13 @@ window.onload = function() {
 		let sumAmount = 0;
 		let ratio = 0;
 		for(let j = 0; j < assetList.length; j++) {
-			if(assetList[j] != null && i != j) {
+			if(assetList[j] != null && i != j && assetList[j].amount > 0) {
 				sumAmount += assetList[j].amount;
 			}
 		}
-		ratio = (((${sumTotal}-sumAmount)/${sumTotal})*100).toFixed(1);
-		if(i+1 != assetList.length){dataPointsText += '{"y":"'+(${sumTotal}-sumAmount)+'", "z":"'+ratio+'", "label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"},';}
-		else{dataPointsText += '{"y":"'+(${sumTotal}-sumAmount) +'","z":"'+ratio+'","label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"}';}
+		ratio = (((${sumAsset}-sumAmount)/${sumAsset})*100).toFixed(1);
+		if(i+1 != assetList.length){dataPointsText += '{"y":"'+(${sumAsset}-sumAmount)+'", "z":"'+ratio+'", "label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"},';}
+		else{dataPointsText += '{"y":"'+(${sumAsset}-sumAmount) +'","z":"'+ratio+'","label":"'+assetList[i].assetsName+' '+assetList[i].memo+'"}';}
 	}
 	dataPointsText += ']';
 	var chart = new CanvasJS.Chart("chartContainer", {
