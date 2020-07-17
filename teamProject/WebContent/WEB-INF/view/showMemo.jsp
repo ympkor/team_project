@@ -35,8 +35,10 @@ window.onload = function() {
 	let debtChtData = ${debtRatioValue}*(-1);
 	let aRatio = (assetChtData/(assetChtData+debtChtData)*100).toFixed(1);
 	let bRatio = (debtChtData/(assetChtData+debtChtData)*100).toFixed(1);
-	document.getElementById('assetRatioInfo').innerHTML=aRatio;
-	document.getElementById('debtRatioInfo').innerHTML=bRatio;
+	if (aRatio > 0 && bRatio > 0){
+	document.getElementById('assetRatioInfo').innerHTML="("+aRatio+"%)";
+	document.getElementById('debtRatioInfo').innerHTML="("+bRatio+"%)";
+	}
 	
 	let assetList = JSON.parse('${assetsListJ}');
 	let dataPointsText = '[';
